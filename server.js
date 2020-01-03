@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
 
+// Middleware utilities
+const bodyParser = require("body-parser");
+const morgan = require('morgan');
+const cors = require("cors");
 const colors = require("colors");
+
+// Mongoose 
 const mongoose = require('mongoose');
+
+// Config variables
 require('dotenv').config();
 
 
@@ -17,9 +25,17 @@ mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology
 });
 
 
+// Getting data in json format
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json())
+
+app.use(morgan('dev'));
+app.use(cors());
+
 /*
-// routes
-app.use(require('./routes/index.js'));
+app.get("/", (req, res) => {
+    res.send("App running")
+})
 */
 
 
