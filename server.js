@@ -1,24 +1,21 @@
 const express = require('express');
 const app = express();
 
+const colors = require("colors");
 const mongoose = require('mongoose');
-/*const config = require('config');
-// MongoDB url
-const url = config.get('mongoURI');
+require('dotenv').config();
 
 
 //Connecting to the database
 mongoose.promise = global.Promise;
-mongoose.connect('mongodb+srv://dev:dev@dev1@prakriti-jxoz5.mongodb.net/enva?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true}, (err,db)=> {
+mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true}, (err,db)=> {
     if(err)
     console.log(err);
 
     else
-    console.log('Database Connected');
+    console.log('Database Connected...'.blue.bold);
 });
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-*/
+
 
 /*
 // routes
@@ -28,5 +25,5 @@ app.use(require('./routes/index.js'));
 
 // Starting the server
 app.listen(process.env.PORT || 5000, ()=>{
-    console.log(`Server started on port ${process.env.PORT || 5000}`);
+    console.log(`Server started on port ${process.env.PORT || 5000}`.blue.bold);
 });
