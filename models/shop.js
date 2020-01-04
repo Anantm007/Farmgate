@@ -18,11 +18,11 @@ const ShopSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Please add a password'],
+        minlength: 6
     },
 
     address: {
         type: String,
-        unique: true,
         required: [true, 'Please add an address'],
     },
 

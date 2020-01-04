@@ -29,13 +29,19 @@ mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
 
+// Dev Middleware
 app.use(morgan('dev'));
 app.use(cors());
 
-
-app.get("/", (req, res) => {
-    res.send("API running")
+// Test route
+app.get("/api", (req, res) => {
+    res.json({
+        message: "API running"
+    });
 })
+
+// Mounting the routes
+app.use('/api/shop/auth', require('./routes/shopAuth'));
 
 
 // Starting the server
