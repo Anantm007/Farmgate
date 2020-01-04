@@ -57,18 +57,23 @@ router.post('/',
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ 
+        success: false,
+        errors: errors.array() });
     }
 
-    const { name, email, password, address, zipCode, phoneNumber,  } = req.body;
+    const { name, email, password, address, zipCode, phoneNumber  } = req.body;
 
     try {
       let shop = await Shop.findOne({ email });
 
+      // Shop already registered
       if (shop) {
         return res
           .status(400)
-          .json({ errors: [{ message: 'Shop already registered!' }] });
+          .json({ 
+            success: false,
+            errors: [{ message: 'Shop already registered!' }] });
       }
 
       // New Shop
@@ -85,9 +90,10 @@ router.post('/',
       const salt = await bcrypt.genSalt(10);
       shop.password = await bcrypt.hash(password, salt);
 
-      // Save to password
+      // Save to database
       await shop.save();
 
+      // Payload for jwt
       const payload = {
         shop: {
           id: shop._id
@@ -101,15 +107,18 @@ router.post('/',
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });  // Send token back to the client
+          res.json({    // Send token back to the client 
+            success: true,
+            token 
+          });  
 
           // Send welcome email
           let HelperOptions ={
 
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
-            subject : "Welcome to Farmgate",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh organic food from the best stores near you. \n\nRegards, \nTeam Farmgate"
+            subject : "Welcome to Farmgate!",
+            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh organic food from the best stores near you. \n\nVisit http://www.farmgate-market.com to start ordering \n\nRegards, \nTeam Farmgate"
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{

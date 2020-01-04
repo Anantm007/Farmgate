@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Middleware
-const auth = require('../middleware/auth');
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -25,7 +22,9 @@ router.post('/',
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ 
+        success: false,
+        errors: errors.array() });
     }
 
     const { email, password } = req.body;
@@ -36,7 +35,9 @@ router.post('/',
       if (!shop) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ 
+            success: false,
+            errors: [{ msg: 'Invalid Credentials' }] });
       }
 
       const isMatch = await bcrypt.compare(password, shop.password);
@@ -44,7 +45,9 @@ router.post('/',
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ 
+            success: false,
+            errors: [{ message: 'Invalid Credentials' }] });
       }
 
       const payload = {
@@ -59,7 +62,9 @@ router.post('/',
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ 
+            success: true,
+            token });
         }
       );
     } catch (err) {
@@ -68,5 +73,48 @@ router.post('/',
     }
   }
 );
+
+// List All shops (public)
+router.get('/', async(req, res) => {
+  await Shop.find({}, (err, shops) => {
+    if(err) {
+      return res.json({
+        success: false,
+        message: err
+      }) 
+    }
+
+    else
+    {
+      return res.json({
+        success: true,
+        count: shops.length,
+        data: shops
+      });
+    }
+  })
+})
+
+
+// Find a shop by id (public)
+router.get('/:id', async(req, res) => {
+  await Shop.findById(req.params.id, (err, shop) => {
+    if(err || !shop)
+    {
+      res.json({
+        success: false,
+        message: "Shop Could Not Be Found!"
+      })
+    }
+
+    else
+    {
+      return res.json({
+        success: true,
+        data: shop
+      });
+    }
+  })
+})
 
 module.exports = router;

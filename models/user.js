@@ -38,6 +38,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Please add a phone number'],
     },
 
+    role: {
+        type: Number,
+        default: 0
+    },
+
     history: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
