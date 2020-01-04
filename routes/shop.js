@@ -84,7 +84,7 @@ router.post('/',
 
 
 // @route   GET /api/shops 
-// @desc    // List All shops 
+// @desc    List All shops 
 // @access  Public 
 router.get('/', async(req, res) => {
   await Shop.find({}, (err, shops) => {
@@ -108,15 +108,63 @@ router.get('/', async(req, res) => {
 
 
 // @route   GET /api/shops/:id
-// @desc    Find a shop by id (private)
+// @desc    Find a shop by id 
 // @access  Private (using middleware) 
 router.get('/:id', auth, async(req, res) => {
   
-  console.log(req.user);
   if(req.user)
   {
     await Shop.findById(req.user.id, (err, shop) => {  // req.user is coming from auth middleware where token is being checked
       
+      shop.password = undefined;
+      return res.json({
+        success: true,
+        data: shop
+      });
+
+    });
+
+  }
+
+  // Shop not found/invalid
+  else
+  {
+        res.json({
+          success: false,
+          message: "Shop Could Not Be Found!"
+        })
+  }
+});
+
+
+// @route   PUT /api/shops/:id
+// @desc    Update a shop by id
+// @access  Private (using middleware) 
+router.put('/:id', auth, async(req, res) => {
+  
+  // Checking for empty fields
+  for (var keys in req.body) {
+    if (req.body[keys] === undefined || req.body[keys] === "") 
+    {
+      var incomplete = keys;
+      break;
+    }
+  }
+  
+  // Return error if there are some undefined values
+  if (incomplete != undefined) {
+    return res.json({
+      success: false,
+      message: "Please fill " + incomplete.toUpperCase()
+    });
+  }
+
+  // If token verifies correctly
+  if(req.user)
+  {
+    await Shop.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, shop) => {  // req.user is coming from auth middleware where token is being checked
+      
+      shop.password = undefined;
       return res.json({
         success: true,
         data: shop
