@@ -9,7 +9,7 @@ require('dotenv').config()
 const { check, validationResult } = require('express-validator');
 
 // Models
-const Shop = require('../models/shop');
+const User = require('../models/user');
 
 // Nodemailer setup
 const nodemailer = require("nodemailer");
@@ -30,8 +30,8 @@ let transporter = nodemailer.createTransport({
 /*                                                  ROUTES                                                  */
 
 
-// @route   POST /api/shop/auth 
-// @desc    Register a new shop
+// @route   POST /api/user/auth 
+// @desc    Register a new user
 // @access  Public 
 router.post('/',
   [ // Validation
@@ -68,38 +68,39 @@ router.post('/',
     const { name, email, password, address, zipCode, phoneNumber  } = req.body;
 
     try {
-      let shop = await Shop.findOne({ email });
+      let user = await User.findOne({ email });
 
-      // Shop already registered
-      if (shop) {
+      // User already registered
+      if (user) {
         return res
           .status(400)
           .json({ 
             success: false,
-            errors: [{ message: 'Shop already registered!' }] });
+            errors: [{ message: 'User already registered!' }] });
       }
 
-      // New Shop
-      shop = new Shop({
+      // New User
+      user = new User({
         name,
         email,
         password,
         address,
         zipCode,
-        phoneNumber        
+        phoneNumber 
       });
 
       // Encrypting the password
       const salt = await bcrypt.genSalt(10);
-      shop.password = await bcrypt.hash(password, salt);
+      user.password = await bcrypt.hash(password, salt);
 
       // Save to database
-      await shop.save();
+      await user.save();
 
       // Payload for jwt
       const payload = {
-        shop: {
-          id: shop._id
+        user: {
+          id: user._id,
+          role: user.role
         }
       };
 
@@ -121,7 +122,7 @@ router.post('/',
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality organic food. \n\nLogin now to add items to your shop. \n\nVisit http://www.farmgate-market.com \n\nRegards, \nTeam Farmgate"
+            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh organic food from the best stores near you. \n\nVisit http://www.farmgate-market.com to start ordering \n\nRegards, \nTeam Farmgate"
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{

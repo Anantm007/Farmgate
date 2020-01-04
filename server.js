@@ -44,6 +44,8 @@ app.get("/api", (req, res) => {
 app.use('/api/shop/auth', require('./routes/shopAuth'));
 app.use('/api/shops', require('./routes/shop'));
 
+app.use('/api/user/auth', require('./routes/userAuth'));
+
 
 // Starting the server
 app.listen(process.env.PORT || 5000, ()=>{

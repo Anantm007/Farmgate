@@ -112,26 +112,40 @@ router.get('/', async(req, res) => {
 // @access  Private (using middleware) 
 router.get('/:id', auth, async(req, res) => {
   
-  if(req.user)
+  if(req.shop)
   {
-    await Shop.findById(req.user.id, (err, shop) => {  // req.user is coming from auth middleware where token is being checked
+    await Shop.findById(req.shop.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
       
-      shop.password = undefined;
-      return res.json({
-        success: true,
-        data: shop
-      });
+      if(shop)
+      {
+
+        shop.password = undefined;
+        return res.json({
+          success: true,
+          data: shop
+        });
+      }
+
+      
+      // Shop not found/invalid
+      else
+      {
+            res.json({
+              success: false,
+              message: "Shop Could Not Be Found!"
+            })
+      }
 
     });
 
   }
 
-  // Shop not found/invalid
+  // Token invalid
   else
   {
         res.json({
           success: false,
-          message: "Shop Could Not Be Found!"
+          message: "Authorization Failed!"
         })
   }
 });
@@ -160,9 +174,9 @@ router.put('/:id', auth, async(req, res) => {
   }
 
   // If token verifies correctly
-  if(req.user)
+  if(req.shop)
   {
-    await Shop.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, shop) => {  // req.user is coming from auth middleware where token is being checked
+    await Shop.findByIdAndUpdate(req.shop.id, req.body, {new: true}, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
       
       shop.password = undefined;
       return res.json({
