@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Middleware for protecting routes
-const auth = require('../middleware/auth');
+const auth = require('../middleware/shopAuth');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -111,23 +111,30 @@ router.get('/', async(req, res) => {
 // @desc    Find a shop by id (private)
 // @access  Private (using middleware) 
 router.get('/:id', auth, async(req, res) => {
-  await Shop.findById(req.params.id, (err, shop) => {
-    if(err || !shop)
-    {
-      res.json({
-        success: false,
-        message: "Shop Could Not Be Found!"
-      })
-    }
-
-    else
-    {
+  
+  console.log(req.user);
+  if(req.user)
+  {
+    await Shop.findById(req.user.id, (err, shop) => {  // req.user is coming from auth middleware where token is being checked
+      
       return res.json({
         success: true,
         data: shop
       });
-    }
-  })
-})
+
+    });
+
+  }
+
+  // Shop not found/invalid
+  else
+  {
+        res.json({
+          success: false,
+          message: "Shop Could Not Be Found!"
+        })
+  }
+});
+
 
 module.exports = router;

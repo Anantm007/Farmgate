@@ -16,11 +16,11 @@ module.exports = function(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.jwtSecret);
 
-    req.user = decoded.user;
+    req.user = decoded.shop;
     next();
   } catch (err) {
-    res.status(401).json({ 
-      success:false,
+    return res.status(401).json({ 
+      success: false,
       message: 'Token is not valid' });
   }
 };
