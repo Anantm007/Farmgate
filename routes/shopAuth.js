@@ -29,7 +29,10 @@ let transporter = nodemailer.createTransport({
 
 /*                                                  ROUTES                                                  */
 
-// Register a new shop
+
+// @route   POST /api/shop/auth 
+// @desc    Register a new shop
+// @access  Public 
 router.post('/',
   [ // Validation
     check('name', 'Name is required')

@@ -31,6 +31,11 @@ const ItemSchema = new mongoose.Schema({
         required: [true, 'Please add item stock status'],
     },
 
+    sold: {
+        type: Number,
+        default: 0
+    },
+
     shop: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shop'

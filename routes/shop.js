@@ -16,7 +16,12 @@ const Shop = require('../models/shop');
 
 
 
-//  Authenticate(log in) user & get token
+/*                                                  ROUTES                                                  */
+
+
+// @route   POST /api/shops 
+// @desc    Authenticate(login) user & get token
+// @access  Public 
 router.post('/',
   [
     check('email', 'Please include a valid email').isEmail(),
@@ -77,7 +82,10 @@ router.post('/',
   }
 );
 
-// List All shops (public)
+
+// @route   GET /api/shops 
+// @desc    // List All shops 
+// @access  Public 
 router.get('/', async(req, res) => {
   await Shop.find({}, (err, shops) => {
     if(err) {
@@ -99,7 +107,9 @@ router.get('/', async(req, res) => {
 })
 
 
-// Find a shop by id (private)
+// @route   GET /api/shops/:id
+// @desc    Find a shop by id (private)
+// @access  Private (using middleware) 
 router.get('/:id', auth, async(req, res) => {
   await Shop.findById(req.params.id, (err, shop) => {
     if(err || !shop)
