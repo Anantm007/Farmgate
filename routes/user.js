@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Middleware for protecting routes
-const auth = require('../middleware/shopAuth');
+const auth = require('../middleware/userAuth');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,18 +10,19 @@ require('dotenv').config()
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
+
 // Express validation
 const { check, validationResult } = require('express-validator');
 
 // Models
-const Shop = require('../models/shop');
+const User = require('../models/user');
 
 
 
 /*                                                  ROUTES                                                  */
 
 
-// @route   POST /api/shops 
+// @route   POST /api/user
 // @desc    Authenticate(login) user & get token
 // @access  Public 
 router.post('/',
@@ -40,9 +41,9 @@ router.post('/',
     const { email, password } = req.body;
 
     try {
-      let shop = await Shop.findOne({ email });
+      let user = await User.findOne({ email });
 
-      if (!shop) {
+      if (!user) {
         return res
           .status(400)
           .json({ 
@@ -50,7 +51,7 @@ router.post('/',
             errors: [{ msg: 'Invalid Credentials' }] });
       }
 
-      const isMatch = await bcrypt.compare(password, shop.password);
+      const isMatch = await bcrypt.compare(password, user.password);
       
       if (!isMatch) {
         return res
@@ -61,8 +62,8 @@ router.post('/',
       }
 
       const payload = {
-        shop: {
-          id: shop._id
+        user: {
+          id: user._id
         }
       };
 
@@ -85,11 +86,11 @@ router.post('/',
 );
 
 
-// @route   GET /api/shops 
-// @desc    List All shops 
+// @route   GET /api/users 
+// @desc    List All users 
 // @access  Public 
 router.get('/', async(req, res) => {
-  await Shop.find({}, (err, shops) => {
+  await User.find({}, (err, users) => {
     if(err) {
       return res.json({
         success: false,
@@ -101,47 +102,49 @@ router.get('/', async(req, res) => {
     {
       return res.json({
         success: true,
-        count: shops.length,
-        data: shops
+        count: users.length,
+        data: users
       });
     }
   })
 })
 
 
-// @route   GET /api/shops/:id
-// @desc    Find a shop by id 
+// @route   GET /api/users/:id
+// @desc    Find a user by id 
 // @access  Private (using middleware) 
 router.get('/:id', auth, async(req, res) => {
   
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+    {
+        return res.json({
+            success: false,
+            message: "User not Found"
+          });
+    }
+
+  // Check is our middleware populated req.user (only when token was valid)
+  if(req.user)
   {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
-  }
-  if(req.shop)
-  {
-    await Shop.findById(req.shop.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
+    await User.findById(req.user.id, (err, user) => {  // req.user is coming from auth middleware where token is being checked
       
-      if(shop)
+      if(user)
       {
 
-        shop.password = undefined;
+        user.password = undefined;
         return res.json({
           success: true,
-          data: shop
+          data: user
         });
       }
 
       
-      // Shop not found/invalid
+      // User not found/invalid
       else
       {
             res.json({
               success: false,
-              message: "Shop Could Not Be Found!"
+              message: "User Could Not Be Found!"
             })
       }
 
@@ -160,19 +163,19 @@ router.get('/:id', auth, async(req, res) => {
 });
 
 
-// @route   PUT /api/shops/:id
-// @desc    Update a shop by id
+// @route   PUT /api/users/:id
+// @desc    Update a user by id
 // @access  Private (using middleware) 
 router.put('/:id', auth, async(req, res) => {
 
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
-  }
+    
+   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+   {
+       return res.json({
+           success: false,
+           message: "User not Found"
+         });
+   }
   
   // Checking for empty fields
   for (var keys in req.body) {
@@ -192,26 +195,26 @@ router.put('/:id', auth, async(req, res) => {
   }
 
   // If token verifies correctly
-  if(req.shop)
+  if(req.user)
   {
-    await Shop.findByIdAndUpdate(req.shop.id, req.body, {new: true}, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
+    await User.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, user) => {  // req.user is coming from auth middleware where token is being checked
       
-      shop.password = undefined;
+      user.password = undefined;
       return res.json({
         success: true,
-        data: shop
+        data: user
       });
 
     });
 
   }
 
-  // Shop not found/invalid
+  // User not found/invalid
   else
   {
         res.json({
           success: false,
-          message: "Shop Could Not Be Found!"
+          message: "User Could Not Be Found!"
         })
   }
 });
