@@ -42,6 +42,7 @@ app.get("/api", (req, res) => {
 
 // Mounting the routes
 app.use('/api/shop/auth', require('./routes/shopAuth'));
+app.use('/api/shops', require('./routes/shop'));
 
 
 // Starting the server
