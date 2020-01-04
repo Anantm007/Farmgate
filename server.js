@@ -32,11 +32,10 @@ app.use(bodyParser.json())
 app.use(morgan('dev'));
 app.use(cors());
 
-/*
+
 app.get("/", (req, res) => {
-    res.send("App running")
+    res.send("API running")
 })
-*/
 
 
 // Starting the server
