@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// Middleware for protecting routes
+const auth = require('../middleware/auth');
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -96,8 +99,8 @@ router.get('/', async(req, res) => {
 })
 
 
-// Find a shop by id (public)
-router.get('/:id', async(req, res) => {
+// Find a shop by id (private)
+router.get('/:id', auth, async(req, res) => {
   await Shop.findById(req.params.id, (err, shop) => {
     if(err || !shop)
     {
