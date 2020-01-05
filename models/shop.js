@@ -40,8 +40,15 @@ const ShopSchema = new mongoose.Schema({
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
-    }]
-    
+    }],
+
+    resetPasswordToken: {
+        type: String
+    },
+
+    resetPasswordExpire: {
+        type: String
+    }    
 
 }, {timestamps: true}
 

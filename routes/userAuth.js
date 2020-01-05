@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -144,7 +145,105 @@ router.post('/',
   }
 );
   
+// @route   POST /api/user/auth/forgot 
+// @desc    Forgot Password
+// @access  Only for registered (user cannot be auth if he forgot his password)
+router.post("/forgot", async(req, res) => {
+  const user = await User.findOne({email: req.body.email});
 
+  if(!user)
+  {
+    return res.json({
+      success: false,
+      message: "User not found with that email"
+    });
+  }
+
+  // Generate and hash password token using crypto (to besent to the user)
+  const resetToken = crypto.randomBytes(20).toString('hex');
+
+  // Hash it to store in the database
+  user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+  // Set expire
+  user.resetPasswordExpire = Date.now() + 10 *60 * 1000;
+
+  // Saving reset token and expires in the database
+  await user.save();
+  
+
+  // Send reset password email
+  const resetUrl = `${req.protocol}://${req.get('host')}/api/user/auth/resetPassword/${resetToken}`;
+
+  let HelperOptions ={
+    from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
+    to : user.email,
+    subject : "Farmgate Password Reset",
+    text : "Hello " + user.name + 
+            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. This link is valid only for 10 minutes.
+            \n\nRegards, \nTeam Farmgate`
+  };
+
+  transporter.sendMail(HelperOptions,(err,info)=>{
+    if(err) throw err;
+    
+    res.json({
+      success: true,
+      message: "Email sent successfully"
+    })
+   });
+/*
+   user.resetPasswordToken = undefined;
+   user.resetPasswordExpire = undefined;
+
+   await user.save();
+  */
+});
+
+
+// @route   PUT /api/user/auth/resetPassword/:resetToken 
+// @desc    Reset Password using token
+// @access  Only for registered (user cannot be auth if he forgot his password)
+router.put("/resetPassword/:resetToken", async(req, res) => {
+
+  // Validate new password
+  if(!req.body.password || req.body.password === "" || req.body.password.length < 6)
+  {
+    return res.json({
+      success: false,
+      message: "Please enter a valid password"
+    })
+  }
+
+  const resetPasswordToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() }
+  });
+
+  if(!user)
+  {
+    return res.json({
+      success: false,
+      message: "Invalid Token"
+    })
+  }
+    // Encrypting the password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(req.body.password, salt);
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    // Save new password to database
+    await user.save();
+
+    return res.json({
+      success: true,
+      message: "Password updated!"
+    })
+})
 
 
 module.exports = router;

@@ -46,9 +46,16 @@ const UserSchema = new mongoose.Schema({
     history: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
-    }]
-    
+    }],
 
+    resetPasswordToken: {
+        type: String
+    },
+
+    resetPasswordExpire: {
+        type: String
+    }
+    
 }, {timestamps: true}
 
 );
