@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 
 // Middleware utilities
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
 const bodyParser = require("body-parser");
 const morgan = require('morgan');
 const cors = require("cors");
@@ -29,9 +34,23 @@ mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
 
+// API SECURITY
+app.use(mongoSanitize());   // Sanitize Data
+app.use(helmet());          // Set security headers
+app.use(xss())              // Prevent XSS(cross site scripting) attacks
+app.use(hpp());             // Prevent hpp param pollution
+app.use(cors());    // Enable CORS
+
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 100 // 100 requests per 10 minutes per IP address
+})
+app.use(limiter);
+
+
 // Dev Middleware
 app.use(morgan('dev'));
-app.use(cors());
 
 // Test route
 app.get("/api", (req, res) => {
