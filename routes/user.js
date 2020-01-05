@@ -73,6 +73,10 @@ router.post('/',
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
+  
+          // persist the token as 'usert' in cookie with expiry date
+          res.cookie('usert', token, {expire: new Date() + 360000})
+
           res.json({ 
             success: true,
             token });
@@ -84,6 +88,22 @@ router.post('/',
     }
   }
 );
+
+
+// @route   GET /api/users/signout
+// @desc    Log the user out and destroy cookie
+// @access  Only for authenticated users
+router.get("/signout", auth, async(req, res) => {
+
+  console.log("hello")
+  // Clear cookie from storage
+  res.clearCookie('usert')
+  res.json({
+    success: true,
+    message: "You have successfully logged out"
+  });
+});
+
 
 
 // @route   GET /api/users 

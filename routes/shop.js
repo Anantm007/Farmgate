@@ -72,17 +72,36 @@ router.post('/',
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
+
+       // persist the token as 'shopt' in cookie with expiry date
+       res.cookie('shopt', token, {expire: new Date() + 360000})
+
           res.json({ 
             success: true,
             token });
         }
       );
+
+      
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
     }
   }
 );
+
+
+// @route   GET /api/shops/signout
+// @desc    Log the shop out and destroy cookie
+// @access  Only for authenticated shops
+router.get("/signout", auth, async(req, res) => {
+
+  // Clear cookie from storage
+  res.clearCookie('shopt')
+  res.json({
+    success: true,
+    msg: "You have successfully logged out"})
+});
 
 
 // @route   GET /api/shops 
