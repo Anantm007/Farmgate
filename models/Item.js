@@ -16,8 +16,12 @@ const ItemSchema = new mongoose.Schema({
 
     price: {
         type: Number,
-        variant: String, // per kg or bunch or dozen
         required: [true, 'Please add a price'],    
+    },
+
+    variant: { // per kg or bunch or dozen
+        type: String, 
+        required: true
     },
 
     quality: {
@@ -28,12 +32,8 @@ const ItemSchema = new mongoose.Schema({
     
     inStock: {
         type: Boolean,
+        default: true,
         required: [true, 'Please add item stock status'],
-    },
-
-    sold: {
-        type: Number,
-        default: 0
     },
 
     shop: {
