@@ -229,7 +229,6 @@ router.put("/:id",
         try {    
             // Saving product to the Database
             const item = await Item.findByIdAndUpdate(req.params.id, newFields, {new: true});
-            console.log(item)
             return res.json({
                 success: true,
                 data: item

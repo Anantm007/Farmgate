@@ -95,7 +95,6 @@ router.post('/',
 // @access  Only for authenticated users
 router.get("/signout", auth, async(req, res) => {
 
-  console.log("hello")
   // Clear cookie from storage
   res.clearCookie('usert')
   res.json({
