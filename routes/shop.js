@@ -15,7 +15,7 @@ const { check, validationResult } = require('express-validator');
 
 // Models
 const Shop = require('../models/shop');
-
+const Item = require("../models/item");
 
 
 /*                                                  ROUTES                                                  */
@@ -234,6 +234,39 @@ router.put('/:id', auth, async(req, res) => {
         })
   }
 });
+
+// @route   GET /api/shops/:id/items 
+// @desc    Get all items for a particular shop
+// @access  Public 
+router.get("/:id/items", async(req, res) => {
+  
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+  {
+      return res.json({
+          success: false,
+          message: "Shop Not Found"
+        });
+  }
+
+  const items = await Item.find({shop: req.params.id}).select('-image');
+
+  if(!items || items.length === 0)
+  {
+      return res.json({
+        success: true,
+        count: 0,
+        message: "This shop has no items listed"
+      })
+  }
+
+  return res.json({
+    success: true,
+    count: items.length,
+    data: items
+  })
+  
+});
+
 
 
 module.exports = router;
