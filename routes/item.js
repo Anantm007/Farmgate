@@ -297,7 +297,15 @@ router.delete("/:id", auth, async(req, res) => {
 // @desc    Display image using item id
 // @access  Public 
 router.get('/photo/:id', async(req, res) => {
-    
+
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+    {
+        return res.json({
+            success: false,
+            message: "Item Not Found"
+          });
+    }
+
     const result = await Item.findById(req.params.id); 
 
     if (!result) 
