@@ -175,7 +175,7 @@ router.put("/:id",
         // Check whether the shop is authorized or not
         const item = await Item.findById(req.params.id);
         
-        if(item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id))
+        if( (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id) ) || !item)
         {
           return res.json({
             success: false,
@@ -250,7 +250,7 @@ router.delete("/:id", auth, async(req, res) => {
   
   // Check whether the shop is authorized or not
   const item = await Item.findById(req.params.id);
-  if(item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id))
+  if( (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id) ) || !item)
   {
     return res.json({
       success: false,

@@ -181,7 +181,8 @@ router.post("/forgot", async(req, res) => {
     to : shop.email,
     subject : "Farmgate Password Reset",
     text : "Hello " + shop.name + 
-            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. This link is valid only for 10 minutes.
+            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. 
+            Do not share this link with anybody. \nThis link is valid only for 10 minutes.
             \n\nRegards, \nTeam Farmgate`
   };
 
@@ -193,12 +194,7 @@ router.post("/forgot", async(req, res) => {
       message: "Email sent successfully"
     })
    });
-/*
-   user.resetPasswordToken = undefined;
-   user.resetPasswordExpire = undefined;
 
-   await user.save();
-  */
 });
 
 

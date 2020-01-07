@@ -180,8 +180,8 @@ router.post("/forgot", async(req, res) => {
     to : user.email,
     subject : "Farmgate Password Reset",
     text : "Hello " + user.name + 
-            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. This link is valid only for 10 minutes.
-            \n\nRegards, \nTeam Farmgate`
+            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. 
+            Do not share this link with anybody. \nThe link is valid only for 10 minutes. \n\nRegards, \nTeam Farmgate`
   };
 
   transporter.sendMail(HelperOptions,(err,info)=>{
@@ -192,12 +192,7 @@ router.post("/forgot", async(req, res) => {
       message: "Email sent successfully"
     })
    });
-/*
-   user.resetPasswordToken = undefined;
-   user.resetPasswordExpire = undefined;
 
-   await user.save();
-  */
 });
 
 
