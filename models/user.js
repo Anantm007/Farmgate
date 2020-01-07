@@ -23,7 +23,6 @@ const UserSchema = new mongoose.Schema({
 
     address: {
         type: String,
-        unique: true,
         required: [true, 'Please add an address'],
     },
 

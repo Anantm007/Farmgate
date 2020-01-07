@@ -207,6 +207,14 @@ router.put('/:id', auth, async(req, res) => {
          });
    }
 
+   if(req.body.role)
+   {
+     return res.json({
+       success: false,
+       message: "You cannot change your role manually!"
+     })
+   }
+
    // Check whether the user is authenticated or not    
    if((JSON.stringify(req.params.id) !== JSON.stringify(req.user.id) ) || !req.user)
    {

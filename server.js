@@ -65,6 +65,7 @@ app.use('/api/user/auth', require('./routes/userAuth'));
 app.use('/api/shops', require('./routes/shop'));
 app.use('/api/users', require('./routes/user'));
 app.use('/api/items', require('./routes/item'));
+app.use('/api/admin', require('./routes/admin'));
 
 
 // Starting the server

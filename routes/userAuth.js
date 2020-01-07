@@ -100,8 +100,7 @@ router.post('/',
       // Payload for jwt
       const payload = {
         user: {
-          id: user._id,
-          role: user.role
+          id: user._id
         }
       };
 
