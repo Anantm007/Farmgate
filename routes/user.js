@@ -83,8 +83,10 @@ router.post('/',
         }
       );
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+      return res.json({
+        success: false,
+        message: err.message
+      });
     }
   }
 );
@@ -142,6 +144,15 @@ router.get('/:id', auth, async(req, res) => {
           });
     }
 
+    // Check whether the user is authenticated or not
+    if((JSON.stringify(req.params.id) !== JSON.stringify(req.user.id) ) || !req.user)
+    {
+      return res.json({
+        success: false,
+        message: "You are not authorized to perform this action"
+      })
+    }
+
   // Check is our middleware populated req.user (only when token was valid)
   if(req.user)
   {
@@ -195,6 +206,16 @@ router.put('/:id', auth, async(req, res) => {
            message: "User not Found"
          });
    }
+
+   // Check whether the user is authenticated or not    
+   if((JSON.stringify(req.params.id) !== JSON.stringify(req.user.id) ) || !req.user)
+   {
+     return res.json({
+       success: false,
+       message: "You are not authorized to perform this action"
+     })
+   }
+
   
   // Checking for empty fields
   for (var keys in req.body) {
@@ -213,9 +234,6 @@ router.put('/:id', auth, async(req, res) => {
     });
   }
 
-  // If token verifies correctly
-  if(req.user)
-  {
     await User.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, user) => {  // req.user is coming from auth middleware where token is being checked
       
       user.password = undefined;
@@ -226,16 +244,7 @@ router.put('/:id', auth, async(req, res) => {
 
     });
 
-  }
 
-  // User not found/invalid
-  else
-  {
-        res.json({
-          success: false,
-          message: "User Could Not Be Found!"
-        })
-  }
 });
 
 

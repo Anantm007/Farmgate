@@ -84,8 +84,10 @@ router.post('/',
 
       
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+      return res.json({
+        success: false,
+        message: err.message
+      });
     }
   }
 );
@@ -140,8 +142,16 @@ router.get('/:id', auth, async(req, res) => {
           message: "Shop Not Found"
         });
   }
-  if(req.shop)
-  {
+
+      // Check whether the shop is authenticated or not
+      if( (JSON.stringify(req.params.id) !== JSON.stringify(req.shop.id) ) || !req.shop)
+      {
+        return res.json({
+          success: false,
+          message: "You are not authorized to perform this action"
+        })
+      }
+
     await Shop.findById(req.shop.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
       
       if(shop)
@@ -166,16 +176,6 @@ router.get('/:id', auth, async(req, res) => {
 
     });
 
-  }
-
-  // Token invalid
-  else
-  {
-        res.json({
-          success: false,
-          message: "Authorization Failed!"
-        })
-  }
 });
 
 
@@ -210,9 +210,15 @@ router.put('/:id', auth, async(req, res) => {
     });
   }
 
-  // If token verifies correctly
-  if(req.shop)
-  {
+  // Check whether the user is authenticated or not
+  if( (JSON.stringify(req.params.id) !== JSON.stringify(req.shop.id) ) || !req.shop)
+   {
+      return res.json({
+        success: false,
+        message: "You are not authorized to perform this action"
+      })
+   }
+
     await Shop.findByIdAndUpdate(req.shop.id, req.body, {new: true}, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
       
       shop.password = undefined;
@@ -223,16 +229,8 @@ router.put('/:id', auth, async(req, res) => {
 
     });
 
-  }
+  
 
-  // Shop not found/invalid
-  else
-  {
-        res.json({
-          success: false,
-          message: "Shop Could Not Be Found!"
-        })
-  }
 });
 
 // @route   GET /api/shops/:id/items 

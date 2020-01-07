@@ -139,8 +139,10 @@ router.post('/',
 
       // If signup fails due to any reason
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+      return res.json({
+        success: false,
+        message: err.message
+      });
     }
   }
 );
@@ -180,8 +182,7 @@ router.post("/forgot", async(req, res) => {
     to : user.email,
     subject : "Farmgate Password Reset",
     text : "Hello " + user.name + 
-            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password. 
-            Do not share this link with anybody. \nThe link is valid only for 10 minutes. \n\nRegards, \nTeam Farmgate`
+            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password.\n\nDo not share this link with anybody. \nThe link is valid only for 10 minutes. \n\nRegards, \nTeam Farmgate`
   };
 
   transporter.sendMail(HelperOptions,(err,info)=>{
