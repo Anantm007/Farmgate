@@ -12,6 +12,7 @@ const MongoObjectId = require("mongoose").Types.ObjectId;
 
 // Models
 const Item = require("../models/item");
+const Shop = require("../models/shop");
 
 // Multer setup
 const multerConf = {
@@ -114,6 +115,12 @@ async(req, res) => {
     // Assigning image properties
     item.image.data = fs.readFileSync(req.file.path);
     item.image.contentType = "image/png";
+   
+    // Add the item to shop's item array
+    const shop = await Shop.findById(item.shop);
+    shop.items.unshift(item);
+    console.log(shop.items)
+    await shop.save();
     
     try {    
         // Saving product to the Database
