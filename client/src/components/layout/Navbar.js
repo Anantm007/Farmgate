@@ -1,23 +1,24 @@
 import React from 'react'
 import { Link}  from "react-router-dom";
-  
+import Logo from "../../images/logo.png";
+
 const Navbar = () => {
     return (
-        <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <Link to ="/" class="navbar-brand">
-                <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2" />
-                <span class="text-uppercase font-weight-bold">Company</span>
+        <nav class="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
+            <div className="container">
+                <Link to ="/" className="navbar-brand">
+                <img src={Logo} width="200" height="75" alt="" className="d-inline-block align-middle mr-2" />
                 </Link>
 
-                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className="navbar-toggler"><span className="navbar-toggler-icon"></span></button>
 
-                <div id="navbarSupportedContent" class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="#" class="nav-link">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                <div id="navbarSupportedContent" className="collapse navbar-collapse">
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item active"><a href="#" className="nav-link">Home <span className="sr-only">(current)</span></a></li>
+                    <li className="nav-item"><a href="#" className="nav-link">Shop</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link">Login</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link">Signup</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link">Contact</a></li>
                 </ul>
                 </div>
             </div>

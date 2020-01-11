@@ -1,9 +1,11 @@
 import React, {Fragment} from 'react';
-
+import Logo from "../../images/logo.png";
+import Carousel from './Carousel';
 const Landing = () => {
     return (
         <Fragment>
-            <h1>Welcome to Farmgate</h1>
+            <Carousel />
+            <h1 style={{textAlign:'center', marginTop: '2rem'}}>OUR SHOPS</h1>
         </Fragment>
     )
 }
