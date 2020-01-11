@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Routes from './components/routing/Routes';
+import Footer from './components/layout/Footer';
 
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
@@ -20,7 +21,8 @@ const  App = () => {
           <Switch>
           <Route exact path='/' component={Landing} />
           <Route component={Routes} />
-          </Switch>      
+          </Switch>
+          <Footer />      
         </Fragment>
         </Router>
   );

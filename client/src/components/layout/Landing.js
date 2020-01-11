@@ -6,7 +6,7 @@ const Landing = () => {
     return (
         <Fragment>
             <Carousel />
-            <h1 style={{textAlign:'center', marginTop: '2rem'}}>OUR SHOPS</h1>
+            <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
             <ShopsCard />
         </Fragment>
     )
