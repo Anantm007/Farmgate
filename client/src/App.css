@@ -2,4 +2,22 @@
     background-color: #272727; 
 }
 
+.shop-container {
+    padding: 2rem;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .card {
+        margin-left: 0px;  
+        margin-bottom: 1rem;      
+    }
+}
+
+@media only screen  and (min-width : 1224px) {
+    .card {
+        margin-left: 4rem;
+        margin-right: 4rem;
+    }
+}
+
 
