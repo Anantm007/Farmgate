@@ -1,8 +1,10 @@
 import React, {Fragment} from 'react';
 import Logo from "../../images/logo.png";
 import Carousel from './Carousel';
-import AboutUs from './AboutUs';
 import ShopsCard from './ShopsCard'
+import AboutUs from './AboutUs';
+import ContactUs from './ContactUs';
+
 const Landing = () => {
     return (
         <Fragment>
@@ -10,6 +12,7 @@ const Landing = () => {
             <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
             <ShopsCard />
             <AboutUs />
+            <ContactUs />
         </Fragment>
     )
 }
