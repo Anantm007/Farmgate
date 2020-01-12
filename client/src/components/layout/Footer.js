@@ -17,7 +17,7 @@ const Footer = () => {
 		</div>
 	<div className="row">
 		<div className="col-md-12 copy">
-			<p className="text-center">&copy; Copyright 2020 - Farmgate |  All rights reserved.</p>
+			<p className="text-center">&copy; Copyright {new Date().getFullYear()} - Farmgate Market |  All rights reserved.</p>
 		</div>
 	</div>
 
