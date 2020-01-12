@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import Carousel1 from '../../images/carousel1.jpeg';
+import Carousel1 from '../../images/carousel1.jpg';
 import Carousel2 from '../../images/carousel2.jpg';
 import Carousel3 from '../../images/carousel3.jpg';
 
