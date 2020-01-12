@@ -1,13 +1,12 @@
 import React from 'react'
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
-import Alert from '../layout/Alert';
+import Register from '../user/Register';
 
 const Routes = () => {
     return (        
         <BrowserRouter>
-          <Alert />
             <Switch>        
-        
+                <Route exact path ='/register' component = {Register} />        
             </Switch>
         </BrowserRouter>
 
