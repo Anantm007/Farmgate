@@ -63,7 +63,7 @@ router.post('/',
     if (!errors.isEmpty()) {
       return res.status(400).json({ 
         success: false,
-        errors: errors.array() });
+        message: errors.array()[0].msg });
     }
 
     const { name, email, password, address, zipCode, phoneNumber  } = req.body;

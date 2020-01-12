@@ -24,17 +24,24 @@ const Register = () => {
     };
     
         const clickSubmit = (e) => {
-        e.preventDefault();
+         e.preventDefault();
+         console.log(password, repeatPassword)
+         if(password !== repeatPassword)
+          {
+            setValues({...values, error: "Passwords do not Match" });
+            return;
+          }  
         setValues({...values, error: false});
         signup({name, email, password, address, zipCode, phoneNumber})
         .then(data => {
-            if(data.sucess === false)
+            
+            if(data.success === false)
             {
                 setValues({...values, error: data.message, success: false})
             }
-            else
+            else if(data.success === true)
             {
-                setValues({...values, name: "", email: "", password: "", address: '', zipCode: undefined , phoneNumber: undefined , error: "", success: true});
+                setValues({...values, name: "", email: "", password: "", address: '', zipCode: '' , phoneNumber: '' , error: "", success: true});
             }
         })
 
