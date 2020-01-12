@@ -35,7 +35,8 @@ router.post('/',
     if (!errors.isEmpty()) {
       return res.status(400).json({ 
         success: false,
-        errors: errors.array() });
+        message: errors.array()[0].msg 
+      });
     }
 
     const { email, password } = req.body;
@@ -76,9 +77,6 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
   
-          // persist the token as 'usert' in cookie with expiry date
-          res.cookie('usert', token, {expire: new Date() + 360000})
-
           res.json({ 
             success: true,
             token });
@@ -100,7 +98,7 @@ router.post('/',
 router.get("/signout", auth, async(req, res) => {
 
   // Clear cookie from storage
-  res.clearCookie('usert')
+  res.clearCookie('jwt')
   res.json({
     success: true,
     message: "You have successfully logged out"

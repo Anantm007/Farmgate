@@ -18,7 +18,7 @@ export const signup = async user => {
 
 // Login User
 export const signin = async user => {
-    return fetch(`/api/user`, {
+    return fetch(`/api/users`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -68,6 +68,7 @@ export const isAuthenticated = () => {
 
     if(localStorage.getItem('userjwt'))
     {
+        console.log(localStorage.getItem('userjwt'))
         return JSON.parse(localStorage.getItem('userjwt'));
     } else {
         return false;

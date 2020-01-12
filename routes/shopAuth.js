@@ -113,9 +113,6 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
 
-          // persist the token as 'shopt' in cookie with expiry date
-          res.cookie('shopt', token, {expire: new Date() + 360000})
-          
           res.json({    // Send token back to the client 
             success: true,
             token 

@@ -1,7 +1,6 @@
-import React, {Fragment, useState} from 'react';
-import {Link} from 'react-router-dom';
-import {signup} from '../userAuth';
-import Logo from '../../images/logo.png'
+import React, {useState} from 'react';
+import {Link, Redirect} from 'react-router-dom';
+import {signup, authenticate, isAuthenticated} from '../userAuth';
 
 const Register = () => {
 
@@ -41,7 +40,9 @@ const Register = () => {
             }
             else if(data.success === true)
             {
-                setValues({...values, name: "", email: "", password: "", address: '', zipCode: '' , phoneNumber: '' , error: "", success: true});
+                authenticate(data, () => {
+                    setValues({...values, loading: false});
+                })
             }
         })
 
@@ -134,12 +135,21 @@ const Register = () => {
         )
     }
 
+    const redirectUser = () => {
+        if(isAuthenticated())
+        {
+            return <Redirect to="/user/dashboard" />
+        }
+    };
+
+
 
     return (
         <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
             {showError()}
             {showSuccess()}
             {signUpForm()}
+            {redirectUser()}
         </div>
     )
 };

@@ -75,9 +75,6 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
 
-       // persist the token as 'shopt' in cookie with expiry date
-       res.cookie('shopt', token, {expire: new Date() + 360000})
-
           res.json({ 
             success: true,
             token });
@@ -101,7 +98,7 @@ router.post('/',
 router.get("/signout", auth, async(req, res) => {
 
   // Clear cookie from storage
-  res.clearCookie('shopt')
+  res.clearCookie('jwt')
   res.json({
     success: true,
     msg: "You have successfully logged out"})
