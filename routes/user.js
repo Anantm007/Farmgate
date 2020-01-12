@@ -48,7 +48,8 @@ router.post('/',
           .status(400)
           .json({ 
             success: false,
-            errors: [{ msg: 'Invalid Credentials' }] });
+            message: 'Invalid Credentials' 
+          });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -58,7 +59,8 @@ router.post('/',
           .status(400)
           .json({ 
             success: false,
-            errors: [{ message: 'Invalid Credentials' }] });
+            message: 'Invalid Credentials' 
+          });
       }
 
       const payload = {

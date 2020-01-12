@@ -77,7 +77,8 @@ router.post('/',
           .status(400)
           .json({ 
             success: false,
-            errors: [{ message: 'User already registered!' }] });
+            message: 'User already registered!'
+          });
       }
 
       // New User

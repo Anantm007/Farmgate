@@ -77,7 +77,8 @@ router.post('/',
           .status(400)
           .json({ 
             success: false,
-            errors: [{ message: 'Shop already registered!' }] });
+            message: 'Shop already registered!' 
+          });
       }
 
       // New Shop
