@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import Logo from "../../images/logo.png";
 import Carousel from './Carousel';
 import ShopsCard from './ShopsCard'
 import AboutUs from './AboutUs';

@@ -38,36 +38,36 @@ const Login = () => {
     }
 
     const signUpForm = () => (
-        <div class="container">
+        <div className="container">
                     <br/><br/>  
                     
-                    <div class="card bg-light">
-                    <article class="card-body mx-auto" style={{maxWdith: "400px"}}>
-                        <h4 class="card-title mt-3 text-center">Login to your Account</h4>
-                        <p class="text-center">Login now to order fresh organic food</p>
+                    <div className="card bg-light">
+                    <article className="card-body mx-auto" style={{maxWdith: "400px"}}>
+                        <h4 className="card-title mt-3 text-center">Login to your Account</h4>
+                        <p className="text-center">Login now to order fresh organic food</p>
                         
                         <form>
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-envelope"></i> </span>
                             </div>
-                            <input onChange={handleChange('email')} type="email" value={email} class="form-control" placeholder="Your Email address" />
+                            <input onChange={handleChange('email')} type="email" value={email} className="form-control" placeholder="Your Email address" />
                         </div> 
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('password')} value={password} class="form-control" placeholder="Enter a Password" type="password" />
+                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter a Password" type="password" />
                         </div> 
                         
                         <br />
-                        <div class="form-group">
-                            <button onClick={clickSubmit} class="btn btn-primary btn-block"> Sign In</button>
+                        <div className="form-group">
+                            <button onClick={clickSubmit} className="btn btn-primary btn-block"> Sign In</button>
                         </div>  
                         <br /><br />     
-                        <p class="text-center">Don't Have an account? <a href="/user/register">Register</a> </p>                                                                 
+                        <p className="text-center">Don't Have an account? <a href="/user/register">Register</a> </p>                                                                 
                     </form>
                     <br /><br />
                     </article>

@@ -50,70 +50,70 @@ const Register = () => {
 
     const signUpForm = () => (
         
-                <div class="container">
+                <div className="container">
                     <br/><br/>  
                     
-                    <div class="card bg-light">
-                    <article class="card-body mx-auto" style={{maxWdith: "400px"}}>
-                        <h4 class="card-title mt-3 text-center">Create Account</h4>
-                        <p class="text-center">Get started with your free account</p>
+                    <div className="card bg-light">
+                    <article className="card-body mx-auto" style={{maxWdith: "400px"}}>
+                        <h4 className="card-title mt-3 text-center">Create Account</h4>
+                        <p className="text-center">Get started with your free account</p>
                         
                         <form>
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-user"></i> </span>
                             </div>
-                            <input onChange={handleChange('name')} type="text" value={name} class="form-control" placeholder="Full name" />
+                            <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Full name" />
                         </div>
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-envelope"></i> </span>
                             </div>
-                            <input onChange={handleChange('email')} type="email" value={email} class="form-control" placeholder="Your Email address" />
+                            <input onChange={handleChange('email')} type="email" value={email} className="form-control" placeholder="Your Email address" />
                         </div> 
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-phone"></i> </span>
                             </div>
-                            <input onChange={handleChange('phoneNumber')} type="Number" value={phoneNumber} class="form-control" placeholder="Your Phone Number" />
+                            <input onChange={handleChange('phoneNumber')} type="Number" value={phoneNumber} className="form-control" placeholder="Your Phone Number" />
                         </div> 
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('password')} value={password} class="form-control" placeholder="Enter a Password" type="password" />
+                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter a Password" type="password" />
                         </div> 
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('repeatPassword')} value={repeatPassword} class="form-control" placeholder="Confirm Password" type="password" />
+                            <input onChange={handleChange('repeatPassword')} value={repeatPassword} className="form-control" placeholder="Confirm Password" type="password" />
                         </div>
                         
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('address')} type="text" value={address} class="form-control" placeholder="Full address" />
+                            <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Full address" />
                         </div>
                          
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} class="form-control" placeholder="Your Zip Code" />
+                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Zip Code" />
                         </div>                              
                         
                         <br />
-                        <div class="form-group">
-                            <button onClick={clickSubmit} class="btn btn-primary btn-block"> Create Account  </button>
+                        <div className="form-group">
+                            <button onClick={clickSubmit} className="btn btn-primary btn-block"> Create Account  </button>
                         </div>       
-                        <p class="text-center">Have an account? <a href="/login">Log In</a> </p>                                                                 
+                        <p className="text-center">Have an account? <a href="/user/login">Log In</a> </p>                                                                 
                     </form>
                     </article>
                     </div> 
