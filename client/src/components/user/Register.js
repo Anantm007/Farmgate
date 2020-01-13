@@ -23,6 +23,8 @@ const Register = () => {
     };
     
         const clickSubmit = (e) => {
+        const captcha = document.querySelector('#g-recaptcha-response').value;
+
          e.preventDefault();
          console.log(password, repeatPassword)
          if(password !== repeatPassword)
@@ -31,7 +33,7 @@ const Register = () => {
             return;
           }  
         setValues({...values, error: false});
-        signup({name, email, password, address, zipCode, phoneNumber})
+        signup({name, email, password, address, zipCode, phoneNumber, captcha})
         .then(data => {
             
             if(data.success === false)
@@ -111,9 +113,12 @@ const Register = () => {
                         </div>                              
                         
                         <br />
+                        <div className="g-recaptcha" onChange={handleChange('g-recaptcha-response')} data-sitekey="6LeJ284UAAAAAHLyxMvzoMiOLWIpEvC3CjJxc25Y"></div>
+                        <br />
                         <div className="form-group">
                             <button onClick={clickSubmit} className="btn btn-primary btn-block"> Create Account  </button>
-                        </div>       
+                        </div>
+                        {showError()}       
                         <p className="text-center">Have an account? <a href="/user/login">Log In</a> </p>                                                                 
                     </form>
                     </article>
@@ -147,7 +152,6 @@ const Register = () => {
 
     return (
         <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
-            {showError()}
             {showSuccess()}
             {signUpForm()}
             {redirectUser()}

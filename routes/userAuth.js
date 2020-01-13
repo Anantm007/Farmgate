@@ -4,6 +4,9 @@ const router = express.Router();
 const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+const { stringify } = require('querystring');
+
 require('dotenv').config()
 
 // Express validation
@@ -66,7 +69,30 @@ router.post('/',
         message: errors.array()[0].msg });
     }
 
-    const { name, email, password, address, zipCode, phoneNumber  } = req.body;
+    const { name, email, password, address, zipCode, phoneNumber, captcha  } = req.body;
+    
+    if (!captcha)
+    {
+        return res.json({success: false, message: "Please fill out the captcha"});
+    }
+
+    // Verify URL
+    const query = stringify({
+      secret: process.env.captchaSecretKey,
+      response: captcha,
+      remoteip: req.connection.remoteAddress
+    });
+
+    const verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
+
+    // Make a request to verifyURL
+    const body = await fetch(verifyURL).then(res => res.json());
+    
+    // If not successful
+    if (body.success !== undefined && !body.success)
+    {
+        return res.json({success: false, message: "Sorry, there was an error, please try again later"});
+    }
 
     try {
       let user = await User.findOne({ email });
