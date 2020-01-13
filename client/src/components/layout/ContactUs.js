@@ -80,10 +80,9 @@ const ContactUs = () => {
                                         <textarea className="form-control" onChange={handleChange('description')} value={description} rows="6" required></textarea>
                                     </div>
                                     <div className="mx-auto">
-                                    <button onClick={clickSubmit} className="btn btn-primary text-right">Submit</button>
-                                    
-            {showError()}
-            {showSuccess()}</div>
+                                    <button onClick={clickSubmit} className="btn btn-primary text-right">Submit</button>                        
+                                    {showError()}
+                                    {showSuccess()}</div>
                                 </form>
                             </div>
                         </div>

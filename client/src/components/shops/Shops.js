@@ -1,86 +1,56 @@
-import React, {Fragment} from 'react'
-import  {Link} from 'react-router-dom';
-
+import React, {Fragment, useState, useEffect} from 'react'
+import {getShops} from '../shops/apiShops';
+import ShopsDetailCard from './ShopsDetailCard';
 const Shops = () => {
-    const id=100000000;
-    return (
-        <Fragment>
-            <div className="row container-fluid">
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="image">
-                    <img src="http://loremflickr.com/320/150?random=4" />
-                    </div>
-                    <div class="card-inner">
-                    <div class="header">
-                        <h2>Shop1</h2>
-                        <h3>Address</h3>
-                    </div>
-                    <div class="content">
-                    <p>Content area</p>
-                    <button className="btn btn-warning"><Link to ={`/shops/${id}`} >Order Now</Link></button>
-                    </div>
-                    </div>
-                </div>
-            </div>
+    const [shops, setShops] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true);
 
-            <div class="col-sm-4">
-            <div class="card">
-                <div class="image">
-                <img src="http://loremflickr.com/320/150?random=5" />
-                </div>
-                <div class="card-inner">
-                <div class="header">
-                    <h2>Shop2</h2>
-                    <h3>Address</h3>
-                </div>
-                <div class="content">
-                <p>Content area</p>
-                <button className="btn btn-warning"><Link to ={`/shops/${id}`} >Order Now</Link></button>
-                </div>
-                </div>
-            </div>
-            </div>
+    const loadShops = () => {
+        getShops().then(data => {
+            if(data.success === false)
+            {
+                setError(data.message);
+                console.log(error);
+                setLoading(false);
+            }
 
-            <div class="col-sm-4">
-            <div class="card">
-                <div class="image">
-                <img src="http://loremflickr.com/320/150?random=6" />
-                </div>
-                <div class="card-inner">
-                <div class="header">
-                    <h2>Shop 3</h2>
-                    <h3>Address</h3>
-                </div>
-                <div class="content">
-                <p>Content area</p>
-                <button className="btn btn-warning"><Link to ={`/shops/${id}`} >Order Now</Link></button>
-                </div>
-                </div>
-            </div>
-            </div>
-            
-            <div class="col-sm-4">
-            <div class="card">
-                <div class="image">
-                <img src="http://loremflickr.com/320/150?random=2" />
-                </div>
-                <div class="card-inner">
-                <div class="header">
-                    <h2>Shop 4</h2>
-                    <h3>Address</h3>
-                </div>
-                <div class="content">
-                <p>Content area</p>
-                <button className="btn btn-warning"><Link to ={`/shops/${id}`} >Order Now</Link></button>
-                </div>
-                </div>
-            </div>
+            else
+            {
+                setShops(data.data);
+                setLoading(false);
+            }
+        })
+    }
 
-            </div>
-        </div>
-</Fragment>
+    const showLoading = () => (
+        loading && (<div className="alert alert-success">
+            <h2>Loading...</h2>
+        </div>)
     )
-}
 
+    useEffect(() => {
+        loadShops()
+        //eslint-disable-next-line
+    }, [])
+
+
+    return (
+        <Fragment>            
+            <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
+            
+            {showLoading()}
+            
+            <div className="row shop-container container-fluid">                
+                {shops.map((shop, i) =>(
+                    <div key={i} className="col-sm-4">    
+                        <ShopsDetailCard shop={shop} />      
+                    </div>
+                ))}
+            </div>
+              
+        </Fragment>
+    )}
+            
+            
 export default Shops
