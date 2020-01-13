@@ -109,24 +109,22 @@ router.get("/signout", auth, async(req, res) => {
 // @desc    List All shops 
 // @access  Public 
 router.get('/', async(req, res) => {
-  await Shop.find({}, (err, shops) => {
-    if(err) {
-      return res.json({
-        success: false,
-        message: err
-      }) 
-    }
+  const shops = await Shop.find().select('-image');
 
-    else
-    {
-      return res.json({
-        success: true,
-        count: shops.length,
-        data: shops
-      });
-    }
-  })
-})
+  if(!shops)
+  {
+    return res.json({
+      success: false,
+      count: 0
+    })
+  }
+  
+  return res.json({
+      success: true,
+      count: shops.length,
+      data: shops
+  });
+});
 
 
 // @route   GET /api/shops/:id
@@ -263,6 +261,36 @@ router.get("/:id/items", async(req, res) => {
   })
   
 });
+
+
+// @route   GET /api/shops/photo/:id 
+// @desc    Display image using shop id
+// @access  Public 
+router.get('/photo/:id', async(req, res) => {
+
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+    {
+        return res.json({
+            success: false,
+            message: "Item Not Found"
+          });
+    }
+
+    const result = await Shop.findById(req.params.id); 
+
+    if (!result) 
+    {
+        res.json({
+            success: false,
+            message: "Image not found"
+        });
+    }   
+
+    res.contentType('image/jpeg');
+    res.send(result.image.data);     
+});
+  
+
 
 
 

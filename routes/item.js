@@ -76,7 +76,7 @@ auth,
 multer(multerConf).single("image"), 
 async(req, res) => {
     
-    if(req.file.size > 1000000)
+    if(!req.file || req.file.size > 1000000)
     {
         return res.json({
             success: false,

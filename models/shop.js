@@ -37,6 +37,16 @@ const ShopSchema = new mongoose.Schema({
         required: [true, 'Please add a phone number'],
     },
 
+    description: {
+        type: String,
+        required: true
+    },
+
+    image: {
+        data: Buffer,
+        contentType: String
+    },
+
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'

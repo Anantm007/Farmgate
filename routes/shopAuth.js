@@ -4,10 +4,10 @@ const router = express.Router();
 const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config()
 
-// Express validation
-const { check, validationResult } = require('express-validator');
+require('dotenv').config()
+var multer = require('multer');
+const fs = require("fs");
 
 // Models
 const Shop = require('../models/shop');
@@ -26,6 +26,55 @@ let transporter = nodemailer.createTransport({
         rejectUnauthorized : false
     }});
 
+    // Multer setup
+const multerConf = {
+  storage: multer.diskStorage({
+    destination: function(req, file, next)
+    {
+      next(null,"./public/images");
+    },
+
+    filename: function(req, file, next)
+    {
+      const ext = file.mimetype.split("/")[1];
+      next(null, file.fieldname + '-' + Date.now()+ "." + ext);
+    }
+  }),
+
+  fileFilter: function(req, file, next)
+  {
+    if(!file)
+    {
+      next();
+    }
+
+    const image = file.mimetype.startsWith("image/");
+
+    if(image)
+    {
+      next(null, true);
+    }
+    else
+    {
+      next({message: "File type not supported"}, false);
+    }
+  }
+};
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/images')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+var upload = multer({
+    storage: storage,
+    limits: {fileSize: 10}
+  });
+
+
 
 
 /*                                                  ROUTES                                                  */
@@ -34,39 +83,37 @@ let transporter = nodemailer.createTransport({
 // @route   POST /api/shop/auth 
 // @desc    Register a new shop
 // @access  Public 
-router.post('/',
-  [ // Validation
-    check('name', 'Name is required')
-    .not()
-    .isEmpty(),
-
-    check('email', 'Please include a valid email').isEmail(),
-
-    check('password', 'Please enter a password with 6 or more characters')
-    .isLength({ min: 6 }),
-  
-    check('address', 'Adress is required')
-    .not()
-    .isEmpty(),
-    
-    check('zipCode', 'Zipcode is required')
-    .not()
-    .isEmpty(),
-
-    check('phoneNumber', 'Phone Number is required')
-    .not()
-    .isEmpty(),   
-  ],
-
+router.post('/',  multer(multerConf).single("image"), 
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ 
-        success: false,
-        errors: errors.array() });
+
+    if(!req.file || req.file.size > 1000000)
+    {
+        return res.json({
+            success: false,
+            message: "Please upload a file with size less than 1 MB"
+        })
     }
 
-    const { name, email, password, address, zipCode, phoneNumber  } = req.body;
+    // Checking for empty fields
+    for (var keys in req.body) {
+      if (req.body[keys] === undefined || req.body[keys] === "") 
+        {
+          var incomplete = keys;
+          break;
+        }
+    }
+
+    // Return error if there are some undefined values
+    if (incomplete != undefined) {
+      return res.json({
+        success: false,
+        message: "Please fill " + incomplete.toUpperCase()
+      });
+    }
+    
+
+
+    const { name, email, password, address, zipCode, phoneNumber, description  } = req.body;
 
     try {
       let shop = await Shop.findOne({ email });
@@ -88,8 +135,15 @@ router.post('/',
         password,
         address,
         zipCode,
-        phoneNumber        
+        phoneNumber,
+        image: req.file.image,
+        description        
       });
+
+      // Assigning image properties
+      shop.image.data = fs.readFileSync(req.file.path);
+      shop.image.contentType = "image/png";
+
 
       // Encrypting the password
       const salt = await bcrypt.genSalt(10);
