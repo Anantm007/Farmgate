@@ -9,7 +9,7 @@ const ShopsCard = ({shop}) => {
               <div className="card-block">
                 <h4 className="card-title">{shop.name}</h4>
                 <p className="card-text">{shop.description.substring(0,100)}</p>
-                <a href="#" className="btn btn-primary">ORDER NOW</a>
+                <a href={`/shops/${shop._id}`} className="btn btn-primary">ORDER NOW</a>
               </div>
             </div>
           </Fragment>

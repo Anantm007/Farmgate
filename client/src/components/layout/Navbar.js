@@ -26,9 +26,10 @@ const Navbar = ({history}) => {
                 <div id="navbarSupportedContent" className="collapse navbar-collapse">
                 <ul className="navbar-nav ml-auto">
                 
+                <li className="nav-item active"><a href="/" className="nav-link">HOME <span className="sr-only"></span></a></li>
+                        
                 {!isAuthenticated() && (
                     <Fragment>         
-                        <li className="nav-item"><a href="/" className="nav-link">HOME <span className="sr-only"></span></a></li>
                         <li className="nav-item"><a href="/shops" className="nav-link">SHOPS</a></li>
                         <li className="nav-item"><a href="/user/login" className="nav-link">LOGIN</a></li>
                         <li className="nav-item"><a href="/user/register" className="nav-link">REGISTER</a></li>
