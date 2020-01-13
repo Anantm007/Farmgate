@@ -5,8 +5,8 @@ import {signin, authenticate, isAuthenticated} from '../userAuth';
 const Login = () => {
 
     const [values, setValues] = useState({
-        email: '',
-        password: '',
+        email: 'anant.mathur007@gmail.com',
+        password: 'abcd1234',
         error: '',
         loading: false,
     });
@@ -29,6 +29,7 @@ const Login = () => {
             }
             else
             {
+                window.location.reload(false); // To reload the page for navbar updation
                 authenticate(data, () => {
                     setValues({...values, loading: false});
                 })
@@ -89,9 +90,15 @@ const Login = () => {
             </div>);
 
     const redirectUser = () => {
-            if(isAuthenticated())
+            if(isAuthenticated() && isAuthenticated().user.Role === 0)
             {
                 return <Redirect to="/user/dashboard" />
+            }
+            
+            if(isAuthenticated() && isAuthenticated().user.Role === 1)
+            {
+
+                return <Redirect to="/admin/dashboard" />
             }
         };
 

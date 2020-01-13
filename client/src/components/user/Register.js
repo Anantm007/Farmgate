@@ -40,6 +40,7 @@ const Register = () => {
             }
             else if(data.success === true)
             {
+                window.location.reload(false); // To reload the page for navbar updation
                 authenticate(data, () => {
                     setValues({...values, loading: false});
                 })

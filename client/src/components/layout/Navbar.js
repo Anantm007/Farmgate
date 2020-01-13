@@ -1,8 +1,19 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import { Link}  from "react-router-dom";
 import Logo from "../../images/logo.png";
+import {signout, isAuthenticated} from '../userAuth';
 
-const Navbar = () => {
+const isActive = (history, path) => {
+    if(history.location.pathname === path)
+    {
+        return {color: '#ff9900'}
+    }
+
+    else
+    return {color: '#ffffff'}
+}
+
+const Navbar = ({history}) => {
     return (
         <nav class="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
             <div className="container">
@@ -14,10 +25,46 @@ const Navbar = () => {
 
                 <div id="navbarSupportedContent" className="collapse navbar-collapse">
                 <ul className="navbar-nav ml-auto">
-                    <li className="nav-item"><a href="/" className="nav-link">Home <span className="sr-only"></span></a></li>
-                    <li className="nav-item"><a href="/shops" className="nav-link">Shop</a></li>
-                    <li className="nav-item"><a href="/user/login" className="nav-link">Login</a></li>
-                    <li className="nav-item"><a href="/user/register" className="nav-link">Signup</a></li>
+                
+                {!isAuthenticated() && (
+                    <Fragment>         
+                        <li className="nav-item"><a href="/" className="nav-link">HOME <span className="sr-only"></span></a></li>
+                        <li className="nav-item"><a href="/shops" className="nav-link">SHOPS</a></li>
+                        <li className="nav-item"><a href="/user/login" className="nav-link">LOGIN</a></li>
+                        <li className="nav-item"><a href="/user/register" className="nav-link">REGISTER</a></li>
+                    </Fragment>
+                )}
+
+                {isAuthenticated() && (
+                    <Fragment>
+                        {isAuthenticated() && isAuthenticated().user.Role === 0 && (
+                            
+                            <li className="nav-item active"><a href="/user/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
+                        )}
+
+                        {isAuthenticated() && isAuthenticated().user.Role === 1 && (
+                            
+                            <li className="nav-item active"><a href="/admin/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
+                        )}
+
+                        <li className="nav-item active"><a href="/shops" className="nav-link">SHOPS</a></li>
+                        
+                        <li className="nav-item active">
+                            <a href="/cart" className="nav-link">
+                            CART <sup><small className="cart-badge active">5</small></sup>
+                            </a>
+                        </li>
+
+                        <li className="nav-item active">
+                            <a href="/" onClick={() => signout(() => {
+                        history.push('/') })} className="nav-link">
+                                LOGOUT
+                            </a>
+                        </li>
+
+                    </Fragment>
+                )}
+
                 </ul>
                 </div>
             </div>

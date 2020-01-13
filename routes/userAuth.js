@@ -112,11 +112,16 @@ router.post('/',
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-
-          res.json({    // Send token back to the client 
+          
+          const Id = user._id;
+          const Email = user.email
+          const Role = user.role;
+          
+          res.json({ 
             success: true,
-            token 
-          });  
+            token,
+            user: {Id, Email, Role} 
+          });
           
           // Send welcome email
           let HelperOptions ={

@@ -49,26 +49,18 @@ export const signout = (next) => {
     {
         localStorage.removeItem('userjwt');
         next();
-        return fetch('/api/signout', {
-            method: "GET"
-        })
-        .then(response => {
-            console.log("signout", response);
-        })
-        .catch(err => console.log(err));
     }
 };
 
 // Return if user is authenticated or not
 export const isAuthenticated = () => {
-    if(typeof window == 'undefined')
+    if(typeof window === 'undefined')
     {
         return false;
     }
 
     if(localStorage.getItem('userjwt'))
     {
-        console.log(localStorage.getItem('userjwt'))
         return JSON.parse(localStorage.getItem('userjwt'));
     } else {
         return false;
