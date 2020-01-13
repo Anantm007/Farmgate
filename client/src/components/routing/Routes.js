@@ -4,6 +4,8 @@ import Register from '../user/Register';
 import Login from '../user/Login';
 import Shops from '../shops/Shops';
 import NotFound from '../layout/NotFound';
+import PrivateRoute from '../userAuth/PrivateRoute';
+import AdminRoute from '../userAuth/AdminRoute';
 
 const Routes = () => {
     return (        
