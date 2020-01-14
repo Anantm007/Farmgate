@@ -19,6 +19,7 @@
         margin-right: 4rem;
     }
 }
+.modal-footer {   border-top: 0px; }
 
 
 /*FOOTER*/
@@ -28,7 +29,6 @@ footer {
     background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
     background: linear-gradient(59deg, #3A6073, #16222A);
     color: white;
-    margin-top: 10px;
   }
   
   footer a {
@@ -54,10 +54,7 @@ footer {
   }
   
   
-  /*SOCİAL İCONS*/
-  
-  /* footer social icons */
-  
+  /*SOCİAL İCONS*/  
   ul.social-network {
     list-style: none;
     display: inline;
@@ -73,24 +70,6 @@ footer {
   
   /* footer social icons */
   
-  .social-network a.icoFacebook:hover {
-    background-color: #3B5998;
-  }
-  
-  .social-network a.icoLinkedin:hover {
-    background-color: #007bb7;
-  }
-  
-  .social-network a.icoFacebook:hover i,
-  .social-network a.icoLinkedin:hover i {
-    color: #fff;
-  }
-  
-  .social-network a.socialIcon:hover,
-  .socialHoverClass {
-    color: #44BCDD;
-  }
-  
   .social-circle li a {
     display: inline-block;
     position: relative;
@@ -104,11 +83,6 @@ footer {
     font-size: 15px;
   }
   
-  .social-circle li i {
-    margin: 0;
-    line-height: 30px;
-    text-align: center;
-  }
   
   .social-circle li a:hover i,
   .triggeredHover {
@@ -123,21 +97,41 @@ footer {
     transition: all 0.2s;
   }
   
-  .social-circle i {
-    color: #595959;
-    -webkit-transition: all 0.8s;
-    -moz-transition: all 0.8s;
-    -o-transition: all 0.8s;
-    -ms-transition: all 0.8s;
-    transition: all 0.8s;
+  .myfa {
+    padding: 8px;
+    font-size: 15px;
+    width: 45px;
+    text-align: center;
+    text-decoration: none;
+    
+    margin-right: 10px;
+    border-radius: 100%;
+    }
+  
+  .fa:hover {
+      opacity: 0.7;
   }
   
-  .social-network a {
-    background-color: #F9F9F9;
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
   }
   
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+  }
 
-
+  .fa-linkedin {
+    background: #007bb5;
+    color: white;
+  }
+  
+  .fa-instagram {
+    background: #125688;
+    color: white;
+  }
+  
 
   
 .card {

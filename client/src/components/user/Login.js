@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {signin, authenticate, isAuthenticated} from '../userAuth';
-
+import ForgotPass from './ForgotPass';
+ 
 const Login = () => {
 
     const [values, setValues] = useState({
@@ -67,6 +68,17 @@ const Login = () => {
                         <div className="form-group">
                             <button onClick={clickSubmit} className="btn btn-primary btn-block"> Sign In</button>
                         </div>  
+                        <br />
+
+                    {/* Forgot Password */}                    
+                        <div class="container">
+                        <a href="#" data-target="#pwdModal" data-toggle="modal">Forgot my password</a>
+                        </div>
+
+                        <ForgotPass id="pwdModal" />
+                        
+                    {/* Forgot Password end */}
+
                         <br /><br />     
                         <p className="text-center">Don't Have an account? <a href="/user/register">Register</a> </p>                                                                 
                     </form>

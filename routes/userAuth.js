@@ -176,7 +176,7 @@ router.post('/',
 );
   
 // @route   POST /api/user/auth/forgot 
-// @desc    Forgot Password
+// @desc    Forgot Password (send token)
 // @access  Only for registered (user cannot be auth if he forgot his password)
 router.post("/forgot", async(req, res) => {
   const user = await User.findOne({email: req.body.email});
