@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Middleware for protecting routes
 const auth = require('../middleware/shopAuth');
+const userAuth = require("../middleware/userAuth");
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -130,8 +131,9 @@ router.get('/', async(req, res) => {
 // @route   GET /api/shops/:id
 // @desc    Find a shop by id 
 // @access  Private (using middleware) 
-router.get('/:id', auth, async(req, res) => {
+router.get('/:id', userAuth, async(req, res) => {
   
+  console.log("hello")
   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
   {
       return res.json({
@@ -141,7 +143,7 @@ router.get('/:id', auth, async(req, res) => {
   }
 
       // Check whether the shop is authenticated or not
-      if( (JSON.stringify(req.params.id) !== JSON.stringify(req.shop.id) ) || !req.shop)
+      if( (!JSON.stringify(req.params.id) ))
       {
         return res.json({
           success: false,
@@ -149,7 +151,7 @@ router.get('/:id', auth, async(req, res) => {
         })
       }
 
-    await Shop.findById(req.shop.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
+    await Shop.findById(req.params.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
       
       if(shop)
       {
