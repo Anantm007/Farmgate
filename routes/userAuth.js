@@ -265,7 +265,7 @@ router.put("/resetPassword/:resetToken", async(req, res) => {
   {
     return res.json({
       success: false,
-      message: "Please enter a valid password"
+      message: "Please enter a valid password with 6 or more characters"
     })
   }
 

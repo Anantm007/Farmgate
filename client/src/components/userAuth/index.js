@@ -83,5 +83,23 @@ export const forgot = async email => {
     .catch(err => {
         console.log(err);
     })
+}
 
+// Update password
+export const updatePassword = async (password, token) => {
+    console.log(token)
+    return fetch(`/api/user/auth/resetPassword/${token}`, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(password)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }
