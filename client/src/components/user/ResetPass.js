@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 
-function ResetPass() {
+const ResetPass = () => {
     return (
-        <Fragment>
-            <h1>Reset password here using token</h1>
-        </Fragment>
+        <div>
+           <h1>Reset password here</h1>
+        </div>
     )
 }
 

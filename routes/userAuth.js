@@ -203,7 +203,7 @@ router.post("/forgot", async(req, res) => {
   
 
   // Send reset password email
-  const resetUrl = `${req.protocol}://${req.get('host')}/api/user/auth/resetPassword/${resetToken}`;
+  const resetUrl = `${req.protocol}://${req.get('host')}/user/reset/password/${resetToken}`;
 
   let HelperOptions ={
     from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
@@ -223,6 +223,36 @@ router.post("/forgot", async(req, res) => {
    });
 
 });
+
+
+
+// @route   POST /api/user/auth/validToken 
+// @desc    Check whether token is valid or not
+// @access  Only for registered (user cannot be auth if he forgot his password)
+router.post("/validToken", async(req, res) => {
+  
+  console.log(req.body.token);
+
+  const resetPasswordToken = crypto.createHash('sha256').update(req.body.token).digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() }
+  });
+
+  if(!user)
+  {
+    return res.json({
+      success: false,
+      message: "Invalid Token"
+    })
+  }
+    
+  return res.json({ 
+      success: true 
+  });
+})
+
 
 
 // @route   PUT /api/user/auth/resetPassword/:resetToken 

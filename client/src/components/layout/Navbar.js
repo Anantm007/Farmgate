@@ -3,19 +3,10 @@ import { Link}  from "react-router-dom";
 import Logo from "../../images/logo.png";
 import {signout, isAuthenticated} from '../userAuth';
 
-const isActive = (history, path) => {
-    if(history.location.pathname === path)
-    {
-        return {color: '#ff9900'}
-    }
-
-    else
-    return {color: '#ffffff'}
-}
 
 const Navbar = ({history}) => {
     return (
-        <nav class="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
+        <nav className="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
             <div className="container">
                 <Link to ="/" className="navbar-brand">
                 <img src={Logo} width="200" height="30" alt="" className="d-inline-block align-middle mr-2" />

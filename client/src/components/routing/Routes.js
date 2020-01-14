@@ -16,7 +16,7 @@ const Routes = () => {
                 <Route exact path ='/user/register' component = {Register} />
                 <Route exact path ='/user/login' component = {Login} />     
                 <Route exact path="/shops" component = {Shops} />
-                <Route exact path="/user/reset/password/:id" component = {ResetPass} />
+                <Route exact path="/user/reset/password/:token" component = {ResetPass} />
                 <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
                 <Route component={NotFound} />
    
