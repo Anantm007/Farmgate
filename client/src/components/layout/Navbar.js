@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import { Link}  from "react-router-dom";
 import Logo from "../../images/logo.png";
 import {signout, isAuthenticated} from '../userAuth';
-
+import {shopSignout, shopIsAuthenticated} from '../shopAuth';
 
 const Navbar = ({history}) => {
     return (
@@ -18,8 +18,9 @@ const Navbar = ({history}) => {
                 <ul className="navbar-nav ml-auto">
                 
                 <li className="nav-item active"><a href="/" className="nav-link">HOME <span className="sr-only"></span></a></li>
-                        
-                {!isAuthenticated() && (
+                
+                {/*                                           GUEST LINKS                                        */}
+                {!isAuthenticated() && !shopIsAuthenticated() && (
                     <Fragment>         
                         <li className="nav-item"><a href="/shops" className="nav-link">SHOPS</a></li>
                         <li className="nav-item"><a href="/user/login" className="nav-link">LOGIN</a></li>
@@ -27,6 +28,8 @@ const Navbar = ({history}) => {
                     </Fragment>
                 )}
 
+
+                {/*                                           USER LINKS                                        */}
                 {isAuthenticated() && (
                     <Fragment>
                         {isAuthenticated() && isAuthenticated().user.Role === 0 && (
@@ -49,6 +52,24 @@ const Navbar = ({history}) => {
 
                         <li className="nav-item active">
                             <a href="/" onClick={() => signout(() => {
+                        history.push('/') })} className="nav-link">
+                                LOGOUT
+                            </a>
+                        </li>
+
+                    </Fragment>
+                )}
+
+
+                {/*                                           SHOP LINKS                                        */}
+                {shopIsAuthenticated() && (
+                    <Fragment>    
+                        <li className="nav-item active"><a href="/shop/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
+                        <li className="nav-item active"><a href="/shops/my/items" className="nav-link">MANAGE ITEMS</a></li>
+                        <li className="nav-item active"><a href="/shops/my/orders" className="nav-link">MANAGE ORDERS</a></li>
+
+                        <li className="nav-item active">
+                            <a href="/" onClick={() => shopSignout(() => {
                         history.push('/') })} className="nav-link">
                                 LOGOUT
                             </a>

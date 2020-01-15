@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import Carousel from './Carousel';
 import ShopsCard from './ShopsCard'
 import AboutUs from './AboutUs';
@@ -44,10 +45,18 @@ const Landing = () => {
 
     return (
         <Fragment>
+            
+          <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
+              <strong>ARE YOU A SHOP OWNER / FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
+              <button type="button" className="btn close" 
+                  data-dismiss="alert" aria-label="Close">           
+                  <span aria-hidden="true">×</span> 
+              </button> 
+          </div> 
+
             <Carousel />
             
             <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
-            
             {showLoading()}
             <div className="row">                
                 {shops.map((shop, i) =>(

@@ -83,16 +83,10 @@ var upload = multer({
 // @route   POST /api/shop/auth 
 // @desc    Register a new shop
 // @access  Public 
-router.post('/',  multer(multerConf).single("image"), 
+router.post('/', 
   async (req, res) => {
 
-    if(!req.file || req.file.size > 1000000)
-    {
-        return res.json({
-            success: false,
-            message: "Please upload a file with size less than 1 MB"
-        })
-    }
+    const { name, email, password, address, zipCode, phoneNumber, description  } = req.body;
 
     // Checking for empty fields
     for (var keys in req.body) {
@@ -111,10 +105,6 @@ router.post('/',  multer(multerConf).single("image"),
       });
     }
     
-
-
-    const { name, email, password, address, zipCode, phoneNumber, description  } = req.body;
-
     try {
       let shop = await Shop.findOne({ email });
 
@@ -136,14 +126,8 @@ router.post('/',  multer(multerConf).single("image"),
         address,
         zipCode,
         phoneNumber,
-        image: req.file.image,
         description        
       });
-
-      // Assigning image properties
-      shop.image.data = fs.readFileSync(req.file.path);
-      shop.image.contentType = "image/png";
-
 
       // Encrypting the password
       const salt = await bcrypt.genSalt(10);
