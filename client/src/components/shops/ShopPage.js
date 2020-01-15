@@ -42,34 +42,34 @@ const ShopPage = (props) => {
         <Fragment>
                       {showLoading()}
 
-        <div class="container">
+        <div className="container">
 
-        <div class="row">
+        <div className="row">
     
-          <div class="col-lg-4">
+          <div className="col-lg-4">
     
-            <h1 class="my-4">{shop.name}</h1>
+            <h1 className="my-4">{shop.name}</h1>
             <div>
-              Email: <a href="#" class="">{shop.email}</a> <br/>
-              Contact No. <a href="#" class="">{shop.phoneNumber}</a><br/><br />
+              Email: <a href={`mailto:${shop.email}`}>{shop.email}</a> <br/>
+              Contact No. <a href="#">{shop.phoneNumber}</a><br/><br />
               Address: {shop.address}<br/><br />
               About: {shop.description}<br/>
             </div>
     
           </div>
     
-          <div class="col-lg-8">
+          <div className="col-lg-8">
     
-            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-              <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active">
-                  <img class="d-block img-fluid" src={`/api/shops/photo/${shop._id}`} />
+            <div id="carouselExampleIndicators" className="carousel slide my-4" data-ride="carousel">
+              <div className="carousel-inner" role="listbox">
+                <div className="carousel-item active">
+                  <img className="d-block img-fluid" src={`/api/shops/photo/${shop._id}`} />
                 </div>
                 </div>
               
             </div>
     
-            <div class="row">
+            <div className="row">
     
               ITEM 1 -  description - price - quality - add to cart<br/>
               ITEM 2 -  description - price - quality - add to cart <br/>

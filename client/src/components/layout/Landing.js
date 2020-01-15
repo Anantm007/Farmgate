@@ -49,9 +49,9 @@ const Landing = () => {
             <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
             
             {showLoading()}
-            <div className="row shop-container container-fluid">                
+            <div className="row">                
                 {shops.map((shop, i) =>(
-                    <div key={i} className="col-sm-3">    
+                    <div key={i} className="col-xs-12 col-sm-6 col-md-4">    
                         <ShopsCard shop={shop} />      
                     </div>
                 ))}

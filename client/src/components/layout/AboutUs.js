@@ -13,7 +13,8 @@ const AboutUs = () => {
                 <div className="row h-300 align-items-center py-5">
                 <div className="col-lg-6">
                     <h1 className="display-4">About Us</h1>
-                    <p className="lead text-muted mb-0">We are a food delivery service based in Adelaide delivering fresh and quality organic food from various shops.</p>
+                    <p className="lead text-muted mb-0">Trading as Farmgate Ag, we are an IT company connecting farmers with consumers by delivering a Point Of Sale and solution package to local farmers, in order to take produce from the farm gate to the consumer door step.</p><br/>
+                    <p className="lead text-muted mb-0">In this age of decentralisation, our aim is to deliver high quality produce, that is as fresh as practically possible to the consumer, that is marketed at a competitive price point, and service driven for the consumer.</p>
                 </div>
                 <div className="col-lg-6 d-none d-lg-block"><img src={About2} alt="img" className="img-fluid" /></div>
                 </div>
@@ -23,7 +24,7 @@ const AboutUs = () => {
             <div className="bg-white py-5">
             <div className="container py-5">
                 <div className="row align-items-center mb-5">
-                <div className="col-lg-6 order-2 order-lg-1"><i className="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                <div className="col-lg-6 order-2 order-lg-1">
                     <h2 className="font-weight-light">Chemical Free food</h2>
                     <p className="font-italic text-muted mb-4">If you’re worried about the chemicals you consume on a daily basis and are on the hunt for nice organic stores in Adelaide, we are here for you.</p>
                 </div>

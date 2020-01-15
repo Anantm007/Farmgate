@@ -55,23 +55,23 @@ const ForgotPass = () => {
 
 
     return (
-        <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="text-center">Forgot Your Password?</h1>
+        <div id="pwdModal" className="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="text-center">Forgot Your Password?</h1>
                             </div>
-                            <div class="modal-body">
-                                <div class="col-md-12">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <div class="text-center">
+                            <div className="modal-body">
+                                <div className="col-md-12">
+                                        <div className="panel panel-default">
+                                            <div className="panel-body">
+                                                <div className="text-center">
                                                 
                                                 <p>If you have forgotten your password you can reset it here.</p>
-                                                    <div class="panel-body">
+                                                    <div className="panel-body">
                                                         <form>
-                                                            <div class="form-group">
-                                                                <input class="form-control input-lg" placeholder="E-mail Address" onChange={handleChange('email')} type="email" value={email} />
+                                                            <div className="form-group">
+                                                                <input className="form-control input-lg" placeholder="E-mail Address" onChange={handleChange('email')} type="email" value={email} />
                                                             </div>
                                                             <button onClick={clickSubmit} className="btn btn-lg btn-primary btn-block">Submit</button>  
                                                             <br />
@@ -85,8 +85,8 @@ const ForgotPass = () => {
                                         </div>
                                     </div>
                             </div>
-                            <div class="modal-footer">
-                                <div class="col-md-12 text-right">
+                            <div className="modal-footer">
+                                <div className="col-md-12 text-right">
                                 <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                                 </div>	
                             </div>

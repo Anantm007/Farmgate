@@ -58,31 +58,31 @@ const ResetPass = (props) => {
 
     return (
 
-    <div class="container" style={{marginTop: "5rem"}}>    
-        <div id="loginbox" style={{marginTop:"50px;"}} class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
-            <div class="panel panel-info" >
-                    <div class="panel-heading">
-                        <div class="panel-title"><h3>ENTER NEW PASSWORD</h3></div>    </div>     
+    <div className="container" style={{marginTop: "5rem"}}>    
+        <div id="loginbox" style={{marginTop:"50px;"}} className="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div className="panel panel-info" >
+                    <div className="panel-heading">
+                        <div className="panel-title"><h3>ENTER NEW PASSWORD</h3></div>    </div>     
 
-                    <div style={{paddingTop:"30px"}} class="panel-body" >
+                    <div style={{paddingTop:"30px"}} className="panel-body" >
 
-                        <div style={{display:"none"}} id="login-alert" class="alert alert-danger col-sm-12"></div>
+                        <div style={{display:"none"}} id="login-alert" className="alert alert-danger col-sm-12"></div>
                             
                             <form>
                                     
-                                <div style={{marginBottom: "25px"}} class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <input onChange={handleChange('password')} value={password} type="password" class="form-control" placeholder="Password" />
+                                <div style={{marginBottom: "25px"}} className="input-group">
+                                            <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
+                                            <input onChange={handleChange('password')} value={password} type="password" className="form-control" placeholder="Password" />
                                 </div>
                                         
-                                <div style={{marginBottom: "25px"}} class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <input onChange={handleChange('confirmPassword')} value={confirmPassword} type="password" class="form-control" placeholder="Confirm Password" />
+                                <div style={{marginBottom: "25px"}} className="input-group">
+                                            <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
+                                            <input onChange={handleChange('confirmPassword')} value={confirmPassword} type="password" className="form-control" placeholder="Confirm Password" />
                                 </div>        
                                 
-                                <div style={{marginTop:"50px;"}} class="form-group">
-                                    <div class="col-sm-12 controls text-center">
-                                        <a onClick={clickSubmit} class="btn btn-primary">RESET</a>
+                                <div style={{marginTop:"50px;"}} className="form-group">
+                                    <div className="col-sm-12 controls text-center">
+                                        <a onClick={clickSubmit} className="btn btn-primary">RESET</a>
                                         <br /><br />
                                         {showError()}
                                         {showSuccess()}
