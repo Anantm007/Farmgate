@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import {getShop} from '../shops/apiShops';
 import Footer from '../layout/Footer';
-import { Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
 const ShopPage = (props) => {
 
@@ -27,9 +27,7 @@ const ShopPage = (props) => {
     }
 
     const showLoading = () => (
-        loading && (<div className="alert alert-success">
-            <h2>Loading...</h2>
-        </div>)
+        loading && <Spinner />
     )
 
     useEffect(() => {

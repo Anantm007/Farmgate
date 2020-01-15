@@ -6,6 +6,7 @@ import ContactUs from './ContactUs';
 import Footer from '../layout/Footer'
 
 import {getShops} from '../shops/apiShops';
+import Spinner from './Spinner';
 
 const Landing = () => {
 
@@ -31,9 +32,7 @@ const Landing = () => {
     }
 
     const showLoading = () => (
-        loading && (<div className="alert alert-success">
-            <h2>Loading...</h2>
-        </div>)
+        loading && <Spinner/>
     )
 
     useEffect(() => {

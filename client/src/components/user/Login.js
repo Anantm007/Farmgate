@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import {signin, authenticate, isAuthenticated} from '../userAuth';
 import ForgotPass from './ForgotPass';
 import Footer from '../layout/Footer';
+import Spinner from '../layout/Spinner';
  
 const Login = () => {
 
@@ -98,9 +99,7 @@ const Login = () => {
 
     const showLoading = () => 
         
-            loading && (<div className="alert alert-info">
-                <h2>Loading...</h2>
-            </div>);
+            loading && <Spinner/>
 
     const redirectUser = () => {
             if(isAuthenticated() && isAuthenticated().user.Role === 0)

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {forgot} from '../userAuth';
+import Spinner from '../layout/Spinner';
 const ForgotPass = () => {
     
     const [values, setValues] = useState({
@@ -34,9 +35,7 @@ const ForgotPass = () => {
 
     const showLoading = () => 
         
-    loading && (<div className="alert alert-info">
-        <h2>Loading...</h2>
-    </div>);
+    loading && <Spinner/>
 
 
     

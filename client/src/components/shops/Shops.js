@@ -2,6 +2,8 @@ import React, {Fragment, useState, useEffect} from 'react'
 import {getShops} from '../shops/apiShops';
 import ShopsDetailCard from './ShopsDetailCard';
 import Footer from '../layout/Footer';
+import Spinner from '../layout/Spinner';
+
 const Shops = () => {
     const [shops, setShops] = useState([])
     const [error, setError] = useState(false)
@@ -25,9 +27,7 @@ const Shops = () => {
     }
 
     const showLoading = () => (
-        loading && (<div className="alert alert-success">
-            <h2>Loading...</h2>
-        </div>)
+        loading && <Spinner />
     )
 
     useEffect(() => {
