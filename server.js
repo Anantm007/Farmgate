@@ -31,7 +31,6 @@ mongoose.connect(process.env.MongoURI,{useNewUrlParser: true, useUnifiedTopology
 
 
 // Getting data in json format
-app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
 
 // API SECURITY
@@ -50,7 +49,7 @@ app.use(limiter);
 
 
 // Dev Middleware
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 
 // Test route
 app.get("/api", (req, res) => {

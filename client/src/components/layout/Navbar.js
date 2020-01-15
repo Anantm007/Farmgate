@@ -30,7 +30,7 @@ const Navbar = ({history}) => {
 
 
                 {/*                                           USER LINKS                                        */}
-                {isAuthenticated() && (
+                {isAuthenticated() && !shopIsAuthenticated() && (
                     <Fragment>
                         {isAuthenticated() && isAuthenticated().user.Role === 0 && (
                             

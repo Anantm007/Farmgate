@@ -1,13 +1,12 @@
 // Register Shop
-export const signup = async shop => { 
-    console.log(shop)
+export const signup = async (shop) => { 
+    
     return fetch(`/api/shop/auth`, {
         method: "POST",
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: "application/json"
         },
-        body: JSON.stringify(shop)
+        body: shop
     })
     .then(response => {
         return response.json();
@@ -62,10 +61,8 @@ export const shopIsAuthenticated = () => {
 
     if(localStorage.getItem('shopjwt'))
     {
-        console.log("auth")
         return JSON.parse(localStorage.getItem('shopjwt'));
     } else {
-        console.log("unauth")
         return false;
     }
 }

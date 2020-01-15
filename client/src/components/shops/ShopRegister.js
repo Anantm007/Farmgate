@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {signup, authenticate, shopIsAuthenticated} from '../shopAuth';
 
@@ -12,18 +12,32 @@ const Register = () => {
         zipCode: '',
         phoneNumber: '',
         error: '',
+        image: '',
         description: '',
-        success: false
+        success: false,
+        formData: ''
     });
 
-    const {name, email, password, repeatPassword, address, zipCode, phoneNumber, description, success, error} = values;
+    const {name, email, password, repeatPassword, address, zipCode, phoneNumber, description, formData, success, error} = values;
+
+    const init = () => {
+            setValues({...values, formData: new FormData()})
+    }
+
+    useEffect(() => {
+        init();
+        // eslint-disable-next-line
+    }, [])
 
     const handleChange = name => e => {
-        setValues({...values, error: false, [name]: e.target.value})
+        const value = name ==='image' ? e.target.files[0] : e.target.value
+        formData.set(name, value)
+        console.log("hello")
+        setValues({...values, [name]: value}) 
     };
 
     
-        const clickSubmit = (e) => {
+    const clickSubmit = (e) => {
         const captcha = document.querySelector('#g-recaptcha-response').value;
 
          e.preventDefault();
@@ -33,12 +47,12 @@ const Register = () => {
             setValues({...values, error: "Passwords do not Match" });
             return;
           }  
-        setValues({...values, error: false});
-        signup({name, email, password, address, zipCode, phoneNumber, description, captcha})
+
+        signup(formData)
         .then(data => {
-            
             if(data.success === false)
             {
+                console.log("no")
                 setValues({...values, error: data.message, success: false})
             }
             else if(data.success === true)
@@ -62,15 +76,21 @@ const Register = () => {
                         <h4 className="card-title mt-3 text-center">Create a Shop Account</h4>
                         <p className="text-center">Get started with your free account</p>
                         
-                        <form>
-                        
+                        <form>  
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-user"></i> </span>
                             </div>
                             <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Full name" />
                         </div>
-                        
+
+                        <div className="form-group">
+                            <label className="btn btn-secondary">
+                                Your Logo &nbsp;
+                            <input onChange={handleChange('image')} type="file" name="image" accept="image/*" />
+                            </label>
+                        </div>
+
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-envelope"></i> </span>

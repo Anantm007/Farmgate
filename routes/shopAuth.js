@@ -6,8 +6,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config()
-var multer = require('multer');
+const formidable = require('formidable');
 const fs = require("fs");
+const _ = require('lodash');
 
 // Models
 const Shop = require('../models/shop');
@@ -26,55 +27,6 @@ let transporter = nodemailer.createTransport({
         rejectUnauthorized : false
     }});
 
-    // Multer setup
-const multerConf = {
-  storage: multer.diskStorage({
-    destination: function(req, file, next)
-    {
-      next(null,"./public/images");
-    },
-
-    filename: function(req, file, next)
-    {
-      const ext = file.mimetype.split("/")[1];
-      next(null, file.fieldname + '-' + Date.now()+ "." + ext);
-    }
-  }),
-
-  fileFilter: function(req, file, next)
-  {
-    if(!file)
-    {
-      next();
-    }
-
-    const image = file.mimetype.startsWith("image/");
-
-    if(image)
-    {
-      next(null, true);
-    }
-    else
-    {
-      next({message: "File type not supported"}, false);
-    }
-  }
-};
-
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'public/images')
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-});
-var upload = multer({
-    storage: storage,
-    limits: {fileSize: 10}
-  });
-
-
 
 
 /*                                                  ROUTES                                                  */
@@ -86,30 +38,34 @@ var upload = multer({
 router.post('/', 
   async (req, res) => {
 
-    const { name, email, password, address, zipCode, phoneNumber, description  } = req.body;
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true // Extension for images
 
-    // Checking for empty fields
-    for (var keys in req.body) {
-      if (req.body[keys] === undefined || req.body[keys] === "") 
-        {
-          var incomplete = keys;
-          break;
-        }
-    }
+  form.parse(req, async(err, fields, files) => {
+    console.log("check this", fields);
+      if(err)
+      {
+          return res.status(400).json({
+            success: false,
+            message: 'Image could not be uploaded'});
+      }
 
-    // Return error if there are some undefined values
-    if (incomplete != undefined) {
-      return res.json({
-        success: false,
-        message: "Please fill " + incomplete.toUpperCase()
-      });
-    }
-    
-    try {
-      let shop = await Shop.findOne({ email });
+      // check for all fields
+      const { name, email, password, address, zipCode, phoneNumber, description  } = fields;
+
+      if(!name || !description || !email || !password || !address || !zipCode || !phoneNumber)
+      {
+          return res.status(400).json({
+              success: false,
+              message: "Please fill all the fields"
+          })
+      }
+
+      let oldShop = await Shop.findOne({ email });
 
       // Shop already registered
-      if (shop) {
+      if (oldShop) {
         return res
           .status(400)
           .json({ 
@@ -118,16 +74,24 @@ router.post('/',
           });
       }
 
-      // New Shop
-      shop = new Shop({
-        name,
-        email,
-        password,
-        address,
-        zipCode,
-        phoneNumber,
-        description        
-      });
+      // Create new shop now
+      let shop = new Shop(fields);
+
+      // Handle files
+      if(files.image)
+      {
+          // Validate file size less than 1 MB
+          if(files.image.size > 1000000)
+          {
+              return res.status(400).json({
+                success: false,
+                message: "File size should be less than 1 mb"
+              })
+          }
+
+          shop.image.data = fs.readFileSync(files.image.path);
+          shop.image.contentType = files.image.type;
+      }
 
       // Encrypting the password
       const salt = await bcrypt.genSalt(10);
@@ -155,7 +119,6 @@ router.post('/',
             success: true,
             token 
           });
-          
 
           // Send welcome email
           let HelperOptions ={
@@ -173,13 +136,8 @@ router.post('/',
         }
       );
 
-      // If signup fails due to any reason
-    } catch (err) {
-      return res.json({
-        success: false,
-        message: err.message
-      });
-    }
+  });
+
   }
 );
   
