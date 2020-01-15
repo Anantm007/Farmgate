@@ -212,7 +212,7 @@ router.post("/forgot", async(req, res) => {
   
 
   // Send reset password email
-  const resetUrl = `${req.protocol}://${req.get('host')}/api/shop/auth/resetPassword/${resetToken}`;
+  const resetUrl = `${req.protocol}://${req.get('host')}/shop/reset/password/${resetToken}`;
 
   let HelperOptions ={
     from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
@@ -245,7 +245,7 @@ router.put("/resetPassword/:resetToken", async(req, res) => {
   {
     return res.json({
       success: false,
-      message: "Please enter a valid password"
+      message: "Please enter a valid password with 6 or more characters"
     })
   }
 
