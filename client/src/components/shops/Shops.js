@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import {getShops} from '../shops/apiShops';
 import ShopsDetailCard from './ShopsDetailCard';
+import Footer from '../layout/Footer';
 const Shops = () => {
     const [shops, setShops] = useState([])
     const [error, setError] = useState(false)
@@ -36,7 +37,7 @@ const Shops = () => {
 
 
     return (
-        <Fragment>            
+        loading ? <div>{showLoading()}</div> : (<Fragment>            
             <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
             
             {showLoading()}
@@ -48,8 +49,8 @@ const Shops = () => {
                     </div>
                 ))}
             </div>
-              
-        </Fragment>
+              <Footer />
+        </Fragment>)
     )}
             
             

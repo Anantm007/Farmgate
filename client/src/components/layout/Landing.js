@@ -3,6 +3,7 @@ import Carousel from './Carousel';
 import ShopsCard from './ShopsCard'
 import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
+import Footer from '../layout/Footer'
 
 import {getShops} from '../shops/apiShops';
 
@@ -59,6 +60,7 @@ const Landing = () => {
               
             <AboutUs />
             <ContactUs />
+            <Footer />
         </Fragment>
     )
 }

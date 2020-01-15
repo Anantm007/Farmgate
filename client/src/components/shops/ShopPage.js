@@ -1,11 +1,11 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import Notfound from '../layout/NotFound';
 import {getShop} from '../shops/apiShops';
+import Footer from '../layout/Footer';
+import { Redirect } from 'react-router-dom';
 
 const ShopPage = (props) => {
 
     const shopId = props.match.params.id;
-    
     const [shop, setShop] = useState([])
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -13,10 +13,9 @@ const ShopPage = (props) => {
     const loadShop = () => {
         getShop(shopId).then(data => {
             if(data.success === false)
-            {
+            {         
                 setError(data.message);
-                console.log(error);
-                setLoading(false);
+                setLoading(true);
             }
 
             else
@@ -39,8 +38,8 @@ const ShopPage = (props) => {
     }, [])
 
     return (
-        <Fragment>
-                      {showLoading()}
+      
+        loading ? <div>{showLoading()}</div> : (<Fragment>
 
         <div className="container">
 
@@ -82,7 +81,8 @@ const ShopPage = (props) => {
         </div>
     
       </div>
-      </Fragment>
+      <Footer/>
+      </Fragment>)
     )
 }
 

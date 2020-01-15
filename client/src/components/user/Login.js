@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {signin, authenticate, isAuthenticated} from '../userAuth';
 import ForgotPass from './ForgotPass';
+import Footer from '../layout/Footer';
  
 const Login = () => {
 
@@ -116,12 +117,15 @@ const Login = () => {
 
 
     return (
-        <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
-            {showError()}
-            {showLoading()}
-            {redirectUser()}
-            {signUpForm()}
-        </div>
+        loading ? <div>{showLoading()}</div> : (<Fragment>
+            <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
+                {showError()}
+                {showLoading()}
+                {redirectUser()}
+                {signUpForm()}
+            </div>
+            <Footer/>
+        </Fragment>)
            
     )
 };
