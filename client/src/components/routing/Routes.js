@@ -14,8 +14,8 @@ import ShopDashboard from '../shops/ShopDashboard';
 import ShopResetPass from '../shops/ShopResetPass';
 import Shops from '../shops/Shops';
 import ShopPage from '../shops/ShopPage';
-import MyShopPage from '../shops/MyShopPage';
 import CreateItem from '../items/CreateItem';
+import MyShopItems from '../items/MyShopItems';
 
 
 // Admin
@@ -43,8 +43,9 @@ const Routes = () => {
                 <Route exact path ='/shop/register' component = {ShopRegister} />
                 <Route exact path ='/shop/login' component = {ShopLogin} />     
                 <ShopRoute exact path ='/shop/dashboard' component = {ShopDashboard} />     
-                <ShopRoute exact path = '/my/shops/:id' component = {MyShopPage} />     
+                <ShopRoute exact path = '/my/shops/:id' component = {ShopPage} />     
                 <ShopRoute exact path = '/create/item' component = {CreateItem} />
+                <ShopRoute exact path = '/shop/:id/items' component = {MyShopItems} />
                 <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />
 
                 <AdminRoute exact path="/admin/dashboard" component = {AdminDashboard} />                

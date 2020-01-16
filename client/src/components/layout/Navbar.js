@@ -5,6 +5,9 @@ import {signout, isAuthenticated} from '../userAuth';
 import {shopSignout, shopIsAuthenticated} from '../shopAuth';
 
 const Navbar = ({history}) => {
+
+    const {shop: {_id}} = shopIsAuthenticated();
+
     return (
         <nav className="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
             <div className="container">
@@ -65,8 +68,8 @@ const Navbar = ({history}) => {
                 {shopIsAuthenticated() && (
                     <Fragment>    
                         <li className="nav-item active"><a href="/shop/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
-                        <li className="nav-item active"><a href="/shops/my/items" className="nav-link">MANAGE ITEMS</a></li>
-                        <li className="nav-item active"><a href="/shops/my/orders" className="nav-link">MANAGE ORDERS</a></li>
+                        <li className="nav-item active"><a href={`/shop/${_id}/items`} className="nav-link">MANAGE ITEMS</a></li>
+                        <li className="nav-item active"><a href={`/shop/${_id}/orders`} className="nav-link">MANAGE ORDERS</a></li>
 
                         <li className="nav-item active">
                             <a href="/" onClick={() => shopSignout(() => {

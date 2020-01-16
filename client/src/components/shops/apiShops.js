@@ -13,9 +13,20 @@ export const getShops = () => {
 
 // Get a particular shop
 export const getShop = id => {
+    let h;
+    if(JSON.parse(localStorage.getItem('jwt')))
+    {
+        h = JSON.parse(localStorage.getItem('jwt')).token
+    }
+
+    else if(JSON.parse(localStorage.getItem('shopjwt')))
+    {
+        h = JSON.parse(localStorage.getItem('shopjwt')).token
+    }
+
     return fetch(`/api/shops/${id}`, {
         method: "GET",
-        headers: { 'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token }
+        headers: { 'x-auth-token': h }
       })
     .then(response => {
         return response.json()

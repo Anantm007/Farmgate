@@ -198,7 +198,7 @@ router.put("/:id",
 })
 
 
-// @route   DELETE /api/items//:id 
+// @route   DELETE /api/items/:id 
 // @desc    Delete item using item id
 // @access  Private
 router.delete("/:id", auth, async(req, res) => {
@@ -220,7 +220,7 @@ router.delete("/:id", auth, async(req, res) => {
           message: "Item Not Found"
         });
   }
-
+  
   await Item.findByIdAndDelete(req.params.id, async(err, item) => {
     if(err)
     {

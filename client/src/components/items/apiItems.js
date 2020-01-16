@@ -15,3 +15,19 @@ export const createItem = async (shop) => {
         console.log(err);
     })
 }
+
+// Delete an Item
+export const deleteItem = async(id) => {
+    return fetch(`/api/items/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
