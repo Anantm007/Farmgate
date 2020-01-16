@@ -318,14 +318,16 @@ section .section-title {
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-  background-color: #deff8b;
-  min-height: 15rem;
+  padding: 1rem;
+  word-wrap: break-word;
+  min-height: 17rem;
   color: black;
 }
 
 /* Style the back side */
 .flip-card-back {
-  background-color: #deff8b;
+  padding: 1rem;
+  word-wrap: break-word;
   min-height: 15rem;
   transform: rotateY(180deg);
 }

@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import {getShop} from '../shops/apiShops';
+import {getShop, getItems} from '../shops/apiShops';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
 import ShopItems from './ShopItems';
@@ -7,7 +7,8 @@ import ShopItems from './ShopItems';
 const ShopPage = (props) => {
 
     const shopId = props.match.params.id;
-    const [shop, setShop] = useState([])
+    const [shop, setShop] = useState([]);
+    const [items, setItems] = useState([]);
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true);
 
@@ -27,12 +28,30 @@ const ShopPage = (props) => {
         })
     }
 
+    
+    const loadItems = () => {
+      getItems(shopId).then(data => {
+          if(data.success === false)
+          {         
+              setError(data.message);
+              setLoading(true);
+          }
+
+          else
+          {
+            setItems(data.data);
+            setLoading(false);
+          }
+      })
+  }
+
     const showLoading = () => (
         loading && <Spinner />
     )
 
     useEffect(() => {
         loadShop()
+        loadItems()
         //eslint-disable-next-line
     }, [])
 
@@ -67,10 +86,18 @@ const ShopPage = (props) => {
               
             </div>
     
-            
-            <h4>Shop Items Available</h4>
+            <br/><br/>
+            <h3>Shop Items Available</h3>
             <br/>
-            <ShopItems/>              
+            <div className="row">                
+                {items.map((item, i) =>(
+                    <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
+                        <ShopItems item={item} />
+                        <br/>      
+                    </div>
+                ))}
+            </div>
+               
             
           </div>
     

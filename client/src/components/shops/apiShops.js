@@ -25,6 +25,21 @@ export const getShop = id => {
     })
 }
 
+// Get items for a shop
+export const getItems = id => {
+    return fetch(`/api/shops/${id}/items`, {
+        method: "GET"
+      })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+
+
 // Get my Shop
 export const myShop = id => {
     return fetch(`/api/shops/${id}`, {

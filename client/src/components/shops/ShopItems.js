@@ -7,19 +7,19 @@ const ShopItems = ({item}) => {
             <div class="row">
                 
                 <div class="flip-card" style={{margin: "2rem"}}>
-                    <div class="flip-card-inner">
+                    <div class="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`}}>
                         
                         <div class="flip-card-front">
-                        <img src="https://lh3.googleusercontent.com/OQZi4ckWAs7UrOlZEPefXZgJOcdJuSM5FSH9zqD5rMg6c2MOaxcKpV5IMrb1Tju98fWyNmcI33E4RGb0uC09Ej4W" style={{height:"10rem"}} />
-                        <h4>Item Name</h4>
-                        <h6>Item quality</h6>
+                        <h4>{item.name}</h4>
+                        <h6>{`$ ${item.price} / ${item.variant}`}</h6>
+                        {item.inStock ? <span className="badge badge-primary badge-pill">In Stock</span> : <span className="badge badge-danger badge-pill">Out of Stock</span>} <br/><br/>
+                        {item.inStock && <button className="btn btn-danger">Add to Cart</button>}
                         </div>
 
                         <div class="flip-card-back">
-                        <h5>Item description</h5>
-                        <strong>Item quality</strong>
-                        <br/>
-                        <button className="btn btn-warning">Add to cart</button>
+                        <p>{item.description}</p>
+                        <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
+                        {item.inStock && <button className="btn btn-danger">Add to Cart</button>}
                         </div>
                         
                     </div>
