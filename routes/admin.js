@@ -87,7 +87,6 @@ router.delete('/delete/shop/:id', auth, async(req, res) => {
             message: "Shop Not Found"
           });
     }
-    console.log(req.admin)
     const admin = await User.findById(req.admin.id);
     if(admin && admin.role === 1)
     {   

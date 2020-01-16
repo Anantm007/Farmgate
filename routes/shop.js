@@ -139,7 +139,6 @@ router.get('/', async(req, res) => {
 // @access  Private (using middleware) 
 router.get('/:id', userAuth, async(req, res) => {
   
-  console.log("hello")
   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
   {
       return res.json({

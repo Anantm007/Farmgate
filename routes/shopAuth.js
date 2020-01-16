@@ -43,7 +43,6 @@ router.post('/',
     form.keepExtensions = true // Extension for images
 
   form.parse(req, async(err, fields, files) => {
-    console.log("check this", fields);
       if(err)
       {
           return res.status(400).json({

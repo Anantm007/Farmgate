@@ -45,7 +45,6 @@ async(req, res) => {
         
         if(!name || !price || !variant || !quality || !description)
         {
-          console.log(name, price, variant, quality, description)
             return res.status(400).json({
                 success: false,
                 message: "Please fill all the fields"
@@ -74,7 +73,6 @@ async(req, res) => {
         // Add the item to shop's item array
         const shop = await Shop.findById(req.shop.id);
         shop.items.unshift(item);
-        console.log(shop.items)
         await shop.save();
 
   

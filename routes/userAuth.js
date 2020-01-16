@@ -231,8 +231,6 @@ router.post("/forgot", async(req, res) => {
 // @access  Only for registered (user cannot be auth if he forgot his password)
 router.post("/validToken", async(req, res) => {
   
-  console.log(req.body.token);
-
   const resetPasswordToken = crypto.createHash('sha256').update(req.body.token).digest('hex');
 
   const user = await User.findOne({
