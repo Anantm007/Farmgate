@@ -2,6 +2,7 @@ import React, {Fragment, useState, useEffect} from 'react'
 import {getShop} from '../shops/apiShops';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
+import ShopItems from './ShopItems';
 
 const ShopPage = (props) => {
 
@@ -66,19 +67,19 @@ const ShopPage = (props) => {
               
             </div>
     
-            <div className="row">
-    
-              ITEM 1 -  description - price - quality - add to cart<br/>
-              ITEM 2 -  description - price - quality - add to cart <br/>
-              ITEM 3 -  description - price - quality - add to cart <br/><br/><br/>
-              
-            </div>
-    
+            
+            <h4>Shop Items Available</h4>
+            <br/>
+            <ShopItems/>              
+            
           </div>
     
         </div>
     
       </div>
+      
+<br/><br/>
+<br/><br/>
       <Footer/>
       </Fragment>)
     )
