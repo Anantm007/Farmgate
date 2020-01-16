@@ -38,7 +38,7 @@ export const signin = async user => {
 export const authenticate = (data, next) => {
     if(typeof window !== 'undefined')
     {
-        localStorage.setItem('userjwt', JSON.stringify(data))
+        localStorage.setItem('jwt', JSON.stringify(data))
         next();
     }
 }
@@ -47,7 +47,7 @@ export const authenticate = (data, next) => {
 export const signout = (next) => {
     if(typeof window !== 'undefined')
     {
-        localStorage.removeItem('userjwt');
+        localStorage.removeItem('jwt');
         next();
     }
 };
@@ -59,9 +59,9 @@ export const isAuthenticated = () => {
         return false;
     }
 
-    if(localStorage.getItem('userjwt'))
+    if(localStorage.getItem('jwt'))
     {
-        return JSON.parse(localStorage.getItem('userjwt'));
+        return JSON.parse(localStorage.getItem('jwt'));
     } else {
         return false;
     }

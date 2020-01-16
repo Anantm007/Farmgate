@@ -69,6 +69,10 @@ router.post('/',
         }
       };
 
+      // Do not send this to the client
+      shop.password = undefined;
+      shop.image = undefined; 
+
       jwt.sign(
         payload,
         process.env.jwtSecret,
@@ -78,7 +82,9 @@ router.post('/',
 
           res.json({ 
             success: true,
-            token });
+            token,
+            shop
+          });
         }
       );
 

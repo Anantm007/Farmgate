@@ -15,7 +15,7 @@ export const getShops = () => {
 export const getShop = id => {
     return fetch(`/api/shops/${id}`, {
         method: "GET",
-        headers: { 'x-auth-token': JSON.parse(localStorage.getItem('userjwt')).token }
+        headers: { 'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token }
       })
     .then(response => {
         return response.json()
@@ -23,4 +23,19 @@ export const getShop = id => {
     .catch(err => {
         console.log(err);
     })
+}
+
+// Get my Shop
+export const myShop = id => {
+    return fetch(`/api/shops/${id}`, {
+        method: 'GET',
+        headers: { 'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token}
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
 }

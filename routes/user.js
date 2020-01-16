@@ -77,13 +77,14 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
           
-          const Id = user._id;
-          const Email = user.email
-          const Role = user.role;
+          // Do not send this to the client
+          user.password = undefined;
+
           res.json({ 
             success: true,
             token,
-            user: {Id, Email, Role} });
+            user
+          });
         }
       );
     } catch (err) {

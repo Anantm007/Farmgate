@@ -5,7 +5,6 @@ const UserDashboard = () => {
     return (
         <Fragment>
             <h1>This is the user dashboard</h1>    
-
             <Footer/>
         </Fragment>
     )

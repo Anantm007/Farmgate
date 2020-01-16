@@ -115,9 +115,14 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
 
-          res.json({    // Send token back to the client 
+      // Do not send this to the client
+      shop.password = undefined;
+      shop.image = undefined;
+          
+      res.json({    // Send token back to the client 
             success: true,
-            token 
+            token,
+            shop
           });
 
           // Send welcome email

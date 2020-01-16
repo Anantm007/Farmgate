@@ -102,7 +102,7 @@ const Login = () => {
             loading && <Spinner/>
 
     const redirectUser = () => {
-            if(isAuthenticated() && isAuthenticated().user.Role === 0)
+            if(isAuthenticated() && isAuthenticated().user.role === 0)
             {
                 return <Redirect to="/user/dashboard" />
             }
