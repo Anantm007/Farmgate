@@ -15,6 +15,7 @@ import ShopResetPass from '../shops/ShopResetPass';
 import Shops from '../shops/Shops';
 import ShopPage from '../shops/ShopPage';
 import MyShopPage from '../shops/MyShopPage';
+import CreateItem from '../items/CreateItem';
 
 // Utilities
 import NotFound from '../layout/NotFound';
@@ -34,7 +35,8 @@ const Routes = () => {
                 <Route exact path ='/shop/register' component = {ShopRegister} />
                 <Route exact path ='/shop/login' component = {ShopLogin} />     
                 <ShopRoute exact path ='/shop/dashboard' component = {ShopDashboard} />     
-                <ShopRoute exact path = '/my/shops/:id' component = {MyShopPage} />
+                <ShopRoute exact path = '/my/shops/:id' component = {MyShopPage} />     
+                <ShopRoute exact path = '/create/item' component = {CreateItem} />
                 <Route exact path="/user/reset/password/:token" component = {ResetPass} />
                 <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />
                 <PrivateRoute exact path="/shops/:id" component = {ShopPage} />

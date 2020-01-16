@@ -101,13 +101,14 @@ async(req, res) => {
       });
     }
 
-    const {name, price, image, variant, quality} = req.body;    // Destructure
+    const {name, price, image, variant, quality, description} = req.body;    // Destructure
     
     const item = new Item({
         name,
         price,
         variant,
         quality,
+        description,
         image,
         shop: req.shop.id     // After token is successfully verified
     })

@@ -14,6 +14,11 @@ const ItemSchema = new mongoose.Schema({
         contentType: String
     },
 
+    description: {
+        type: String,
+        required: [true, 'Please enter a description']
+    },
+
     price: {
         type: Number,
         required: [true, 'Please add a price'],    
