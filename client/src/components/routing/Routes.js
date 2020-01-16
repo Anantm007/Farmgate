@@ -17,6 +17,11 @@ import ShopPage from '../shops/ShopPage';
 import MyShopPage from '../shops/MyShopPage';
 import CreateItem from '../items/CreateItem';
 
+
+// Admin
+import AdminDashboard from '../admin/AdminDashboard';
+
+
 // Utilities
 import NotFound from '../layout/NotFound';
 import PrivateRoute from '../userAuth/PrivateRoute';
@@ -31,15 +36,19 @@ const Routes = () => {
                 <Route exact path ='/user/register' component = {Register} />
                 <Route exact path ='/user/login' component = {Login} />     
                 <PrivateRoute exact path ='/user/dashboard' component = {UserDashboard} />     
+                <Route exact path="/user/reset/password/:token" component = {ResetPass} />
                 <Route exact path="/shops" component = {Shops} />
+                <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
+
                 <Route exact path ='/shop/register' component = {ShopRegister} />
                 <Route exact path ='/shop/login' component = {ShopLogin} />     
                 <ShopRoute exact path ='/shop/dashboard' component = {ShopDashboard} />     
                 <ShopRoute exact path = '/my/shops/:id' component = {MyShopPage} />     
                 <ShopRoute exact path = '/create/item' component = {CreateItem} />
-                <Route exact path="/user/reset/password/:token" component = {ResetPass} />
                 <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />
-                <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
+
+                <AdminRoute exact path="/admin/dashboard" component = {AdminDashboard} />                
+
                 <Route component={NotFound} />
    
             </Switch>

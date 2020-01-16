@@ -106,9 +106,8 @@ const Login = () => {
                 return <Redirect to="/user/dashboard" />
             }
             
-            if(isAuthenticated() && isAuthenticated().user.Role === 1)
+            if(isAuthenticated() && isAuthenticated().user.role === 1)
             {
-
                 return <Redirect to="/admin/dashboard" />
             }
         };
