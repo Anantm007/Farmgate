@@ -1,11 +1,10 @@
 // Add new Item
 export const createItem = async (shop) => { 
-    
-    return fetch(`/api/shop/auth`, {
+    return fetch(`/api/items`, {
         method: "POST",
         headers: {
             Accept: "application/json",
-            headers: { 'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token }
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
         },
         body: shop
     })

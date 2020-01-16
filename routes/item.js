@@ -5,8 +5,11 @@ const router = express.Router();
 const auth = require('../middleware/shopAuth');
 
 require('dotenv').config()
-var multer = require('multer');
+
+// Form Data
+const formidable = require('formidable');
 const fs = require("fs");
+const _ = require('lodash');
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
@@ -14,130 +17,77 @@ const MongoObjectId = require("mongoose").Types.ObjectId;
 const Item = require("../models/item");
 const Shop = require("../models/shop");
 
-// Multer setup
-const multerConf = {
-    storage: multer.diskStorage({
-      destination: function(req, file, next)
-      {
-        next(null,"./public/images");
-      },
-  
-      filename: function(req, file, next)
-      {
-        const ext = file.mimetype.split("/")[1];
-        next(null, file.fieldname + '-' + Date.now()+ "." + ext);
-      }
-    }),
-  
-    fileFilter: function(req, file, next)
-    {
-      if(!file)
-      {
-        next();
-      }
-  
-      const image = file.mimetype.startsWith("image/");
-  
-      if(image)
-      {
-        next(null, true);
-      }
-      else
-      {
-        next({message: "File type not supported"}, false);
-      }
-    }
-  };
-  
-  var storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, 'public/images')
-      },
-      filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-      }
-  });
-  var upload = multer({
-      storage: storage,
-      limits: {fileSize: 10}
-    });
-  
 
- 
-    
 /*                                                       ROUTES                                                   */
 
 
 // @route   POST /api/items 
 // @desc    Add new item
 // @access  Private 
-router.post("/",
-auth, 
-multer(multerConf).single("image"), 
+router.post("/", auth, 
 async(req, res) => {
-    
-    if(!req.file || req.file.size > 1000000)
-    {
-        return res.json({
-            success: false,
-            message: "Please upload a file with size less than 1 MB"
-        })
-    }
-
-    // Checking for empty fields
-    for (var keys in req.body) {
-      if (req.body[keys] === undefined || req.body[keys] === "") 
-      {
-        var incomplete = keys;
-        break;
-      }
-    }
-    
-    // Return error if there are some undefined values
-    if (incomplete != undefined) {
-      return res.json({
-        success: false,
-        message: "Please fill " + incomplete.toUpperCase()
-      });
-    }
-
-    const {name, price, image, variant, quality, description} = req.body;    // Destructure
-    
-    const item = new Item({
-        name,
-        price,
-        variant,
-        quality,
-        description,
-        image,
-        shop: req.shop.id     // After token is successfully verified
-    })
+  
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true // Extension for images
+  
+    form.parse(req, async(err, fields, files) => {
+        if(err)
+        {
+            return res.status(400).json({
+              success: false,
+              message: 'Image could not be uploaded'});
+        }
+  
+        // check for all fields
+        const {name, price, variant, quality, description} = fields;    // Destructure
+  
         
-    // Assigning image properties
-    item.image.data = fs.readFileSync(req.file.path);
-    item.image.contentType = "image/png";
-   
-    // Add the item to shop's item array
-    const shop = await Shop.findById(item.shop);
-    shop.items.unshift(item);
-    console.log(shop.items)
-    await shop.save();
-    
-    try {    
-        // Saving product to the Database
+        if(!name || !price || !variant || !quality || !description)
+        {
+          console.log(name, price, variant, quality, description)
+            return res.status(400).json({
+                success: false,
+                message: "Please fill all the fields"
+            })
+        }
+  
+        // Create new item now
+        let item = new Item(fields);
+        item.shop = req.shop.id;
+        // Handle files
+        if(files.image)
+        {
+            // Validate file size less than 1 MB
+            if(files.image.size > 1000000)
+            {
+                return res.status(400).json({
+                  success: false,
+                  message: "File size should be less than 1 MB"
+                })
+            }
+  
+            item.image.data = fs.readFileSync(files.image.path);
+            item.image.contentType = files.image.type;
+        }
+
+        // Add the item to shop's item array
+        const shop = await Shop.findById(req.shop.id);
+        shop.items.unshift(item);
+        console.log(shop.items)
+        await shop.save();
+
+  
+        // Save to database
         await item.save();
 
         return res.json({
-            success: true,
-            data: item
+          success: true,
+          message: "Item added"
         })
-       
-    } catch (err) {
-        res.json({
-            success: false,
-            message: err
-        });
-    }
+
+    });
+  
 })
 
 
@@ -177,7 +127,6 @@ router.get("/:id", async(req, res) => {
 // @access  Private 
 router.put("/:id",
     auth, 
-    multer(multerConf).single("image"), 
     async(req, res) => {
       
         // Check whether the shop is authorized or not

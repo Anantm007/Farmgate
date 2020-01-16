@@ -85,7 +85,7 @@ router.post('/',
           {
               return res.status(400).json({
                 success: false,
-                message: "File size should be less than 1 mb"
+                message: "File size should be less than 1 MB"
               })
           }
 

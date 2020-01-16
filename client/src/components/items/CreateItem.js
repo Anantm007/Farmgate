@@ -14,11 +14,11 @@ const CreateItem = () => {
         description: '',
         loading: false,
         error: '',
-        createdProduct: '',
+        success: false,
         formData: ''
     });
 
-    const {name, price, variant, quality, description, loading, error, createdProduct, formData} = values;
+    const {name, price, variant, quality, description, loading, error, success, formData} = values;
 
     // load categories and form set data
     const init = () => {
@@ -52,8 +52,7 @@ const CreateItem = () => {
             {
                 setValues({
                     ...values, name: '', image: '', price: '', variant: '', quality: '', description: '', loading: false, error: '',
-                    createdProduct: data.name,
-                    formData: ''
+                    success: true, formData: ''
                 })
             }
         })
@@ -106,6 +105,10 @@ const CreateItem = () => {
             <br/>
             <div className="text-center">
                 <button className="btn btn-outline-primary">Create Item</button>
+                <br/><br />
+                {showError()}
+                {showSuccess()}
+                {showLoading()}
             </div>
             <br/>
         </form>
@@ -117,11 +120,11 @@ const CreateItem = () => {
         </div>
     )
 
-    const showSuccess = () => (
-        <div className="alert alert-info" style={{display: createdProduct? '': 'none'}}>
-            <h2>{`${createdProduct}`} is added to your shop!</h2>
-        </div>
-    )
+    const showSuccess = () => {
+        return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
+            Item added Succesfully
+        </div>)
+    }
 
     const showLoading = () => (
         loading && <Spinner/>
@@ -135,9 +138,6 @@ const CreateItem = () => {
             </div>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showError()}
-                    {showSuccess()}
-                    {showLoading()}
                     {newPostForm()}
                 </div>
             </div>
