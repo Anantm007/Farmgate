@@ -26,7 +26,6 @@ const Register = () => {
         const captcha = document.querySelector('#g-recaptcha-response').value;
 
          e.preventDefault();
-         console.log(password, repeatPassword)
          if(password !== repeatPassword)
           {
             setValues({...values, error: "Passwords do not Match" });

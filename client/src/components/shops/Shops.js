@@ -14,7 +14,6 @@ const Shops = () => {
             if(data.success === false)
             {
                 setError(data.message);
-                console.log(error);
                 setLoading(false);
             }
 

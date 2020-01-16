@@ -87,7 +87,6 @@ export const forgot = async email => {
 
 // Update password
 export const updatePassword = async (password, token) => {
-    console.log(token)
     return fetch(`/api/user/auth/resetPassword/${token}`, {
         method: "PUT",
         headers: {

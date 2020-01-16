@@ -32,7 +32,6 @@ const Register = () => {
     const handleChange = name => e => {
         const value = name ==='image' ? e.target.files[0] : e.target.value
         formData.set(name, value)
-        console.log("hello")
         setValues({...values, [name]: value}) 
     };
 
@@ -41,7 +40,6 @@ const Register = () => {
         const captcha = document.querySelector('#g-recaptcha-response').value;
 
          e.preventDefault();
-         console.log(password, repeatPassword)
          if(password !== repeatPassword)
           {
             setValues({...values, error: "Passwords do not Match" });
@@ -52,7 +50,6 @@ const Register = () => {
         .then(data => {
             if(data.success === false)
             {
-                console.log("no")
                 setValues({...values, error: data.message, success: false})
             }
             else if(data.success === true)

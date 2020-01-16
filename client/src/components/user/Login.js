@@ -25,7 +25,6 @@ const Login = () => {
         setValues({...values, error: false, loading: true});
         signin({email, password})
         .then(data => {
-            console.log(data)
             if(data.success === false)
             {
                 setValues({...values, error: data.message, loading: false})
