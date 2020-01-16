@@ -6,7 +6,9 @@ import {shopSignout, shopIsAuthenticated} from '../shopAuth';
 
 const Navbar = ({history}) => {
 
-    const {shop: {_id}} = shopIsAuthenticated();
+    let _id = null;
+    if(shopIsAuthenticated())
+    _id = shopIsAuthenticated().shop._id;
 
     return (
         <nav className="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">

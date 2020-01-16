@@ -31,3 +31,35 @@ export const deleteItem = async(id) => {
         console.log(err);
     })
 }
+
+// Get a particular item
+export const getItem = async(id) => {
+    return fetch(`/api/items/${id}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+
+// Delete an Item
+export const Update = async(itemid, item) => {
+    return fetch(`/api/items/${itemid}`, {
+        method: 'PUT',
+        headers: {
+            Accept: "application/json",
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
+        },
+        body: item
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}

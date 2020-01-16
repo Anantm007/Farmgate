@@ -127,74 +127,49 @@ router.put("/:id",
     auth, 
     async(req, res) => {
       
-        // Check whether the shop is authorized or not
-        const item = await Item.findById(req.params.id);
-        
-        if( (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id) ) || !item)
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true // Extension for images
+  
+    form.parse(req, async(err, fields, files) => {
+      if(err)
         {
-          return res.json({
-            success: false,
-            message: "You are not authorized to perform this action!"
-          })
+            return res.status(400).json({
+              success: false,
+              message: 'Image could not be uploaded'});
         }
+  
         
-        if(req.file && req.file.size > 1000000)
+        // Saving product to the Database
+        const item = await Item.findByIdAndUpdate(req.params.id, fields, {new: true});
+        
+        // Handle files
+        if(files.image)
         {
-            return res.json({
-                success: false,
-                message: "Please upload a file with size less than 1 MB"
-            })
+            // Validate file size less than 1 MB
+            if(files.image.size > 1000000)
+            {
+                return res.status(400).json({
+                  success: false,
+                  message: "File size should be less than 1 MB"
+                })
+            }
+  
+            item.image.data = fs.readFileSync(files.image.path);
+            item.image.contentType = files.image.type;
         }
 
-        // Checking for empty fields
-        for (var keys in req.body) {
-          if (req.body[keys] === undefined || req.body[keys] === "") 
-          {
-            var incomplete = keys;
-            break;
-          }
-        }
-        
-        // Return error if there are some undefined values
-        if (incomplete != undefined) {
-          return res.json({
-            success: false,
-            message: "Please fill " + incomplete.toUpperCase()
-          });
-        }
+  
+        // Save to database
+        await item.save();
 
-        
-        let newFields = ({
-          name: req.body.name || item.name,
-          price: req.body.price || item.price,
-          variant: req.body.variant || item.variant,
-          quality: req.body.quality || item.quality,
-          inStock: req.body.inStock || item.inStock,
-          image: item.image
-        });
-          
+        return res.json({
+          success: true,
+          message: "Item Modified"
+        })
 
-        if(req.file)
-        {   
-          // Assigning image properties
-          item.image.data = fs.readFileSync(req.file.path);
-          item.image.contentType = "image/png";
-        } 
-
-        try {    
-            // Saving product to the Database
-            const item = await Item.findByIdAndUpdate(req.params.id, newFields, {new: true});
-            return res.json({
-                success: true,
-                data: item
-            })
-           
-        } catch (err) {
-            res.json({
-                success: false,
-                message: err
-            });
-        }
+    });
+   
 })
 
 

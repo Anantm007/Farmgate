@@ -31,6 +31,7 @@ const ShopPage = (props) => {
     
     const loadItems = () => {
       getItems(shopId).then(data => {
+        console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
@@ -39,7 +40,13 @@ const ShopPage = (props) => {
 
           else
           {
-            setItems(data.data);
+            if(data.count === 0)
+                {
+                    setError(data.message)
+                }
+                else {
+                    setItems(data.data);
+                }
             setLoading(false);
           }
       })
@@ -48,6 +55,11 @@ const ShopPage = (props) => {
     const showLoading = () => (
         loading && <Spinner />
     )
+
+    const showError = () => (
+      error && <h3 className="text-center">{error}</h3>
+    ) 
+
 
     useEffect(() => {
         loadShop()
@@ -88,9 +100,10 @@ const ShopPage = (props) => {
     
             <br/><br/>
             <h3>Shop Items Available</h3>
+            {showError()}
             <br/>
             <div className="row">                
-                {items.map((item, i) =>(
+                {items.length && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
                         <ShopItems item={item} />
                         <br/>      

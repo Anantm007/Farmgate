@@ -16,7 +16,7 @@ import Shops from '../shops/Shops';
 import ShopPage from '../shops/ShopPage';
 import CreateItem from '../items/CreateItem';
 import MyShopItems from '../items/MyShopItems';
-
+import UpdateItem from '../items/UpdateItem';
 
 // Admin
 import AdminDashboard from '../admin/AdminDashboard';
@@ -46,6 +46,7 @@ const Routes = () => {
                 <ShopRoute exact path = '/my/shops/:id' component = {ShopPage} />     
                 <ShopRoute exact path = '/create/item' component = {CreateItem} />
                 <ShopRoute exact path = '/shop/:id/items' component = {MyShopItems} />
+                <ShopRoute exact path = '/shop/:id/item/:itemid' component = {UpdateItem} />
                 <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />
 
                 <AdminRoute exact path="/admin/dashboard" component = {AdminDashboard} />                

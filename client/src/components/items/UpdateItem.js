@@ -1,9 +1,12 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {createItem} from './apiItems';
+import {getItem, Update} from './apiItems';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
 
-const CreateItem = () => {
+const UpdateItem = (props) => {
+
+    const itemid = props.match.params.itemid;
+
 
     const [values, setValues] = useState({
         name: '',
@@ -12,21 +15,37 @@ const CreateItem = () => {
         variant: '',
         quality: '',
         description: '',
-        loading: false,
         error: '',
+        loading: false,
         success: false,
-        formData: ''
+        inStock: '',
+        formData: new FormData()
     });
 
-    const {name, price, variant, quality, description, loading, error, success, formData} = values;
+    const {name, price, variant, quality, description, loading, error, success, inStock, formData} = values;
+    
+    const loadItem = () => {
+        setValues({...values, loading: true})
+        getItem(itemid).then(data => {
+            if(data.success === false)
+            {         
+                setValues({...values, error: data.message});
+                setValues({...values, loading: false})
+            }
+  
+            else
+            {
+            setValues({...values, name: data.data.name, description: data.data.description, 
+                price: data.data.price, variant: data.data.variant, quality: data.data.quality, inStock: data.data.inStock, loading:false
+            })
 
-    // load categories and form set data
-    const init = () => {
-            setValues({...values, formData: new FormData()})
+            }
+        })
     }
+  
     
     useEffect(() => {
-        init();
+        loadItem();
         // eslint-disable-next-line
     }, [])
     
@@ -40,33 +59,36 @@ const CreateItem = () => {
     const clickSubmit = e => {
         e.preventDefault();
         setValues({...values, error: '', loading: true});
-
-        createItem( formData)
+        
+        Update( itemid,formData)
         .then(data => {
+            console.log(data)
             if(data.success === false)
             {
-                setValues({...values, loading: false, error: data.message});
+                setValues({...values, error: data.message});
             }
 
             else
             {
                 setValues({
                     ...values, name: '', image: '', price: '', variant: '', quality: '', description: '', loading: false, error: '',
-                    success: true, formData: new FormData()
+                    success: true, formData: ''
                 })
             }
         })
     }
 
     const newPostForm = () => (
+        
         <form className="mb-3" onSubmit={clickSubmit}>
+                {showLoading()}
 
             <div className="form-group">
                 <label>Name</label>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
             
-            <h6>Item image (less than 1MB)</h6>
+            <h6>Item image (less than 1MB) (Don't choose any file if you don't want to update it)</h6>
             <div className="form-group">
                 <label className="btn btn-secondary">
                 <input onChange={handleChange('image')} type="file" name="image" accept="image/*" />
@@ -102,9 +124,19 @@ const CreateItem = () => {
                         <option value="No Chemical">No Chemical</option>
                 </select>
             </div>
+
+            <div className="form-group">
+                <label>In Stock</label>
+                <select onChange={handleChange('inStock')} className="form-control" value={inStock}>
+                    <option>Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+            </div>
+
             <br/>
             <div className="text-center">
-                <button className="btn btn-outline-primary">Create Item</button>
+                <button className="btn btn-outline-primary">Edit Item</button>
                 <br/><br />
                 {showError()}
                 {showSuccess()}
@@ -122,7 +154,7 @@ const CreateItem = () => {
 
     const showSuccess = () => {
         return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
-            Item added Succesfully
+            Item updated Succesfully
         </div>)
     }
 
@@ -134,7 +166,7 @@ const CreateItem = () => {
     return (
         <Fragment>
             <div style={{backgroundColor: '#c0ffb3', minHeight: '8rem', padding: '2rem', marginBottom: '2rem'}}>
-                <h1>Add Items to your shop</h1>
+                <h1>Edit Item</h1>
             </div>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
@@ -149,4 +181,4 @@ const CreateItem = () => {
 
 }
 
-export default CreateItem;
+export default UpdateItem;

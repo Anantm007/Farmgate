@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import {Link} from 'react-router-dom';
 import Footer from '../layout/Footer'
 import {getItems} from '../shops/apiShops';
 import {deleteItem} from './apiItems';
@@ -78,16 +79,16 @@ const MyShopItems = (props) => {
             </div>
             
             <br/>
+             
             {showError()}
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
+            
             <div className="row">                
                 {items.length > 0 && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
                         <ShopItems item={item} />
                         <br/>
                         <div className="text-center">
-                        <button  className="btn btn-primary">UPDATE</button>&nbsp;
+                        <button className="btn btn-primary"><Link to= {`/shop/${shopId}/item/${item._id}`} style={{color: 'white'}}>UPDATE </Link></button>&nbsp;
                         <button onClick={() => DeleteItem(item._id)} className="btn btn-danger">DELETE</button>
                         </div>
                         <br/>      
@@ -95,7 +96,7 @@ const MyShopItems = (props) => {
                 ))}
             </div>
             
-
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
             <Footer />
         </Fragment>)
