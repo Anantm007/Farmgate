@@ -35,25 +35,28 @@ const Navbar = ({history}) => {
 
 
                 {/*                                           USER LINKS                                        */}
-                {isAuthenticated() && !shopIsAuthenticated() && (
-                    <Fragment>
-                        {isAuthenticated() && isAuthenticated().user.Role === 0 && (
+                        {isAuthenticated() && !shopIsAuthenticated() && (
+                            <Fragment>
+                        {isAuthenticated() && isAuthenticated().user.role === 0 && (
                             
                             <li className="nav-item active"><a href="/user/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
                         )}
+                      
+                        {isAuthenticated() && isAuthenticated().user.role === 0 && (                            
+                            <li className="nav-item active">
+                                <a href="/cart" className="nav-link">
+                                CART <sup><small className="cart-badge active">5</small></sup>
+                                </a>
+                            </li>
+                        )}
 
-                        {isAuthenticated() && isAuthenticated().user.Role === 1 && (
+                        {isAuthenticated() && isAuthenticated().user.role === 1 && (
                             
                             <li className="nav-item active"><a href="/admin/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></a></li>
                         )}
 
                         <li className="nav-item active"><a href="/shops" className="nav-link">SHOPS</a></li>
                         
-                        <li className="nav-item active">
-                            <a href="/cart" className="nav-link">
-                            CART <sup><small className="cart-badge active">5</small></sup>
-                            </a>
-                        </li>
 
                         <li className="nav-item active">
                             <a href="/" onClick={() => signout(() => {

@@ -16,3 +16,17 @@ export const query = (query) => {
         console.log(err);
     })
 } 
+
+// List all users for the admin
+export const getUsers = () => {
+    return fetch(`/api/users`, {
+        method: "GET",
+        headers: { 'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token}
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+} 

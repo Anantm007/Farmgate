@@ -20,7 +20,7 @@ import UpdateItem from '../items/UpdateItem';
 
 // Admin
 import AdminDashboard from '../admin/AdminDashboard';
-
+import AdminUsers from '../admin/AdminUsers';
 
 // Utilities
 import NotFound from '../layout/NotFound';
@@ -50,6 +50,7 @@ const Routes = () => {
                 <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />
 
                 <AdminRoute exact path="/admin/dashboard" component = {AdminDashboard} />                
+                <AdminRoute exact path="/admin/users" component = {AdminUsers} />                
 
                 <Route component={NotFound} />
    

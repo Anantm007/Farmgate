@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Middleware for protecting routes
 const auth = require('../middleware/userAuth');
+const adminAuth = require('../middleware/adminAuth');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -115,7 +116,7 @@ router.get("/signout", auth, async(req, res) => {
 // @route   GET /api/users 
 // @desc    List All users 
 // @access  Public 
-router.get('/', async(req, res) => {
+router.get('/', adminAuth, async(req, res) => {
   await User.find({}, (err, users) => {
     if(err) {
       return res.json({
