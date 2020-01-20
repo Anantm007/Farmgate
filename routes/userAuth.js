@@ -14,6 +14,7 @@ const { check, validationResult } = require('express-validator');
 
 // Models
 const User = require('../models/user');
+const PostCodes = require("../models/postcodes");
 
 // Nodemailer setup
 const nodemailer = require("nodemailer");
@@ -105,6 +106,20 @@ router.post('/',
             success: false,
             message: 'User already registered!'
           });
+      }
+
+      // Check if we can deliver to the user's postcode
+      const p = await PostCodes.findOne({ adminName: "Admin" });
+      
+      if(p)
+      {
+        if(!p.codes.includes(zipCode))
+        {
+          return res.json({
+            success: false,
+            message: "Sorry, we do not currently deliver to your zip code. We are working hard to bring Farmgate to more customers"
+          })
+        }
       }
 
       // New User
