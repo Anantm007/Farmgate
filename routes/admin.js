@@ -5,6 +5,7 @@ const router = express.Router();
 const auth = require('../middleware/adminAuth');
 
 require('dotenv').config()
+const formidable = require("formidable");
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
@@ -188,6 +189,57 @@ router.post("/feedback", async(req, res) => {
       }
 })
 
+// @route   PUT /api/admin/items/:id 
+// @desc    Update item
+// @access  Private 
+router.put("/items/:id",
+    auth, 
+    async(req, res) => {
+      
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true // Extension for images
+  
+    form.parse(req, async(err, fields, files) => {
+      if(err)
+        {
+            return res.status(400).json({
+              success: false,
+              message: 'Image could not be uploaded'});
+        }
+  
+        
+        // Saving product to the Database
+        const item = await Item.findByIdAndUpdate(req.params.id, fields, {new: true});
+        
+        // Handle files
+        if(files.image)
+        {
+            // Validate file size less than 1 MB
+            if(files.image.size > 1000000)
+            {
+                return res.status(400).json({
+                  success: false,
+                  message: "File size should be less than 1 MB"
+                })
+            }
+  
+            item.image.data = fs.readFileSync(files.image.path);
+            item.image.contentType = files.image.type;
+        }
+
+  
+        // Save to database
+        await item.save();
+
+        return res.json({
+          success: true,
+          message: "Item Modified"
+        })
+
+    });
+   
+})
 
 
 module.exports = router;

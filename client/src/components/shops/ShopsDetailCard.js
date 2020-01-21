@@ -1,7 +1,16 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
+import {isAuthenticated} from '../userAuth';
 
 const ShopsCard = ({shop}) => {
+
+    const {user} = isAuthenticated();
+    let role;
+    if(user)
+    {
+        role = user.role;
+    }
+
     return (
           <Fragment>
             <div className="card">
@@ -16,11 +25,16 @@ const ShopsCard = ({shop}) => {
                 </div>
                 <div className="content">
                 <p>{shop.description.substring(0,150)}...</p>
-                <button className="btn btn-warning"><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>
+                {role!== undefined && role === 0 &&
+                <button className="btn btn-warning"><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
+                {role!== undefined && role === 1 &&
+                <button className="btn btn-warning"><Link to ={`/admin/shops/${shop._id}`} >Edit Now</Link></button>}
+                {role === undefined &&
+                <button className="btn btn-warning"><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
+
                 </div>
                 </div>
             </div>
-/* ITEMS, AVERAGE PRICE */
           </Fragment>
     )
 }

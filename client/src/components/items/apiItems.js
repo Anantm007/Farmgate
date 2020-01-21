@@ -46,20 +46,42 @@ export const getItem = async(id) => {
 }
 
 
-// Delete an Item
+// Update an Item
 export const Update = async(itemid, item) => {
-    return fetch(`/api/items/${itemid}`, {
-        method: 'PUT',
-        headers: {
-            Accept: "application/json",
-            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
-        },
-        body: item
-    })
-    .then(response => {
-        return response.json();
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    if(JSON.parse(localStorage.getItem('shopjwt')))
+    {   
+        return fetch(`/api/items/${itemid}`, {
+            method: 'PUT',
+            headers: {
+                Accept: "application/json",
+                'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
+            },
+            body: item
+        })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
+    else if (JSON.parse(localStorage.getItem('jwt')))
+    {    
+        return fetch(`/api/admin/items/${itemid}`, {
+            method: 'PUT',
+            headers: {
+                Accept: "application/json",
+                'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+            },
+            body: item
+        })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 }
+
