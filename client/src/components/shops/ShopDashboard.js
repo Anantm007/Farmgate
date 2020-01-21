@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import {Link} from 'react-router-dom';
 import {shopIsAuthenticated} from '../shopAuth';
+import ContactUs from '../layout/ContactUs';
 import Footer from '../layout/Footer';
 
 const ShopDashboard = () => {
@@ -50,6 +51,7 @@ const ShopDashboard = () => {
                         {shopInfo()}
                     </div>
                 </div>
+                <ContactUs/>
                 <Footer/>
             </Fragment>
     )

@@ -17,6 +17,7 @@ const { check, validationResult } = require('express-validator');
 
 // Models
 const User = require('../models/user');
+const PostCodes = require('../models/postcodes');
 
 
 
@@ -248,8 +249,24 @@ router.put('/:id', auth, async(req, res) => {
     });
   }
 
-    await User.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, user) => {  // req.user is coming from auth middleware where token is being checked
+  // Check if we can deliver to the user's postcode
+    const p = await PostCodes.findOne({ adminName: "Admin" });
       
+    if(p)
+      {
+        if(!p.codes.includes(req.body.zipCode))
+        {
+          return res.json({
+            success: false,
+            message: "Sorry, we do not currently deliver to your zip code."
+          })
+        }
+      }
+  
+    await User.findByIdAndUpdate(req.user.id, req.body, {new: true}, (err, user) => {  // req.user is coming from auth middleware where token is being checked
+      if(err)
+      throw err;
+
       user.password = undefined;
       return res.json({
         success: true,
