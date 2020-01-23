@@ -18,7 +18,7 @@ const { check, validationResult } = require('express-validator');
 // Models
 const User = require('../models/user');
 const PostCodes = require('../models/postcodes');
-
+const Item = require('../models/item');
 
 
 /*                                                  ROUTES                                                  */
@@ -275,8 +275,66 @@ router.put('/:id', auth, async(req, res) => {
 
     });
 
-
 });
 
+
+// @route   POST /api/users/cart/add/:id
+// @desc    Add or update an item in cart using the item id
+// @access  Private (using middleware) 
+router.post('/cart/add/:id', auth, async(req, res) => {
+  
+  const user = await User.findById(req.user.id)
+  const item = await Item.findById(req.params.id);
+  
+  if(req.body.quantity < 1)
+  {
+    return res.json({
+      success: false,
+      message: "Item quantity must be greater than 1"
+    })
+  }
+
+  let f = 0;
+  
+  try {
+        // If item already exists, we just need to update the quantity
+        if(user.cart.length > 0)
+        {
+          user.cart.forEach(c => {
+            if(c.item.toString() === req.params.id)
+            {
+              f=1;
+              c.quantity = req.body.quantity;
+              c.price = req.body.quantity * item.price
+            }            
+          }) 
+        }
+
+        // Create a new cart item
+        if(f === 0)
+        {
+          const cartItem = ({
+            item,
+            quantity: req.body.quantity,
+            price: item.price * req.body.quantity 
+          })
+        }
+    
+        // Save item to the cart in the DB
+        await user.save();
+    
+        return res.json({
+          success: true,
+          user
+        })
+      
+  } catch (err) {
+        return res.json({
+          success: false,
+          message: err
+        })
+    }  
+
+})
 
 module.exports = router;
