@@ -1,14 +1,39 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import { Link}  from "react-router-dom";
 import Logo from "../../images/logo.png";
 import {signout, isAuthenticated} from '../userAuth';
 import {shopSignout, shopIsAuthenticated} from '../shopAuth';
+import {cartLength} from '../user/apiUser';
 
 const Navbar = ({history}) => {
 
     let _id = null;
     if(shopIsAuthenticated())
     _id = shopIsAuthenticated().shop._id;
+
+    const [values, setValues] = useState({
+        Length: 0
+    });
+
+    const {Length} = values;
+
+    const findLength = () => {
+        cartLength()
+        .then(data => {
+            if(data.success === false)
+            {
+                setValues({...values, Length: 0})
+            }
+            if(data.success === true)
+            setValues({...values, Length: data.data})
+        })
+    }
+    
+    useEffect(() => {
+        isAuthenticated() && findLength()
+        //eslint-disable-next-line
+    }, [])    
+    
 
     return (
         <nav className="navbar navbar-expand-lg py-3 navbar-dark navbarbg shadow-sm">
@@ -45,7 +70,7 @@ const Navbar = ({history}) => {
                         {isAuthenticated() && isAuthenticated().user.role === 0 && (                            
                             <li className="nav-item active">
                                 <a href="/cart" className="nav-link">
-                                CART <sup><small className="cart-badge active">5</small></sup>
+                                 CART <sup><small className="cart-badge active">{Length}</small></sup>
                                 </a>
                             </li>
                         )}

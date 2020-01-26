@@ -7,6 +7,7 @@ import Login from '../user/Login';
 import UserDashboard from '../user/UserDashboard';
 import ResetPass from '../user/ResetPass';
 import UserSettings from '../user/UserSettings';
+import UserCart from '../user/UserCart';
 
 // Shops
 import ShopRegister from '../shops/ShopRegister';
@@ -43,6 +44,7 @@ const Routes = () => {
                 <Route exact path="/shops" component = {Shops} />
                 <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
                 <PrivateRoute exact path="/user/:id/settings" component = {UserSettings} />
+                <PrivateRoute exact path="/cart" component = {UserCart} />
 
                 <Route exact path ='/shop/register' component = {ShopRegister} />
                 <Route exact path ='/shop/login' component = {ShopLogin} />     

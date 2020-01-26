@@ -12,7 +12,7 @@ const UserDashboard = () => {
             <div className="card mb-5">
                 <h4 className="card-header text-center">User Links</h4>
                 <ul className="list-group">
-                    <li className="list-group-item"><Link to="/create/item" className="nav-link">My Cart</Link></li>
+                    <li className="list-group-item"><Link to="/cart" className="nav-link">My Cart</Link></li>
                     <li className="list-group-item"><Link to={`/shop/${_id}/orders`} className="nav-link">My Orders</Link></li>
                     <li className="list-group-item"><Link to={`/user/${_id}/settings`} className="nav-link">Account Settings</Link></li>
                 </ul>

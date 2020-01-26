@@ -318,6 +318,8 @@ router.post('/cart/add/:id', auth, async(req, res) => {
             quantity: req.body.quantity,
             price: item.price * req.body.quantity 
           })
+
+          user.cart.push(cartItem);
         }
     
         // Save item to the cart in the DB
@@ -335,6 +337,59 @@ router.post('/cart/add/:id', auth, async(req, res) => {
         })
     }  
 
+})
+
+
+// @route   DELETE /api/users/cart/remove/:id
+// @desc    Remove item from cart using the item id
+// @access  Private (using middleware) 
+router.delete('/cart/remove/:id', auth, async(req, res) => {
+
+  const user = await User.findById(req.user.id);
+  const item = await Item.findById(req.params.id);
+
+  if(!item || !user)
+  {
+    return res.json({
+      success: false,
+      message: "Item or user not found"
+    })
+  }
+
+  let i=0;
+  user.cart.forEach(async(c) => {
+    if(c.item.toString() === req.params.id)
+    {
+      user.cart.splice(i,1);
+      await user.save();
+      return res.json({
+        success: true,
+        data: user
+      })
+    }
+    i++;
+  });
+
+});
+
+
+// @route   GET /api/users/cart/length
+// @desc    Get cart length 9number of items)
+// @access  Private (using middleware) 
+router.get('/cart/length', auth, async(req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if(user.cart.length < 1)
+  {
+    return res.json({
+      success: false
+    })
+  }
+  
+  return res.json({
+    success: true,
+    data: user.cart.length
+  })
 })
 
 module.exports = router;
