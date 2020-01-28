@@ -27,7 +27,7 @@ const UserCart = () => {
           <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Delivery Address</div>
           <div class="p-4">
             <p class="font-italic mb-4">Please check your delivery address before proceeding forward</p>
-            <textarea name="" cols="30" rows="2" class="form-control" value="abcdefghijklmnopqrstuvwxyz" readOnly></textarea>
+            <textarea name="" cols="30" rows="2" class="form-control" value={user.address} readOnly></textarea>
           </div>
         </div>
 
@@ -37,10 +37,10 @@ const UserCart = () => {
             <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
             <ul class="list-unstyled mb-4">
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$4.5</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">GST (@10%)</strong><strong>$0.45</strong></li>
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                <h5 class="font-weight-bold">$400.00</h5>
+                <input readOnly></input>
               </li>
             </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
           </div>

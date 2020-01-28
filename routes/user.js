@@ -279,7 +279,7 @@ router.put('/:id', auth, async(req, res) => {
 
 
 // @route   POST /api/users/cart/add/:id
-// @desc    Add or update an item in cart using the item id
+// @desc    Add an item in cart using the item id
 // @access  Private (using middleware) 
 router.post('/cart/add/:id', auth, async(req, res) => {
   
@@ -294,25 +294,8 @@ router.post('/cart/add/:id', auth, async(req, res) => {
     })
   }
 
-  let f = 0;
-  
   try {
-        // If item already exists, we just need to update the quantity
-        if(user.cart.length > 0)
-        {
-          user.cart.forEach(c => {
-            if(c.item.toString() === req.params.id)
-            {
-              f=1;
-              c.quantity = req.body.quantity;
-              c.price = req.body.quantity * item.price
-            }            
-          }) 
-        }
-
-        // Create a new cart item
-        if(f === 0)
-        {
+       // Create a new cart item
           const cartItem = ({
             item,
             quantity: req.body.quantity,
@@ -320,7 +303,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
           })
 
           user.cart.push(cartItem);
-        }
+        
     
         // Save item to the cart in the DB
         await user.save();
@@ -336,6 +319,53 @@ router.post('/cart/add/:id', auth, async(req, res) => {
           message: err
         })
     }  
+
+})
+
+// @route   POST /api/users/cart/update/:id
+// @desc    Update an item in cart using the item id
+// @access  Private (using middleware) 
+router.put('/cart/update/:id', auth, async(req, res) => {
+  
+  const user = await User.findById(req.user.id)
+  const item = await Item.findById(req.params.id);
+  
+
+  if(req.body.quantity < 1)
+  {
+    return res.json({
+      success: false,
+      message: "Item quantity must be greater than 1"
+    })
+  }
+
+  try {
+      // If item already exists, we just need to update the quantity
+      if(user.cart.length > 0)
+      {
+        user.cart.forEach(async(c) => {
+        if(c.item.toString() === req.params.id)
+          {
+            c.quantity = req.body.quantity;
+            c.price = req.body.quantity * item.price
+            await user.save();
+
+            return res.json({
+              success: true, 
+              quantity: c.quantity,
+              price: c.price,
+              data: user
+            })
+          }            
+        }) 
+      }    
+    
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error
+    })
+  }
 
 })
 

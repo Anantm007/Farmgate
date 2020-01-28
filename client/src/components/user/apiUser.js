@@ -67,6 +67,27 @@ export const cartLength = () => {
     })
 }
 
+// Update item quantity from cart
+export const updateCartItem = (id, quantity) => {
+    const b = {
+        quantity
+    }
+    return fetch(`/api/users/cart/update/${id}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        },
+        body: JSON.stringify(b)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 // Remove item from cart
 export const removeFromCart = (id) => {
     return fetch(`/api/users/cart/remove/${id}`, {
