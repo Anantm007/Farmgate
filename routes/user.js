@@ -310,7 +310,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
     
         return res.json({
           success: true,
-          user
+          data: user
         })
       
   } catch (err) {
@@ -402,6 +402,32 @@ router.delete('/cart/remove/:id', auth, async(req, res) => {
 
 });
 
+
+// @route   GET /api/users/cart/total
+// @desc    Get cart total
+// @access  Private (using middleware) 
+router.get('/cart/total', auth, async(req, res) => {
+  const user = await User.findById(req.user.id);
+
+  let total = 0;
+
+  try {
+      user.cart.forEach(async(c) => {
+        total += c.price;
+      })
+      
+      return res.json({
+        success: true,
+        data: total
+      })  
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: err
+    })
+  }
+
+})
 
 // @route   GET /api/users/cart/length
 // @desc    Get cart length 9number of items)

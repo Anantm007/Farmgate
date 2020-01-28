@@ -37,7 +37,6 @@ export const Update = async(id, user) => {
 
 // Update user in local storage
 export const updateUser = (user, next) => {
-    console.log('yo',user)
     if(typeof window !== 'undefined')
     {
         if(localStorage.getItem('jwt'))
@@ -50,10 +49,51 @@ export const updateUser = (user, next) => {
     }
 }
 
+// Add item to user's cart
+export const addToCart = (id) => {
+    const b = {
+        quantity: 1
+    }
+
+    return fetch(`/api/users/cart/add/${id}`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        },
+        body: JSON.stringify(b)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })   
+
+}
+
 // Get cart length of user
 export const cartLength = () => {
 
     return fetch(`/api/users/cart/length`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+
+// Get cart total of user
+export const getCartTotal = () => {
+
+    return fetch(`/api/users/cart/total`, {
         method: 'GET',
         headers: {
             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token

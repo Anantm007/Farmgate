@@ -5,7 +5,6 @@ import {getItem} from '../items/apiItems';
 import {updateCartItem} from '../user/apiUser';
 
 const CartItem = ({item}) => {
-  console.log(item)
     const [values, setValues] = useState({
         foundItem: {},
         error: '',
