@@ -15,7 +15,7 @@ const ShopsCard = ({shop}) => {
           <Fragment>
             <div className="card">
                 <div className="image">
-                <img src={`/api/shops/photo/${shop._id}`} />
+                <img src={`/api/shops/photo/${shop._id}`} alt="" />
                 </div>
                 <div className="card-inner">
                 <div className="header">

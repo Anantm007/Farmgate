@@ -150,7 +150,7 @@ const Register = () => {
 
 
     return (
-        <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
+        <div style ={{ backgroundImage: "url(https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg" }}>
             {showSuccess()}
             {signUpForm()}
             {redirectUser()}

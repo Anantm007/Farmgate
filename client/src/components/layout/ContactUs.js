@@ -67,16 +67,16 @@ const ContactUs = () => {
                             <div className="card-body">
                                 <form>
                                     <div className="form-group">
-                                        <label for="name">Name</label>
+                                        <label htmlFor="name">Name</label>
                                         <input type="text" className="form-control" onChange={handleChange('name')} value={name} aria-describedby="emailHelp" placeholder="Your name" required />
                                     </div>
                                     <div className="form-group">
-                                        <label for="email">Email address</label>
+                                        <label htmlFor="email">Email address</label>
                                         <input type="email" className="form-control" onChange={handleChange('email')} value={email} aria-describedby="emailHelp" placeholder="Your email" required />
                                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                                     </div>
                                     <div className="form-group">
-                                        <label for="message">Message</label>
+                                        <label htmlFor="message">Message</label>
                                         <textarea className="form-control" onChange={handleChange('description')} value={description} rows="6" required></textarea>
                                     </div>
                                     <div className="mx-auto">

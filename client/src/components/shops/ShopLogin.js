@@ -110,7 +110,7 @@ const ShopLogin = () => {
 
     return (
         loading ? <div>{showLoading()}</div> : (<Fragment>
-            <div style ={{ backgroundImage: "url("+"https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg"+")" }}>
+            <div style ={{ backgroundImage: "url(https://inhabitat.com/wp-content/blogs.dir/1/files/2017/05/Fresh-Food-Health.jpg)" }}>
                 {showError()}
                 {showLoading()}
                 {redirectShop()}

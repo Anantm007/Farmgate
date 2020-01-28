@@ -8,14 +8,12 @@ const AdminUsers = () => {
     const {user: { name}} = isAuthenticated();
 
     const [users, setUsers] = useState([])
-    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true);
 
     const loadShops = () => {
         getUsers().then(data => {
             if(data.success === false)
             {
-                setError(data.message);
                 setLoading(false);
             }
 

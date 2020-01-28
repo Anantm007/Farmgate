@@ -12,14 +12,12 @@ import Spinner from './Spinner';
 const Landing = () => {
 
     const [shops, setShops] = useState([])
-    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true);
 
     const loadShops = () => {
         getShops().then(data => {
             if(data.success === false)
             {
-                setError(data.message);
                 setLoading(false);
             }
 
