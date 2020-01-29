@@ -35,20 +35,19 @@ export const signin = async user => {
 }
 
 // Save token in storage
-export const authenticate = (data, next) => {
+export const authenticate = (data) => {
     if(typeof window !== 'undefined')
     {
         localStorage.setItem('jwt', JSON.stringify(data))
-        next();
     }
 }
 
 // Signout so destroy the local token
-export const signout = (next) => {
+export const signout = () => {
     if(typeof window !== 'undefined')
     {
         localStorage.removeItem('jwt');
-        next();
+        window.location.reload(false);
     }
 };
 
