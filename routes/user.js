@@ -294,35 +294,41 @@ router.post('/cart/add/:id', auth, async(req, res) => {
     })
   }
 
-  try {
-       // Create a new cart item
-          const cartItem = ({
-            item,
-            quantity: req.body.quantity,
-            price: item.price * req.body.quantity 
-          })
+  let f=0;
+  // If item already exists, we just need to update the quantity (add 1)
+  if(user.cart.length > 0)
+  {
+    user.cart.forEach(async(c) => {
+      if(c.item.toString() === req.params.id)
+      {
+        c.quantity += 1;
+        c.price += item.price;
+        f=1;
+      }            
+    }) 
+  }
 
-          user.cart.push(cartItem);
-        
-    
-        // Save item to the cart in the DB
-        await user.save();
-    
-        return res.json({
-          success: true,
-          data: user
-        })
-      
-  } catch (err) {
-        return res.json({
-          success: false,
-          message: err
-        })
-    }  
+   if(f === 0)
+   {
+     // Create a new cart item
+     const cartItem = ({
+       item,
+       quantity: req.body.quantity,
+       price: item.price * req.body.quantity 
+     })
 
+     user.cart.push(cartItem);
+  }
+
+   await user.save();
+    console.log('hello', user)
+   return res.json({
+     success: true,
+     data: user
+    })
 })
 
-// @route   POST /api/users/cart/update/:id
+// @route   PUT /api/users/cart/update/:id
 // @desc    Update an item in cart using the item id
 // @access  Private (using middleware) 
 router.put('/cart/update/:id', auth, async(req, res) => {
@@ -339,7 +345,7 @@ router.put('/cart/update/:id', auth, async(req, res) => {
     })
   }
 
-  try {
+  let f=0;
       // If item already exists, we just need to update the quantity
       if(user.cart.length > 0)
       {
@@ -348,24 +354,21 @@ router.put('/cart/update/:id', auth, async(req, res) => {
           {
             c.quantity = req.body.quantity;
             c.price = req.body.quantity * item.price
-            await user.save();
-
-            return res.json({
-              success: true, 
-              quantity: c.quantity,
-              price: c.price,
-              data: user
-            })
+            f = 1;
           }            
-        }) 
+        })
+
+        if(f===1)
+        {
+          await user.save();
+
+          return res.json({
+            success: true,
+            data: user
+          })
+        } 
       }    
     
-  } catch (error) {
-    return res.json({
-      success: false,
-      message: error
-    })
-  }
 
 })
 

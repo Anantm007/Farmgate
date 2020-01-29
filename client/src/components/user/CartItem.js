@@ -102,29 +102,29 @@ const CartItem = ({item}) => {
 
     return (
         <Fragment>
-            <div class="pb-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+            <div className="pb-5">
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
 
-          <div class="table-responsive">
-            <table class="table">
+          <div className="table-responsive">
+            <table className="table">
               <thead>
                 <tr>
-                  <th scope="col" class="border-0 bg-light">
-                    <div class="p-2 px-3 text-uppercase">Product</div>
+                  <th scope="col" className="border-0 bg-light">
+                    <div className="p-2 px-3 text-uppercase">Product</div>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
-                    <div class="py-2 text-uppercase">Price</div>
+                  <th scope="col" className="border-0 bg-light">
+                    <div className="py-2 text-uppercase">Price</div>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
-                    <div class="py-2 text-uppercase">Quantity</div>
+                  <th scope="col" className="border-0 bg-light">
+                    <div className="py-2 text-uppercase">Quantity</div>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
-                    <div class="py-2 text-uppercase">Item Total ($)</div>
+                  <th scope="col" className="border-0 bg-light">
+                    <div className="py-2 text-uppercase">Item Total ($)</div>
                   </th>
-                  <th scope="col" class="border-0 bg-light">
-                    <div class="py-2 text-uppercase">Remove</div>
+                  <th scope="col" className="border-0 bg-light">
+                    <div className="py-2 text-uppercase">Remove</div>
                   </th>
                 </tr>
               </thead>
@@ -133,17 +133,17 @@ const CartItem = ({item}) => {
                 {loading ? showLoading() : <Fragment>
                   <tr>
                   <th scope="row">
-                    <div class="p-2">                        
-                      <img src={`/api/items/photo/${foundItem._id}`} alt="" width="70" class="img-fluid rounded shadow-sm" />
-                      <div class="ml-3 d-inline-block align-middle">
-                      <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">{foundItem.name}</a></h5><span class="text-muted font-weight-normal font-italic">{foundItem.description}</span>
+                    <div className="p-2">                        
+                      <img src={`/api/items/photo/${foundItem._id}`} alt="" width="70" className="img-fluid rounded shadow-sm" />
+                      <div className="ml-3 d-inline-block align-middle">
+                      <h5 className="mb-0"><a href="#" className="text-dark d-inline-block">{foundItem.name}</a></h5><span className="text-muted font-weight-normal font-italic">{foundItem.description}</span>
                       </div>
                     </div>
                   </th>
-                  <td class="align-middle"><strong>{`$${foundItem.price}/${foundItem.variant}`}</strong></td>
-                  <td class="align-middle"><input type="number" value={quantity} onChange={handleChange(`${item.item}`)} style={{width:"3rem"}} min="1"/></td>
-                  <td class="align-middle"><input type="number" value={price} readOnly style={{border: 'none', fontWeight: 'bold', width:"3rem"}}/></td>
-                  <td class="align-middle"><i onClick={removeItem} class="fa fa-trash"></i>
+                  <td className="align-middle"><strong>{`$${foundItem.price}/${foundItem.variant}`}</strong></td>
+                  <td className="align-middle"><input type="number" value={quantity} onChange={handleChange(`${item.item}`)} style={{width:"3rem"}} min="1"/></td>
+                  <td className="align-middle"><input type="number" value={price} readOnly style={{border: 'none', fontWeight: 'bold', width:"3rem"}}/></td>
+                  <td className="align-middle"><i onClick={removeItem} className="fa fa-trash"></i>
                   </td>
                 </tr>
                   </Fragment>}

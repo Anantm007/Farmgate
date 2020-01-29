@@ -1,4 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import CartItem from './CartItem';
 import {isAuthenticated} from '../userAuth';
@@ -9,7 +11,7 @@ const UserCart = () => {
   const {user} = isAuthenticated();
 
   const [values, setValues] = useState({
-    shipping: 4.5,
+    shipping: 4.50,
     tax: 0.45,
     subtotal: 0,
     loading: false,
@@ -38,6 +40,9 @@ const UserCart = () => {
     getValues();
     //eslint-disable-next-line
   }, [])
+
+  const showLoading = () =>      
+    loading && <Spinner/>
 
     return (
         <Fragment>
@@ -68,11 +73,12 @@ const UserCart = () => {
           <div className="p-4">
             <p className="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
             <ul className="list-unstyled mb-4">
+              {showLoading()}
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${total}</strong></li>
-            </ul><a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+            </ul><Link to="/checkout" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</Link>
           </div>
         </div>
 
