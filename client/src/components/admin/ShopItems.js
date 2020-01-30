@@ -6,19 +6,19 @@ const ShopItems = ({item}) => {
     return (
         <Fragment>
             
-            <div class="row">
+            <div className="row">
                 
-                <div class="flip-card" style={{margin: "2rem"}}>
-                    <div class="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`}}>
+                <div className="flip-card" style={{margin: "2rem"}}>
+                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`}}>
                         
-                        <div class="flip-card-front">
+                        <div className="flip-card-front">
                         <h4>{item.name}</h4>
                         <h6>{`$ ${item.price} / ${item.variant}`}</h6>
                         {item.inStock ? <span className="badge badge-primary badge-pill">In Stock</span> : <span className="badge badge-danger badge-pill">Out of Stock</span>} <br/><br/>
                         {item.inStock && <button className="btn btn-danger"><Link to = {`/admin/update/item/${item._id}`} style={{color: 'white'}}>Edit Item</Link></button>}
                         </div>
 
-                        <div class="flip-card-back">
+                        <div className="flip-card-back">
                         <p>{item.description}</p>
                         <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
                         {item.inStock && <button className="btn btn-danger"><Link to = {`/admin/update/item/${item._id}`} style={{color: 'white'}}>Edit Item</Link></button>}

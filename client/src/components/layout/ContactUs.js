@@ -92,7 +92,7 @@ const ContactUs = () => {
                             <div className="card-header bg-success text-white text-uppercase"><i className="fa fa-home"></i> Address</div>
                             <div className="card-body">
                                 <p>154 Grasby Road, Ballhannah</p>
-                                <p>Adealide</p>
+                                <p>Adelaide</p>
                                 <p>South Australia</p>
                                 <p>Email :<a href="mailto:farmgateishere@gmail.com"> farmgateishere@gmail.com</a></p>
                                 <p>Tel: <a href="https://wa.me/61438807530">+61 438 807 530</a></p>
