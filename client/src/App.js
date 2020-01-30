@@ -11,6 +11,7 @@ import UserDashboard from './components/user/UserDashboard';
 import ResetPass from './components/user/ResetPass';
 import UserSettings from './components/user/UserSettings';
 import UserCart from './components/user/UserCart';
+import Checkout from './components/user/Checkout';
 
 // Shops
 import ShopRegister from './components/shops/ShopRegister';
@@ -60,6 +61,7 @@ const  App = () => {
             <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
             <PrivateRoute exact path="/user/:id/settings" component = {UserSettings} />
             <PrivateRoute exact path="/cart" component = {UserCart} />
+            <PrivateRoute exact path='/checkout' component = {Checkout} />
 
             <Route exact path ='/shop/register' component = {ShopRegister} />
             <Route exact path ='/shop/login' component = {ShopLogin} />     

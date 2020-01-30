@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import {addToCart, updateUser} from '../user/apiUser';
+import Spinner from '../layout/Spinner';
 
 const ShopItems = ({item}) => {
 
@@ -13,7 +14,7 @@ const ShopItems = ({item}) => {
 
 
     const addCart = () => {
-        setValues({...values, loading: true, error: '', success: false});
+        setValues({...values, loading: true, error: false, success: false});
         addToCart(item._id)
         .then(data => {
             console.log(data)
@@ -30,6 +31,24 @@ const ShopItems = ({item}) => {
             }
         })
     }
+
+    const showError = () => {
+        return (<div className="alert alert-danger" style={{display: error ? '': 'none'}}>
+            {error}
+        </div>
+        )
+    }
+
+    
+    const showSuccess = () => {
+        return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
+            Item added to cart successfully!
+        </div>
+        )
+    }
+
+    const showLoading = () => 
+            loading && <Spinner/>
 
 
     return (
@@ -54,6 +73,10 @@ const ShopItems = ({item}) => {
                         </div>
                         
                     </div>
+                    <br/>
+                    {showLoading()}
+                    {showError()}
+                    {showSuccess()}
                 </div>
 
             </div>

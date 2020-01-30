@@ -121,7 +121,7 @@ const CartItem = ({item}) => {
                     <div className="py-2 text-uppercase">Quantity</div>
                   </th>
                   <th scope="col" className="border-0 bg-light">
-                    <div className="py-2 text-uppercase">Item Total ($)</div>
+                    <div className="py-2 text-uppercase">Item Total</div>
                   </th>
                   <th scope="col" className="border-0 bg-light">
                     <div className="py-2 text-uppercase">Remove</div>
@@ -142,7 +142,7 @@ const CartItem = ({item}) => {
                   </th>
                   <td className="align-middle"><strong>{`$${foundItem.price}/${foundItem.variant}`}</strong></td>
                   <td className="align-middle"><input type="number" value={quantity} onChange={handleChange(`${item.item}`)} style={{width:"3rem"}} min="1"/></td>
-                  <td className="align-middle"><input type="number" value={price} readOnly style={{border: 'none', fontWeight: 'bold', width:"3rem"}}/></td>
+                  <td className="align-middle"><strong>${price}</strong></td>
                   <td className="align-middle"><i onClick={removeItem} className="fa fa-trash"></i>
                   </td>
                 </tr>
