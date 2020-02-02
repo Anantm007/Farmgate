@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getBraintreeClientToken} from '../user/apiUser';
+import {getBraintreeClientToken, processPayment, emptyCart, updateUser} from '../user/apiUser';
 import DropIn from 'braintree-web-drop-in-react';
 import { withRouter } from 'react-router-dom';
 
@@ -25,10 +25,12 @@ const Checkout = (props) => {
     instructions: '',
     clientToken: null,
     instance: {},
+    success: false,
+    error: '',
     total: 0
   });
 
-  const {shipping, tax, instructions, subtotal, clientToken, loading} = values;
+  const {shipping, tax, instructions, subtotal, instance, clientToken, success, error, loading} = values;
 
   const handleChange = name => e => {
     setValues({...values, error: false, [name]: e.target.value})
@@ -65,18 +67,79 @@ const Checkout = (props) => {
     //eslint-disable-next-line
   }, [])
 
+  const buy = () => {
+    // send nonce to server
+    // nonce is data.instance.requestpaymentMethod()
+    
+    let nonce;
+    
+    let getNonce = instance.requestPaymentMethod()
+    .then(data => {
+      console.log(data);
+      nonce = data.nonce;
+
+      // once you have nonce (card type, card number) send nonce as 'paymentMethodNonce'
+      // and also total to be charged
+      const paymentData = {
+          paymentMethodNonce: nonce,
+          amount: Total()
+      }
+
+      processPayment(user._id, paymentData)
+      .then(response => {
+        setValues({...values, success: response.success})
+        // empty cart
+        emptyCart()
+        .then(data => {
+          if(data.success === false)
+          {
+            setValues({...values, success: false, error: data.message})
+          }
+          else
+          {
+            updateUser(data.data, () => {
+              setValues({...values, subtotal: 0})
+            })
+          }
+        })
+        // create order
+      })
+    })
+    .catch(err => {
+      console.log('dropin error: ', err);
+    })
+  }
+
   const showDropIn = () => (
     <div>
       {clientToken !== null ? (
         <div>
           <DropIn options = {{
             authorization: clientToken
-          }} onInstance = {instance => (values.instance = instance)} />
-          <button className="btn btn-block btn-success">Pay</button>
+          }} onInstance = {instance => (setValues({...values, instance: instance }))} />
+          <button onClick={buy} className="btn btn-block btn-success">Pay</button>
         </div>
       ): null}
     </div>
   )
+
+  const showError = error => (
+    <div
+        className="alert alert-danger"
+        style={{ display: error ? "" : "none" }}
+    >
+        {error}
+    </div>
+);
+
+const showSuccess = success => (
+    <div
+        className="alert alert-info"
+        style={{ display: success ? "" : "none" }}
+    >
+        Thanks! Your payment was successful! Please check your email
+    </div>
+);
 
   const showLoading = () => (
     loading && <Spinner/>
@@ -111,7 +174,8 @@ const Checkout = (props) => {
             <p className="font-italic mb-4">If you have some information for the seller/delivery you can leave them in the box below</p>
             <textarea onChange={handleChange('instructions')} value={instructions} cols="30" rows="3" className="form-control"></textarea>
           </div>
-          
+          {showSuccess(success)}
+          {showError(error)}
           {showDropIn()}
         </div>
       </div>

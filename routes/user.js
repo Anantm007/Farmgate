@@ -451,4 +451,29 @@ router.get('/cart/length', auth, async(req, res) => {
   })
 })
 
+// @route   PUT /api/users/cart/empty
+// @desc    Empty cart after successfull purchase
+// @access  Private (using middleware) 
+router.put('/cart/empty', auth, async(req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if(user.cart.length > 1)
+  {
+    try {  
+      user.cart = [];
+      await user.save();
+
+      return res.json({
+        success: true,
+        data: user
+      })
+    } catch (err) {
+        return res.json({
+          success: false,
+          message: err
+        })
+    }
+  }
+})
+
 module.exports = router;

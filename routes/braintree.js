@@ -21,6 +21,10 @@ const gateway = braintree.connect({
 
 
 /*                                                              ROUTES                                                           */
+
+// @route   GET /api/braintree/getToken/:id 
+// @desc    Generate Braintree client token for payments
+// @access  Private 
 router.get('/braintree/getToken/:id', userAuth , async(req, res) => {
     gateway.clientToken.generate({}, async(err, response) => {
         if(err)
@@ -32,6 +36,34 @@ router.get('/braintree/getToken/:id', userAuth , async(req, res) => {
         }
 
         return res.json(response);
+    })
+})
+
+
+// @route   POST /api/braintree/payment/:id 
+// @desc    Process payments
+// @access  Public
+router.post('/braintree/payment/:id', userAuth, async(req, res) => {
+    let nonceFromTheClient = req.body.paymentMethodNonce;
+    let amountFromTheClient = req.body.amount;
+
+    // charge
+    let newTransaction = gateway.transaction.sale({
+        amount: amountFromTheClient,
+        paymentMethodNonce: nonceFromTheClient,
+        options: {
+            submitForSettlement: true
+        }
+    }, (err, result) => {
+        if(err)
+        {
+            return res.json({
+                success: false,
+                message: err
+            })
+        }
+
+        return res.json(result)
     })
 })
 

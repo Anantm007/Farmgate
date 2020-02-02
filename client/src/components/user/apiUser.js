@@ -161,3 +161,39 @@ export const getBraintreeClientToken = (userId) => {
         console.log(err);
     }) 
 }
+
+
+// Process the payment
+export const processPayment = (userId, paymentData) => {
+    return fetch(`/api/braintree/payment/${userId}`, {
+        method: 'POST',
+        headers: {
+            Accept: "application/json",
+            'Content-Type': "application/json",
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        },
+        body: JSON.stringify(paymentData)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    }) 
+}
+
+// Empty cart after successfull purchase
+export const emptyCart = () => {
+    return fetch(`/api/users/cart/empty`, {
+        method: 'PUT',
+        headers: {
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
