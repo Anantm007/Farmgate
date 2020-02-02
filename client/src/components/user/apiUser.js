@@ -143,3 +143,21 @@ export const removeFromCart = (id) => {
         console.log(err);
     })
 }
+
+// Get Braintree token from backend
+export const getBraintreeClientToken = (userId) => {
+    return fetch(`/api/braintree/getToken/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: "application/json",
+            'Content-Type': "application/json",
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    }) 
+}

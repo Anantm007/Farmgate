@@ -1,48 +1,87 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getCartTotal} from '../user/apiUser';
+import {getBraintreeClientToken} from '../user/apiUser';
+import DropIn from 'braintree-web-drop-in-react';
+import { withRouter } from 'react-router-dom';
 
-const Checkout = () => {
+const Checkout = (props) => {
 
   const {user} = isAuthenticated();
+
+  const check = () => {
+    if(!props.location.state)
+    {
+      window.location = `/cart`;
+    }
+  }
 
   const [values, setValues] = useState({
     shipping: 4.50,
     tax: 0.45,
-    subtotal: 0,
+    subtotal: props.location.state ? props.location.state.subtotal: 0,
     loading: false,
+    instructions: '',
+    clientToken: null,
+    instance: {},
     total: 0
   });
 
-  const {shipping, tax, subtotal, total, loading} = values;
+  const {shipping, tax, instructions, subtotal, clientToken, loading} = values;
 
-  const getValues = () => {
-    setValues({...values, loading: true});
-    getCartTotal()
+  const handleChange = name => e => {
+    setValues({...values, error: false, [name]: e.target.value})
+  };
+
+  // cart values
+  const cartTotal = () => {
+    return subtotal
+  }
+
+  const Total = () => {
+    return cartTotal() + shipping + tax;
+  }
+
+  // get braintree token
+  const getToken = () => {
+    getBraintreeClientToken(user._id)
     .then(data => {
-      if(data.success === true)
+      if(data.error)
       {
-        setValues({...values, subtotal: data.data, total: data.data + tax + shipping, loading: false})
+        setValues({...values, error: data.message});
       }
 
       else
       {
-        setValues({...values, loading: false})
+        setValues({...values, clientToken: data.clientToken})
       }
     })
   }
 
   useEffect(() => {
-    getValues();
+    check();
+    getToken();
     //eslint-disable-next-line
   }, [])
 
-  const showLoading = () =>      
-    loading && <Spinner/>
+  const showDropIn = () => (
+    <div>
+      {clientToken !== null ? (
+        <div>
+          <DropIn options = {{
+            authorization: clientToken
+          }} onInstance = {instance => (values.instance = instance)} />
+          <button className="btn btn-block btn-success">Pay</button>
+        </div>
+      ): null}
+    </div>
+  )
 
+  const showLoading = () => (
+    loading && <Spinner/>
+  )      
+    
     return (
         <Fragment>
           <br/>
@@ -58,14 +97,23 @@ const Checkout = () => {
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Deliver To</strong><strong>{user.name}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Delivery Address</strong><strong>{user.address}</strong></li>
               {showLoading()}
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${cartTotal()}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${total}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${Total()}</strong></li>
             </ul>
           </div>
         </div>
 
+        <div className="col-lg-6">
+          <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for the seller</div>
+          <div className="p-4">
+            <p className="font-italic mb-4">If you have some information for the seller/delivery you can leave them in the box below</p>
+            <textarea onChange={handleChange('instructions')} value={instructions} cols="30" rows="3" className="form-control"></textarea>
+          </div>
+          
+          {showDropIn()}
+        </div>
       </div>
 
           <Footer />  
@@ -73,4 +121,4 @@ const Checkout = () => {
     )
 }
 
-export default Checkout
+export default withRouter(Checkout)

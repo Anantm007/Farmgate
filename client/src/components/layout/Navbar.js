@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import { Link, BrowserRouter }  from "react-router-dom";
+import { Link }  from "react-router-dom";
 import Logo from "../../images/logo.png";
 import {signout, isAuthenticated} from '../userAuth';
 import {shopSignout, shopIsAuthenticated} from '../shopAuth';

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import {addToCart, updateUser} from '../user/apiUser';
 import Spinner from '../layout/Spinner';
 
