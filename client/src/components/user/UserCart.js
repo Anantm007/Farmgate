@@ -49,7 +49,7 @@ const UserCart = () => {
           <br/>
           <h1 className="text-center">{user.name.split(" ").slice(0,-1)}'s Shopping Cart</h1>
           
-          {user.cart.length > 1 ? user.cart.map((item, i) =>(
+          {user.cart.length >= 1 ? user.cart.map((item, i) =>(
                     <div key={i}>    
                         <CartItem item={item} />      
                     </div>
@@ -76,7 +76,7 @@ const UserCart = () => {
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${total}</strong></li>
             </ul>
-            {user.cart.length > 1 ? <Link to= {{pathname: "/checkout", state: {subtotal: values.subtotal}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
+            {user.cart.length >= 1 ? <Link to= {{pathname: "/checkout", state: {subtotal: values.subtotal}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
            : <Link to="/checkout" className="btn btn-dark rounded-pill py-2 btn-block disabled">Proceed to checkout</Link>}
           </div>
         </div>

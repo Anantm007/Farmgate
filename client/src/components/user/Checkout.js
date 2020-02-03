@@ -88,6 +88,10 @@ const Checkout = (props) => {
       processPayment(user._id, paymentData)
       .then(response => {
         setValues({...values, success: response.success})
+        
+        // create order
+        //TODO
+        
         // empty cart
         emptyCart()
         .then(data => {
@@ -102,7 +106,6 @@ const Checkout = (props) => {
             })
           }
         })
-        // create order
       })
     })
     .catch(err => {
@@ -165,10 +168,12 @@ const showSuccess = success => (
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${Total()}</strong></li>
             </ul>
+            
+            <h5>* Your order should be delivered within 7 days</h5>
           </div>
         </div>
 
-        <div className="col-lg-6">
+        <div className="col-lg-5">
           <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for the seller</div>
           <div className="p-4">
             <p className="font-italic mb-4">If you have some information for the seller/delivery you can leave them in the box below</p>
