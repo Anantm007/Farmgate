@@ -8,14 +8,14 @@ const OrderSchema = new mongoose.Schema({
     },
 
 
-    shop: [{
+    shop: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shop'
-    }],
+    },
 
-    address: {
+    instructions: {
         type: String,
-        required: [true, 'Please add a delivery address']
+        default: ''
     },
 
     items: [{
@@ -30,15 +30,19 @@ const OrderSchema = new mongoose.Schema({
         }
     }],
 
-    amount: {
-        tax_shipping: {
-            type: Number,
-            default: 0
-        },
+    subtotal: {
+        type: Number,
+        required: true
+    },
 
-        totalAmount: {
-            type: Number
-        }
+    tax_shipping: {
+        type: Number,
+        default: 4.95,
+    },
+    
+    totalAmount: {
+        type: Number,
+        required: true
     }
     
 

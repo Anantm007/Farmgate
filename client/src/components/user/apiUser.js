@@ -182,18 +182,22 @@ export const processPayment = (userId, paymentData) => {
     }) 
 }
 
-// Empty cart after successfull purchase
-export const emptyCart = () => {
-    return fetch(`/api/users/cart/empty`, {
-        method: 'PUT',
+
+// Create the order
+export const createOrder = (userId, data) => {
+    return fetch(`/api/order/${userId}`, {
+        method: 'POST',
         headers: {
+            Accept: "application/json",
+            'Content-Type': "application/json",
             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
-        }
+        },
+        body: JSON.stringify(data)
     })
     .then(response => {
         return response.json();
     })
     .catch(err => {
-        console.log(err)
-    })
+        console.log(err);
+    }) 
 }

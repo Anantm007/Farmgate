@@ -65,6 +65,7 @@ app.use('/api/shops', require('./routes/shop'));
 app.use('/api/users', require('./routes/user'));
 app.use('/api/items', require('./routes/item'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/order', require('./routes/order'));
 app.use('/api', require('./routes/braintree'));
 
 // Starting the server

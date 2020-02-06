@@ -298,6 +298,15 @@ router.post('/cart/add/:id', auth, async(req, res) => {
   // If item already exists, we just need to update the quantity (add 1)
   if(user.cart.length > 0)
   {
+    const x = await Item.findById(user.cart[0].item);
+    console.log(item.shop, x)
+    if(item.shop.toString() !== x.shop.toString())
+    {
+      return res.json({
+        success: false,
+        message: "Sorry, you can currently have items from one shop only"
+      })
+    }
     user.cart.forEach(async(c) => {
       if(c.item.toString() === req.params.id)
       {
@@ -321,7 +330,6 @@ router.post('/cart/add/:id', auth, async(req, res) => {
   }
 
    await user.save();
-    console.log('hello', user)
    return res.json({
      success: true,
      data: user
@@ -449,31 +457,6 @@ router.get('/cart/length', auth, async(req, res) => {
     success: true,
     data: user.cart.length
   })
-})
-
-// @route   PUT /api/users/cart/empty
-// @desc    Empty cart after successfull purchase
-// @access  Private (using middleware) 
-router.put('/cart/empty', auth, async(req, res) => {
-  const user = await User.findById(req.user.id);
-
-  if(user.cart.length > 1)
-  {
-    try {  
-      user.cart = [];
-      await user.save();
-
-      return res.json({
-        success: true,
-        data: user
-      })
-    } catch (err) {
-        return res.json({
-          success: false,
-          message: err
-        })
-    }
-  }
 })
 
 module.exports = router;

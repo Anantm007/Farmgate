@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getBraintreeClientToken, processPayment, emptyCart, updateUser} from '../user/apiUser';
+import {getBraintreeClientToken, processPayment, updateUser, createOrder, getCartTotal} from '../user/apiUser';
 import DropIn from 'braintree-web-drop-in-react';
 import { withRouter } from 'react-router-dom';
 
@@ -14,6 +14,11 @@ const Checkout = (props) => {
     if(!props.location.state)
     {
       window.location = `/cart`;
+    }
+
+    if(user.cart.length < 0)
+    {
+      window.location = '/cart'
     }
   }
 
@@ -42,7 +47,7 @@ const Checkout = (props) => {
   }
 
   const Total = () => {
-    return cartTotal() + shipping + tax;
+    return cartTotal() === 0 ? 0 : shipping + tax;
   }
 
   // get braintree token
@@ -89,23 +94,33 @@ const Checkout = (props) => {
       .then(response => {
         setValues({...values, success: response.success})
         
+        let data = {
+          instructions,
+          subtotal,
+          tax_shipping: tax + shipping,
+          totalAmount: subtotal + tax + shipping
+        }
         // create order
-        //TODO
-        
-        // empty cart
-        emptyCart()
+        createOrder(user._id, data)
         .then(data => {
+          console.log(data)
           if(data.success === false)
           {
-            setValues({...values, success: false, error: data.message})
+            setValues({...values, success: false, error: data.message});
           }
+
           else
           {
-            updateUser(data.data, () => {
-              setValues({...values, subtotal: 0})
+              updateUser(data.data, () => {
+              setValues({...values, success: true, loading: false, subtotal: 0, instructions: ''})
+              window.setTimeout(function(){
+                window.location.href = "/user/dashboard";
+              }, 2500);
+        
             })
           }
         })
+        
       })
     })
     .catch(err => {
@@ -126,21 +141,19 @@ const Checkout = (props) => {
     </div>
   )
 
-  const showError = error => (
-    <div
-        className="alert alert-danger"
-        style={{ display: error ? "" : "none" }}
-    >
+  const showError = () => {
+    return (<div className="alert alert-danger" style={{display: error ? '': 'none'}}>
         {error}
     </div>
-);
+    )
+  }
 
 const showSuccess = success => (
     <div
         className="alert alert-info"
         style={{ display: success ? "" : "none" }}
     >
-        Thanks! Your payment was successful! Please check your email
+        Thanks! Your order was successful! Please check your email
     </div>
 );
 
