@@ -29,6 +29,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import AdminUsers from './components/admin/AdminUsers';
 import ShopList from './components/admin/ShopList';
 import AdminShop from './components/admin/AdminShopItems';
+import AdminOrders from './components/admin/AdminOrders';
 
 // Utilities
 import NotFound from './components/layout/NotFound';
@@ -77,7 +78,7 @@ const  App = () => {
             <AdminRoute exact path="/admin/shops" component = {ShopList} />                
             <AdminRoute exact path="/admin/shops/:id" component = {AdminShop} />            
             <AdminRoute exact path="/admin/update/item/:itemid" component = {UpdateItem} />    
-
+            <AdminRoute exact path="/admin/orders" component = {AdminOrders} />
             <Route component={NotFound} />
     
           </Switch>

@@ -43,8 +43,13 @@ const OrderSchema = new mongoose.Schema({
     totalAmount: {
         type: Number,
         required: true
-    }
-    
+    },
+
+    status: {
+        type: String,
+        default: "Order Received",
+        enum: ["Order Received", "Under Process", "Dispatched", "Delivered", "Cancelled"] // enum means string objects
+      }
 
 }, {timestamps: true}
 

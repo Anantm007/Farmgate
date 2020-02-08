@@ -30,6 +30,17 @@ const Item = require("../models/item");
 
 /*                                                  ROUTES                                                  */
 
+
+// @route   GET /api/order/status-values
+// @desc    Get status values of orders
+// @access  Public 
+router.get('/statusValues', async(req, res) => {
+    return res.json({
+        success: true,
+        data: Order.schema.path("status").enumValues
+    })  
+}) 
+
 // @route   POST /api/order/:userId
 // @desc    Create order using the user's id
 // @access  Private 
@@ -119,7 +130,7 @@ router.get('/:id',async(req, res) => {
         })
     }
 })
-
+    
 
 // @route   GET /api/order/:shopId
 // @desc    Get all orders for a particular shop
@@ -154,10 +165,9 @@ router.get('/:id', shopAuth, async(req, res) => {
 // @route   GET /api/order/all
 // @desc    Get all orders for admin
 // @access  Private 
-router.get('/all', adminAuth, async(req, res) => {
-    
+router.get('/admin/all', adminAuth, async(req, res) => {
     try {
-        const orders = await Order.find({});
+        const orders = await Order.find();
      
         return res.json({
             success: true,

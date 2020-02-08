@@ -26,11 +26,11 @@ const ShopsCard = ({shop}) => {
                 <div className="content">
                 <p>{shop.description.substring(0,150)}...</p>
                 {role!== undefined && role === 0 &&
-                <button className="btn btn-warning"><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
+                <button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}><Link to ={`/shops/${shop._id}`} style={{color: 'white'}} >Order Now</Link></button>}
                 {role!== undefined && role === 1 &&
                 <button className="btn btn-warning"><Link to ={`/admin/shops/${shop._id}`} >Edit Now</Link></button>}
                 {role === undefined &&
-                <button className="btn btn-warning"><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
+                <button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
 
                 </div>
                 </div>

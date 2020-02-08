@@ -47,6 +47,7 @@ export const shopSignout = () => {
     if(typeof window !== 'undefined')
     {
         localStorage.removeItem('shopjwt');
+        window.location.reload(false);
     }
 };
 

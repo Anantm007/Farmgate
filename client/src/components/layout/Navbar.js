@@ -77,7 +77,7 @@ const Navbar = () => {
 
                         {isAuthenticated() && isAuthenticated().user.role === 1 && (
                             
-                            <li className="nav-item active"><Link to="/admin/dashboard" className="nav-link">DASHBOARD <span className="sr-only"></span></Link></li>
+                            <li className="nav-item active"><Link to="/admin/dashboard" className="nav-link">ADMIN DASHBOARD <span className="sr-only"></span></Link></li>
                         )}
 
                         <li className="nav-item active"><Link to="/shops" className="nav-link">SHOPS</Link></li>
