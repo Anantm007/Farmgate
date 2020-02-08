@@ -69,6 +69,9 @@ const AdminUsers = () => {
                         <div className="row">
                         <strong>&nbsp;&nbsp;Zip Code: &nbsp;</strong><p>{user.zipCode}</p>
                         </div>
+                        <div className="row">
+                        <strong>&nbsp;&nbsp;Orders: &nbsp;</strong><p>{user.history.join(', ')}</p>
+                        </div>
 
                         <br/><br/>
                     </li>

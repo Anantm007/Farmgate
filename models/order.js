@@ -18,6 +18,21 @@ const OrderSchema = new mongoose.Schema({
         default: ''
     },
 
+    userName: {
+        type: String, 
+        required: true
+    },
+
+    shopName: {
+        type: String, 
+        required: true
+    },
+
+    deliveryAddress: {
+        type: String,
+        required: true
+    },
+
     items: [{
         item: {
             type: mongoose.Schema.Types.ObjectId,
@@ -48,7 +63,7 @@ const OrderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: "Order Received",
-        enum: ["Order Received", "Under Process", "Dispatched", "Delivered", "Cancelled"] // enum means string objects
+        enum: ["Order Received", "Dispatched", "Delivered", "Cancelled"] // enum means string objects
       }
 
 }, {timestamps: true}

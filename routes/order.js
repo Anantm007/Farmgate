@@ -25,6 +25,7 @@ let transporter = nodemailer.createTransport({
 
 // Models
 const User = require('../models/user');
+const Shop = require('../models/shop');
 const Order = require('../models/order');
 const Item = require("../models/item");
 
@@ -61,11 +62,15 @@ router.post('/:id', auth, async(req, res) => {
 
     let item = await Item.findById(user.cart[0].item)
     let shop = item.shop;
+    const s = await Shop.findById(shop).select('name');
 
     const order = new Order({
         items,
         user: user._id,
-        shop, 
+        userName: user.name,
+        shop,
+        shopName: s.name, 
+        deliveryAddress: user.address,
         instructions,
         subtotal, 
         tax_shipping, 
@@ -146,7 +151,7 @@ router.get('/:id', shopAuth, async(req, res) => {
     }
 
     try {
-        const orders = await Order.findMany({shop: req.params.id});
+        const orders = await Order.findMany({shop: req.params.id}).sort('-createdAt');
      
         return res.json({
             success: true,
@@ -165,13 +170,13 @@ router.get('/:id', shopAuth, async(req, res) => {
 // @route   GET /api/order/all
 // @desc    Get all orders for admin
 // @access  Private 
-router.get('/admin/all', adminAuth, async(req, res) => {
+router.get('/admin/all', async(req, res) => {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find().sort('-createdAt');
      
         return res.json({
             success: true,
-            count: orders.length,
+            count: orders.length,       
             data: orders
         })
     } catch (err) {
@@ -180,6 +185,25 @@ router.get('/admin/all', adminAuth, async(req, res) => {
             message: err
         })
     }
+})
+
+// @route   PUT /api/order/admin/update/:id
+// @desc    Update order by admin
+// @access  Private 
+router.put('/admin/update/:id', adminAuth, async(req, res) => {
+    await Order.update({_id: req.params.id}, {$set: {status: req.body.status}}, (err, order) => {
+        if(err)
+        {
+            return res.json({
+                success: false,
+                message: err
+            })
+        }
+        return res.json({
+            success: true,
+            data: order
+        });
+    });
 })
 
 

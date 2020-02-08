@@ -49,9 +49,9 @@ const AdminOrders = () => {
     }
 
     const handleStatusChange = (e, orderId) => {
-        updateOrderStatus(user._id, token, orderId, e.target.value)
+        updateOrderStatus(orderId, e.target.value)
         .then(data => {
-            if(data.error)
+            if(data.success === false)
             {
                 console.log("Status update fail");
             }
@@ -80,7 +80,7 @@ const AdminOrders = () => {
         if(orders.length > 0)
         {
             return (
-                <h2 className="text-danger display-2">Total Orders: {orders.length}</h2>
+                <h4 className="text-danger">Total Orders: {orders.length}</h4>
             )
         }
 
@@ -134,18 +134,18 @@ const AdminOrders = () => {
                         <div key={oIndex} className="mt-5" style={{borderBottom: "5px solid indigo"}}>
                             
                             <ul className="list-group mb-2">
-                                <li className="list-group-item">{showStatus(o)}</li>
                                 <li className="list-group-item" style={{fontWeight: 'bold'}}>Order_id: {o._id}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Amount: ${o.totalAmount}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Ordered by: {o.user}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Ordered from: {o.shop}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Order Date: {Moment(o.createdAt).fromNow()}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Delivery Instructions: {o.instructions}</li>
-                                <li className="list-group-item" style={{fontWeight: 'bold'}}>Total Items: {o.items.length}</li>
+                                <li className="list-group-item">{showStatus(o)}</li>
+                                <li className="list-group-item" >Total Amount: ${o.totalAmount}</li>
+                                <li className="list-group-item" >Ordered by: {o.userName} ({o.user})</li>
+                                <li className="list-group-item" >Ordered from: {o.shopName} ({o.shop})</li>
+                                <li className="list-group-item" >Order Date: {Moment(o.createdAt).format('YYYY/MM/DD')}</li>
+                                <li className="list-group-item" >Delivery Instructions: {o.instructions}</li>
+                                <li className="list-group-item" >Total Items: {o.items.length}</li>
                             </ul>
 
                             {o.items.map((p, pIndex) => {
-                                return (<div className="mb-4" key={pIndex} style={{padding: '20px', border: '1px solid indigo'}}>
+                                return (<div className="mb-4" key={pIndex} style={{padding: '20px'}}>
                                     {showInput('Item id', p._id)}
                                     {showInput('Item Quantity', p.quantity)}
                                 </div>)

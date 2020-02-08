@@ -61,13 +61,13 @@ export const getStatusValues = () => {
 };
 
 // Update status values
-export const updateOrderStatus = (userId, token, orderId, status) => {
-    return fetch(`/api/order/${orderId}/status/${userId}`, {
+export const updateOrderStatus = (orderId, status) => {
+    return fetch(`/api/order/admin/update/${orderId}`, {
         method: "PUT",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
         },
         body: JSON.stringify({ status, orderId })
     })
