@@ -9,6 +9,7 @@ import Register from './components/user/Register';
 import Login from './components/user/Login';
 import UserDashboard from './components/user/UserDashboard';
 import ResetPass from './components/user/ResetPass';
+import UserOrders from './components/user/UserOrders';
 import UserSettings from './components/user/UserSettings';
 import UserCart from './components/user/UserCart';
 import Checkout from './components/user/Checkout';
@@ -61,6 +62,7 @@ const  App = () => {
             <Route exact path="/shops" component = {Shops} />
             <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
             <PrivateRoute exact path="/user/:id/settings" component = {UserSettings} />
+            <PrivateRoute exact path="/user/:id/orders" component = {UserOrders} />
             <PrivateRoute exact path="/cart" component = {UserCart} />
             <PrivateRoute exact path='/checkout' component = {Checkout} />
 

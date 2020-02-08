@@ -201,3 +201,21 @@ export const createOrder = (userId, data) => {
         console.log(err);
     }) 
 }
+
+
+
+// List all orders for the user
+export const listOrders = (userId) => {
+    console.log(userId)
+    return fetch(`/api/order/user/${userId}`, {
+        method: "GET",
+        headers: { 
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token}
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}

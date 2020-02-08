@@ -167,6 +167,37 @@ router.get('/:id', shopAuth, async(req, res) => {
 })
 
 
+
+// @route   GET /api/order/user/:userId
+// @desc    Get all orders for a particular shop
+// @access  Private 
+router.get('/user/:id', auth, async(req, res) => {
+    
+    if(req.user.id != req.params.id)
+    {
+        return res.json({
+            success: false,
+            message: "Sorry, you are not authorized!"
+        })
+    }
+
+    try {
+        const orders = await Order.find({user: req.params.id}).sort('-createdAt');
+        
+        return res.json({
+            success: true,
+            count: orders.length,
+            data: orders
+        })
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+
+
 // @route   GET /api/order/all
 // @desc    Get all orders for admin
 // @access  Private 
