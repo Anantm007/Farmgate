@@ -69,9 +69,9 @@ const Navbar = () => {
                       
                         {isAuthenticated() && isAuthenticated().user.role === 0 && (                            
                             <li className="nav-item active">
-                                <Link to="/cart" className="nav-link">
+                                <a href="/cart" className="nav-link">
                                  CART <sup><small className="cart-badge active">{Length}</small></sup>
-                                </Link>
+                                </a>
                             </li>
                         )}
 

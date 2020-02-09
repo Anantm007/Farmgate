@@ -49,6 +49,7 @@ const CartItem = ({item}) => {
     }; 
 
     const loadItem = (id) => {
+      console.log('yo', id)
       setValues({...values, loading: true})
       getItem(id)
       .then(data => {
@@ -65,14 +66,14 @@ const CartItem = ({item}) => {
     }
 
     useEffect(() => {
-      loadItem(item.item)
+      item.item._id ? loadItem(item.item._id) : loadItem(item.item)
       //eslint-disable-next-line
-    }, [])
+    }, [item])
 
     const removeItem = () => {
         setValues({...values, error: false, loading: true});
-        
-        removeFromCart(item.item)
+        const id = item.item._id ? item.item._id : item.item
+        removeFromCart(id)
         .then(data => {
             if(data.success === false)
             {

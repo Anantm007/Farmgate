@@ -299,7 +299,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
   if(user.cart.length > 0)
   {
     const x = await Item.findById(user.cart[0].item);
-    console.log(item.shop, x)
+    
     if(item.shop.toString() !== x.shop.toString())
     {
       return res.json({
@@ -388,6 +388,15 @@ router.delete('/cart/remove/:id', auth, async(req, res) => {
 
   const user = await User.findById(req.user.id);
   const item = await Item.findById(req.params.id);
+
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+  {
+    console.log("object")
+      return res.json({
+          success: false,
+          message: "User not Found"
+        });
+  }
 
   if(!item || !user)
   {
