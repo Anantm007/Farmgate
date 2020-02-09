@@ -206,7 +206,6 @@ export const createOrder = (userId, data) => {
 
 // List all orders for the user
 export const listOrders = (userId) => {
-    console.log(userId)
     return fetch(`/api/order/user/${userId}`, {
         method: "GET",
         headers: { 

@@ -65,3 +65,18 @@ export const myShop = id => {
     })
 
 }
+
+// List all orders for a shop
+export const listOrders = (shopId) => {
+    return fetch(`/api/order/shop/${shopId}`, {
+        method: "GET",
+        headers: { 
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token}
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}

@@ -1,22 +1,19 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import {isAuthenticated} from '../userAuth';
+import {shopIsAuthenticated} from '../shopAuth';
 import Footer from '../layout/Footer';
-import {listOrders, getStatusValues, updateOrderStatus} from './apiAdmin';
+import {listOrders} from './apiShops';
 import Moment from 'moment';
 import Spinner from '../layout/Spinner';
 
-const AdminOrders = () => {
-    const {user: { name}} = isAuthenticated();
+const ShopOrders = () => {
+    const {shop: { _id, name}} = shopIsAuthenticated();
 
     const [orders, setOrders] = useState([]);
-    const [statusValues, setStatusValues] = useState([]);
     const [loading, setLoading] = useState(true);
-    
-    const {user, token} = isAuthenticated();
     
     const loadOrders = () => {
         setLoading(true);
-        listOrders().then(data => {
+        listOrders(_id).then(data => {
             if(data.success === false)
             {
                 console.log(data.message);
@@ -31,47 +28,10 @@ const AdminOrders = () => {
         })
     }
     
-    const loadStatusValues = () => {
-        setLoading(true);
-        getStatusValues(user._id, token).then(data => {
-            if(data.success === false)
-            {
-                console.log(data.message);
-                setLoading(false);
-            }
-
-            else
-            {
-                setStatusValues(data.data);
-                setLoading(false);
-            }
-        })
-    }
-
-    const handleStatusChange = (e, orderId) => {
-        updateOrderStatus(orderId, e.target.value)
-        .then(data => {
-            if(data.success === false)
-            {
-                console.log("Status update fail");
-            }
-
-            else
-            {
-                loadOrders()
-            }
-        })
-    }
 
     const showStatus = (o) => {
         return (<div className="form-group">
             <h6 className="mark mb-4">Status: {o.status}</h6>
-            <select className = "form-control" onChange={(e) => handleStatusChange(e,o._id)}>
-                <option>Update Status</option>
-                {statusValues.map((status, i) => (
-                     <option key={i} value={status}>{status}</option>
-                ))}
-            </select>
         </div>)
     }
 
@@ -87,7 +47,7 @@ const AdminOrders = () => {
         else
         {
             return (
-                <h1 className="text-danger">Waiting....</h1>
+                <h1 className="text-danger">No Orders</h1>
             )
         }
     }
@@ -98,9 +58,8 @@ const AdminOrders = () => {
 
 
     useEffect(() => {
-        loadOrders()
-        loadStatusValues()
-        showLoading()
+        loadOrders();
+        showLoading();
         // eslint-disable-next-line
     }, [])
 
@@ -119,11 +78,11 @@ const AdminOrders = () => {
     return (
         <Fragment>
             <div style={{backgroundColor: '#c0ffb3', minHeight: '8rem', padding: '2rem', marginBottom: '2rem'}}>
-                <h1>Admin Dashboard</h1>
+                <h1>Shop Dashboard</h1>
                 <h5>{`Welcome, ${name}`}</h5>
             </div>
 
-            <h2 className="text-center">MANAGE ALL ORDERS</h2>
+            <h2 className="text-center">MY ORDERS</h2>
             {showLoading()}
             <div className="row">
             <div className="xs-col-12 col-sm-8">
@@ -137,17 +96,14 @@ const AdminOrders = () => {
                                 <li className="list-group-item" style={{fontWeight: 'bold'}}>Order_id: {o._id}</li>
                                 <li className="list-group-item">{showStatus(o)}</li>
                                 <li className="list-group-item" ><strong>Total Amount:</strong> ${o.totalAmount}</li>
-                                <li className="list-group-item" ><strong>Ordered by:</strong> {o.userName} ({o.user})</li>
-                                <li className="list-group-item" ><strong>Ordered from:</strong> {o.shopName} ({o.shop})</li>
-                                <li className="list-group-item" ><strong>Delivery Address:</strong> {o.deliveryAddress}</li>
+                                <li className="list-group-item" ><strong>Ordered By:</strong> {o.userName}</li>
+                                <li className="list-group-item" ><strong>Instructions:</strong> {o.instructions}</li>
                                 <li className="list-group-item" ><strong>Order Date:</strong> {Moment(o.createdAt).format('YYYY/MM/DD')}</li>
-                                <li className="list-group-item" ><strong>Delivery Instructions:</strong> {o.instructions}</li>
                                 <li className="list-group-item" ><strong>Total Items:</strong> {o.items.length}</li>
                             </ul>
 
                             {o.items.map((p, pIndex) => (
                                 <div className="mb-4" key={pIndex} style={{padding: '20px'}}>
-                                    {showInput('Item Id', p.item)}
                                     {showInput('Item Name', p.itemName)}
                                     {showInput('Item Quantity', p.quantity + ' ' + p.variant)}
                                 </div>
@@ -163,4 +119,4 @@ const AdminOrders = () => {
     )
 }
 
-export default AdminOrders
+export default ShopOrders;

@@ -95,11 +95,19 @@ const UserOrders = () => {
                             <ul className="list-group mb-2">
                                 <li className="list-group-item" style={{fontWeight: 'bold'}}>Order_id: {o._id}</li>
                                 <li className="list-group-item">{showStatus(o)}</li>
-                                <li className="list-group-item" >Total Amount: ${o.totalAmount}</li>
-                                <li className="list-group-item" >Ordered from: {o.shopName}</li>
-                                <li className="list-group-item" >Order Date: {Moment(o.createdAt).format('YYYY/MM/DD')}</li>
-                                <li className="list-group-item" >Total Items: {o.items.length}</li>
+                                <li className="list-group-item" ><strong>Total Amount:</strong> ${o.totalAmount}</li>
+                                <li className="list-group-item" ><strong>Ordered From:</strong> {o.shopName}</li>
+                                <li className="list-group-item" ><strong>Instructions:</strong> {o.instructions}</li>
+                                <li className="list-group-item" ><strong>Order Date:</strong> {Moment(o.createdAt).format('YYYY/MM/DD')}</li>
+                                <li className="list-group-item" ><strong>Total Items:</strong> {o.items.length}</li>
                             </ul>
+
+                            {o.items.map((p, pIndex) => (
+                                <div className="mb-4" key={pIndex} style={{padding: '20px'}}>
+                                    {showInput('Item Name', p.itemName)}
+                                    {showInput('Item Quantity', p.quantity + ' ' + p.variant)}
+                                </div>
+                            ))}
                         </div>
                     )
                 })}

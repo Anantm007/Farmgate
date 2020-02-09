@@ -51,9 +51,12 @@ router.post('/:id', auth, async(req, res) => {
     const {instructions, subtotal, tax_shipping, totalAmount} = req.body;
     let items = [];
 
-    user.cart.forEach(c => {
+    user.cart.forEach(async(c) => {
+        let x = await Item.findById(c.item).select('name variant')
         let i = {
             item: c.item,
+            itemName: x.name,
+            variant: x.variant,
             quantity: c.quantity
         }
 
@@ -140,7 +143,7 @@ router.get('/:id',async(req, res) => {
 // @route   GET /api/order/:shopId
 // @desc    Get all orders for a particular shop
 // @access  Private 
-router.get('/:id', shopAuth, async(req, res) => {
+router.get('/shop/:id', shopAuth, async(req, res) => {
     
     if(req.shop.id != req.params.id)
     {
@@ -151,7 +154,7 @@ router.get('/:id', shopAuth, async(req, res) => {
     }
 
     try {
-        const orders = await Order.findMany({shop: req.params.id}).sort('-createdAt');
+        const orders = await Order.find({shop: req.params.id}).sort('-createdAt');
      
         return res.json({
             success: true,
@@ -169,7 +172,7 @@ router.get('/:id', shopAuth, async(req, res) => {
 
 
 // @route   GET /api/order/user/:userId
-// @desc    Get all orders for a particular shop
+// @desc    Get all orders for a particular user
 // @access  Private 
 router.get('/user/:id', auth, async(req, res) => {
     

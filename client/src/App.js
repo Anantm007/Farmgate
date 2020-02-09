@@ -20,6 +20,7 @@ import ShopLogin from './components/shops/ShopLogin';
 import ShopDashboard from './components/shops/ShopDashboard';
 import ShopResetPass from './components/shops/ShopResetPass';
 import Shops from './components/shops/Shops';
+import ShopOrders from './components/shops/ShopOrders';
 import ShopPage from './components/shops/ShopPage';
 import CreateItem from './components/items/CreateItem';
 import MyShopItems from './components/items/MyShopItems';
@@ -71,6 +72,7 @@ const  App = () => {
             <ShopRoute exact path ='/shop/dashboard' component = {ShopDashboard} />     
             <ShopRoute exact path = '/my/shops/:id' component = {ShopPage} />     
             <ShopRoute exact path = '/create/item' component = {CreateItem} />
+            <ShopRoute exact path="/shop/:id/orders" component = {ShopOrders} />
             <ShopRoute exact path = '/shop/:id/items' component = {MyShopItems} />
             <ShopRoute exact path = '/shop/:id/item/:itemid' component = {UpdateItem} />
             <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />

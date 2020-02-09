@@ -38,6 +38,16 @@ const OrderSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Item'
             },
+        
+        itemName: {
+            type: String,
+            required: true
+        },
+
+        variant: {
+            type: String,
+            required: true
+        },
 
         quantity: {
             type: Number,
