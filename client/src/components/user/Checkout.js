@@ -47,7 +47,7 @@ const Checkout = (props) => {
   }
 
   const Total = () => {
-    return cartTotal() === 0 ? 0 : shipping + tax;
+    return cartTotal() === 0 ? 0 : cartTotal() + shipping + tax;
   }
 
   // get braintree token

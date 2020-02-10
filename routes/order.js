@@ -8,6 +8,8 @@ const adminAuth = require('../middleware/adminAuth');
 
 require('dotenv').config()
 
+var path = require('path'); 
+
 // nodemailer to send emails
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
@@ -21,6 +23,9 @@ let transporter = nodemailer.createTransport({
     tls : {
         rejectUnauthorized : false
     }});
+
+// PDF Receipt
+const {createInvoice} = require('./createInvoice');
 
 
 // Models
@@ -52,11 +57,14 @@ router.post('/:id', auth, async(req, res) => {
     let items = [];
 
     user.cart.forEach(async(c) => {
-        let x = await Item.findById(c.item).select('name variant')
+        let x = await Item.findById(c.item).select('name variant price description')
         let i = {
             item: c.item,
             itemName: x.name,
+            price: x.price,
+            description: x.description.substring(0,20) + '...',
             variant: x.variant,
+            amount: c.quantity * x.price,
             quantity: c.quantity
         }
 
@@ -86,6 +94,24 @@ router.post('/:id', auth, async(req, res) => {
     user.history.push(order);
     await user.save();
 
+    const invoice = {
+      shipping: {
+        name: order.userName,
+        address: user.address,
+        city: "Adelaide",
+        state: "South Australia",
+        country: "Australia",
+        postal_code: user.zipCode
+      },
+      items: items ,
+
+      subtotal: subtotal,
+      total: totalAmount,
+      invoice_nr: order._id
+    };
+    
+    createInvoice(invoice, "invoice.pdf");
+
     // Send order confirmation email to user and admin
     let HelperOptions = {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
@@ -103,7 +129,12 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : user.email,
         subject : "Your order on Farmgate Market was successful",
-        text : "Hello " + user.name + ", \n\nYou purchase of $ " + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order.\n\nRegards, \Farmgate Market"
+        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \Farmgate Market",
+        attachments: [{
+            filename: 'invoice.pdf',
+            path: path.join(__dirname, '../invoice.pdf'),
+            contentType: 'application/pdf'
+          }]
     };
         
     transporter.sendMail(HelperOptions2,(err,info)=>{
