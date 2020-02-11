@@ -158,7 +158,7 @@ function generateFooter(doc) {
   doc
     .fontSize(10)
     .text(
-      "Your order should be delivered within 7 days. Thank you!",
+      "If there may be security issues with us being granted access to your property for parcel delivery please contact us through the portal at www.farmgate-market.com. Thank you!",
       50,
       780,
       { align: "center", width: 500 }
