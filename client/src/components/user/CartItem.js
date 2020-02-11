@@ -15,6 +15,9 @@ const CartItem = ({item}) => {
     
     const {foundItem, loading, quantity, price, error} = values;
 
+    const handleFocus = (event) => {
+      event.target.select();
+    }
 
     const handleChange = Item => event => {
       if(event.target.value < 1)
@@ -33,7 +36,6 @@ const CartItem = ({item}) => {
           setValues({...values, loading: true});
           updateCartItem(Item._id, q)
           .then(data => {
-            console.log(data)
             if(data.success === false)
             {
               setValues({...values, loading: false, error: data.message})
@@ -144,7 +146,7 @@ const CartItem = ({item}) => {
                     </div>
                   </th>
                   <td className="align-middle"><strong>{`$${foundItem.price}/${foundItem.variant}`}</strong></td>
-                  <td className="align-middle"><input type="number" value={quantity} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/></td>
+                  <td className="align-middle"><input type="number" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/></td>
                   <td className="align-middle"><strong>${price}</strong></td>
                   <td className="align-middle"><i onClick={removeItem} className="fa fa-trash"></i>
                   </td>

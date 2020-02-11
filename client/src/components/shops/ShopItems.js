@@ -55,7 +55,7 @@ const ShopItems = ({item}) => {
             
             <div className="row">
                 
-                <div className="flip-card" style={{margin: "2rem"}}>
+                { loading ? showLoading() : <div className="flip-card" style={{margin: "2rem"}}>
                     <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`}}>
                         
                         <div className="flip-card-front">
@@ -73,10 +73,9 @@ const ShopItems = ({item}) => {
                         
                     </div>
                     <br/>
-                    {showLoading()}
                     {showError()}
                     {showSuccess()}
-                </div>
+                </div>}
 
             </div>
         

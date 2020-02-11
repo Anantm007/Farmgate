@@ -114,8 +114,8 @@ const Checkout = (props) => {
               updateUser(data.data, () => {
               setValues({...values, success: true, loading: false, subtotal: 0, instructions: ''})
               window.setTimeout(function(){
-                window.location.href = "/user/dashboard";
-              }, 2500);
+                window.location.href = `/user/${user._id}/orders`;
+              }, 2300);
         
             })
           }

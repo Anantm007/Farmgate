@@ -16,7 +16,7 @@ function createInvoice(invoice, path) {
 
 function generateHeader(doc) {
   doc
-    .image(path.join(__dirname,'logo.png'), 50, 45, { width: 50 })
+    .image(path.join(__dirname,'logo.png'), 50, 25, { width: 100 })
     .fillColor("#444444")
     .fontSize(20)
     .text("Farmgate Market", 110, 57)
@@ -47,7 +47,7 @@ function generateCustomerInformation(doc, invoice) {
     .text(formatDate(new Date()), 150, customerInformationTop + 15)
     .text("Total:", 50, customerInformationTop + 30)
     .text(
-      formatCurrency(invoice.total * 100),
+      formatCurrency(invoice.total),
       150,
       customerInformationTop + 30
     )
@@ -95,9 +95,9 @@ function generateInvoiceTable(doc, invoice) {
       position,
       item.itemName,
       item.description,
-      formatCurrency(item.price * 100),
+      formatCurrency(item.price),
       item.quantity + item.variant,
-      formatCurrency(item.amount * 100)
+      formatCurrency(item.amount)
     );
 
     generateHr(doc, position + 20);
@@ -111,7 +111,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Subtotal",
     "",
-    formatCurrency(invoice.subtotal * 100)
+    formatCurrency(invoice.subtotal)
   );
 
   const paidToDatePosition = subtotalPosition + 20;
@@ -122,7 +122,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Shipping",
     "",
-    formatCurrency(495)
+    formatCurrency(4.5)
   );
 
 
@@ -135,7 +135,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "GST @ 10%",
     "",
-    formatCurrency(45)
+    formatCurrency(0.45)
   );
   doc.font("Helvetica");
 
@@ -149,7 +149,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Grand Total",
     "",
-    formatCurrency(invoice.total * 100)
+    formatCurrency(invoice.total)
   );
   doc.font("Helvetica");
 }
@@ -160,7 +160,7 @@ function generateFooter(doc) {
     .text(
       "If there may be security issues with us being granted access to your property for parcel delivery please contact us through the portal at www.farmgate-market.com. Thank you!",
       50,
-      780,
+      750,
       { align: "center", width: 500 }
     );
 }
@@ -193,7 +193,7 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  return "$" + (cents).toFixed(2);
 }
 
 function formatDate(date) {
