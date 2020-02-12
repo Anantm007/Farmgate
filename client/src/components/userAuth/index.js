@@ -38,6 +38,11 @@ export const signin = async user => {
 export const authenticate = (data) => {
     if(typeof window !== 'undefined')
     {
+        if(JSON.parse(localStorage.getItem('shopjwt')))
+        {
+            localStorage.removeItem('shopjwt');
+        }
+
         localStorage.setItem('jwt', JSON.stringify(data))
     }
 }

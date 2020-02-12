@@ -22,8 +22,8 @@ function generateHeader(doc) {
     .text("Farmgate Market", 110, 57)
     .fontSize(10)
     .text("Farmgate Market", 200, 50, { align: "right" })
-    .text("154 Grasby Road, Ballhannah", 200, 65, { align: "right" })
-    .text("Adelaide, South Australia", 200, 80, { align: "right" })
+    .text("Level 1, 49 George Street Norwood, S.A.", 200, 65, { align: "right" })
+    .text("ABN: 91688399669", 200, 80, { align: "right" })
     .moveDown();
 }
 
@@ -96,7 +96,7 @@ function generateInvoiceTable(doc, invoice) {
       item.itemName,
       item.description,
       formatCurrency(item.price),
-      item.quantity + item.variant,
+      item.quantity + ' ' + item.variant,
       formatCurrency(item.amount)
     );
 

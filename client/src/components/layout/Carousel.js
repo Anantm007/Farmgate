@@ -14,21 +14,18 @@ const Carousel = () => {
 			</ol>
 			<div className="carousel-inner">
 				<div className="carousel-item active">
-					<img className="d-block img-fluid" style={{height:"35rem", width:"100%"}} src={Carousel1} alt="" />
+					<img className="d-block img-fluid" style={{height:"35rem", width:"100%"}} src={Carousel1} alt="carousel1" />
+				</div>
+				<div className="carousel-item">
+					<img className="d-block img-fluid" style={{height:"35rem", width:"100%"}} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
-						<h2>Buy Fresh Organic Food</h2>
+						<h2>Connecting Producers to People</h2>
 					</div>
 				</div>
 				<div className="carousel-item">
-					<img className="d-block img-fluid" style={{height:"35rem", width:"100%"}} src={Carousel2} alt="" />
+					<img className="d-block img-fluid " style={{height:"35rem", width:"100%"}} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
-						<h2>Best Stores In Adelaide</h2>
-					</div>
-				</div>
-				<div className="carousel-item">
-					<img className="d-block img-fluid " style={{height:"35rem", width:"100%"}} src={Carousel3} alt="" />
-					<div className="carousel-caption d-md-block">
-						<h2>Affordable Rates And Fast Delivery</h2>
+						<h2>Trace Your Food… “Support Local Farmers”</h2>
 					</div>
 				</div>
 				
