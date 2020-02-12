@@ -73,7 +73,7 @@ const ShopLogin = () => {
 
                     {/* Forgot Password */}                    
                         <div className="container">
-                        <a href="#" data-target="#pwdModal" data-toggle="modal">Forgot my password</a>
+                        <a href="/#" data-target="#pwdModal" data-toggle="modal">Forgot my password</a>
                         </div>
 
                         <ForgotPass id="pwdModal" />

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getBraintreeClientToken, processPayment, updateUser, createOrder, getCartTotal} from '../user/apiUser';
+import {getBraintreeClientToken, processPayment, updateUser, createOrder} from '../user/apiUser';
 import DropIn from 'braintree-web-drop-in-react';
 import { withRouter } from 'react-router-dom';
 
@@ -78,7 +78,7 @@ const Checkout = (props) => {
     
     let nonce;
     
-    let getNonce = instance.requestPaymentMethod()
+    instance.requestPaymentMethod()
     .then(data => {
       console.log(data);
       nonce = data.nonce;

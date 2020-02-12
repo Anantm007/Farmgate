@@ -82,7 +82,7 @@ const ResetPass = (props) => {
                                 
                                 <div style={{marginTop:"50px;"}} className="form-group">
                                     <div className="col-sm-12 controls text-center">
-                                        <a onClick={clickSubmit} className="btn btn-primary">RESET</a>
+                                        <a href="/#" onClick={clickSubmit} className="btn btn-primary">RESET</a>
                                         <br /><br />
                                         {showError()}
                                         {showSuccess()}

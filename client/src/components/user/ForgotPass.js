@@ -54,7 +54,7 @@ const ForgotPass = () => {
 
 
     return (
-        <div id="pwdModal" className="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
