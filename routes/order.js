@@ -9,6 +9,7 @@ const adminAuth = require('../middleware/adminAuth');
 require('dotenv').config()
 
 var path = require('path'); 
+const shortid = require('shortid');
 
 // nodemailer to send emails
 const nodemailer = require("nodemailer");
@@ -26,6 +27,7 @@ let transporter = nodemailer.createTransport({
 
 // PDF Receipt
 const {createInvoice} = require('./createInvoice');
+const {shopWeeklyInvoice} = require('./shopWeeklyInvoice');
 
 
 // Models
@@ -110,7 +112,8 @@ router.post('/:id', auth, async(req, res) => {
       invoice_nr: order._id
     };
     
-    createInvoice(invoice, "invoice.pdf");
+    const code = shortid.generate();
+    createInvoice(invoice, `${code}.pdf`);
 
     // Send order confirmation email to user and admin
     let HelperOptions = {
@@ -131,8 +134,8 @@ router.post('/:id', auth, async(req, res) => {
         subject : "Your order on Farmgate Market was successful",
         text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \Farmgate Market",
         attachments: [{
-            filename: 'invoice.pdf',
-            path: path.join(__dirname, '../invoice.pdf'),
+            filename: `${code}.pdf`,
+            path: path.join(__dirname, `../${code}.pdf`),
             contentType: 'application/pdf'
           }]
     };
@@ -271,6 +274,49 @@ router.put('/admin/update/:id', adminAuth, async(req, res) => {
     });
 })
 
+
+// @route   GET /api/order/invoice/:shopId
+// @desc    Generate Invoice for shop
+// @access  Public (to be changed) 
+router.get('/invoice/:id', async(req, res) => {
+
+    try {   
+        const shop = await Shop.findById(req.params.id);
+        const orders = await Order.find({shop: req.params.id, createdAt: {
+            $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+            }}).select('_id subtotal totalAmount createdAt')
+        
+        const subtotal = 0;
+        orders.forEach(async(o) => {
+            subtotal += o.subtotal
+        })
+        const invoice = {
+            shipping: {
+            name: shop.name,
+            address: shop.address,
+            city: "Adelaide",
+            state: "South Australia",
+            country: "Australia",
+            postal_code: shop.zipCode
+            },
+            orders: orders,
+    
+            subtotal: subtotal,
+            FarmgateFees: subtotal*0.2,
+            total: 0.8*subtotal,
+            invoice_nr: code
+        };
+        
+        const code = shortid.generate();
+        createInvoice(invoice, `${code}.pdf`);
+  
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+})
 
 
 module.exports = router;

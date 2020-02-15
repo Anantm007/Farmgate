@@ -2,7 +2,7 @@ const fs = require("fs");
 const PDFDocument = require("pdfkit");
 var path = require('path'); 
 
-function createInvoice(invoice, path) {
+function shopWeeklyInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   generateHeader(doc);
@@ -205,5 +205,5 @@ function formatDate(date) {
 }
 
 module.exports = {
-  createInvoice
+  shopWeeklyInvoice
 };
