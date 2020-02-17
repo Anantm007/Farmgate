@@ -51,9 +51,9 @@ router.post('/',
       }
 
       // check for all fields
-      const { name, email, password, address, zipCode, phoneNumber, description  } = fields;
+      const { name, email, password, address, zipCode, phoneNumber, description, ABN  } = fields;
 
-      if(!name || !description || !email || !password || !address || !zipCode || !phoneNumber)
+      if(!name || !description || !email || !password || !address || !zipCode || !phoneNumber || !ABN)
       {
           return res.status(400).json({
               success: false,

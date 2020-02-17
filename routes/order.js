@@ -283,13 +283,17 @@ router.get('/invoice/:id', async(req, res) => {
     try {   
         const shop = await Shop.findById(req.params.id);
         const orders = await Order.find({shop: req.params.id, createdAt: {
-            $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
-            }}).select('_id subtotal totalAmount createdAt')
+                $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+            }})
         
-        const subtotal = 0;
+        let subtotal = 0;
         orders.forEach(async(o) => {
             subtotal += o.subtotal
         })
+
+        
+        const code = shortid.generate();
+        console.log(shop.name, shop.address, shop.ABN, shop.zipCode, subtotal, code)
         const invoice = {
             shipping: {
             name: shop.name,
@@ -297,6 +301,7 @@ router.get('/invoice/:id', async(req, res) => {
             city: "Adelaide",
             state: "South Australia",
             country: "Australia",
+            ABN: shop.ABN,
             postal_code: shop.zipCode
             },
             orders: orders,
@@ -306,10 +311,15 @@ router.get('/invoice/:id', async(req, res) => {
             total: 0.8*subtotal,
             invoice_nr: code
         };
+
+        shopWeeklyInvoice(invoice, `${code}.pdf`);
         
-        const code = shortid.generate();
-        createInvoice(invoice, `${code}.pdf`);
-  
+        console.log('here');
+
+        return res.json({
+            success: true,
+            message: `PDF generated with code ${code}`
+        })
     } catch (err) {
         return res.json({
             success: false,

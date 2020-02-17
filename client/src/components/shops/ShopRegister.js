@@ -10,6 +10,7 @@ const Register = () => {
         repeatPassword: '',
         address: '',
         zipCode: '',
+        ABN: '',
         phoneNumber: '',
         error: '',
         image: '',
@@ -18,7 +19,7 @@ const Register = () => {
         formData: ''
     });
 
-    const {name, email, password, repeatPassword, address, zipCode, phoneNumber, description, formData, success, error} = values;
+    const {name, email, password, repeatPassword, address, zipCode, ABN, phoneNumber, description, formData, success, error} = values;
 
     const init = () => {
             setValues({...values, formData: new FormData()})
@@ -121,6 +122,13 @@ const Register = () => {
                             </div>
                             <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Full address" />
                         </div>
+
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-home"></i> </span>
+                            </div>
+                            <input onChange={handleChange('ABN')} type="text" value={ABN} className="form-control" placeholder="Australian Businness Number (ABN)" />
+                        </div>
                          
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
@@ -128,7 +136,6 @@ const Register = () => {
                             </div>
                             <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Zip Code" />
                         </div>
-
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">

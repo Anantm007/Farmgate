@@ -5,7 +5,7 @@ var path = require('path');
 function shopWeeklyInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
-  generateHeader(doc);
+  generateHeader(doc, invoice);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
   generateFooter(doc);
@@ -14,16 +14,16 @@ function shopWeeklyInvoice(invoice, path) {
   doc.pipe(fs.createWriteStream(path));
 }
 
-function generateHeader(doc) {
+function generateHeader(doc, invoice) {
   doc
     .image(path.join(__dirname,'logo.png'), 50, 25, { width: 100 })
     .fillColor("#444444")
     .fontSize(20)
-    .text("Farmgate Market", 110, 57)
+    .text(invoice.shipping.name, 110, 57)
     .fontSize(10)
-    .text("Farmgate Market", 200, 50, { align: "right" })
-    .text("Level 1, 49 George Street Norwood, S.A.", 200, 65, { align: "right" })
-    .text("ABN: 91688399669", 200, 80, { align: "right" })
+    .text(invoice.shipping.name, 200, 50, { align: "right" })
+    .text(invoice.shipping.address, 200, 65, { align: "right" })
+    .text(`ABN: ${invoice.shipping.ABN}`, 200, 80, { align: "right" })
     .moveDown();
 }
 
@@ -39,7 +39,7 @@ function generateCustomerInformation(doc, invoice) {
 
   doc
     .fontSize(10)
-    .text("Order Number:", 50, customerInformationTop)
+    .text("Invoice Number:", 50, customerInformationTop)
     .font("Helvetica-Bold")
     .text(invoice.invoice_nr, 150, customerInformationTop)
     .font("Helvetica")
@@ -53,9 +53,9 @@ function generateCustomerInformation(doc, invoice) {
     )
 
     .font("Helvetica-Bold")
-    .text(invoice.shipping.name, 300, customerInformationTop)
+    .text('Farmgate Market', 300, customerInformationTop)
     .font("Helvetica")
-    .text(invoice.shipping.address, 300, customerInformationTop + 15)
+    .text('Level 1, 49 George Street Norwood', 300, customerInformationTop + 15)
     .text(
       invoice.shipping.city +
         ", " +
@@ -78,26 +78,22 @@ function generateInvoiceTable(doc, invoice) {
   generateTableRow(
     doc,
     invoiceTableTop,
-    "Item",
-    "Description",
-    "Cost",
-    "Quantity",
-    "Item Total"
+    "Order Id",
+    "Total Items",
+    "Order Total"
   );
   generateHr(doc, invoiceTableTop + 20);
   doc.font("Helvetica");
 
-  for (i = 0; i < invoice.items.length; i++) {
-    const item = invoice.items[i];
+  for (i = 0; i < invoice.orders.length; i++) {
+    const order = invoice.orders[i];
     const position = invoiceTableTop + (i + 1) * 30;
     generateTableRow(
       doc,
       position,
-      item.itemName,
-      item.description,
-      formatCurrency(item.price),
-      item.quantity + ' ' + item.variant,
-      formatCurrency(item.amount)
+      order._id,
+      order.items.length,
+      formatCurrency(order.subtotal)
     );
 
     generateHr(doc, position + 20);
@@ -114,32 +110,20 @@ function generateInvoiceTable(doc, invoice) {
     formatCurrency(invoice.subtotal)
   );
 
-  const paidToDatePosition = subtotalPosition + 20;
-  generateTableRow(
-    doc,
-    paidToDatePosition,
-    "",
-    "",
-    "Shipping",
-    "",
-    formatCurrency(4.5)
-  );
-
-
-  const duePosition = paidToDatePosition + 25;
+  console.log('lol',invoice.FarmgateFees)
+  const duePosition = subtotalPosition + 25;
   doc.font("Helvetica");
   generateTableRow(
     doc,
     duePosition,
     "",
     "",
-    "GST @ 10%",
+    "Farmgate Fees (20%)",
     "",
-    formatCurrency(0.45)
+    formatCurrency(invoice.FarmgateFees)
   );
+  console.log('here me')
   doc.font("Helvetica");
-
-  
   const xxx = duePosition + 25;
   doc.font("Helvetica-Bold");
   generateTableRow(
@@ -158,9 +142,9 @@ function generateFooter(doc) {
   doc
     .fontSize(10)
     .text(
-      "If there may be security issues with us being granted access to your property for parcel delivery please contact us through the portal at www.farmgate-market.com. Thank you!",
+      "For any queries please contact us through the portal at www.farmgate-market.com. Thank you!",
       50,
-      750,
+      780,
       { align: "center", width: 500 }
     );
 }
@@ -177,8 +161,8 @@ function generateTableRow(
   doc
     .fontSize(10)
     .text(item, 50, y)
-    .text(description, 150, y)
-    .text(unitCost, 280, y, { width: 90, align: "right" })
+    .text(description, 250, y)
+    .text(unitCost, 410, y, { width: 90, align: "right" })
     .text(quantity, 370, y, { width: 90, align: "right" })
     .text(lineTotal, 0, y, { align: "right" });
 }
