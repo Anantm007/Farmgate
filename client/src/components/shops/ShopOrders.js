@@ -44,10 +44,17 @@ const ShopOrders = () => {
             )
         }
 
-        else
+        else if(!loading)
         {
             return (
-                <h1 className="text-danger">No Orders</h1>
+                <Fragment>
+                    <h1 className="text-danger">No Orders</h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2 className="text-danger">All the orders for your shop will be listed here</h2>
+                    <br/><br/><br/>
+                </Fragment>
             )
         }
     }

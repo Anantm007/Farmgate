@@ -84,10 +84,17 @@ const AdminOrders = () => {
             )
         }
 
-        else
+        else if(!loading)
         {
             return (
-                <h1 className="text-danger">Waiting....</h1>
+                <Fragment>
+                    <h1 className="text-danger">No Orders</h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2 className="text-danger">All the orders will be listed here</h2>
+                    <br/><br/><br/>
+                </Fragment>
             )
         }
     }
