@@ -32,6 +32,7 @@ import AdminUsers from './components/admin/AdminUsers';
 import ShopList from './components/admin/ShopList';
 import AdminShop from './components/admin/AdminShopItems';
 import AdminOrders from './components/admin/AdminOrders';
+import AdminInvoice from './components/admin/AdminInvoice';
 
 // Utilities
 import NotFound from './components/layout/NotFound';
@@ -41,7 +42,6 @@ import AdminRoute from './components/userAuth/AdminRoute';
 
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
-
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -83,6 +83,7 @@ const  App = () => {
             <AdminRoute exact path="/admin/shops/:id" component = {AdminShop} />            
             <AdminRoute exact path="/admin/update/item/:itemid" component = {UpdateItem} />    
             <AdminRoute exact path="/admin/orders" component = {AdminOrders} />
+            <AdminRoute exact path='/admin/invoice' component = {AdminInvoice} />
             <Route component={NotFound} />
     
           </Switch>

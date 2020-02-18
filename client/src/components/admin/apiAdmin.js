@@ -32,6 +32,21 @@ export const getUsers = () => {
     })
 } 
 
+// List all shops for the admin
+export const listShops = () => {
+    return fetch(`/api/shops`, {
+        method: "GET",
+        headers: { 
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token}
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+} 
+
 // List all orders for admin
 export const listOrders = () => {
     return fetch(`/api/order/admin/all`, {
@@ -76,3 +91,17 @@ export const updateOrderStatus = (orderId, status) => {
     })
     .catch(err => console.log(err));
 };
+
+// Generate orders invoice for shops
+export const generateInvoice = (id) => {
+    return fetch(`/api/order/invoice/${id}`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => console.log(err))
+}

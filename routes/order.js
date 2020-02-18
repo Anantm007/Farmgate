@@ -277,8 +277,8 @@ router.put('/admin/update/:id', adminAuth, async(req, res) => {
 
 // @route   GET /api/order/invoice/:shopId
 // @desc    Generate Invoice for shop
-// @access  Public (to be changed) 
-router.get('/invoice/:id', async(req, res) => {
+// @access  Private 
+router.get('/invoice/:id', adminAuth, async(req, res) => {
 
     try {   
         const shop = await Shop.findById(req.params.id);
@@ -293,7 +293,6 @@ router.get('/invoice/:id', async(req, res) => {
 
         
         const code = shortid.generate();
-        console.log(shop.name, shop.address, shop.ABN, shop.zipCode, subtotal, code)
         const invoice = {
             shipping: {
             name: shop.name,
@@ -314,12 +313,46 @@ router.get('/invoice/:id', async(req, res) => {
 
         shopWeeklyInvoice(invoice, `${code}.pdf`);
         
-        console.log('here');
+        // Send invoice confirmation email to user and admin
+        let HelperOptions = {
+            from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
+            to : "farmgateishere@gmail.com",
+            subject : `Hey admin, an invoice has been generated for ${shop.name}`,
+            text : "Hello Pelle, \n\nAn invoice of $" + invoice.total + ` for the past 7 days has been generated for ${shop.name}` + "\n\nRegards, \nFarmgate Market",
+            attachments: [{
+                filename: `${code}.pdf`,
+                path: path.join(__dirname, `../${code}.pdf`),
+                contentType: 'application/pdf'
+            }]
+        };
+            
+        transporter.sendMail(HelperOptions,(err,info)=>{
+            if(err) throw err;
+            console.log("The message was sent");
+        });
+
+        let HelperOptions2 = {
+            from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
+            to : shop.email,
+            subject : "Invoice generated for you on Farmgate Market",
+            text : `Hello ${shop.name}, \n\nAn invoice of $` + invoice.total + ` for the past 7 days has been generated. You should receive the payment soon. \n\nRegards, \nFarmgate Market`,
+            attachments: [{
+                filename: `${code}.pdf`,
+                path: path.join(__dirname, `../${code}.pdf`),
+                contentType: 'application/pdf'
+            }]
+        };
+            
+        transporter.sendMail(HelperOptions2,(err,info)=>{
+            if(err) throw err;
+            console.log("The message was sent...");
+        });
 
         return res.json({
             success: true,
-            message: `PDF generated with code ${code}`
+            message: 'Invoice generated, please check your email'
         })
+        
     } catch (err) {
         return res.json({
             success: false,
