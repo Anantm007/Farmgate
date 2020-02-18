@@ -282,7 +282,7 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
 
     try {   
         const shop = await Shop.findById(req.params.id);
-        const orders = await Order.find({shop: req.params.id, createdAt: {
+        const orders = await Order.find({shop: req.params.id, InvoiceIncluded: false, createdAt: {
                 $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
             }})
         
@@ -347,6 +347,11 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             if(err) throw err;
             console.log("The message was sent...");
         });
+
+        orders.forEach(async(o) => {
+            o.InvoiceIncluded = true;
+            await o.save();
+        })
 
         return res.json({
             success: true,

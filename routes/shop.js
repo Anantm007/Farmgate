@@ -4,7 +4,6 @@ const router = express.Router();
 // Middleware for protecting routes
 const auth = require('../middleware/shopAuth');
 const userAuth = require("../middleware/userAuth");
-const adminAuth = require('../middleware/adminAuth');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -116,7 +115,7 @@ router.get("/signout", auth, async(req, res) => {
 // @route   GET /api/shops 
 // @desc    List All shops 
 // @access  Public 
-router.get('/', adminAuth, async(req, res) => {
+router.get('/', async(req, res) => {
   const shops = await Shop.find().select('-image');
 
   if(!shops)

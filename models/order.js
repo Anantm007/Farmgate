@@ -33,6 +33,12 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
 
+    InvoiceIncluded: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+
     items: [{
         item: {
             type: mongoose.Schema.Types.ObjectId,

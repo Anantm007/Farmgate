@@ -1,11 +1,8 @@
 import React, {Fragment, useState} from 'react'
-import {isAuthenticated} from '../userAuth';
 import {generateInvoice} from './apiAdmin';
 import Spinner from '../layout/Spinner';
 
 const AdminInvoice = ({shop}) => {
-
-    const {name} = isAuthenticated();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
