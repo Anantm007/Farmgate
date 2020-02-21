@@ -14,6 +14,7 @@ const ShopItems = ({item}) => {
 
 
     const addCart = () => {
+        console.log('yo')
         setValues({...values, loading: true, error: false, success: false});
         addToCart(item._id)
         .then(data => {
@@ -40,7 +41,7 @@ const ShopItems = ({item}) => {
 
     
     const showSuccess = () => {
-        return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
+        return (<div className="alert alert-success" style={{display: success === true ? '': 'none'}}>
             Item added to cart successfully!
         </div>
         )

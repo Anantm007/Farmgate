@@ -96,6 +96,17 @@ router.post('/:id', auth, async(req, res) => {
     user.history.push(order);
     await user.save();
 
+    let ta,sh;
+    if(tax_shipping === 0)
+    {
+        ta = sh = 0;
+    }
+
+    else
+    {
+        sh = 4.5;
+        ta = 0.45;
+    }
     const invoice = {
       shipping: {
         name: order.userName,
@@ -108,6 +119,8 @@ router.post('/:id', auth, async(req, res) => {
       items: items ,
 
       subtotal: subtotal,
+      shippingAmount: sh,
+      tax: ta,
       total: totalAmount,
       invoice_nr: order._id
     };
@@ -365,6 +378,36 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
         })
     }
 })
+
+
+// @route   GET /api/order/checkPromo
+// @desc    Check whether the entered promo code is valid or not
+// @access  Private 
+router.post('/checkout/checkPromo', auth, async(req, res) => {
+    
+    try { 
+        if(req.body.promoCode === 'farmfresh' || req.body.promoCode === 'handpickedyesterday' )
+        {
+            return res.json({
+                success: true
+            })
+        }   
+
+        else
+        {
+            return res.json({
+                success: false,
+                message: "Sorry, this promo code is either invalid or has expired"
+            })
+        }
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+
 
 
 module.exports = router;

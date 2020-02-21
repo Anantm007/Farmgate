@@ -23,8 +23,8 @@ const Checkout = (props) => {
   }
 
   const [values, setValues] = useState({
-    shipping: 4.50,
-    tax: 0.45,
+    shipping: props.location.state ? props.location.state.shipping: 4.5,
+    tax: props.location.state ? props.location.state.tax: 0.45,
     subtotal: props.location.state ? props.location.state.subtotal: 0,
     loading: false,
     instructions: '',

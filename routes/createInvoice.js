@@ -122,7 +122,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Shipping",
     "",
-    formatCurrency(4.5)
+    formatCurrency(invoice.shippingAmount)
   );
 
 
@@ -135,7 +135,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "GST @ 10%",
     "",
-    formatCurrency(0.45)
+    formatCurrency(invoice.tax)
   );
   doc.font("Helvetica");
 

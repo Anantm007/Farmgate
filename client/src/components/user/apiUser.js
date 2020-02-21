@@ -203,7 +203,6 @@ export const createOrder = (userId, data) => {
 }
 
 
-
 // List all orders for the user
 export const listOrders = (userId) => {
     return fetch(`/api/order/user/${userId}`, {
@@ -217,4 +216,23 @@ export const listOrders = (userId) => {
     .catch(err => {
         console.log(err)
     });
+}
+
+// Check promo code for delivery and tax
+export const checkPromo = (data) => {
+    return fetch(`/api/order/checkout/checkPromo`, {
+        method: 'POST',
+        headers: {
+            Accept: "application/json",
+            'Content-Type': "application/json",
+            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    }) 
 }

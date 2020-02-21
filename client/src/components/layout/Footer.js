@@ -1,4 +1,5 @@
 import React from 'react'
+import TermsAndConditions from '../../TermsAndConditions.pdf';
 
 const Footer = () => {
     return (
@@ -14,6 +15,11 @@ const Footer = () => {
              <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter"><i className="myfa fa fa-twitter"></i></a></li>
             </ul>				
 		</div>
+    <div className="row">
+    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank'>Terms and Conditions</a> &nbsp;|&nbsp;
+    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank'>Privacy Policy</a>
+    <br/>
+    </div>
 	<div className="row">
 		<div className="col-md-12 copy">
 			<p className="text-center">&copy; Copyright {new Date().getFullYear()} - Farmgate Market |  All rights reserved.</p>

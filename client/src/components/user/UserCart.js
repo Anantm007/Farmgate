@@ -4,7 +4,7 @@ import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import CartItem from './CartItem';
 import {isAuthenticated} from '../userAuth';
-import {getCartTotal} from '../user/apiUser';
+import {getCartTotal, checkPromo} from '../user/apiUser';
 
 const UserCart = () => {
 
@@ -14,11 +14,35 @@ const UserCart = () => {
     shipping: 4.50,
     tax: 0.45,
     subtotal: 0,
+    promoCode: '',
     loading: false,
+    success:  false,
+    error: false,
     total: 0
   });
 
-  const {shipping, tax, subtotal, total, loading} = values;
+  const {shipping, tax, subtotal, total, success, error, promoCode, loading} = values;
+
+  const handleChange = name => e => {
+    setValues({...values, error: false, [name]: e.target.value})
+  };
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+    setValues({...values, error: false, success: false, loading: true});
+    checkPromo({promoCode})
+    .then(data => {
+        if(data.success === false)
+        {
+            setValues({...values, error: data.message, success: false, loading: false})
+        }
+        else
+        {
+            setValues({...values, shipping: 0, tax: 0, total: subtotal, success: true, error: false, loading: false});
+        }
+    })
+
+}
 
   const getValues = () => {
     setValues({...values, loading: true});
@@ -36,13 +60,26 @@ const UserCart = () => {
     })
   }
 
+  const showLoading = () => loading && <Spinner/>
+
+  const showError = () => {
+      return (<div className="alert alert-danger" style={{display: error ? '': 'none'}}>
+          {error}
+      </div>
+      )
+  }
+
+  const showSuccess = () => {
+      return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
+        Code applied successfully!
+      </div>)
+  }
+
+
   useEffect(() => {
     getValues();
     //eslint-disable-next-line
   }, [])
-
-  const showLoading = () =>      
-    loading && <Spinner/>
 
     return (
         <Fragment>
@@ -58,6 +95,18 @@ const UserCart = () => {
       <div className="row py-5 p-4 bg-white rounded shadow-sm">
         
         <div className="col-lg-6">
+          
+          <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Promotional Code</div>
+          <div className="p-4">
+            <p className="font-italic mb-4">Please enter any promo code that you have ?</p>
+            <input onChange={handleChange('promoCode')} value={promoCode} className="form-control"></input>
+            <br/>
+            <button style={{textAlign: 'center'}} onClick={clickSubmit} className="btn btn-success btn-block">APPLY!</button>
+            <br/>
+            {showSuccess()}
+            {showError()}
+          </div>
+
           <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Delivery Address</div>
           <div className="p-4">
             <p className="font-italic mb-4">Please check your delivery address before proceeding forward</p>
@@ -76,7 +125,7 @@ const UserCart = () => {
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${total}</strong></li>
             </ul>
-            {user.cart.length >= 1 ? <Link to= {{pathname: "/checkout", state: {subtotal: values.subtotal}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
+            {user.cart.length >= 1 ? <Link to= {{pathname: "/checkout", state: {subtotal: subtotal, total: total, tax: tax, shipping: shipping}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
            : <Link to="/checkout" className="btn btn-dark rounded-pill py-2 btn-block disabled">Proceed to checkout</Link>}
           </div>
         </div>
