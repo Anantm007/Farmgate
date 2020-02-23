@@ -54,7 +54,7 @@ const Navbar = () => {
                     <Fragment>         
                         <li className="nav-item"><Link to="/shops" className="nav-link">SHOPS</Link></li>
                         <li className="nav-item"><Link to="/user/login" className="nav-link">LOGIN</Link></li>
-                        <li className="nav-item"><Link to="/user/register" className="nav-link">REGISTER</Link></li>
+                        <li className="nav-item"><a href="/user/register" className="nav-link">REGISTER</a></li>
                     </Fragment>
                 )}
 
