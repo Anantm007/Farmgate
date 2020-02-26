@@ -21,7 +21,8 @@ const ShopsCard = ({shop}) => {
                 <div className="header">
                     <h2>{shop.name}</h2> <br/>
                     <h6>{shop.address}</h6>
-                    <h6>Tel. {shop.phoneNumber}</h6> <br/>
+                    <h6>Tel. {shop.phoneNumber}</h6>
+                    <h6>Items Available: {shop.items.length}</h6> <br/>
                 </div>
                 <div className="content">
                 <p>{shop.description.substring(0,150)}...</p>
@@ -30,7 +31,7 @@ const ShopsCard = ({shop}) => {
                 {role!== undefined && role === 1 &&
                 <button className="btn btn-warning"><Link to ={`/admin/shops/${shop._id}`} >Edit Now</Link></button>}
                 {role === undefined &&
-                <button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}><Link to ={`/shops/${shop._id}`} >Order Now</Link></button>}
+                <button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}><Link to ={`/shops/${shop._id}`} style={{color: 'white'}}>Order Now</Link></button>}
 
                 </div>
                 </div>
