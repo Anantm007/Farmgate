@@ -195,6 +195,20 @@ router.delete("/:id", auth, async(req, res) => {
           message: "Item Not Found"
         });
   }
+
+  // cascade delete the item from shop schema as well
+  const shop = await Shop.findById(item.shop);
+  
+  let x = 0;
+  for(x = 0; x<shop.items.length; x++)
+  {
+    if(JSON.stringify(shop.items[x]) === JSON.stringify(item._id))
+    {
+      shop.items.splice(x,1)
+    }
+  }
+
+  await shop.save();
   
   await Item.findByIdAndDelete(req.params.id, async(err, item) => {
     if(err)

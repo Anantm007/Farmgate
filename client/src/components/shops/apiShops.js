@@ -80,3 +80,18 @@ export const listOrders = (shopId) => {
         console.log(err)
     });
 }
+
+
+// List number of items for a shop
+export const countItems = (shopId) => {
+    return fetch(`/api/shops/items/${shopId}`, {
+        method: "GET"
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}
+
