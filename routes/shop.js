@@ -270,6 +270,34 @@ router.get("/:id/items", async(req, res) => {
 });
 
 
+// @route   GET /api/shops/items/:id 
+// @desc    Return total items listed for the shop
+// @access  Public 
+router.get('/items/:id', async(req, res) => {
+
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+    {
+        return res.json({
+            success: false,
+            message: "Item Not Found"
+          });
+    }
+
+    const shop = await Shop.findById(req.params.id); 
+    if (!shop) 
+    {
+        return res.json({
+            success: false,
+            message: "Shop not found"
+        });
+    }   
+    
+    return res.json({
+      success: true,
+      data: shop.items.length
+    });
+});
+
 // @route   GET /api/shops/photo/:id 
 // @desc    Display image using shop id
 // @access  Public 
