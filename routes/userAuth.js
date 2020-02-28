@@ -218,7 +218,7 @@ router.post("/forgot", async(req, res) => {
   
 
   // Send reset password email
-  const resetUrl = `${req.protocol}://${req.get('host')}/user/reset/password/${resetToken}`;
+  const resetUrl = `${req.protocol}://farmgate-market.com/user/reset/password/${resetToken}`;
 
   let HelperOptions ={
     from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
