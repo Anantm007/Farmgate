@@ -16,8 +16,8 @@ const Footer = () => {
             </ul>				
 		</div>
     <div className="row">
-    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank'>Terms and Conditions</a> &nbsp;|&nbsp;
-    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank'>Privacy Policy</a>
+    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms and Conditions</a> &nbsp;|&nbsp;
+    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Privacy Policy</a>
     <br/>
     </div>
 	<div className="row">
