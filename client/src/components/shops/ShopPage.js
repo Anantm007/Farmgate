@@ -79,8 +79,6 @@ const ShopPage = (props) => {
     
             <h1 className="my-4">{shop.name}</h1>
             <div>
-              <strong>Email: </strong><a href={`mailto:${shop.email}`}>{shop.email}</a> <br/>
-              <strong>Contact No. </strong><a href={`https://wa.me/${shop.phoneNumber}`} target="_blank" rel="noopener noreferrer">{shop.phoneNumber}</a><br/><br />
               <strong>Address: </strong>{shop.address}<br/><br />
               <strong>About: </strong>{shop.description}<br/>
             </div>

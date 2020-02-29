@@ -37,7 +37,7 @@ const ShopsCard = ({shop}) => {
                 <div className="header">
                     <h2>{shop.name}</h2> <br/>
                     <h6>{shop.address}</h6>
-                    <h6>Tel. {shop.phoneNumber}</h6>
+                    <h6>ABN. {shop.ABN}</h6>
                     <h6>Items Available: {noOfItems}</h6> <br/>
                 </div>
                 <div className="content">

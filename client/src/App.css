@@ -332,3 +332,7 @@ section .section-title {
   transform: rotateY(180deg);
 }
 
+iframe
+{
+    display: none;
+}

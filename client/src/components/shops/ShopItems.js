@@ -62,7 +62,6 @@ const ShopItems = ({item}) => {
                         <div className="flip-card-front">
                         <h4>{item.name}</h4>
                         <h6>{`$ ${item.price} / ${item.variant}`}</h6>
-                        {item.inStock ? <span className="badge badge-primary badge-pill">In Stock</span> : <span className="badge badge-danger badge-pill">Out of Stock</span>} <br/><br/>
                         {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
                         </div>
 
