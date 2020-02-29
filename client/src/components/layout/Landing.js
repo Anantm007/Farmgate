@@ -42,15 +42,7 @@ const Landing = () => {
 
     return (
         <Fragment>
-            
-          <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
-              <strong>ARE YOU A SHOP OWNER / FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
-              <button type="button" className="btn close" 
-                  data-dismiss="alert" aria-label="Close">           
-                  <span aria-hidden="true">×</span> 
-              </button> 
-          </div> 
-
+        
             <Carousel />
             
             <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
@@ -65,6 +57,15 @@ const Landing = () => {
               
             <AboutUs />
             <ContactUs />
+<br/>
+            <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
+              <strong>ARE YOU A FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
+              <button type="button" className="btn close" 
+                  data-dismiss="alert" aria-label="Close">           
+                  <span aria-hidden="true">×</span> 
+              </button> 
+            </div> 
+
             <Footer />
         </Fragment>
     )

@@ -125,8 +125,9 @@ const UserCart = () => {
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${total}</strong></li>
             </ul>
-            {user.cart.length >= 1 ? <Link to= {{pathname: "/checkout", state: {subtotal: subtotal, total: total, tax: tax, shipping: shipping}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
+            {user.cart.length >= 1 && subtotal > 25 ? <Link to= {{pathname: "/checkout", state: {subtotal: subtotal, total: total, tax: tax, shipping: shipping}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>
            : <Link to="/checkout" className="btn btn-dark rounded-pill py-2 btn-block disabled">Proceed to checkout</Link>}
+           {subtotal < 25 ? 'Min. subtotal amount allowed to checkout is $25' : ''} 
           </div>
         </div>
 

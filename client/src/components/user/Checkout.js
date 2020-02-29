@@ -20,6 +20,11 @@ const Checkout = (props) => {
     {
       window.location = '/cart'
     }
+
+    if(props.location.state.subtotal < 25)
+    {
+      window.location = '/cart'
+    }
   }
 
   const [values, setValues] = useState({
@@ -189,7 +194,7 @@ const showSuccess = success => (
         <div className="col-lg-5">
           <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for the seller</div>
           <div className="p-4">
-            <p className="font-italic mb-4">If you have some information for the seller/delivery you can leave them in the box below</p>
+            <p className="font-italic mb-4">If you have any special delivery instructions for the delivery driver you can leave them in the box below</p>
             <textarea onChange={handleChange('instructions')} value={instructions} cols="30" rows="3" className="form-control"></textarea>
           </div>
           {showSuccess(success)}
