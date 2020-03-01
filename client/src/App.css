@@ -331,8 +331,3 @@ section .section-title {
   min-height: 15rem;
   transform: rotateY(180deg);
 }
-
-iframe
-{
-    display: none;
-}

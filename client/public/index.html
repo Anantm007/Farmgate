@@ -28,7 +28,16 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
+    
+    <script>
+      window.addEventListener('error', function(e){
+        // prevent React's listener from firing
+        e.stopImmediatePropagation();
+        // prevent the browser's console error message 
+        e.preventDefault();
+      });
+    </script>
+    
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
