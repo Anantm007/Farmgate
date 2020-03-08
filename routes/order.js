@@ -319,8 +319,8 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             orders: orders,
     
             subtotal: subtotal,
-            FarmgateFees: subtotal*0.2,
-            total: 0.8*subtotal,
+            FarmgateFees: subtotal*0.225,
+            total: 0.775*subtotal,
             invoice_nr: code
         };
 
