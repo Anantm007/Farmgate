@@ -258,7 +258,7 @@ router.put('/:id', auth, async(req, res) => {
         {
           return res.json({
             success: false,
-            message: "Sorry, we do not currently deliver to your zip code."
+            message: "Sorry, we do not currently deliver to your PostCode."
           })
         }
       }

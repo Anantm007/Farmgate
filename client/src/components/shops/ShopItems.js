@@ -71,8 +71,8 @@ const ShopItems = ({item}) => {
                         
                     </div>
                     <br/>
-                    <p style={{backgroundColor: success ? 'none': '#d4f8e8'}}>{success ? showSuccess() : item.description}</p>
-                    {showError()}
+                    <p style={{backgroundColor: success ? 'none': '#d4f8e8'}}>{success ? 
+                    showSuccess() : error ? showError() : item.description}</p>
                     <br/>
                     </div>}
 

@@ -89,7 +89,8 @@ const CreateItem = () => {
                     <option>Select</option>
                         <option value="Kg.">Kg.</option>
                         <option value="Dozen">Dozen</option>
-                        <option value="Bunch">Bunch</option>
+                        <option value="Bunch">Each</option>
+                        <option value="Bunch">Container</option>
                 </select>
             </div>
 

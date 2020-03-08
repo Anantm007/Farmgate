@@ -134,7 +134,7 @@ const Register = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Zip Code" />
+                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode" />
                         </div>
                         
                         <div className="form-group input-group">

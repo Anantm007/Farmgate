@@ -81,6 +81,25 @@ const ShopPage = (props) => {
             <div>
               <strong>Address: </strong>{shop.address}<br/><br />
               <strong>About: </strong>{shop.description}<br/>
+              <strong>Items Available: </strong>{shop.items.length}<br/><br/>
+              <table>
+                <tr>
+                  <th></th>
+                  <th>Weekly Delivery 1</th>
+                  <th>Weekly Delivery 2</th>
+                </tr>
+                <tr>
+                  <td><strong>Order cut-off day/time:</strong></td>
+                  <td>Monday, 7am</td>
+                  <td>Thursday, 7am</td>
+                </tr>
+                <tr>
+                  <td><strong>Delivery by:</strong></td>
+                  <td>Tuesday, 2pm</td>
+                  <td>Friday, 2pm</td>
+                </tr>
+              </table>
+
             </div>
     
           </div>
@@ -115,7 +134,6 @@ const ShopPage = (props) => {
         </div>
     
       </div>
-      
 <br/><br/>
 <br/><br/>
       <Footer/>
