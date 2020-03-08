@@ -4,6 +4,7 @@ import Carousel from './Carousel';
 import ShopsCard from './ShopsCard'
 import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
+import DeliveryInfo from './DeliveryInfo';
 import Footer from '../layout/Footer'
 
 import {getShops} from '../shops/apiShops';
@@ -57,7 +58,8 @@ const Landing = () => {
               
             <AboutUs />
             <ContactUs />
-<br/>
+        <br/>    <DeliveryInfo />
+        <br/>
             <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
               <strong>ARE YOU A FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
               <button type="button" className="btn close" 

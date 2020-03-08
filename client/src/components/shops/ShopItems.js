@@ -62,20 +62,19 @@ const ShopItems = ({item}) => {
                         <div className="flip-card-front">
                         <h4>{item.name}</h4>
                         <h6>{`$ ${item.price} / ${item.variant}`}</h6>
+                        <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
                         {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
                         </div>
 
                         <div className="flip-card-back">
-                        <p>{item.description}</p>
-                        <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
-                        {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
                         </div>
                         
                     </div>
                     <br/>
-                    {showError()}
-                    {showSuccess()}
-                </div>}
+                    <p style={{backgroundColor: success ? 'none': '#d4f8e8'}}>{success ? 
+                    showSuccess() : error ? showError() : item.description}</p>
+                    <br/>
+                    </div>}
 
             </div>
         

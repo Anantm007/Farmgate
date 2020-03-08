@@ -305,7 +305,7 @@ section .section-title {
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
+  /*transform: rotateY(180deg);*/
 }
 
 /* Position the front and back side */
@@ -330,4 +330,20 @@ section .section-title {
   word-wrap: break-word;
   min-height: 15rem;
   transform: rotateY(180deg);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
