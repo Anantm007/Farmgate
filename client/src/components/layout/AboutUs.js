@@ -1,7 +1,5 @@
 import React, {Fragment} from 'react'
 import About2 from '../../images/about2.jpg';
-import About3 from '../../images/about3.jpg';
-
 
 const AboutUs = () => {
     return (
