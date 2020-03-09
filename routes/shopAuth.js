@@ -49,9 +49,9 @@ router.post('/',
             success: false,
             message: 'Image could not be uploaded'});
       }
-
+            
       // check for all fields
-      const { name, email, password, address, zipCode, phoneNumber, description, ABN  } = fields;
+      const { name, email, password, address, zipCode, phoneNumber, facebook, instagram, description, ABN  } = fields;
 
       if(!name || !description || !email || !password || !address || !zipCode || !phoneNumber || !ABN)
       {

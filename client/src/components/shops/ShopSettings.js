@@ -13,12 +13,14 @@ const ShopSettings = (props) => {
         address: '',
         zipCode: '',
         phoneNumber: '',
+        facebook: '',
+        instagram: '',
         error: false,
         loading: false,
         success: false,
     });
 
-    const {name, email, address, zipCode, phoneNumber, error, loading, success} = values;
+    const {name, email, address, zipCode, phoneNumber, facebook, instagram, error, loading, success} = values;
     
     const loadShop = () => {
         setValues({...values, loading: true})
@@ -33,7 +35,8 @@ const ShopSettings = (props) => {
             {
                 updateShop(data, () => {
                     setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
-                        phoneNumber: data.data.phoneNumber, zipCode: data.data.zipCode
+                        phoneNumber: data.data.phoneNumber, facebook: data.data.facebook, 
+                        instagram: data.data.instagram, zipCode: data.data.zipCode
                     })
                 })
             }
@@ -97,8 +100,16 @@ const ShopSettings = (props) => {
             </div>
 
             <div className="form-group">
-                <label>Zip Code</label>
+                <label>Post Code</label>
                 <input onChange={handleChange('zipCode')} type="number" className="form-control" value={zipCode} />
+            </div>
+            <div className="form-group">
+                <label>Facebook Link</label>
+                <input onChange={handleChange('facebook')} type="text" className="form-control" value={facebook} />
+            </div>
+            <div className="form-group">
+                <label>Instagram Link</label>
+                <input onChange={handleChange('instagram')} type="text" className="form-control" value={instagram} />
             </div>
         
 

@@ -51,6 +51,14 @@ const ShopSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    
+    facebook: {
+        type: String
+    },
+
+    instagram: {
+        type: String,
+    },
 
     items: [{
         type: mongoose.Schema.Types.ObjectId,
