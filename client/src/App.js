@@ -33,6 +33,7 @@ import ShopList from './components/admin/ShopList';
 import AdminShop from './components/admin/AdminShopItems';
 import AdminOrders from './components/admin/AdminOrders';
 import InvoiceListShops from './components/admin/InvoiceListShops';
+import ShopSettings from './components/shops/ShopSettings';
 
 // Utilities
 import NotFound from './components/layout/NotFound';
@@ -70,7 +71,8 @@ const  App = () => {
             <Route exact path ='/shop/register' component = {ShopRegister} />
             <Route exact path ='/shop/login' component = {ShopLogin} />     
             <ShopRoute exact path ='/shop/dashboard' component = {ShopDashboard} />     
-            <ShopRoute exact path = '/my/shops/:id' component = {ShopPage} />     
+            <ShopRoute exact path = '/my/shops/:id' component = {ShopPage} /> 
+            <ShopRoute exact path="/shop/:id/settings" component = {ShopSettings} />    
             <ShopRoute exact path = '/create/item' component = {CreateItem} />
             <ShopRoute exact path="/shop/:id/orders" component = {ShopOrders} />
             <ShopRoute exact path = '/shop/:id/items' component = {MyShopItems} />

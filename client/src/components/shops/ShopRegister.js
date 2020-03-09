@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {signup, authenticate, shopIsAuthenticated} from '../shopAuth';
 
+import TermsAndConditions from '../../TermsAndConditions.pdf';
+import PrivacyPolicy from '../../Farmgate_Ag_Privacy_Policy.pdf';
+
 const Register = () => {
     const [values, setValues] = useState({
         name: '',
@@ -15,11 +18,13 @@ const Register = () => {
         error: '',
         image: '',
         description: '',
+        facebook: '',
+        instagram: '',
         success: false,
         formData: ''
     });
 
-    const {name, email, password, repeatPassword, address, zipCode, ABN, phoneNumber, description, formData, success, error} = values;
+    const {name, email, password, repeatPassword, address, zipCode, ABN, phoneNumber, description, facebook, instagram, formData, success, error} = values;
 
     const init = () => {
             setValues({...values, formData: new FormData()})
@@ -78,12 +83,12 @@ const Register = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-user"></i> </span>
                             </div>
-                            <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Full name" />
+                            <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Full name*" />
                         </div>
 
                         <div className="form-group">
                             <label className="btn btn-secondary">
-                                Your Logo &nbsp;
+                                Your Logo* &nbsp;
                             <input onChange={handleChange('image')} type="file" name="image" accept="image/*" />
                             </label>
                         </div>
@@ -92,61 +97,79 @@ const Register = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-envelope"></i> </span>
                             </div>
-                            <input onChange={handleChange('email')} type="email" value={email} className="form-control" placeholder="Your Email address" />
+                            <input onChange={handleChange('email')} type="email" value={email} className="form-control" placeholder="Your Email address*" />
                         </div> 
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-phone"></i> </span>
                             </div>
-                            <input onChange={handleChange('phoneNumber')} type="Number" value={phoneNumber} className="form-control" placeholder="Your Phone Number" />
+                            <input onChange={handleChange('phoneNumber')} type="Number" value={phoneNumber} className="form-control" placeholder="Your Phone Number*" />
                         </div> 
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter a Password" type="password" />
+                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter a Password*" type="password" />
                         </div> 
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('repeatPassword')} value={repeatPassword} className="form-control" placeholder="Confirm Password" type="password" />
+                            <input onChange={handleChange('repeatPassword')} value={repeatPassword} className="form-control" placeholder="Confirm Password*" type="password" />
                         </div>
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Full address" />
+                            <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Full address*" />
                         </div>
 
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
-                                <span className="input-group-text"> <i className="fa fa-home"></i> </span>
+                                <span className="input-group-text"> <i className="fa fa-suitcase"></i> </span>
                             </div>
-                            <input onChange={handleChange('ABN')} type="text" value={ABN} className="form-control" placeholder="Australian Businness Number (ABN)" />
+                            <input onChange={handleChange('ABN')} type="text" value={ABN} className="form-control" placeholder="Australian Businness Number (ABN)*" />
                         </div>
                          
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode" />
+                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode*" />
                         </div>
                         
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fas fa-pen"></i> </span>
                             </div>
-                            <textarea onChange={handleChange('description')} type="Number" value={description} className="form-control" placeholder="A Detailed Shop Description" />
+                            <textarea onChange={handleChange('description')} type="text" value={description} className="form-control" placeholder="A Detailed Shop Description*" />
+                        </div>                              
+
+                        
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-facebook-official"></i> </span>
+                            </div>
+                            <input onChange={handleChange('facebook')} type="text" value={facebook} className="form-control" placeholder="Link to your Facebook Page" />
+                        </div>                              
+
+                        
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-instagram"></i> </span>
+                            </div>
+                            <input onChange={handleChange('instagram')} type="text" value={instagram} className="form-control" placeholder="Link to your Instagram Page" />
                         </div>                              
                         
                         <br />
                         <div className="g-recaptcha" onChange={handleChange('g-recaptcha-response')} data-sitekey="6LeJ284UAAAAAHLyxMvzoMiOLWIpEvC3CjJxc25Y"></div>
                         <br />
+                        <p className="text-center"><strong>*</strong> By signing up you agree to our <a href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a>  and <a href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms & Conditions</a> </p>                                                                 
+
                         <div className="form-group">
                             <button onClick={clickSubmit} className="btn btn-primary btn-block"> Create Account  </button>
                         </div>

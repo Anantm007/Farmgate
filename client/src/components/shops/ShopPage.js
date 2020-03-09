@@ -99,6 +99,9 @@ const ShopPage = (props) => {
                   <td>Friday, 2pm</td>
                 </tr>
               </table>
+              <br/><br/>
+              {shop.facebook ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
+              {shop.instagram ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
 
             </div>
     

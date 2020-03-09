@@ -55,10 +55,10 @@ const Landing = () => {
                     </div>
                 ))}
             </div>
-              
+            <DeliveryInfo />
             <AboutUs />
             <ContactUs />
-        <br/>    <DeliveryInfo />
+        <br/>    
         <br/>
             <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
               <strong>ARE YOU A FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
