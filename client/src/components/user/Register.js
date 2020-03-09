@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {signup, authenticate, isAuthenticated} from '../userAuth';
 
+import TermsAndConditions from '../../TermsAndConditions.pdf';
+import PrivacyPolicy from '../../Farmgate_Ag_Privacy_Policy.pdf';
+
 const Register = () => {
 
     const [values, setValues] = useState({
@@ -114,6 +117,8 @@ const Register = () => {
                         <br />
                         <div className="g-recaptcha" onChange={handleChange('g-recaptcha-response')} data-sitekey="6LeJ284UAAAAAHLyxMvzoMiOLWIpEvC3CjJxc25Y"></div>
                         <br />
+                        <p className="text-center"><strong>*</strong> By signing up you agree to our <a href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a>  and <a href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms & Conditions</a> </p>                                                                 
+
                         <div className="form-group">
                             <button onClick={clickSubmit} className="btn btn-primary btn-block"> Create Account  </button>
                         </div>
