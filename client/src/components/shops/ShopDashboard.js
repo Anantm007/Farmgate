@@ -17,6 +17,7 @@ const ShopDashboard = () => {
                     <li className="list-group-item"><Link to="/create/item" className="nav-link">Create Item</Link></li>
                     <li className="list-group-item"><Link to={`/shop/${_id}/orders`} className="nav-link">Manage Orders</Link></li>
                     <li className="list-group-item"><Link to={`/shop/${_id}/items`} className="nav-link">Manage Items</Link></li>
+                    <li className="list-group-item"><Link to={`/shop/${_id}/settings`} className="nav-link">Shop Settings</Link></li>
                 </ul>
 
             </div>

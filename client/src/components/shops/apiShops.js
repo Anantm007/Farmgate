@@ -36,6 +36,40 @@ export const getShop = id => {
     })
 }
 
+// Update Shop
+export const Update = async(id, user) => {
+       
+    return fetch(`/api/shops/${id}`, {
+        method: 'PUT',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
+        },
+            body: JSON.stringify(user)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+// Update shop in local storage
+export const updateShop = (shop, next) => {
+    if(typeof window !== 'undefined')
+    {
+        if(localStorage.getItem('shopjwt'))
+        {
+            let auth = JSON.parse(localStorage.getItem("shopjwt"));
+            auth.shop = shop;
+            localStorage.setItem('shopjwt', JSON.stringify(auth))
+            next()
+        }
+    }
+}
+
 // Get items for a shop
 export const getItems = id => {
     return fetch(`/api/shops/${id}/items`, {
