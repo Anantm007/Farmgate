@@ -188,6 +188,7 @@ const showSuccess = success => (
             </ul>
             
             <h5>* Your order should be delivered within 7 days</h5>
+            <h6>** Your bank statement will show debits to Farmgate Ag (our trading name)</h6>
           </div>
         </div>
 

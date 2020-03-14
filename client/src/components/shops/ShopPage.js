@@ -30,12 +30,13 @@ const ShopPage = (props) => {
 
     
     const loadItems = () => {
+      setLoading(true)
       getItems(shopId).then(data => {
         console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
-              setLoading(true);
+              setLoading(false);
           }
 
           else
@@ -100,8 +101,8 @@ const ShopPage = (props) => {
                 </tr>
               </table>
               <br/><br/>
-              {shop.facebook ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
-              {shop.instagram ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
+              {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
+              {shop.instagram !== undefined ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
 
             </div>
     
