@@ -193,7 +193,7 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents).toFixed(2);
+  return "(AUD) $" + (cents).toFixed(2);
 }
 
 function formatDate(date) {
