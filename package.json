@@ -8,7 +8,7 @@
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build:production": "webpack --define process.env.NODE_ENV=production --config webpack.prod.js --progress"
+    "build-production": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Anant Mathur",
   "license": "MIT",
