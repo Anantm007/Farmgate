@@ -89,8 +89,9 @@ const CreateItem = () => {
                     <option>Select</option>
                         <option value="Kg.">Kg.</option>
                         <option value="Dozen">Dozen</option>
-                        <option value="Bunch">Each</option>
-                        <option value="Bunch">Container</option>
+                        <option value="Each">Each</option>
+                        <option value="Container">Container</option>
+                        <option value="Bag">Bag</option>
                 </select>
             </div>
 
@@ -100,8 +101,8 @@ const CreateItem = () => {
                     <option>Select</option>
                         <option value="Organic">Oragnic</option>
                         <option value="Fresh">Organically Certified</option>
-                        <option value="No Chemical">Biodynamic</option>
-                        <option value="No Chemical">No Category</option>
+                        <option value="BioDynamic">Biodynamic</option>
+                        <option value="No Category">No Category</option>
                 </select>
             </div>
             <br/>
