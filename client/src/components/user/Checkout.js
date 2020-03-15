@@ -187,8 +187,8 @@ const showSuccess = success => (
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${Total()}</strong></li>
             </ul>
             
-            <h5>* Your order should be delivered within 7 days</h5>
-            <h6>** Your bank statement will show debits to Farmgate Ag (our trading name)</h6>
+            <h6>* Your order should be delivered within 7 days (delivery days were stipulated when you added items to your cart)</h6>
+            <h6>** Your bank statement will show debits to <strong>Farmgate Ag</strong> (our trading name)</h6>
           </div>
         </div>
 
