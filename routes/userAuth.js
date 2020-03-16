@@ -70,7 +70,9 @@ router.post('/',
         message: errors.array()[0].msg });
     }
 
-    const { name, email, password, address, zipCode, phoneNumber, captcha  } = req.body;
+    const { name, email, password, address, zipCode, phoneNumber } = req.body;
+  
+    /*const { name, email, password, address, zipCode, phoneNumber, captcha  } = req.body;
     
     if (!captcha)
     {
@@ -94,7 +96,7 @@ router.post('/',
     {
         return res.json({success: false, message: "Sorry, there was an error, please try again later"});
     }
-
+  */
     try {
       let user = await User.findOne({ email });
 

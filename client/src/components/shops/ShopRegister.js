@@ -164,10 +164,10 @@ const Register = () => {
                             </div>
                             <input onChange={handleChange('instagram')} type="text" value={instagram} className="form-control" placeholder="Link to your Instagram Page" />
                         </div>                              
-                        
+                        {/* 
                         <br />
                         <div className="g-recaptcha" onChange={handleChange('g-recaptcha-response')} data-sitekey="6LeJ284UAAAAAHLyxMvzoMiOLWIpEvC3CjJxc25Y"></div>
-                        <br />
+                        <br />*/}
                         <p className="text-center"><strong>*</strong> By signing up you agree to our <a href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a>  and <a href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms & Conditions</a> </p>                                                                 
 
                         <div className="form-group">

@@ -26,8 +26,7 @@ const Register = () => {
     };
     
         const clickSubmit = (e) => {
-        const captcha = document.querySelector('#g-recaptcha-response').value;
-
+        {/*const captcha = document.querySelector('#g-recaptcha-response').value;*/}
          e.preventDefault();
          if(password !== repeatPassword)
           {
@@ -35,7 +34,9 @@ const Register = () => {
             return;
           }  
         setValues({...values, error: false});
-        signup({name, email, password, address, zipCode, phoneNumber, captcha})
+
+        {/*signup({name, email, password, address, zipCode, phoneNumber, captcha})*/}
+        signup({name, email, password, address, zipCode, phoneNumber})
         .then(data => {
             
             if(data.success === false)
@@ -113,10 +114,10 @@ const Register = () => {
                             </div>
                             <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode*" />
                         </div>                              
-                        
+                        {/*
                         <br />
                         <div className="g-recaptcha" onChange={handleChange('g-recaptcha-response')} data-sitekey="6LeJ284UAAAAAHLyxMvzoMiOLWIpEvC3CjJxc25Y"></div>
-                        <br />
+                        <br />*/}
                         <p className="text-center"><strong>*</strong> By signing up you agree to our <a href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a>  and <a href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms & Conditions</a> </p>                                                                 
 
                         <div className="form-group">
