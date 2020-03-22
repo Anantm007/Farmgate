@@ -8,8 +8,8 @@ import Spinner from '../layout/Spinner';
 const ShopLogin = () => {
 
     const [values, setValues] = useState({
-        email: 'anantcodesweb@gmail.com',
-        password: '123456',
+        email: '',
+        password: '',
         error: '',
         loading: false,
     });
@@ -62,7 +62,7 @@ const ShopLogin = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
-                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter a Password" type="password" />
+                            <input onChange={handleChange('password')} value={password} className="form-control" placeholder="Enter Your Password" type="password" />
                         </div> 
                         
                         <br />
