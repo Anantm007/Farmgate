@@ -92,9 +92,9 @@ const ContactUs = () => {
                             <div className="card-header bg-success text-white text-uppercase"><i className="fa fa-home"></i> Address</div>
                             <div className="card-body">
                                 <p>Level 1, 49 George Street</p>
-                                <p>Norwood, S.A.</p>
-                                <p>South Australia - 5067</p>
-                                <p><strong>ABN:</strong> 91688399669 </p>
+                                <p>Norwood, South Australia</p>
+                                <p>Australia</p>
+                                <p>5067</p><p><strong>ABN:</strong> 91688399669 </p>
                                 <p><strong>Email:</strong> <a href="mailto:farmgateishere@gmail.com"> farmgateishere@gmail.com</a></p>
                                 <p><strong>Tel:</strong> <a href="https://wa.me/61438807530">+61 438 807 530</a></p>
 
