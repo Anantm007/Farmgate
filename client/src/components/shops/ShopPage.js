@@ -32,6 +32,7 @@ const ShopPage = (props) => {
     const loadItems = () => {
       setLoading(true)
       getItems(shopId).then(data => {
+        console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
@@ -43,12 +44,11 @@ const ShopPage = (props) => {
             if(data.count === 0)
                 {
                     setError(data.message)
-                    setLoading(false);
                 }
                 else {
                     setItems(data.data);
-                    setLoading(false);
                 }
+            setLoading(false);
           }
       })
   }
@@ -84,6 +84,7 @@ const ShopPage = (props) => {
               <strong>About: </strong>{shop.description}<br/>
               <strong>Items Available: </strong>{shop.items.length}<br/><br/>
               <table>
+                <tbody>
                 <tr>
                   <th></th>
                   <th>Weekly Delivery 1</th>
@@ -99,6 +100,7 @@ const ShopPage = (props) => {
                   <td>Tuesday, 2pm</td>
                   <td>Friday, 2pm</td>
                 </tr>
+                </tbody>
               </table>
               <br/><br/>
               {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}

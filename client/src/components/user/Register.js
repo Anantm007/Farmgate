@@ -26,7 +26,7 @@ const Register = () => {
     };
     
         const clickSubmit = (e) => {
-        {/*const captcha = document.querySelector('#g-recaptcha-response').value;*/}
+        /*const captcha = document.querySelector('#g-recaptcha-response').value;*/
          e.preventDefault();
          if(password !== repeatPassword)
           {
@@ -35,7 +35,7 @@ const Register = () => {
           }  
         setValues({...values, error: false});
 
-        {/*signup({name, email, password, address, zipCode, phoneNumber, captcha})*/}
+        /*signup({name, email, password, address, zipCode, phoneNumber, captcha})*/
         signup({name, email, password, address, zipCode, phoneNumber})
         .then(data => {
             
