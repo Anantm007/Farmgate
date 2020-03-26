@@ -84,6 +84,7 @@ const ShopPage = (props) => {
               <strong>About: </strong>{shop.description}<br/>
               <strong>Items Available: </strong>{shop.items.length}<br/><br/>
               <table>
+                <tbody>
                 <tr>
                   <th></th>
                   <th>Weekly Delivery 1</th>
@@ -99,6 +100,7 @@ const ShopPage = (props) => {
                   <td>Tuesday, 2pm</td>
                   <td>Friday, 2pm</td>
                 </tr>
+                </tbody>
               </table>
               <br/><br/>
               {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
