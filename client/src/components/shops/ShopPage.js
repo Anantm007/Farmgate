@@ -32,6 +32,7 @@ const ShopPage = (props) => {
     const loadItems = () => {
       setLoading(true)
       getItems(shopId).then(data => {
+        console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
@@ -43,12 +44,11 @@ const ShopPage = (props) => {
             if(data.count === 0)
                 {
                     setError(data.message)
-                    setLoading(false);
                 }
                 else {
                     setItems(data.data);
-                    setLoading(false);
                 }
+            setLoading(false);
           }
       })
   }
