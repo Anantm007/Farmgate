@@ -130,7 +130,7 @@ router.post('/',
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality organic food. \n\nLogin now to add items to your shop. \n\nVisit http://www.farmgate-market.com \n\nRegards, \nTeam Farmgate"
+            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality organic food. \n\nLogin now to add items to your shop. \n\nVisit http://www.farmgate-market.com \n\nRegards, \nThe Farmgate Team"
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{
@@ -182,7 +182,7 @@ router.post("/forgot", async(req, res) => {
     subject : "Farmgate Password Reset",
     text : "Hello " + shop.name + 
             `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password.\n\nDo not share this link with anybody. \nThis link is valid only for 10 minutes.
-            \n\nRegards, \nTeam Farmgate`
+            \n\nRegards, \nThe Farmgate Team`
   };
 
   transporter.sendMail(HelperOptions,(err,info)=>{

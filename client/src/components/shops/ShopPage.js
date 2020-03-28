@@ -30,13 +30,11 @@ const ShopPage = (props) => {
 
     
     const loadItems = () => {
-      setLoading(true)
       getItems(shopId).then(data => {
         console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
-              setLoading(false);
           }
 
           else
@@ -48,7 +46,6 @@ const ShopPage = (props) => {
                 else {
                     setItems(data.data);
                 }
-            setLoading(false);
           }
       })
   }
@@ -65,6 +62,10 @@ const ShopPage = (props) => {
     useEffect(() => {
         loadShop()
         loadItems()
+
+        return () => {
+          console.log('cleaned up');
+        }
         //eslint-disable-next-line
     }, [])
 

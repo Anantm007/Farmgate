@@ -133,7 +133,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : "farmgateishere@gmail.com",
         subject : "Hey admin, a purchase has been made!",
-        text : "Hello Pelle, \n\nA purchase of $" + totalAmount + " has been made by " + user.name + "\n\nRegards, \nFarmgate"
+        text : "Hello Pelle, \n\nA purchase of $" + totalAmount + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team"
     };
         
     transporter.sendMail(HelperOptions,(err,info)=>{
@@ -145,7 +145,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : user.email,
         subject : "Your order on Farmgate Market was successful",
-        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \Farmgate Market",
+        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
@@ -331,7 +331,7 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : "farmgateishere@gmail.com",
             subject : `Hey admin, an invoice has been generated for ${shop.name}`,
-            text : "Hello Pelle, \n\nAn invoice of $" + invoice.total + `  has been generated for ${shop.name}` + "\n\nRegards, \nFarmgate Market",
+            text : "Hello Pelle, \n\nAn invoice of $" + invoice.total + `  has been generated for ${shop.name}` + "\n\nRegards, \nThe Farmgate Team",
             attachments: [{
                 filename: `${code}.pdf`,
                 path: path.join(__dirname, `../${code}.pdf`),
@@ -348,7 +348,7 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : shop.email,
             subject : "Invoice generated for you on Farmgate Market",
-            text : `Hello ${shop.name}, \n\nAn invoice of $` + invoice.total + ` has been generated. You should receive the payment soon. \n\nRegards, \nFarmgate Market`,
+            text : `Hello ${shop.name}, \n\nAn invoice of $` + invoice.total + ` has been generated. You should receive the payment soon. \n\nRegards, \nThe Farmgate Team`,
             attachments: [{
                 filename: `${code}.pdf`,
                 path: path.join(__dirname, `../${code}.pdf`),

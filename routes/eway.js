@@ -136,7 +136,7 @@ router.get('/status/:userId/:code', async(req, res) => {
                 from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
                 to : user.email,
                 subject : "Your order on Farmgate Market was unseccessful",
-                text : "Hello , \n\nYour purchase on Farmgate Market was unsuccessful. Please try checking out again with correct credit card details" + "\n\nRegards, \nFarmgate"
+                text : "Hello , \n\nYour purchase on Farmgate Market was unsuccessful. Please try checking out again with correct credit card details" + "\n\nRegards, \nThe Farmgate Team"
             };
                 
             transporter.sendMail(HelperOptions,(err,info)=>{
