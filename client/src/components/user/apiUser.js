@@ -129,12 +129,13 @@ export const updateCartItem = (id, quantity) => {
 }
 
 // Remove item from cart
-export const removeFromCart = (id) => {
+export const removeFromCart = (id, amount) => {
     return fetch(`/api/users/cart/remove/${id}`, {
         method: 'DELETE',
         headers: {
             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
-        }
+        },
+        body: JSON.stringify(amount)
     })
     .then(response => {
         return response.json();
@@ -144,35 +145,16 @@ export const removeFromCart = (id) => {
     })
 }
 
-// Get Braintree token from backend
-export const getBraintreeClientToken = (userId) => {
-    return fetch(`/api/braintree/getToken/${userId}`, {
-        method: 'GET',
-        headers: {
-            Accept: "application/json",
-            'Content-Type': "application/json",
-            'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
-        }
-    })
-    .then(response => {
-        return response.json();
-    })
-    .catch(err => {
-        console.log(err);
-    }) 
-}
-
-
-// Process the payment
-export const processPayment = (userId, paymentData) => {
-    return fetch(`/api/braintree/payment/${userId}`, {
+// Get access code for payment from backend
+export const getClientToken = (userId, amount) => {
+    return fetch(`/api/eway/getToken/${userId}`, {
         method: 'POST',
         headers: {
             Accept: "application/json",
             'Content-Type': "application/json",
             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
         },
-        body: JSON.stringify(paymentData)
+        body: JSON.stringify(amount)
     })
     .then(response => {
         return response.json();
@@ -182,7 +164,36 @@ export const processPayment = (userId, paymentData) => {
     }) 
 }
 
+// Check Payment status
+export const checkPaymentStatus = (userId, code) => {
+    return fetch(`/api/eway/status/${userId}/${code.accessCode}`, {
+        method: 'GET',
+        headers: {
+          'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+        }
+      })
+      .then(response => {
+          return response.json();
+      })
+      .catch(err => {
+          console.log(err);
+      })
+} 
 
+// export const sendErrorEmail = (userId) => {
+//     return fetch(`/api/eway/fail/${userId}`, {
+//         method: 'GET',
+//         headers: {
+//             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+//         }
+//     })
+//     .then(response => {
+//         return response.json();
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     })
+// }
 // Create the order
 export const createOrder = (userId, data) => {
     return fetch(`/api/order/${userId}`, {
