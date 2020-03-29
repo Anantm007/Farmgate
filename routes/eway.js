@@ -28,34 +28,6 @@ let transporter = nodemailer.createTransport({
 
 /*                                                              ROUTES                                                           */
 
-// // @route   POST /api/braintree/payment/:id 
-// // @desc    Process payments
-// // @access  Public
-// router.post('/braintree/payment/:id', userAuth, async(req, res) => {
-//     let nonceFromTheClient = req.body.paymentMethodNonce;
-//     let amountFromTheClient = req.body.amount;
-
-//     // charge
-//     let newTransaction = gateway.transaction.sale({
-//         amount: amountFromTheClient,
-//         paymentMethodNonce: nonceFromTheClient,
-//         options: {
-//             submitForSettlement: true
-//         }
-//     }, (err, result) => {
-//         if(err)
-//         {
-//             return res.json({
-//                 success: false,
-//                 message: err
-//             })
-//         }
-
-//         return res.json(result)
-//     })
-// })
-
-
 // @route   GET /api/eway/getToken/:id 
 // @desc    Generate accessCode and formURL token for payments
 // @access  Private
@@ -82,7 +54,7 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
             "Email": user.email,
             "PostalCode": user.zipCode,     
         },
-        "RedirectUrl": 'http://localhost:3006',
+        "RedirectUrl": 'http://localhost:3006/checkPayment',
         "TransactionType": "Purchase"
     }).then(async (response) => {
         if (response.getErrors().length == 0) {
@@ -110,27 +82,38 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
 router.get('/status/:userId/:code', async(req, res) => {
     var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox"
     
-    const user = await User.findById(req.params.userId).select('email');
+    const user = await User.findById(req.params.userId);
 
+    console.log('checking', req.params.code)
     client.queryTransaction(req.params.code)
     .then(function (response) {
-        const Attri = response.attributes;
-        const Trans = Attri.Transactions;
-        console.log('fuck me', Attri)
-        console.log('hey baby', Trans)
-
-        if(Trans.length !== 0)
-        {
-            if(Trans[0].ResponseCode === '00')
+        console.log(response)
+        if (response.get('Transactions[0].TransactionStatus')) {
+            console.log('Payment successful! ID: ' + response.get('Transactions[0].TransactionID'));
             return res.json({
-                success: true
+                success: true,
+                data: user
+            })
+        } else {
+            var errorCodes = response.get('Transactions[0].ResponseMessage').split(', ');
+            errorCodes.forEach(function(errorCode) {
+                console.log("Response Message: " + rapid.getMessage(errorCode, "en"));
+            });
+
+            return res.json({
+                success: false,
+                data: user
             })
         }
-
-        else
-        {
-            console.log('lol wtf');
-    
+    }).catch(function(reason) {
+        console.log('error', reason)
+        return res.json({
+            success: false,
+            data: user
+        })
+    });
+/*    
+            
             // Send order confirmation email to user and admin
             let HelperOptions = {
                 from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
@@ -144,12 +127,6 @@ router.get('/status/:userId/:code', async(req, res) => {
                 console.log("Error email was sent");
             });
 
-            return res.json({
-                success: false
-            })
-        }
-        
-    });
-
+*/
 })
 module.exports = router;

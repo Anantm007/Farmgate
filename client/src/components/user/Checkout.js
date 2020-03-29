@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getClientToken, updateUser, createOrder, checkPaymentStatus, sendErrorEmail} from '../user/apiUser';
+import {getClientToken, setInfo} from '../user/apiUser';
 import { withRouter } from 'react-router-dom';
 
 const Checkout = (props) => {
@@ -34,13 +34,12 @@ const Checkout = (props) => {
     instructions: '',
     accessCode: '',
     formUrl: '',
-    paymentSuccess: false,
     success: false,
     error: '',
     total: 0
   });
 
-  const {shipping, tax, instructions, subtotal, accessCode, formUrl, paymentSuccess, success, error, loading} = values;
+  const {shipping, tax, instructions, subtotal, accessCode, formUrl, success, error, loading} = values;
 
   const handleChange = name => e => {
     setValues({...values, error: false, [name]: e.target.value})
@@ -80,58 +79,7 @@ const Checkout = (props) => {
   }, [])
   
   const buy = () => {
-
-    checkPaymentStatus(user._id, {code: accessCode})
-    .then(data => {
-      if(data.success === true)
-      {
-        setValues({...values, paymentSuccess: true})
-      }
-      else
-      {
-        setValues({...values, paymentSuccess: false})
-      }
-    })
-
-    // create order      
-    if(paymentSuccess)
-    {
-      let data = {
-        instructions,
-        subtotal,
-        tax_shipping: tax + shipping,
-        totalAmount: subtotal + tax + shipping
-      }
-      
-      createOrder(user._id, data)
-      .then(data => {
-        console.log(data)
-        if(data.success === false)
-        {
-          setValues({...values, success: false, error: data.message});
-        }
-
-        else
-        {
-            updateUser(data.data, () => {
-            setValues({...values, success: true, loading: false, subtotal: 0, instructions: ''})
-            window.setTimeout(function(){
-              window.location.href = `/user/${user._id}/orders`;
-            }, 2300);
-      
-          })
-        }
-      })    
-      .catch(err => {
-        console.log('dropin error: ', err);
-      })
-    }
-
-    // else
-    // {
-    //   sendErrorEmail();
-    // }
-
+    setInfo({instructions, subtotal, tax, shipping})
   }
 
 
@@ -151,7 +99,7 @@ const Checkout = (props) => {
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input class="form-control" onChange={handleChange('name')} name="EWAY_CARDNAME" type="text" placeholder="Name on the card" />
+                                <input class="form-control" onChange={handleChange('name')} value="anantt" name="EWAY_CARDNAME" type="text" placeholder="Name on the card" />
                             </div>
                         </div>
                     </div>
@@ -160,7 +108,7 @@ const Checkout = (props) => {
                             <div class="form-group">
                                 <label for="ccnumber">Credit Card Number</label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" onChange={handleChange('ccNumber')} name="EWAY_CARDNUMBER" placeholder="Your credit card number"/>
+                                    <input class="form-control" type="number" onChange={handleChange('ccNumber')} value="4444333322221111" name="EWAY_CARDNUMBER" placeholder="Your credit card number"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="mdi mdi-credit-card"></i>
@@ -173,22 +121,23 @@ const Checkout = (props) => {
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <label for="ccmonth">Card Expiry Month</label>
-                            <input class="form-control" type="number" onChange={handleChange('expMonth')} name="EWAY_CARDEXPIRYMONTH" placeholder="MM" />
+                            <input className="form-control" type="number" onChange={handleChange('expMonth')} value="08" name="EWAY_CARDEXPIRYMONTH" placeholder="MM" />
                           </div>
-                        <div class="form-group col-sm-4">
+                        <div className="form-group col-sm-4">
                             <label for="ccyear">Card Expiry Year</label>
-                            <input class="form-control" type="number" onChange={handleChange('expYear')} name="EWAY_CARDEXPIRYYEAR" placeholder="YYYY" />
+                            <input className="form-control" type="number" onChange={handleChange('expYear')} name="EWAY_CARDEXPIRYYEAR" value="2020" placeholder="YYYY" />
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                        <div className="col-sm-4">
+                            <div className="form-group">
                                 <label for="cvv">CVV/CVC</label>
-                                <input class="form-control" type="number" onChange={handleChange('cvv')} name="EWAY_CARDCVN" placeholder="XXX" />
+                                <input className="form-control" type="number" onChange={handleChange('cvv')} name="EWAY_CARDCVN" value="123" placeholder="XXX" />
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                    <button onClick={buy} class="btn btn-block btn-success" type="submit">
-                        <i class="mdi mdi-gamepad-circle"></i> PAY</button>
+                    <div className="card-footer">
+                      {/*onClick={buy}*/}
+                    <button onClick={buy} className="btn btn-block btn-success" type="submit">
+                        <i className="mdi mdi-gamepad-circle"></i> PAY</button>
                     </div>
                   </form>
                 </div>

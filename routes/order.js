@@ -55,7 +55,16 @@ router.get('/statusValues', async(req, res) => {
 router.post('/:id', auth, async(req, res) => {
     const user = await User.findById(req.params.id);
     
-    const {instructions, subtotal, tax_shipping, totalAmount} = req.body;
+    const {instructions, subtotal, tax_shipping, totalAmount, accessCode} = req.body;
+    const orderCheck = await Order.findOne({accessCode});
+    if(orderCheck)
+    {
+        return res.json({
+            success: false,
+            message: 'Order cannot be placed again'
+        })
+    }
+
     let items = [];
 
     user.cart.forEach(async(c) => {
@@ -87,12 +96,13 @@ router.post('/:id', auth, async(req, res) => {
         instructions,
         subtotal, 
         tax_shipping, 
-        totalAmount
+        totalAmount,
+        accessCode
     })
     
     await order.save();
 
-    //user.cart = [];
+    user.cart = [];
     user.history.push(order);
     await user.save();
 
