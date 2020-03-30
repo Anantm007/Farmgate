@@ -13,9 +13,10 @@ const CheckPayment = (props) => {
     
     const [values, setValues] = useState({
         loading: false,
+        success: false,
         error: ''
     });
-    const {loading, error} = values;
+    const {loading, error, success} = values;
     
     const {user} = isAuthenticated();
     const accessCode = (props.location.search.substring(12));
@@ -32,7 +33,7 @@ const CheckPayment = (props) => {
         }
         else
         {
-            setValues({...values, loading: false})
+            setValues({...values, success: true, loading: false})
             placeOrder()
         }
         })
@@ -92,6 +93,9 @@ const CheckPayment = (props) => {
             : '' }
             {error ? <Fragment>  <h5 style={{color: 'red'}}>Payment Declined, please try again with correct payment information...</h5> 
             </Fragment> : ''}
+            {success ? <Fragment>  <h5 style={{color: 'green'}}>Payment Successful, please wait while we confirm your order...</h5> 
+            </Fragment> : ''}
+            
             {showLoading()}
         </div>
     )

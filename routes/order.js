@@ -84,7 +84,7 @@ router.post('/:id', auth, async(req, res) => {
 
     let item = await Item.findById(user.cart[0].item)
     let shop = item.shop;
-    const s = await Shop.findById(shop).select('name');
+    const s = await Shop.findById(shop).select('name email');
 
     const order = new Order({
         items,
@@ -162,8 +162,26 @@ router.post('/:id', auth, async(req, res) => {
             contentType: 'application/pdf'
           }]
     };
-        
+
     transporter.sendMail(HelperOptions2,(err,info)=>{
+        if(err) throw err;
+        console.log("The message was sent...");
+    });
+
+
+    let HelperOptions3 = {
+        from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
+        to : s.email,
+        subject : "You have a new order on Farmgate Market",
+        text : "Hello " + s.name + ", \n\nA new order for your shop was placed by" + user.name +  "on Farmgate Market. You can find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        attachments: [{
+            filename: `${code}.pdf`,
+            path: path.join(__dirname, `../${code}.pdf`),
+            contentType: 'application/pdf'
+          }]
+    };
+        
+    transporter.sendMail(HelperOptions3,(err,info)=>{
         if(err) throw err;
         console.log("The message was sent...");
     });

@@ -54,7 +54,7 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
             "Email": user.email,
             "PostalCode": user.zipCode,     
         },
-        "RedirectUrl": 'https://farmgate-market.com/checkPayment',
+        "RedirectUrl": process.env.redirectUrl,
         "TransactionType": "Purchase"
     }).then(async (response) => {
         if (response.getErrors().length == 0) {
