@@ -18,8 +18,8 @@ function generateHeader(doc) {
   doc
     .image(path.join(__dirname,'logo.png'), 50, 25, { width: 100 })
     .fillColor("#444444")
-    .fontSize(20)
-    .text("Farmgate Market", 110, 57)
+    // .fontSize(20)
+    // .text("Farmgate Market", 110, 57)
     .fontSize(10)
     .text("Farmgate Market", 200, 50, { align: "right" })
     .text("Level 1, 49 George Street Norwood, S.A.", 200, 65, { align: "right" })
@@ -31,7 +31,10 @@ function generateCustomerInformation(doc, invoice) {
   doc
     .fillColor("#444444")
     .fontSize(20)
-    .text("Invoice", 50, 160);
+    .text("Invoice", 50, 160)
+    .font("Helvetica-Bold")
+    .fontSize(15)
+    .text("AUTHORIZATION TO LEAVE", 300, 160);
 
   generateHr(doc, 185);
 
