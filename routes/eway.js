@@ -54,7 +54,7 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
             "Email": user.email,
             "PostalCode": user.zipCode,     
         },
-        "RedirectUrl": 'http://localhost:3006/checkPayment',
+        "RedirectUrl": 'https://farmgate-market.com/checkPayment',
         "TransactionType": "Purchase"
     }).then(async (response) => {
         if (response.getErrors().length == 0) {
@@ -80,11 +80,10 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
 // @desc    Check payment status
 // @access  Private
 router.get('/status/:userId/:code', async(req, res) => {
-    var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox"
+    var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
     
     const user = await User.findById(req.params.userId);
 
-    console.log('checking', req.params.code)
     client.queryTransaction(req.params.code)
     .then(function (response) {
         console.log(response)
@@ -112,21 +111,6 @@ router.get('/status/:userId/:code', async(req, res) => {
             data: user
         })
     });
-/*    
-            
-            // Send order confirmation email to user and admin
-            let HelperOptions = {
-                from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
-                to : user.email,
-                subject : "Your order on Farmgate Market was unseccessful",
-                text : "Hello , \n\nYour purchase on Farmgate Market was unsuccessful. Please try checking out again with correct credit card details" + "\n\nRegards, \nThe Farmgate Team"
-            };
-                
-            transporter.sendMail(HelperOptions,(err,info)=>{
-                if(err) throw err;
-                console.log("Error email was sent");
-            });
 
-*/
 })
 module.exports = router;

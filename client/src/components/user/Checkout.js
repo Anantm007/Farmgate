@@ -99,7 +99,7 @@ const Checkout = (props) => {
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input class="form-control" onChange={handleChange('name')} value="anantt" name="EWAY_CARDNAME" type="text" placeholder="Name on the card" />
+                                <input class="form-control" onChange={handleChange('name')} name="EWAY_CARDNAME" type="text" placeholder="Name on the card" />
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ const Checkout = (props) => {
                             <div class="form-group">
                                 <label for="ccnumber">Credit Card Number</label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" onChange={handleChange('ccNumber')} value="4444333322221111" name="EWAY_CARDNUMBER" placeholder="Your credit card number"/>
+                                    <input class="form-control" type="number" onChange={handleChange('ccNumber')} name="EWAY_CARDNUMBER" placeholder="Your credit card number"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="mdi mdi-credit-card"></i>
@@ -121,16 +121,16 @@ const Checkout = (props) => {
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <label for="ccmonth">Card Expiry Month</label>
-                            <input className="form-control" type="number" onChange={handleChange('expMonth')} value="08" name="EWAY_CARDEXPIRYMONTH" placeholder="MM" />
+                            <input className="form-control" type="number" onChange={handleChange('expMonth')} name="EWAY_CARDEXPIRYMONTH" placeholder="MM" />
                           </div>
                         <div className="form-group col-sm-4">
                             <label for="ccyear">Card Expiry Year</label>
-                            <input className="form-control" type="number" onChange={handleChange('expYear')} name="EWAY_CARDEXPIRYYEAR" value="2020" placeholder="YYYY" />
+                            <input className="form-control" type="number" onChange={handleChange('expYear')} name="EWAY_CARDEXPIRYYEAR" placeholder="YYYY" />
                         </div>
                         <div className="col-sm-4">
                             <div className="form-group">
                                 <label for="cvv">CVV/CVC</label>
-                                <input className="form-control" type="number" onChange={handleChange('cvv')} name="EWAY_CARDCVN" value="123" placeholder="XXX" />
+                                <input className="form-control" type="number" onChange={handleChange('cvv')} name="EWAY_CARDCVN" placeholder="XXX" />
                             </div>
                         </div>
                     </div>
