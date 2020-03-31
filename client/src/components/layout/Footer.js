@@ -1,6 +1,7 @@
 import React from 'react'
 import TermsAndConditions from '../../TermsAndConditions.pdf';
 import PrivacyPolicy from '../../Farmgate_Ag_Privacy_Policy.pdf';
+import Sitemap from '../../Farmgate_Sitemap.xml';
 
 const Footer = () => {
     return (
@@ -20,7 +21,8 @@ const Footer = () => {
 		</div>
     <div className="row">
     <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms and Conditions</a> &nbsp;|&nbsp;
-    <a style={{color: '#79bac1'}} href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a>
+    <a style={{color: '#79bac1'}} href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a> &nbsp;|&nbsp;
+    <a style={{color: '#79bac1'}} href = {Sitemap} target='_blank' rel="noopener noreferrer">Sitemap</a>
     <br/>
     </div>
 	<div className="row">
