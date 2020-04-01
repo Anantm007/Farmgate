@@ -172,7 +172,7 @@ router.post('/',
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh organic food from the best stores near you. \n\nVisit http://www.farmgate-market.com to start ordering \n\nRegards, \nThe Farmgate Team"
+            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh quality food from the best stores near you. \n\nVisit http://www.farmgate-market.com to start ordering \n\nRegards, \nThe Farmgate Team"
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{

@@ -130,7 +130,7 @@ const ShopPage = (props) => {
                 {items.length && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
                         <ShopItems item={item} />
-                        <br/>      
+                        <br/><br/><br/>      
                     </div>
                 ))}
             </div>
@@ -141,6 +141,11 @@ const ShopPage = (props) => {
         </div>
     
       </div>
+
+      <br/><br/><br/>
+      {!loading ? <div className="text-center">
+                <button className="btn btn-dark" style={{width: '12rem'}}><i className="fa fa-shopping-cart">&nbsp;&nbsp;</i><a href="/cart" style={{color: 'white'}}>Go To Cart</a></button>
+      </div> : ''}
 <br/><br/>
 <br/><br/>
       <Footer/>
