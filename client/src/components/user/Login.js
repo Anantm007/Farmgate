@@ -47,7 +47,7 @@ const Login = () => {
                     <div className="card bg-light">
                     <article className="card-body mx-auto" style={{maxWdith: "400px"}}>
                         <h4 className="card-title mt-3 text-center">Login to your Account</h4>
-                        <p className="text-center">Login now to order fresh organic food</p>
+                        <p className="text-center">Login now to order paddock direct and quality produce</p>
                         
                         <form>
                             <div className="form-group input-group">

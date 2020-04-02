@@ -87,7 +87,13 @@ const CreateItem = () => {
                 <label>Type per price</label>
                 <select onChange={handleChange('variant')} className="form-control" value={variant}>
                     <option>Select</option>
-                        <option value="Kg.">Kg.</option>
+                        <option value="100 g.">100 g.</option>
+                        <option value="200 g.">200 g.</option>
+                        <option value="250 g.">250 g.</option>
+                        <option value="500 g.">500 g.</option>
+                        <option value="1 Kg.">1 Kg.</option>
+                        <option value="2 Kg.">2 Kg.</option>
+                        <option value="5 Kg.">5 Kg.</option>
                         <option value="Dozen">Dozen</option>
                         <option value="Each">Each</option>
                         <option value="Container">Container</option>
