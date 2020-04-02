@@ -79,7 +79,7 @@ const Checkout = (props) => {
   }, [])
   
   const buy = () => {
-    setInfo({instructions, subtotal, tax, shipping})
+    setInfo({instructions, subtotal, tax, shipping, accessCode})
   }
 
 

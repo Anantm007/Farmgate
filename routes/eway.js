@@ -83,7 +83,8 @@ router.get('/status/:userId/:code', async(req, res) => {
     var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
     
     const user = await User.findById(req.params.userId);
-
+    
+    console.log('checking payment status', req.params.code)
     client.queryTransaction(req.params.code)
     .then(function (response) {
         console.log(response)
@@ -113,4 +114,5 @@ router.get('/status/:userId/:code', async(req, res) => {
     });
 
 })
+
 module.exports = router;

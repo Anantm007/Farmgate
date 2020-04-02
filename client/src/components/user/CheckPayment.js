@@ -3,29 +3,28 @@ import { updateUser, createOrder, checkPaymentStatus, readInfo, removeInfo} from
 import {isAuthenticated} from '../userAuth';
 import Spinner from '../layout/Spinner';
 
-const CheckPayment = (props) => {
+const CheckPayment = () => {
     const data = readInfo();
+    const {user} = isAuthenticated();
 
-    const instructions = data.instructions; 
-    const subtotal = data.subtotal;
-    const tax = data.tax;
-    const shipping = data.shipping;
-    
     const [values, setValues] = useState({
+        instructions : data.instructions, 
+        subtotal : data.subtotal,
+        tax : data.tax,
+        shipping : data.shipping,
+        accessCode : data.accessCode,
         loading: false,
         success: false,
         error: ''
-    });
-    const {loading, error, success} = values;
-    
-    const {user} = isAuthenticated();
-    const accessCode = (props.location.search.substring(12));
+    })
+
+    const {instructions, subtotal, tax, shipping, accessCode, loading, error, success} = values;
     
     const buy = () => {
         setValues({...values, loading: true})
         checkPaymentStatus(user._id, accessCode)
         .then(data => {
-            console.log('lol', data, data.success)
+            console.log('lol', data, data.success, )
         if(data.success === false)
         {
             setValues({...values, error: true, loading: false})
@@ -53,7 +52,7 @@ const CheckPayment = (props) => {
             subtotal,
             tax_shipping: tax + shipping,
             totalAmount: subtotal + tax + shipping,
-            accessCode
+            accessCode,
         }
         console.log('reached')
         createOrder(user._id, data)
