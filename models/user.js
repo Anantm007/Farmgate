@@ -63,6 +63,11 @@ const UserSchema = new mongoose.Schema({
         ref: 'Order'
     }],
 
+    newUser : {
+        type: Boolean,
+        required: true
+    },
+
     resetPasswordToken: {
         type: String
     },

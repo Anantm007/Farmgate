@@ -143,7 +143,7 @@ const AdminOrders = () => {
                             <ul className="list-group mb-2">
                                 <li className="list-group-item" style={{fontWeight: 'bold'}}>Order_id: {o._id}</li>
                                 <li className="list-group-item">{showStatus(o)}</li>
-                                <li className="list-group-item" ><strong>Total Amount:</strong> ${o.totalAmount}</li>
+                                <li className="list-group-item" ><strong>Total Amount:</strong> ${o.totalAmount.toFixed(3)}</li>
                                 <li className="list-group-item" ><strong>Ordered by:</strong> {o.userName} ({o.user})</li>
                                 <li className="list-group-item" ><strong>Ordered from:</strong> {o.shopName} ({o.shop})</li>
                                 <li className="list-group-item" ><strong>Delivery Address:</strong> {o.deliveryAddress}</li>

@@ -51,7 +51,7 @@ const Checkout = (props) => {
   }
 
   const Total = () => {
-    return cartTotal() === 0 ? 0 : cartTotal() + shipping + tax;
+    return cartTotal() === 0 ? 0 : (cartTotal() + shipping + tax).toFixed(3);
   }
 
   // get access code for payment

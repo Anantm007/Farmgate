@@ -102,7 +102,7 @@ router.post('/:id', auth, async(req, res) => {
     
     await order.save();
 
-    user.cart = [];
+    // user.cart = [];
     user.history.push(order);
     await user.save();
 
@@ -112,11 +112,18 @@ router.post('/:id', auth, async(req, res) => {
         ta = sh = 0;
     }
 
-    else
+    else if(tax_shipping === 4.95)
     {
         sh = 4.5;
         ta = 0.45;
     }
+
+    else 
+    {
+        sh = 9;
+        ta = 0.9
+    }
+    
     const invoice = {
       shipping: {
         name: order.userName,
@@ -143,7 +150,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : "farmgateishere@gmail.com",
         subject : "Hey admin, a purchase has been made!",
-        text : "Hello Pelle, \n\nA purchase of $" + totalAmount + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team"
+        text : "Hello Pelle, \n\nA purchase of $" + totalAmount.toFixed(3) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team"
     };
         
     transporter.sendMail(HelperOptions,(err,info)=>{
@@ -155,7 +162,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : user.email,
         subject : "Your order on Farmgate Market was successful",
-        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount.toFixed(3) + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),

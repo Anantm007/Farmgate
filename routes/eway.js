@@ -11,20 +11,6 @@ require('dotenv').config();
 // Models
 const User = require('../models/user');
 
-// Nodemailer setup
-const nodemailer = require("nodemailer");
-let transporter = nodemailer.createTransport({
-    service : 'gmail',
-    secure : false,
-    port : 25,
-    auth : {
-        user : process.env.EmailId,
-        pass : process.env.EmailPass
-    },
-    tls : {
-        rejectUnauthorized : false
-    }});
-
 
 /*                                                              ROUTES                                                           */
 
@@ -76,7 +62,7 @@ router.post('/getToken/:id', userAuth, async(req, res) => {
 });
 
 
-// @route   GET /api/eway/status/:code 
+// @route   GET /api/eway/:userId/:code 
 // @desc    Check payment status
 // @access  Private
 router.get('/status/:userId/:code', async(req, res) => {

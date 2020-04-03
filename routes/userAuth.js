@@ -4,8 +4,6 @@ const router = express.Router();
 const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fetch = require('node-fetch');
-const { stringify } = require('querystring');
 
 require('dotenv').config()
 
@@ -15,6 +13,7 @@ const { check, validationResult } = require('express-validator');
 // Models
 const User = require('../models/user');
 const PostCodes = require("../models/postcodes");
+const PostCodesNew = require('../models/postcodesNew');
 
 // Nodemailer setup
 const nodemailer = require("nodemailer");
@@ -111,27 +110,46 @@ router.post('/',
       }
 
       // Check if we can deliver to the user's postcode
+      let flag = 0;
+      let newUser = false;
       const p = await PostCodes.findOne({ adminName: "Admin" });
-      
       if(p)
       {
-        if(!p.codes.includes(zipCode))
+        if(p.codes.includes(zipCode))
         {
-          return res.json({
-            success: false,
-            message: "Sorry, we do not currently deliver to your zip code. We are working hard to bring Farmgate to more customers"
-          })
+          flag = 1;
         }
       }
 
-      // New User
+      // Check in the new array if we can deliver to the user's postcode
+      const po = await PostCodesNew.findOne({ adminName: "Admin" });
+      if(po)
+      {
+        if(po.codes.includes(zipCode))
+        {
+          newUser = true;
+          flag = 1;
+        }
+      }
+
+      // Return false if we cannot deliver to customer's postcode
+      if(flag === 0)
+      {
+        return res.json({
+          success: false,
+          message: "Sorry, we do not currently deliver to your zip code. We are working hard to bring Farmgate to more customers"
+        })
+      }
+
+      // Create New User
       user = new User({
         name,
         email,
         password,
         address,
         zipCode,
-        phoneNumber 
+        phoneNumber,
+        newUser 
       });
 
       // Encrypting the password
