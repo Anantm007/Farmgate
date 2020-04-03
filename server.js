@@ -51,7 +51,7 @@ app.use(limiter);
 
 
 // Dev Middleware
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 
 // Test route
 app.get("/api", (req, res) => {
@@ -68,7 +68,6 @@ app.use('/api/users', require('./routes/user'));
 app.use('/api/items', require('./routes/item'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/order', require('./routes/order'));
-// app.use('/api', require('./routes/braintree'));
 app.use('/api/eway', require('./routes/eway'));
 
 // Serve Static Assets in production
