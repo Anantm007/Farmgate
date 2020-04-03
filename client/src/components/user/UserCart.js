@@ -124,7 +124,7 @@ const getTotal = () => {
             <p className="font-italic mb-4">Shipping and additional costs are calculated as per the Australian laws.</p>
             <ul className="list-unstyled mb-4">
               {showLoading()}
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal.toFixed(3)}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>(AUD) ${getTotal()}</strong></li>
