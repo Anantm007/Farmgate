@@ -14,7 +14,6 @@ const ShopItems = ({item}) => {
 
 
     const addCart = () => {
-        console.log('yo')
         setValues({...values, loading: true, error: false, success: false});
         addToCart(item._id)
         .then(data => {
