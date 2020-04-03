@@ -4,19 +4,19 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 // Load models
-const PostCodes = require("./models/postcodes");
+const PostCodesNew = require("./models/postcodesNew");
 
 // Connect to DB
 mongoose.connect(process.env.MongoURi,{useNewUrlParser: true, useUnifiedTopology: true});
 
 // Read JSON files
-const codes = JSON.parse(fs.readFileSync(`${__dirname}/_data/postcodes.json`, 'utf-8'));
+const codes = JSON.parse(fs.readFileSync(`${__dirname}/_data/postcodesNew.json`, 'utf-8'));
 
 // Import into DB
 // node seeder -i
 const importData = async() => {
     try {
-        await PostCodes.create(codes);
+        await PostCodesNew.create(codes);
 
         console.log("Data Imported...");
         process.exit();
@@ -29,7 +29,7 @@ const importData = async() => {
 // $ node seeder -d
 const deleteData = async() => {
     try {
-        await PostCodes.deleteMany();
+        await PostCodesNew.deleteMany();
 
         console.log("Data Destroyed...");
         process.exit();
