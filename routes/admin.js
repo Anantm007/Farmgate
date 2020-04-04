@@ -6,6 +6,8 @@ const auth = require('../middleware/adminAuth');
 
 require('dotenv').config()
 const formidable = require("formidable");
+const fs = require("fs");
+const _ = require('lodash');
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 

@@ -116,7 +116,7 @@ const ShopPage = (props) => {
             <div id="carouselExampleIndicators" className="carousel slide my-4" data-ride="carousel">
               <div className="carousel-inner" role="listbox">
                 <div className="carousel-item active">
-                  <img className="d-block img-fluid" alt="" src={`/api/shops/photo/${shop._id}`} />
+                  <img className="d-block img-fluid" alt="" src={`/api/shops/photo/${shop._id}`} style={{height: '30rem', width: '30rem'}} />
                 </div>
                 </div>
               

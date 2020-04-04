@@ -31,7 +31,7 @@ const ShopsCard = ({shop}) => {
           <Fragment>
             <div className="card">
                 <div className="image">
-                <img src={`/api/shops/photo/${shop._id}`} alt="" />
+                <img src={`/api/shops/photo/${shop._id}`} alt="" style={{height: '15rem'}} />
                 </div>
                 <div className="card-inner">
                 <div className="header">
@@ -40,7 +40,7 @@ const ShopsCard = ({shop}) => {
                     <h6>Items Available: {noOfItems}</h6> <br/>
                 </div>
                 <div className="content">
-                <p>{shop.description.substring(0,150)}...</p>
+                <p>{shop.description.substring(0,100)}...</p>
                 {role!== undefined && role === 0 &&
                 <button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}><Link to ={`/shops/${shop._id}`} style={{color: 'white'}} >Order Now</Link></button>}
                 {role!== undefined && role === 1 &&

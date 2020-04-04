@@ -56,7 +56,7 @@ const ShopItems = ({item}) => {
             <div className="row">
                 
                 { loading ? showLoading() : <div className="flip-card" style={{margin: "2rem"}}>
-                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`}}>
+                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem'}}>
                         
                         <div className="flip-card-front">
                         <h4>{item.name}</h4>
@@ -70,7 +70,7 @@ const ShopItems = ({item}) => {
                     </div>
                     <br/>
                     <strong style={{backgroundColor: success ? 'none': ''}}>{success ? 
-                    '' : error ? '' : '$ ' + item.price + '/' + item.variant}</strong>
+                    '' : error ? '' : '$' + item.price + ' per ' + item.variant}</strong>
                     <p style={{backgroundColor: success ? 'none': '#d4f8e8'}}>{success ? 
                     showSuccess() : error ? showError() : item.description}</p>
                     <br/>
