@@ -86,7 +86,7 @@ const MyShopItems = (props) => {
                 {items.length > 0 && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
                         <ShopItems item={item} />
-                        <br/>
+                        <br/><br/><br/>
                         <div className="text-center">
                         <button className="btn btn-primary"><Link to= {`/shop/${shopId}/item/${item._id}`} style={{color: 'white'}}>UPDATE </Link></button>&nbsp;
                         <button onClick={() => DeleteItem(item._id)} className="btn btn-danger">DELETE</button>
