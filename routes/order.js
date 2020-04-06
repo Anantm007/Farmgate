@@ -55,15 +55,15 @@ router.get('/statusValues', async(req, res) => {
 router.post('/:id', auth, async(req, res) => {
     const user = await User.findById(req.params.id);
     
-    const {instructions, subtotal, tax_shipping, totalAmount, accessCode} = req.body;
-    const orderCheck = await Order.findOne({accessCode});
-    if(orderCheck)
-    {
-        return res.json({
-            success: false,
-            message: 'Order cannot be placed again'
-        })
-    }
+    const {instructions, subtotal, tax_shipping, totalAmount} = req.body;
+    // const orderCheck = await Order.findOne({accessCode});
+    // if(orderCheck)
+    // {
+    //     return res.json({
+    //         success: false,
+    //         message: 'Order cannot be placed again'
+    //     })
+    // }
 
     let items = [];
 
@@ -97,7 +97,6 @@ router.post('/:id', auth, async(req, res) => {
         subtotal, 
         tax_shipping, 
         totalAmount,
-        accessCode
     })
     
     await order.save();
@@ -421,7 +420,7 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
 router.post('/checkout/checkPromo', auth, async(req, res) => {
     
     try { 
-        if(req.body.promoCode === 'eatingisseasonallyadjusted' || req.body.promoCode === 'waxandgasfreeforme' )
+        if(req.body.promoCode === 'farmfresh' || req.body.promoCode === 'waxandgasfreeforme' )
         {
             return res.json({
                 success: true

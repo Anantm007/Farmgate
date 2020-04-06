@@ -14,89 +14,52 @@ const User = require('../models/user');
 
 /*                                                              ROUTES                                                           */
 
-// @route   GET /api/eway/getToken/:id 
-// @desc    Generate accessCode and formURL token for payments
+// @route   POST /api/eway/payment/ 
+// @desc    Create payment status
 // @access  Private
-router.post('/getToken/:id', userAuth, async(req, res) => {
-    var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint); // rapidEndpoint can be written as "Sandbox"
-    const user = await User.findById(req.params.id);
+router.post('/payment/', async(req, res) => {
+    var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
+    const {EWAY_CARDNAME, EWAY_CARDNUMBER, EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR} = req.body
 
-    if(!user)
-    {
+    console.log(req.body)
+client.createTransaction('Direct', {
+    "Customer": {
+       "CardDetails": {
+         "Name": EWAY_CARDNAME,
+         "Number": EWAY_CARDNUMBER,
+         "ExpiryMonth": EWAY_CARDEXPIRYMONTH,
+         "ExpiryYear": EWAY_CARDEXPIRYYEAR,
+         "CVN": EWAY_CARDCVN
+       }
+    },
+    "Payment": {
+       "TotalAmount": 7800
+    },
+    "TransactionType": "Purchase"
+}).then(function (response) {
+    console.log(response)
+    if (response.get('TransactionStatus')) {
+        console.log('Payment successful! ID: ' + response.get('TransactionID'));
+        return res.json({
+            success: true,
+            paymentId: response.get('TransactionID')
+        })
+    } else {
+        var errorCodes = response.get('ResponseMessage').split(', ');
+        errorCodes.forEach(function(errorCode) {
+            console.log("Response Message: " + rapid.getMessage(errorCode, "en"));
+        });
         return res.json({
             success: false,
-            message: "Invalid User token"
+            message: rapid.getMessage(errorCode, "en")
         })
     }
-    
-    client.createTransaction('TransparentRedirect', {
-        "Payment": {
-        "TotalAmount": req.body.t * 100, // We have to write in smallest denomination possible so multiply it by 100
-        "CurrencyCode": "AUD"
-        },
-        "Customer": {
-            "FirstName": user.name,
-            "Mobile": user.phoneNumber,
-            "Email": user.email,
-            "PostalCode": user.zipCode,     
-        },
-        "RedirectUrl": process.env.redirectUrl,
-        "TransactionType": "Purchase"
-    }).then(async (response) => {
-        if (response.getErrors().length == 0) {
-            
-            var accessCode = response.get('AccessCode');
-            var formUrl = response.get('FormActionURL');
-            console.log(accessCode)
-            return res.json({
-                success: true,
-                accessCode,
-                formUrl
-            })
-        } else {
-            response.getErrors().forEach(function(error) {
-                console.log(rapid.getMessage(error, "en"))
-            })
-        }
     })
-});
-
-
-// @route   GET /api/eway/:userId/:code 
-// @desc    Check payment status
-// @access  Private
-router.get('/status/:userId/:code', async(req, res) => {
-    var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
-    
-    const user = await User.findById(req.params.userId);
-    
-    console.log('checking payment status', req.params.code)
-    client.queryTransaction(req.params.code)
-    .then(function (response) {
-        console.log(response)
-        if (response.get('Transactions[0].TransactionStatus')) {
-            console.log('Payment successful! ID: ' + response.get('Transactions[0].TransactionID'));
-            return res.json({
-                success: true,
-                data: user
-            })
-        } else {
-            var errorCodes = response.get('Transactions[0].ResponseMessage').split(', ');
-            errorCodes.forEach(function(errorCode) {
-                console.log("Response Message: " + rapid.getMessage(errorCode, "en"));
-            });
-
-            return res.json({
-                success: false,
-                data: user
-            })
-        }
-    }).catch(function(reason) {
-        console.log('error', reason)
+    .catch(function(reason) {
         return res.json({
             success: false,
-            data: user
-        })
+            message: reason
+        })    
     });
 
 })

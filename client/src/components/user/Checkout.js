@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-import {getClientToken, setInfo} from '../user/apiUser';
+// import {getClientToken, setInfo} from '../user/apiUser';
+import {Pay, updateUser, createOrder} from './apiUser';
 import { withRouter } from 'react-router-dom';
 
 const Checkout = (props) => {
@@ -34,12 +35,19 @@ const Checkout = (props) => {
     instructions: '',
     accessCode: '',
     formUrl: '',
+    EWAY_CARDNAME: '',
+    EWAY_CARDNUMBER: '',
+    EWAY_CARDEXPIRYMONTH: '',
+    EWAY_CARDEXPIRYYEAR: '',
+    EWAY_CARDCVN: '',
     success: false,
     error: '',
+
     total: 0
   });
 
   const {shipping, tax, instructions, subtotal, accessCode, formUrl, success, error, loading} = values;
+  const {EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR, EWAY_CARDNAME, EWAY_CARDNUMBER} = values;
 
   const handleChange = name => e => {
     setValues({...values, error: false, [name]: e.target.value})
@@ -54,35 +62,61 @@ const Checkout = (props) => {
     return cartTotal() === 0 ? 0 : (cartTotal() + shipping + tax).toFixed(3);
   }
 
-  // get access code for payment
-  const getToken = () => {
-    const t = Total();
-    getClientToken(user._id, {t})
-    .then(data => {
-      console.log(data)
-      if(data.success === true)
-      {
-        setValues({...values, accessCode: data.accessCode, formUrl: data.formUrl})
-      }
-
-      else
-      {
-        setValues({...values, error: data.message});
-      }
-    })
-  }
-
+  
   useEffect(() => {
     check();
-    getToken();
     //eslint-disable-next-line
   }, [])
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+    buy();
+  }
   
   const buy = () => {
-    setInfo({instructions, subtotal, tax, shipping, accessCode})
-  }
+    setValues({...values, loading: true})
+    Pay({EWAY_CARDNUMBER, EWAY_CARDNAME, EWAY_CARDEXPIRYYEAR, EWAY_CARDEXPIRYMONTH, EWAY_CARDCVN})
+    .then(data => {
+        console.log('lol', data, data.success, )
+    if(data.success === false)
+    {
+        setValues({...values, error: true, loading: false})
+        // removeInfo();
+    }
+    else
+    {
+        setValues({...values, success: true, loading: false})
+        // placeOrder()
+        let data = {
+          instructions,
+          subtotal,
+          tax_shipping: tax + shipping,
+          totalAmount: subtotal + tax + shipping,
+          accessCode,
+      }
+      createOrder(user._id, data)
+      .then(data => {
+          if(data.success === false)
+          {
+          setValues({...values, success: false, error: data.message});
+          }
+    
+          else
+          {
+              updateUser(data.data, () => {
+                setValues({...values, success: true, loading: false})
+                window.setTimeout(function(){
+                  window.location.href = `/user/${user._id}/orders`;
+                  }, 200);  
+              })
+          }
+      })
+    }
+    })
+    
+    }
 
-
+    
   const showDropIn = () => (
     <div class="padding">
     <div class="row">
@@ -92,14 +126,12 @@ const Checkout = (props) => {
                     <strong>Pay With Card</strong>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action={formUrl} id="payment_form">
-                  <input type="hidden" name="EWAY_ACCESSCODE" value={accessCode} />
-                  <input type="hidden" name="EWAY_PAYMENTTYPE" value="Credit Card" />
+                  <form>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input class="form-control" onChange={handleChange('name')} name="EWAY_CARDNAME" type="text" placeholder="Name on the card" />
+                                <input class="form-control" onChange={handleChange('EWAY_CARDNAME')} value={EWAY_CARDNAME} type="text" placeholder="Name on the card" />
                             </div>
                         </div>
                     </div>
@@ -108,7 +140,7 @@ const Checkout = (props) => {
                             <div class="form-group">
                                 <label for="ccnumber">Credit Card Number</label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" onChange={handleChange('ccNumber')} name="EWAY_CARDNUMBER" placeholder="Your credit card number"/>
+                                    <input class="form-control" type="text" onChange={handleChange('EWAY_CARDNUMBER')} value={EWAY_CARDNUMBER} placeholder="Your credit card number"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="mdi mdi-credit-card"></i>
@@ -121,22 +153,22 @@ const Checkout = (props) => {
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <label for="ccmonth">Card Expiry Month</label>
-                            <input className="form-control" type="number" onChange={handleChange('expMonth')} name="EWAY_CARDEXPIRYMONTH" placeholder="MM" />
+                            <input className="form-control" type="number" onChange={handleChange('EWAY_CARDEXPIRYMONTH')} value={EWAY_CARDEXPIRYMONTH} placeholder="MM" />
                           </div>
                         <div className="form-group col-sm-4">
                             <label for="ccyear">Card Expiry Year</label>
-                            <input className="form-control" type="number" onChange={handleChange('expYear')} name="EWAY_CARDEXPIRYYEAR" placeholder="YYYY" />
+                            <input className="form-control" type="number" onChange={handleChange('EWAY_CARDEXPIRYYEAR')} value={EWAY_CARDEXPIRYYEAR} placeholder="YYYY" />
                         </div>
                         <div className="col-sm-4">
                             <div className="form-group">
                                 <label for="cvv">CVV/CVC</label>
-                                <input className="form-control" type="number" onChange={handleChange('cvv')} name="EWAY_CARDCVN" placeholder="XXX" />
+                                <input className="form-control" type="text" onChange={handleChange('EWAY_CARDCVN')} value={EWAY_CARDCVN} placeholder="XXX" />
                             </div>
                         </div>
                     </div>
                     <div className="card-footer">
                       {/*onClick={buy}*/}
-                    <button onClick={buy} className="btn btn-block btn-success" type="submit">
+                    <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
                         <i className="mdi mdi-gamepad-circle"></i> PAY</button>
                     </div>
                   </form>
@@ -152,7 +184,7 @@ const Checkout = (props) => {
 
   const showError = () => {
     return (<div className="alert alert-danger" style={{display: error ? '': 'none'}}>
-        {error}
+        Transaction Failed! Please fill correct information
     </div>
     )
   }
@@ -202,11 +234,12 @@ const showSuccess = success => (
             <p className="font-italic mb-4">If you have any special delivery instructions for the delivery driver you can leave them in the box below</p>
             <textarea onChange={handleChange('instructions')} value={instructions} cols="30" rows="3" className="form-control"></textarea>
           </div>
-          {showSuccess(success)}
-          {showError(error)}
+         
         </div>
       </div>
       {showDropIn()}
+      {showSuccess(success)}
+          {showError(error)}
 
           <Footer />  
         </Fragment>
