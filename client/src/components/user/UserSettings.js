@@ -25,17 +25,14 @@ const UserSettings = (props) => {
         getUser(id).then(data => {
             if(data.success === false)
             {         
-                setValues({...values, error: data.message});
-                setValues({...values, loading: false})
+                setValues({...values, error: data.message, loading: false});
             }
   
             else
             {
-                updateUser(data, () => {
-                    setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
-                        phoneNumber: data.data.phoneNumber, zipCode: data.data.zipCode
-                    })
-                })
+                setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
+                    phoneNumber: data.data.phoneNumber, zipCode: data.data.zipCode
+              })
             }
         })
     }
@@ -60,12 +57,14 @@ const UserSettings = (props) => {
             console.log(data)
             if(data.success === false)
             {
-                setValues({...values, error: data.message});
+                setValues({...values, error: data.message, success: false, loading: false});
             }
 
             else
             {
-                setValues({...values, success: true })
+                updateUser(data.data, () => {
+                    setValues({...values, success: true, error: false, loading: false})
+                    })
             }
         })
     }
