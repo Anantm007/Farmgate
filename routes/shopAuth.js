@@ -130,7 +130,7 @@ router.post('/',
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality organic food. \n\nLogin now to add items to your shop. \n\nVisit http://www.farmgate-market.com \n\nRegards, \nThe Farmgate Team"
+            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality produce, raised with care. \n\nLogin now to add items to your shop. \n\Visit (use the login link from the bottom of the home page for shop account login) http://www.farmgate-market.com \n\nRegards, \nThe Farmgate Team"
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{
