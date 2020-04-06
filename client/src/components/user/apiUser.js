@@ -146,15 +146,15 @@ export const removeFromCart = (id, amount) => {
 }
 
 // Get access code for payment from backend
-export const getClientToken = (userId, amount) => {
-    return fetch(`/api/eway/getToken/${userId}`, {
+export const Pay = (data) => {
+    return fetch(`/api/eway/payment`, {
         method: 'POST',
         headers: {
             Accept: "application/json",
             'Content-Type': "application/json",
             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
         },
-        body: JSON.stringify(amount)
+        body: JSON.stringify(data)
     })
     .then(response => {
         return response.json();
@@ -164,21 +164,41 @@ export const getClientToken = (userId, amount) => {
     }) 
 }
 
-// Check Payment status
-export const checkPaymentStatus = (userId, code) => {
-    return fetch(`/api/eway/status/${userId}/${code}`, {
-        method: 'GET',
-        headers: {
-          'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
-        }
-      })
-      .then(response => {
-          return response.json();
-      })
-      .catch(err => {
-          console.log(err);
-      })
-} 
+
+// // Get access code for payment from backend
+// export const getClientToken = (userId, amount) => {
+//     return fetch(`/api/eway/getToken/${userId}`, {
+//         method: 'POST',
+//         headers: {
+//             Accept: "application/json",
+//             'Content-Type': "application/json",
+//             'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+//         },
+//         body: JSON.stringify(amount)
+//     })
+//     .then(response => {
+//         return response.json();
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     }) 
+// }
+
+// // Check Payment status
+// export const checkPaymentStatus = (userId, code) => {
+//     return fetch(`/api/eway/status/${userId}/${code}`, {
+//         method: 'GET',
+//         headers: {
+//           'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
+//         }
+//       })
+//       .then(response => {
+//           return response.json();
+//       })
+//       .catch(err => {
+//           console.log(err);
+//       })
+// } 
 
 // Create the order
 export const createOrder = (userId, data) => {
@@ -234,35 +254,34 @@ export const checkPromo = (data) => {
     }) 
 }
 
-// Set delivery info in the localstorage for payment checking
-export const setInfo = (data) => {
-    if(typeof window !== 'undefined')
-    {
-        localStorage.setItem('orderInfo', JSON.stringify(data))
-    }
-}
+// // Set delivery info in the localstorage for payment checking
+// export const setInfo = (data) => {
+//     if(typeof window !== 'undefined')
+//     {
+//         localStorage.setItem('orderInfo', JSON.stringify(data))
+//     }
+// }
 
 
-// Read delivery info
-export const readInfo = () => {
-    if(typeof window === 'undefined')
-    {
-        return false;
-    }
+// // Read delivery info
+// export const readInfo = () => {
+//     if(typeof window === 'undefined')
+//     {
+//         return false;
+//     }
 
-    if(localStorage.getItem('orderInfo'))
-    {
-        return JSON.parse(localStorage.getItem('orderInfo'));
-    } else {
-        return false;
-    }
-}
+//     if(localStorage.getItem('orderInfo'))
+//     {
+//         return JSON.parse(localStorage.getItem('orderInfo'));
+//     } else {
+//         return false;
+//     }
+// }
 
-// Remove order info from localstorage
-export const removeInfo = () => {
-    if(typeof window !== 'undefined')
-    {
-        localStorage.removeItem('orderInfo');
-    }
-}
-
+// // Remove order info from localstorage
+// export const removeInfo = () => {
+//     if(typeof window !== 'undefined')
+//     {
+//         localStorage.removeItem('orderInfo');
+//     }
+// }

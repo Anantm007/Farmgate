@@ -76,10 +76,10 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
 
-    accessCode: {
-        type: String,
-        required: true
-    },
+    // accessCode: {
+    //     type: String,
+    //     required: true
+    // },
 
     status: {
         type: String,
