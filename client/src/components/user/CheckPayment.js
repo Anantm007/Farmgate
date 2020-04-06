@@ -7,6 +7,8 @@ const CheckPayment = () => {
     const data = readInfo();
     const {user} = isAuthenticated();
 
+    // console.log('heeyyy', data, user.name)
+
     const [values, setValues] = useState({
         instructions : data.instructions, 
         subtotal : data.subtotal,
@@ -21,17 +23,20 @@ const CheckPayment = () => {
     const {instructions, subtotal, tax, shipping, accessCode, loading, error, success} = values;
     
     const buy = () => {
+        console.log('1111 herre')
         setValues({...values, loading: true})
         checkPaymentStatus(user._id, accessCode)
         .then(data => {
             console.log('lol', data, data.success, )
         if(data.success === false)
         {
+            console.log('999')
             setValues({...values, error: true, loading: false})
             removeInfo();
         }
         else
         {
+            console.log('888')
             setValues({...values, success: true, loading: false})
             placeOrder()
         }
@@ -46,6 +51,7 @@ const CheckPayment = () => {
         
     const placeOrder = () => {
         removeInfo()
+        console.log('7777')
         // create order      
         let data = {
             instructions,
@@ -54,33 +60,36 @@ const CheckPayment = () => {
             totalAmount: subtotal + tax + shipping,
             accessCode,
         }
-        console.log('reached')
+        console.log('reached', data)
         createOrder(user._id, data)
         .then(data => {
-            console.log(data)
+            console.log('nnnn',data)
             if(data.success === false)
             {
+                console.log('223333')
             setValues({...values, success: false, error: data.message});
             }
 
             else
             {
                 updateUser(data.data, () => {
-                setValues({...values, success: true, loading: false, subtotal: 0, instructions: ''})
-                window.setTimeout(function(){
-                window.location.href = `/user/${user._id}/orders`;
-                }, 2300);
+                setValues({...values, success: true, loading: false})
+                // window.setTimeout(function(){
+                // window.location.href = `/user/${user._id}/orders`;
+                // }, 2300);
         
             })
             }
         })    
         .catch(err => {
+            console.log('oooooooo')
             console.log('dropin error: ', err);
         })
 
     }
 
     useEffect(() => {
+        console.log('muyyyy')
         buy()
         // eslint-disable-next-line
     }, [])
