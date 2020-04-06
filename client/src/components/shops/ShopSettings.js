@@ -27,17 +27,14 @@ const ShopSettings = (props) => {
         getShop(id).then(data => {
             if(data.success === false)
             {         
-                setValues({...values, error: data.message});
-                setValues({...values, loading: false})
+                setValues({...values, error: data.message, loading: false});
             }
   
             else
             {
-                updateShop(data, () => {
-                    setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
-                        phoneNumber: data.data.phoneNumber, facebook: data.data.facebook, 
-                        instagram: data.data.instagram, zipCode: data.data.zipCode
-                    })
+                setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
+                    phoneNumber: data.data.phoneNumber, facebook: data.data.facebook, 
+                    instagram: data.data.instagram, zipCode: data.data.zipCode
                 })
             }
         })
@@ -63,12 +60,14 @@ const ShopSettings = (props) => {
             console.log(data)
             if(data.success === false)
             {
-                setValues({...values, error: data.message});
+                setValues({...values, error: data.message, success: false, loading: false});
             }
 
             else
-            {
-                setValues({...values, success: true })
+            {                
+                updateShop(data.data, () => {
+                    setValues({...values, success: true, error: false, loading: false})
+                })
             }
         })
     }
