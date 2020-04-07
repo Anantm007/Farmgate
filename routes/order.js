@@ -420,7 +420,7 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
 router.post('/checkout/checkPromo', auth, async(req, res) => {
     
     try { 
-        if(req.body.promoCode === 'farmfresh' || req.body.promoCode === 'waxandgasfreeforme' )
+        if(req.body.promoCode === 'pesticidefreeforme' || req.body.promoCode === 'eatingisseasonallyadjusted' )
         {
             return res.json({
                 success: true

@@ -145,7 +145,7 @@ const CartItem = ({item}) => {
                       </div>
                     </div>
                   </th>
-                  <td className="align-middle"><strong>{`$${foundItem.price}/${foundItem.variant}`}</strong></td>
+                  <td className="align-middle"><strong>{`$${foundItem.price} per ${foundItem.variant}`}</strong></td>
                   <td className="align-middle"><input type="number" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/></td>
                   <td className="align-middle"><strong>${price}</strong></td>
                   <td className="align-middle"><i onClick={removeItem} className="fa fa-trash"></i>
