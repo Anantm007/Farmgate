@@ -19,7 +19,7 @@ const User = require('../models/user');
 // @access  Private
 router.post('/payment/', async(req, res) => {
     var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
-    const {EWAY_CARDNAME, EWAY_CARDNUMBER, EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR} = req.body
+    const {EWAY_CARDNAME, EWAY_CARDNUMBER, EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR, amount} = req.body
 
     console.log(req.body)
 client.createTransaction('Direct', {
@@ -33,7 +33,7 @@ client.createTransaction('Direct', {
        }
     },
     "Payment": {
-       "TotalAmount": 7800
+       "TotalAmount": amount * 100
     },
     "TransactionType": "Purchase"
 }).then(function (response) {

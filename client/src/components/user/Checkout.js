@@ -34,7 +34,6 @@ const Checkout = (props) => {
     loading: false,
     instructions: '',
     accessCode: '',
-    formUrl: '',
     EWAY_CARDNAME: '',
     EWAY_CARDNUMBER: '',
     EWAY_CARDEXPIRYMONTH: '',
@@ -46,7 +45,7 @@ const Checkout = (props) => {
     total: 0
   });
 
-  const {shipping, tax, instructions, subtotal, accessCode, formUrl, success, error, loading} = values;
+  const {shipping, tax, instructions, subtotal, accessCode, success, error, loading} = values;
   const {EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR, EWAY_CARDNAME, EWAY_CARDNUMBER} = values;
 
   const handleChange = name => e => {
@@ -75,7 +74,8 @@ const Checkout = (props) => {
   
   const buy = () => {
     setValues({...values, loading: true})
-    Pay({EWAY_CARDNUMBER, EWAY_CARDNAME, EWAY_CARDEXPIRYYEAR, EWAY_CARDEXPIRYMONTH, EWAY_CARDCVN})
+    let amount = subtotal + tax + shipping;
+    Pay({EWAY_CARDNUMBER, EWAY_CARDNAME, EWAY_CARDEXPIRYYEAR, EWAY_CARDEXPIRYMONTH, EWAY_CARDCVN, amount})
     .then(data => {
         console.log('lol', data, data.success, )
     if(data.success === false)

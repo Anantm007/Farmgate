@@ -112,7 +112,7 @@ const ShopOrders = () => {
                             {o.items.map((p, pIndex) => (
                                 <div className="mb-4" key={pIndex} style={{padding: '20px'}}>
                                     {showInput('Item Name', p.itemName)}
-                                    {showInput('Item Quantity', p.quantity + ' ' + p.variant)}
+                                    {showInput('Item Quantity', p.quantity + ' X ' + p.variant)}
                                 </div>
                             ))}
                         </div>
