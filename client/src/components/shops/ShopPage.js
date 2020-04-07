@@ -129,7 +129,7 @@ const ShopPage = (props) => {
             <div className="row">                
                 {items.length && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
-                        <ShopItems item={item} />
+                        {item.inStock ? <ShopItems item={item} /> : ''}
                         <br/><br/><br/>      
                     </div>
                 ))}

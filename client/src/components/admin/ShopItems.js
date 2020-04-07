@@ -15,7 +15,7 @@ const ShopItems = ({item}) => {
                         <h4>{item.name}</h4>
                         <h6>{`$ ${item.price} / ${item.variant}`}</h6>
                         {item.inStock ? <span className="badge badge-primary badge-pill">In Stock</span> : <span className="badge badge-danger badge-pill">Out of Stock</span>} <br/><br/>
-                        {item.inStock && <button className="btn btn-danger"><Link to = {`/admin/update/item/${item._id}`} style={{color: 'white'}}>Edit Item</Link></button>}
+                        <button className="btn btn-danger"><Link to = {`/admin/update/item/${item._id}`} style={{color: 'white'}}>Edit Item</Link></button>
                         </div>
 
                         <div className="flip-card-back">
