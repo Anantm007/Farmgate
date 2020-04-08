@@ -194,7 +194,7 @@ const showSuccess = success => (
         className="alert alert-info"
         style={{ display: success ? "" : "none" }}
     >
-        Thanks! Your order was successful! Please check your email
+        Your payment was successful, please check your email! We are processing your order....
     </div>
 );
 

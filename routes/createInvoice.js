@@ -33,8 +33,8 @@ function generateCustomerInformation(doc, invoice) {
     .fontSize(20)
     .text("Invoice", 50, 160)
     .font("Helvetica-Bold")
-    .fontSize(15)
-    .text("AUTHORIZATION TO LEAVE", 300, 160);
+    .fontSize(10)
+    .text("AUTHORISATION TO LEAVE - PRIORITY FOOD", 300, 160);
 
   generateHr(doc, 185);
 
