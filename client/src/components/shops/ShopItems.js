@@ -59,7 +59,7 @@ const ShopItems = ({item}) => {
                     <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem'}}>
                         
                         <div className="flip-card-front">
-                        <h4>{item.name}</h4>
+                        <h4 style={{backgroundColor: '#d4ebd0'}}>{item.name}</h4>
                         <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
                         {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
                         </div>

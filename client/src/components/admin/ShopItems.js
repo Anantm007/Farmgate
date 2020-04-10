@@ -12,7 +12,7 @@ const ShopItems = ({item}) => {
                     <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem'}}>
                         
                         <div className="flip-card-front">
-                        <h4>{item.name}</h4>
+                        <h4 style={{backgroundColor: '#d4ebd0'}}>{item.name}</h4>
                         <h6>{`$ ${item.price} / ${item.variant}`}</h6>
                         {item.inStock ? <span className="badge badge-primary badge-pill">In Stock</span> : <span className="badge badge-danger badge-pill">Out of Stock</span>} <br/><br/>
                         <button className="btn btn-danger"><Link to = {`/admin/update/item/${item._id}`} style={{color: 'white'}}>Edit Item</Link></button>
