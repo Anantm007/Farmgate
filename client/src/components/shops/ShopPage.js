@@ -93,8 +93,8 @@ const ShopPage = (props) => {
                 </tr>
                 <tr>
                   <td><strong>Order cut-off day/time:</strong></td>
-                  <td>Tuesday, 7am</td>
-                  <td>Thursday, 7am</td>
+                  <td>Tuesday, 3pm</td>
+                  <td>Thursday, 3pm</td>
                 </tr>
                 <tr>
                   <td><strong>Delivery by:</strong></td>
