@@ -1,14 +1,17 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import {getShop, getItems} from '../shops/apiShops';
+import Pagination from './Pagination';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
-import ShopItems from './ShopItems';
+import ShopListItems from './ShopListItems';
 
 const ShopPage = (props) => {
 
     const shopId = props.match.params.id;
     const [shop, setShop] = useState([]);
     const [items, setItems] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);  
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true);
 
@@ -69,6 +72,14 @@ const ShopPage = (props) => {
         //eslint-disable-next-line
     }, [])
 
+    // Get current items
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItem = items.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
       
         loading ? <div>{showLoading()}</div> : (<Fragment>
@@ -126,15 +137,13 @@ const ShopPage = (props) => {
             <h3>Shop Items Available</h3>
             {showError()}
             <br/>
-            <div className="row">                
-                {items.length && items.map((item, i) =>(
-                    <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
-                        {item.inStock ? <ShopItems item={item} /> : ''}
-                        <br/><br/><br/>      
-                    </div>
-                ))}
-            </div>
-               
+
+            <ShopListItems items={currentItem} loading={loading} />
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              totalItems={items.length}
+              paginate={paginate}
+            />               
             
           </div>
     
