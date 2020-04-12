@@ -111,8 +111,9 @@ const CreateItem = () => {
                 <select onChange={handleChange('quality')} className="form-control" value={quality}>
                     <option>Select</option>
                         <option value="Organic">Oragnic</option>
-                        <option value="Fresh">Organically Certified</option>
+                        <option value="Organically Certified">Organically Certified</option>
                         <option value="BioDynamic">Biodynamic</option>
+                        <option value="Pesticide Free">Pesticide Free</option>
                         <option value="No Category">No Category</option>
                 </select>
             </div>
