@@ -20,6 +20,20 @@ const Shop = require("../models/shop");
 
 /*                                                       ROUTES                                                   */
 
+// @route   GET /api/items/checking/setitemQuality 
+// @desc    Set item quality to Pesticide free
+// @access  Public 
+// router.get('/checking/setItemQuality', async(req, res) => {
+//   await Item.updateMany({}, { $set: { quality: 'Pesticide Free' } });
+//   const items = await Item.find({});
+
+//   return res.json({
+//     success: true,
+//     data: items
+//   })
+
+// })
+
 
 // @route   POST /api/items 
 // @desc    Add new item
