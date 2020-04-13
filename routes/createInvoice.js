@@ -18,10 +18,8 @@ function generateHeader(doc) {
   doc
     .image(path.join(__dirname,'logo.png'), 50, 25, { width: 100 })
     .fillColor("#444444")
-    // .fontSize(20)
-    // .text("Farmgate Market", 110, 57)
     .fontSize(10)
-    .text("Farmgate Market", 200, 50, { align: "right" })
+    .text("Farmgate Ag", 200, 50, { align: "right" })
     .text("Level 1, 49 George Street Norwood, S.A.", 200, 65, { align: "right" })
     .text("ABN: 91688399669", 200, 80, { align: "right" })
     .moveDown();
@@ -75,7 +73,7 @@ function generateCustomerInformation(doc, invoice) {
 
 function generateInvoiceTable(doc, invoice) {
   let i;
-  const invoiceTableTop = 330;
+  let invoiceTableTop = 330;
 
   doc.font("Helvetica-Bold");
   generateTableRow(
@@ -89,10 +87,12 @@ function generateInvoiceTable(doc, invoice) {
   );
   generateHr(doc, invoiceTableTop + 20);
   doc.font("Helvetica");
-
+  
+  let flag = 0, position, j=0;
   for (i = 0; i < invoice.items.length; i++) {
     const item = invoice.items[i];
-    const position = invoiceTableTop + (i + 1) * 30;
+    position = invoiceTableTop + (j + 1) * 30;
+    j=j+1;
     generateTableRow(
       doc,
       position,
@@ -104,6 +104,19 @@ function generateInvoiceTable(doc, invoice) {
     );
 
     generateHr(doc, position + 20);
+    if(position > 720 && flag === 0)
+    {
+      doc.addPage();
+      invoiceTableTop = 0;
+      flag = 1;
+      j=0;
+    }
+  }
+
+  if(i > 13)
+  {
+    i=0;
+    invoiceTableTop = 50;
   }
 
   const subtotalPosition = invoiceTableTop + (i + 1) * 30;
