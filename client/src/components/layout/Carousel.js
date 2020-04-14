@@ -19,7 +19,7 @@ const Carousel = () => {
 				<div className="carousel-item">
 					<img className="d-block img-fluid" style={{height:"35rem", width:"100%"}} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
-						<h1 style={{marginBottom: '10rem'}}>connecting producers to people</h1>
+						<h1 style={{marginBottom: '8rem'}}>connecting producers to people</h1>
 					</div>
 				</div>
 				<div className="carousel-item">
