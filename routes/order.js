@@ -149,7 +149,12 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : "farmgateishere@gmail.com",
         subject : "Hey admin, a purchase has been made!",
-        text : "Hello Pelle, \n\nA purchase of $" + totalAmount.toFixed(3) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team"
+        text : "Hello Admin, \n\nA purchase of $" + totalAmount.toFixed(3) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team",
+        attachments: [{
+            filename: `${code}.pdf`,
+            path: path.join(__dirname, `../${code}.pdf`),
+            contentType: 'application/pdf'
+          }]
     };
         
     transporter.sendMail(HelperOptions,(err,info)=>{
