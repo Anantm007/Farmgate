@@ -137,7 +137,7 @@ router.get('/', async(req, res) => {
 // @route   GET /api/shops/:id
 // @desc    Find a shop by id 
 // @access  Private (using middleware) 
-router.get('/:id', userAuth, async(req, res) => {
+router.get('/:id', async(req, res) => {
   
   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
   {

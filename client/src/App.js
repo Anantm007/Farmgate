@@ -63,7 +63,7 @@ const  App = () => {
             <PrivateRoute exact path ='/user/dashboard' component = {UserDashboard} />     
             <Route exact path="/user/reset/password/:token" component = {ResetPass} />
             <Route exact path="/shops" component = {Shops} />
-            <PrivateRoute exact path="/shops/:id" component = {ShopPage} />
+            <Route exact path="/shops/:id" component = {ShopPage} />
             <PrivateRoute exact path="/user/:id/settings" component = {UserSettings} />
             <PrivateRoute exact path="/user/:id/orders" component = {UserOrders} />
             <PrivateRoute exact path="/cart" component = {UserCart} />

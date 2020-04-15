@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import {addToCart, updateUser} from '../user/apiUser';
 import Spinner from '../layout/Spinner';
+import {isAuthenticated} from '../userAuth';
 
 const ShopItems = ({item}) => {
 
@@ -14,6 +15,10 @@ const ShopItems = ({item}) => {
 
 
     const addCart = () => {
+        if(!isAuthenticated()) 
+        {
+            window.location.href = '/user/login'
+        }
         setValues({...values, loading: true, error: false, success: false});
         addToCart(item._id)
         .then(data => {
