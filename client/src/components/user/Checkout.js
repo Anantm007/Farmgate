@@ -41,7 +41,6 @@ const Checkout = (props) => {
     EWAY_CARDCVN: '',
     success: false,
     error: '',
-
     total: 0
   });
 
@@ -168,8 +167,8 @@ const Checkout = (props) => {
                     </div>
                     <div className="card-footer">
                       {/*onClick={buy}*/}
-                    <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
-                        <i className="mdi mdi-gamepad-circle"></i> PAY</button>
+                    {!success && !loading && <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
+                        <i className="mdi mdi-gamepad-circle"></i> PAY</button>}
                     </div>
                   </form>
                 </div>
