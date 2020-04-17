@@ -101,7 +101,7 @@ router.post('/:id', auth, async(req, res) => {
     
     await order.save();
 
-    // user.cart = [];
+    user.cart = [];
     user.history.push(order);
     await user.save();
 
