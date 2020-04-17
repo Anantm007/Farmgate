@@ -70,7 +70,7 @@ const Register = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-user"></i> </span>
                             </div>
-                            <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Full name*" />
+                            <input onChange={handleChange('name')} type="text" value={name} className="form-control" placeholder="Contact name*" />
                         </div>
                         
                         <div className="form-group input-group">
