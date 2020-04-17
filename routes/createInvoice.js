@@ -102,9 +102,9 @@ function generateInvoiceTable(doc, invoice) {
       item.quantity + ' X ' + item.variant,
       formatCurrency(item.amount)
     );
-
+    
     generateHr(doc, position + 20);
-    if(position > 720 && flag === 0)
+    if(position >= 660 && flag === 0)
     {
       doc.addPage();
       invoiceTableTop = 0;
@@ -113,10 +113,10 @@ function generateInvoiceTable(doc, invoice) {
     }
   }
 
-  if(i > 13)
+  if(i > 10)
   {
     i=0;
-    invoiceTableTop = 50;
+    invoiceTableTop = position;
   }
 
   const subtotalPosition = invoiceTableTop + (i + 1) * 30;
