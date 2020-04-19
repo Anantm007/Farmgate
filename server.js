@@ -5,7 +5,6 @@ const app = express();
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
-// const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const bodyParser = require("body-parser");
 const morgan = require('morgan');
@@ -40,15 +39,7 @@ app.use(mongoSanitize());   // Sanitize Data
 app.use(helmet());          // Set security headers
 app.use(xss())              // Prevent XSS(cross site scripting) attacks
 app.use(hpp());             // Prevent hpp param pollution
-app.use(cors());    // Enable CORS
-
-// Rate Limiting
-// const limiter = rateLimit({
-//     windowMs: 10 * 60 * 1000, // 10 minutes
-//     max: 100 // 100 requests per 10 minutes per IP address
-// })
-// app.use(limiter);
-
+app.use(cors());            // Enable CORS
 
 // Dev Middleware
 app.use(morgan('dev'));

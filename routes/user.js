@@ -284,7 +284,7 @@ router.put('/:id', auth, async(req, res) => {
 router.post('/cart/add/:id', auth, async(req, res) => {
   
   const user = await User.findById(req.user.id)
-  const item = await Item.findById(req.params.id);
+  const item = await Item.findById(req.params.id).select('-image');
   
   if(req.body.quantity < 1)
   {
@@ -298,7 +298,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
   // If item already exists, we just need to update the quantity (add 1)
   if(user.cart.length > 0)
   {
-    const x = await Item.findById(user.cart[0].item);
+    const x = await Item.findById(user.cart[0].item).select('shop');
     
     if(item.shop.toString() !== x.shop.toString())
     {
@@ -308,7 +308,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
       })
     }
     user.cart.forEach(async(c) => {
-      if(c.item.toString() === req.params.id)
+      if(c.item.toString() === req.params.id && f === 0)
       {
         c.quantity += 1;
         c.price += item.price;
@@ -342,7 +342,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
 router.put('/cart/update/:id', auth, async(req, res) => {
   
   const user = await User.findById(req.user.id)
-  const item = await Item.findById(req.params.id);
+  const item = await Item.findById(req.params.id).select('price');
   
 
   if(req.body.quantity < 1)
@@ -387,7 +387,7 @@ router.put('/cart/update/:id', auth, async(req, res) => {
 router.delete('/cart/remove/:id', auth, async(req, res) => {
 
   const user = await User.findById(req.user.id);
-  const item = await Item.findById(req.params.id);
+  const item = await Item.findById(req.params.id).select('id');
 
   if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
   {
@@ -450,10 +450,10 @@ router.get('/cart/total', auth, async(req, res) => {
 })
 
 // @route   GET /api/users/cart/length
-// @desc    Get cart length 9number of items)
+// @desc    Get cart length (number of items)
 // @access  Private (using middleware) 
 router.get('/cart/length', auth, async(req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id).select('cart');
 
   if(user.cart.length < 1)
   {
