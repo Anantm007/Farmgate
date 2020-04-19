@@ -283,7 +283,7 @@ router.get('/items/:id', async(req, res) => {
           });
     }
 
-    const shop = await Shop.findById(req.params.id); 
+    const shop = await Shop.findById(req.params.id).select('items'); 
     if (!shop) 
     {
         return res.json({
