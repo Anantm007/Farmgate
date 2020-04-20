@@ -113,7 +113,7 @@ const Login = () => {
 
     return (
         loading ? <div>{showLoading()}</div> : (<Fragment>
-            <div style ={{ backgroundImage: "url(" + require("../../images/login.jpg") + ")", backgroundSize: '90rem 40rem' }}>
+            <div style ={{ backgroundImage: "url(" + require("../../images/login.jpg") + ")", backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}>
                 {showError()}
                 {showLoading()}
                 {redirectUser()}
