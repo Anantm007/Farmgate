@@ -149,7 +149,7 @@ function generateInvoiceTable(doc, invoice) {
     duePosition,
     "",
     "",
-    "GST @ 10%",
+    "GST @ 0%",
     "",
     formatCurrency(invoice.tax)
   );
