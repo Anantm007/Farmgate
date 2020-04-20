@@ -261,6 +261,19 @@ router.get("/:id/items", async(req, res) => {
       })
   }
 
+  for(i=0; i<items.length-1; i++)
+    {
+      for(j=i+1; j <items.length; j++)
+      {
+        if(items[j].name.toString() < items[i].name.toString())
+        {
+          let x = items[i];
+          items[i] = items[j];
+          items[j] = x;
+        }
+      }
+    }
+  
   return res.json({
     success: true,
     count: items.length,
