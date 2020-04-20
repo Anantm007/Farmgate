@@ -29,7 +29,7 @@ const Checkout = (props) => {
 
   const [values, setValues] = useState({
     shipping: props.location.state ? props.location.state.shipping: 4.5,
-    tax: props.location.state ? props.location.state.tax: 0.45,
+    tax: props.location.state ? props.location.state.tax: 0,
     subtotal: props.location.state ? props.location.state.subtotal: 0,
     loading: false,
     instructions: '',
@@ -169,12 +169,10 @@ const Checkout = (props) => {
                       {/*onClick={buy}*/}
                     {!success && !loading && <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
                         <i className="mdi mdi-gamepad-circle"></i> PAY</button>}
-                        <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to - <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider)</strong>
+                        <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to - <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider) for decryption</strong>
                     </div>
                   </form>
                 </div>
-                
-                
                 
             </div>
         </div>
@@ -194,7 +192,7 @@ const showSuccess = success => (
         className="alert alert-info"
         style={{ display: success ? "" : "none" }}
     >
-        Your payment was successful, please check your email! We are processing your order....
+        Your payment was successful! Please wait, we are processing your order....
     </div>
 );
 
@@ -219,7 +217,7 @@ const showSuccess = success => (
               {showLoading()}
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${cartTotal().toFixed(3)}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@10%)</strong><strong>${tax}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@0%)</strong><strong>${tax}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${Total()}</strong></li>
             </ul>
             

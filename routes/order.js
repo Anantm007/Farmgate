@@ -113,14 +113,14 @@ router.post('/:id', auth, async(req, res) => {
 
     else if(tax_shipping === 4.95)
     {
-        sh = 4.5;
-        ta = 0.45;
+        sh = 4.95;
+        ta = 0;
     }
 
     else 
     {
-        sh = 9;
-        ta = 0.9
+        sh = 9.9;
+        ta = 0;
     }
     
     const invoice = {
