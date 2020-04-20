@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {signup, authenticate, shopIsAuthenticated} from '../shopAuth';
+import Footer from '../layout/Footer';
 
 import TermsAndConditions from '../../TermsAndConditions.pdf';
 import PrivacyPolicy from '../../Farmgate_Ag_Privacy_Policy.pdf';
@@ -206,11 +207,14 @@ const Register = () => {
 
 
     return (
-        <div style ={{ backgroundImage: "url(" + require("../../images/login.jpg") + ")", backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}>
-            {showSuccess()}
-            {signUpForm()}
-            {redirectShop()}
-        </div>
+        <Fragment>
+            <div style ={{ backgroundImage: "url(" + require("../../images/login.jpg") + ")", backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}>
+                {showSuccess()}
+                {signUpForm()}
+                {redirectShop()}
+            </div>
+            <Footer/>
+        </Fragment>
     )
 };
 
