@@ -169,7 +169,7 @@ const Checkout = (props) => {
                       {/*onClick={buy}*/}
                     {!success && !loading && <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
                         <i className="mdi mdi-gamepad-circle"></i> PAY</button>}
-                        <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to - <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider) for decryption</strong>
+                        <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider) for decryption</strong>
                     </div>
                   </form>
                 </div>
