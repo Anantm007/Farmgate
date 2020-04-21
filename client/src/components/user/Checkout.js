@@ -57,7 +57,7 @@ const Checkout = (props) => {
   }
 
   const Total = () => {
-    return cartTotal() === 0 ? 0 : (cartTotal() + shipping + tax).toFixed(3);
+    return cartTotal() === 0 ? 0 : (cartTotal() + shipping + tax).toFixed(2);
   }
 
   
@@ -215,9 +215,9 @@ const showSuccess = success => (
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Deliver To</strong><strong>{user.name}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Delivery Address</strong><strong>{user.address}</strong></li>
               {showLoading()}
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${cartTotal().toFixed(3)}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@0%)</strong><strong>${tax}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${cartTotal().toFixed(2)}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping.toFixed(2)}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@0%)</strong><strong>${tax.toFixed(2)}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>${Total()}</strong></li>
             </ul>
             

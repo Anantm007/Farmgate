@@ -46,7 +46,7 @@ const UserCart = () => {
 }
 
 const getTotal = () => {
-  return (subtotal + shipping + tax).toFixed(3)
+  return (subtotal + shipping + tax).toFixed(2)
 }
 
   const getValues = () => {
@@ -125,9 +125,9 @@ const getTotal = () => {
             <p className="font-italic mb-4">Shipping and additional costs are calculated as per the Australian laws.</p>
             <ul className="list-unstyled mb-4">
               {showLoading()}
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal.toFixed(3)}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping}</strong></li>
-              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@0%)</strong><strong>${tax}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal</strong><strong>${subtotal.toFixed(2)}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping.toFixed(2)}</strong></li>
+              <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">GST (@0%)</strong><strong>${tax.toFixed(2)}</strong></li>
               <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong><strong>(AUD) ${getTotal()}</strong></li>
             </ul>
             {user.cart.length >= 1 && subtotal > 25 ? <Link to= {{pathname: "/checkout", state: {subtotal: subtotal, total: total, tax: tax, shipping: shipping}}} className="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</Link>

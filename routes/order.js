@@ -149,7 +149,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : "farmgateishere@gmail.com",
         subject : "Hey admin, a purchase has been made!",
-        text : "Hello Admin, \n\nA purchase of $" + totalAmount.toFixed(3) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team",
+        text : "Hello Admin, \n\nA purchase of $" + totalAmount.toFixed(2) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team",
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
@@ -166,7 +166,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : user.email,
         subject : "Your order on Farmgate Market was successful",
-        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount.toFixed(3) + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount.toFixed(2) + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
