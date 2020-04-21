@@ -60,7 +60,7 @@ const Register = () => {
                 <div className="container">
                     <br/><br/>  
                     
-                    <div className="card bg-light">
+                    <div className="card bg-light" style={{marginBottom: '0'}}>
                     <article className="card-body mx-auto" style={{maxWdith: "400px"}}>
                         <h4 className="card-title mt-3 text-center">Create Account</h4>
                         <p className="text-center">Get started with your free account</p>

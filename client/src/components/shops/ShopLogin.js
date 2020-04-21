@@ -44,7 +44,7 @@ const ShopLogin = () => {
         <div className="container">
                     <br/><br/>  
                     
-                    <div className="card bg-light">
+                    <div className="card bg-light" style={{marginBottom: '0'}}>
                     <article className="card-body mx-auto" style={{maxWdith: "400px"}}>
                         <h4 className="card-title mt-3 text-center">Shop Login</h4>
                         <p className="text-center">Login now to manage items/orders</p>
