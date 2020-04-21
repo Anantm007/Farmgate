@@ -32,6 +32,7 @@ const ShopItems = ({item}) => {
                 updateUser(data.data, () => {
                     setValues({...values, success: true, error: false, loading: false});
                 })
+                setTimeout(() => setValues({...values, success: false}), 5000)
             }
         })
     }

@@ -143,6 +143,7 @@ const ShopPage = (props) => {
               itemsPerPage={itemsPerPage}
               totalItems={items.length}
               paginate={paginate}
+              pageNumber = {currentPage}
             />               
             
           </div>
