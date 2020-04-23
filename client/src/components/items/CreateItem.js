@@ -114,6 +114,7 @@ const CreateItem = () => {
                         <option value="Organically Certified">Organically Certified</option>
                         <option value="BioDynamic">Biodynamic</option>
                         <option value="Pesticide Free">Pesticide Free</option>
+                        <option value="Organic (not certified)">Organic (not certified)</option>
                         <option value="No Category">No Category</option>
                 </select>
             </div>
