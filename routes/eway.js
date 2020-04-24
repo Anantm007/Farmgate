@@ -15,7 +15,7 @@ const User = require('../models/user');
 /*                                                              ROUTES                                                           */
 
 // @route   POST /api/eway/payment/ 
-// @desc    Create payment status
+// @desc    Create payment
 // @access  Private
 router.post('/payment/', async(req, res) => {
     var client = rapid.createClient(process.env.apiKey, process.env.password, process.env.rapidEndpoint);   // rapidEndpoint can be written as "Sandbox/Production"
