@@ -39,12 +39,13 @@ const Checkout = (props) => {
     EWAY_CARDEXPIRYMONTH: '',
     EWAY_CARDEXPIRYYEAR: '',
     EWAY_CARDCVN: '',
+    paymentSuccess: false,
     success: false,
     error: '',
     total: 0
   });
 
-  const {shipping, tax, instructions, subtotal, accessCode, success, error, loading} = values;
+  const {shipping, tax, instructions, subtotal, accessCode, success, paymentSuccess, error, loading} = values;
   const {EWAY_CARDCVN, EWAY_CARDEXPIRYMONTH, EWAY_CARDEXPIRYYEAR, EWAY_CARDNAME, EWAY_CARDNUMBER} = values;
 
   const handleChange = name => e => {
@@ -84,7 +85,7 @@ const Checkout = (props) => {
     }
     else
     {
-        setValues({...values, success: true, loading: false})
+        setValues({...values, success: true, paymentSuccess: true, loading: false})
         // placeOrder()
         let data = {
           instructions,
@@ -196,7 +197,15 @@ const showSuccess = success => (
     </div>
 );
 
-  const showLoading = () => (
+const showPaymentSuccess = paymentSuccess => (
+  <div
+      className="alert"
+      style={{ display: paymentSuccess ? "" : "none" }}
+  >
+      <Spinner/>
+  </div>
+);
+const showLoading = () => (
     loading && <Spinner/>
   )      
     
@@ -237,7 +246,8 @@ const showSuccess = success => (
       </div>
       {showDropIn()}
       {showSuccess(success)}
-          {showError(error)}
+      {showError(error)}
+      {showPaymentSuccess(paymentSuccess)}
 
           <Footer />  
         </Fragment>
