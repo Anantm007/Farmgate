@@ -21,6 +21,6 @@ module.exports = function(req, res, next) {
   } catch (err) {
     return res.status(401).json({ 
       success: false,
-      message: 'Token is not valid' });
+      message: 'Please log out and login again' });
   }
 };
