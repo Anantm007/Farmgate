@@ -19,6 +19,54 @@ const CartItem = ({item}) => {
       event.target.select();
     }
 
+    const decreaseQuantity = () => {
+      
+      let q = quantity < 1 ? 1 : quantity - 1;
+      if(q === 0)
+        q = 1;
+      
+      updateCartItem(foundItem._id, q)
+          .then(data => {
+            if(data.success === false)
+            {
+              setValues({...values, loading: false, error: data.message})
+            }
+
+            else
+            {
+              updateUser(data.data, () => {
+                setValues({...values, loading: false, quantity: data.quantity, price: data.price})
+              });
+            window.location.reload(false);
+
+            }
+          })
+    }
+
+    const increaseQuantity = () => {
+      let q = quantity < 1 ? 1 : quantity + 1;
+      if(q === 0)
+        q = 1;
+      
+      updateCartItem(foundItem._id, q)
+          .then(data => {
+            if(data.success === false)
+            {
+              setValues({...values, loading: false, error: data.message})
+            }
+
+            else
+            {
+              updateUser(data.data, () => {
+                setValues({...values, loading: false, quantity: data.quantity, price: data.price})
+              });
+            window.location.reload(false);
+
+            }
+          })
+    }
+
+
     const handleChange = Item => event => {
       if(event.target.value < 1)
       {
@@ -30,7 +78,7 @@ const CartItem = ({item}) => {
       else
       setValues({...values, quantity: event.target.value})
 
-      const q = event.target.value <1 ? 1: event.target.value;
+      const q = event.target.value < 1 ? 1: event.target.value;
 
       if (q >= 1) {
           setValues({...values, loading: true});
@@ -146,7 +194,15 @@ const CartItem = ({item}) => {
                     </div>
                   </th>
                   <td className="align-middle"><strong>{`$${foundItem.price} per ${foundItem.variant}`}</strong></td>
-                  <td className="align-middle"><input type="number" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/></td>
+                  
+                  <td className="align-middle">
+                    <button type="button" className="fa fa-minus btn btn-danger btn-number" onClick={decreaseQuantity} style={{height:"2rem", width: '3rem'}}></button>
+                    
+                    <input type="number" className="text-center" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/>
+
+                    <button type="button" class="fa fa-plus btn btn-success btn-number" onClick={increaseQuantity} style={{height:"2rem", width: '3rem'}}></button>
+                  </td>
+                  
                   <td className="align-middle"><strong>${price}</strong></td>
                   <td className="align-middle"><i onClick={removeItem} className="fa fa-trash fa-2x"></i>
                   </td>
