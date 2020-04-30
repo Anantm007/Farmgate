@@ -21,9 +21,13 @@ const CartItem = ({item}) => {
 
     const decreaseQuantity = () => {
       
+      if(quantity === 1)
+      {
+        removeItem();
+        return;
+      }
+
       let q = quantity < 1 ? 1 : quantity - 1;
-      if(q === 0)
-        q = 1;
       
       updateCartItem(foundItem._id, q)
           .then(data => {
@@ -70,7 +74,6 @@ const CartItem = ({item}) => {
     const handleChange = Item => event => {
       if(event.target.value < 1)
       {
-
         setValues({...values, quantity: 1})
         return;
       }
@@ -196,11 +199,11 @@ const CartItem = ({item}) => {
                   <td className="align-middle"><strong>{`$${foundItem.price} per ${foundItem.variant}`}</strong></td>
                   
                   <td className="align-middle">
-                    <button type="button" className="fa fa-minus btn btn-danger btn-number" onClick={decreaseQuantity} style={{height:"2rem", width: '3rem'}}></button>
+                    <button type="button" className="fa fa-minus btn btn-number" onClick={decreaseQuantity} style={{height:"2rem", width: '2.9rem', border: 'solid 1px'}}></button>
                     
                     <input type="number" className="text-center" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/>
 
-                    <button type="button" class="fa fa-plus btn btn-success btn-number" onClick={increaseQuantity} style={{height:"2rem", width: '3rem'}}></button>
+                    <button type="button" class="fa fa-plus btn btn-number" onClick={increaseQuantity} style={{height:"2rem", width: '2.9rem',  border: 'solid 1px'}}></button>
                   </td>
                   
                   <td className="align-middle"><strong>${price}</strong></td>
