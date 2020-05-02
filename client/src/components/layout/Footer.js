@@ -11,7 +11,7 @@ const Footer = () => {
     <div className="row">      
       	<h4>Follow Us : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</h4>
             <ul className="social-network social-circle">
-             <li><a href="https://www.instagram.com/pelle.mumford/" target="_blank" rel="noopener noreferrer" title="Instagram"><i className="myfa fa fa-instagram"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <li><a href="https://www.instagram.com/far.gate.market/" target="_blank" rel="noopener noreferrer" title="Instagram"><i className="myfa fa fa-instagram"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              <li><a href= "https://www.facebook.com/Farmgate-Market-109209664020278" target="_blank" rel="noopener noreferrer" title="Facebook"><i className="myfa fa fa-facebook"></i></a></li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {/* 
               <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="Linkedin"><i className="myfa fa fa-linkedin"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

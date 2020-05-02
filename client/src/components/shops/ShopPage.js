@@ -109,8 +109,8 @@ const ShopPage = (props) => {
                 </tr>
                 <tr>
                   <td><strong>Delivery by:</strong></td>
-                  <td>Wednesday, 2pm</td>
-                  <td>Friday, 2pm</td>
+                  <td>Wednesday, 3pm</td>
+                  <td>Friday, 3pm</td>
                 </tr>
                 </tbody>
               </table>
