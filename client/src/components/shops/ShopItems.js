@@ -75,9 +75,11 @@ const ShopItems = ({item}) => {
                         
                     </div>
                     <br/>
-                    <strong style={{backgroundColor: success ? 'none': ''}}>{success ? 
+                    <div  style={{backgroundColor: success ? 'none': '', textAlign: 'center', marginTop: '-1em', marginBottom: '1em'}}>
+                    <strong>{success ? 
                     '' : error ? '' : '$' + item.price + ' per ' + item.variant}</strong>
-                    <p style={{border: success ? 'none': 'solid 1px', textAlign: 'center', borderWidth: 'medium'}}>{success ? 
+                    </div>
+                    <p style={{border: success ? 'none': 'solid 1px', textAlign: 'center', borderWidth: 'thin', padding: '0.5em'}}>{success ? 
                     showSuccess() : error ? showError() : item.description}</p>
                     <br/>
                     </div>}
