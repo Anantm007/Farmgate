@@ -70,7 +70,7 @@ const Navbar = () => {
                         {isAuthenticated() && isAuthenticated().user.role === 0 && (                            
                             <li className="nav-item active">
                                 <a href="/cart" className="nav-link">
-                                 CART <sup><small className="cart-badge active">{Length}</small></sup>
+                                 CART <sup><strong className="cart-badge active" style={{backgroundColor: 'green', padding: '.3em'}}>{Length}</strong></sup>
                                 </a>
                             </li>
                         )}
