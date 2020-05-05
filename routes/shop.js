@@ -238,7 +238,7 @@ router.put('/:id', auth, async(req, res) => {
 });
 
 // @route   GET /api/shops/:id/items 
-// @desc    Get all items for a particular shop
+// @desc    List all items for a particular shop
 // @access  Public 
 router.get("/:id/items", async(req, res) => {
   
@@ -261,6 +261,16 @@ router.get("/:id/items", async(req, res) => {
       })
   }
 
+  // don't send items that are not in stock
+  for(i=0; i<items.length; i++)
+  {
+    if(!items[i].inStock)
+    {
+      items.splice(i, 1);
+    }
+  }
+
+  // Bubble sort technique to sort items by name
   for(i=0; i<items.length-1; i++)
     {
       for(j=i+1; j <items.length; j++)
@@ -274,6 +284,7 @@ router.get("/:id/items", async(req, res) => {
       }
     }
   
+  // Return the in stock and sorted items
   return res.json({
     success: true,
     count: items.length,
@@ -338,8 +349,6 @@ router.get('/photo/:id', async(req, res) => {
     res.send(result.image.data);     
 });
   
-
-
 
 
 module.exports = router;
