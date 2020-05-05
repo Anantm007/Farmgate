@@ -61,16 +61,13 @@ const ShopItems = ({item}) => {
             
             <div className="row">
                 
-                { loading ? showLoading() : <div className="flip-card" style={{margin: "2rem"}}>
-                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem'}}>
+                { loading ? showLoading() : <div className="flip-card cardStyle" style={{margin: "2rem", }}>
+                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem', borderRadius: '.5em', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
                         
                         <div className="flip-card-front">
-                        <h4 style={{backgroundColor: '#d4ebd0'}}>{item.name}</h4>
+                        <h4 style={{  textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff', color: 'black'}}>{item.name}</h4>
                         <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
                         {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
-                        </div>
-
-                        <div className="flip-card-back">
                         </div>
                         
                     </div>
