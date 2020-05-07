@@ -14,16 +14,16 @@ const Carousel = () => {
 			</ol>
 			<div className="carousel-inner">
 				<div className="carousel-item active">
-					<img className="d-block img-fluid" style={{height:"25rem", width:"80%", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '80%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
+					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
 				</div>
 				<div className="carousel-item">
-					<img className="d-block img-fluid" style={{height:"25rem", width:"80%", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '80%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel2} alt="carousel2" />
+					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
 						<h1 style={{marginBottom: '8rem'}}>connecting producers to people</h1>
 					</div>
 				</div>
 				<div className="carousel-item">
-					<img className="d-block img-fluid " style={{height:"25rem", width:"80%", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '80%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel3} alt="carousel3" />
+					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
 						<h1 style={{marginBottom: '2rem'}}>trace your food… support local farmers</h1>
 					</div>
