@@ -5,7 +5,7 @@ import Carousel3 from '../../images/carousel3.jpg';
 
 const Carousel = () => {
     return (
-	<div className="carouselmain" style={{background: 'linear-gradient(#649d66, #639a67)', padding: '2em'}}>
+	<div className="carouselmain" style={{backgroundColor: '#fff', padding: '2em'}}>
 		<div className="carousel slide" id="main-carousel" data-ride="carousel" data-interval="3000">
 			<ol className="carousel-indicators">
 				<li data-target="#main-carousel" data-slide-to="0" className="active"></li>
