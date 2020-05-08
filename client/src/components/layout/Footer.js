@@ -46,8 +46,8 @@ const useStyles = makeStyles({
   },
 
   footerText: {
-    color: '#142850', 
     fontSize: '1.1em',
+    fontWeight: '700',
     marginLeft: '1em',
     marginRight: '1em'
   }

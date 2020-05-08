@@ -48,7 +48,7 @@ const Landing = () => {
         <Fragment>
         
             <Carousel />
-            
+            <hr/>
             <h1 className={styles.headingStyle}>OUR SHOPS</h1>
             {showLoading()}
             <div className="row">                
@@ -85,7 +85,8 @@ const useStyles = makeStyles({
     headingStyle: {
         textAlign:'center', 
         marginTop: '4rem',
-        fontFamily: 'Cedarville Cursive, cursive'
+        fontSize: '3em',
+        fontFamily: 'Oswald, sans-serif'
 
     }
   });

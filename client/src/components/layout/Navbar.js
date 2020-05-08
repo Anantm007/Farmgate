@@ -54,14 +54,14 @@ const Navbar = () => {
                 <div id="navbarSupportedContent" className="collapse navbar-collapse">
                 <ul className="navbar-nav ml-auto">
                 
-                <li className="nav-item active"><Link to="/" className="nav-link" className={styles.navLink}>home <span className="sr-only"></span></Link></li>
+                <li className="nav-item active"><Link to="/" className={styles.navLink}>home <span className="sr-only"></span></Link></li>
                 
                 {/*                                           GUEST LINKS                                        */}
                 {!isAuthenticated() && !shopIsAuthenticated() && (
                     <Fragment>         
                         <li className="nav-item"><Link to="/shops" className={styles.navLink}>shops</Link></li>
-                        <li className="nav-item"><Link to="/user/login" className="nav-link" className={styles.navLink}>login</Link></li>
-                        <li className="nav-item"><a href="/user/register" className="nav-link" className={styles.navLink}>register</a></li>
+                        <li className="nav-item"><Link to="/user/login" className={styles.navLink}>login</Link></li>
+                        <li className="nav-item"><a href="/user/register" className={styles.navLink}>register</a></li>
                     </Fragment>
                 )}
 
@@ -71,12 +71,12 @@ const Navbar = () => {
                             <Fragment>
                         {isAuthenticated() && isAuthenticated().user.role === 0 && (
                             
-                            <li className="nav-item active"><Link to="/user/dashboard" className="nav-link" className={styles.navLink}>dashboard <span className="sr-only"></span></Link></li>
+                            <li className="nav-item active"><Link to="/user/dashboard" className={styles.navLink}>dashboard <span className="sr-only"></span></Link></li>
                         )}
                       
                         {isAuthenticated() && isAuthenticated().user.role === 0 && (                            
                             <li className="nav-item active">
-                                <a href="/cart" className="nav-link" className={styles.navLink}>
+                                <a href="/cart" className={styles.navLink}>
                                  cart <sup><strong className="cart-badge active" style={{backgroundColor: 'green', padding: '.3em'}}>{Length}</strong></sup>
                                 </a>
                             </li>
@@ -84,14 +84,14 @@ const Navbar = () => {
 
                         {isAuthenticated() && isAuthenticated().user.role === 1 && (
                             
-                            <li className="nav-item active"><Link to="/admin/dashboard" className="nav-link" className={styles.navLink}>admin dashboard <span className="sr-only"></span></Link></li>
+                            <li className="nav-item active"><Link to="/admin/dashboard" className={styles.navLink}>admin dashboard <span className="sr-only"></span></Link></li>
                         )}
 
-                        <li className="nav-item active"><Link to="/shops" className="nav-link" className={styles.navLink}>shops</Link></li>
+                        <li className="nav-item active"><Link to="/shops" className={styles.navLink}>shops</Link></li>
                         
 
                         <li className="nav-item active">
-                            <Link to="/" onClick={signout} className="nav-link" className={styles.navLink}>
+                            <Link to="/" onClick={signout} className={styles.navLink}>
                                 logout
                             </Link>
                         </li>
@@ -103,12 +103,12 @@ const Navbar = () => {
                 {/*                                           SHOP LINKS                                        */}
                 {shopIsAuthenticated() && (
                     <Fragment>    
-                        <li className="nav-item active"><Link to="/shop/dashboard" className="nav-link" className={styles.navLink}>dasboard <span className="sr-only"></span></Link></li>
-                        <li className="nav-item active"><Link to={`/shop/${_id}/items`} className="nav-link" className={styles.navLink}>manage items</Link></li>
-                        <li className="nav-item active"><Link to={`/shop/${_id}/orders`} className="nav-link" className={styles.navLink}>manage orders</Link></li>
+                        <li className="nav-item active"><Link to="/shop/dashboard" className={styles.navLink}>dasboard <span className="sr-only"></span></Link></li>
+                        <li className="nav-item active"><Link to={`/shop/${_id}/items`} className={styles.navLink}>manage items</Link></li>
+                        <li className="nav-item active"><Link to={`/shop/${_id}/orders`} className={styles.navLink}>manage orders</Link></li>
 
                         <li className="nav-item active">
-                            <Link to="/" onClick={shopSignout} className="nav-link" className={styles.navLink}>
+                            <Link to="/" onClick={shopSignout} className={styles.navLink}>
                                 Logout
                             </Link>
                         </li>

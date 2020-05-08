@@ -2,10 +2,8 @@ import React from 'react';
 import Carousel1 from '../../images/carousel1.jpg';
 import Carousel2 from '../../images/carousel2.jpg';
 import Carousel3 from '../../images/carousel3.jpg';
-import { makeStyles } from "@material-ui/core/styles";
 
 const Carousel = () => {
-	const styles = useStyles();
 
     return (
 	<div className="carouselmain" style={{backgroundColor: '#fff', padding: '2em'}}>
@@ -41,13 +39,5 @@ const Carousel = () => {
         </div>
     )
 }
-
-const useStyles = makeStyles({
-    heading: {
-        fontFamily: 'Oswald, sans-serif', 
-        fontSize: '3em'
-    }
-  });
-
 
 export default Carousel;
