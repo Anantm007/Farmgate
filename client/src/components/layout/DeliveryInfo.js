@@ -1,8 +1,11 @@
 import React, {Fragment} from 'react'
 import About3 from '../../images/about3.jpg';
 
+import { makeStyles } from "@material-ui/core/styles";
 
 const DeliveryInfo = () => {
+    const styles = useStyles();
+
     return (
         <Fragment>
             <div className="bg-light">
@@ -10,8 +13,8 @@ const DeliveryInfo = () => {
                 <div className="row align-items-center">
                 <div className="col-lg-5 px-5 mx-auto"><img src={About3} alt="" className="img-fluid mb-4 mb-lg-0" /></div>
                 <div className="col-lg-6">
-                    <h2 className="font-weight-light">We deliver from the farm gate to your door step</h2>
-                    <p className="font-italic text-muted mb-4">Adelaide metropolitan and outer metropolitan areas only 
+                    <h2 className={styles.heading}>We deliver from the farm gate to your door step</h2>
+                    <p className="font-italic text-muted mb-4" style={{fontSize: '1.2em'}}>Adelaide metropolitan and outer metropolitan areas only 
                     (see the terms & conditions linked below for a definition of the Service Area) </p>
                 </div>
                 </div>
@@ -21,5 +24,12 @@ const DeliveryInfo = () => {
         </Fragment>
     );
 };
+
+const useStyles = makeStyles({
+    heading: {
+        fontFamily: 'Arvo, serif',
+        fontSize: '1.9em'
+    }
+})
 
 export default DeliveryInfo;

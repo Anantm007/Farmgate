@@ -1,7 +1,11 @@
 import React, {Fragment, useState} from 'react';
 import {query} from '../admin/apiAdmin';
 
+import { makeStyles } from "@material-ui/core/styles";
+
 const ContactUs = () => {
+
+    const styles = useStyles();
 
     const [values, setValues] = useState({
         name: '',
@@ -53,7 +57,7 @@ const ContactUs = () => {
             
             <section className="jumbotron text-center">
                 <div className="container">
-                    <h1 className="jumbotron-heading">CONTACT US</h1>
+                    <h1 className={styles.heading}>CONTACT US</h1>
                     <p className="lead text-muted mb-0">We would love to hear feedback from you</p>
                 </div>
             </section>
@@ -62,7 +66,7 @@ const ContactUs = () => {
                 <div className="row">
                     <div className="col">
                         <div className="card">
-                            <div className="card-header bg-primary text-white"><i className="fa fa-envelope"></i> Contact Us</div>
+                            <div className="card-header bg-primary text-white"><i className="fa fa-envelope"></i> CONTACT US</div>
 
                             <div className="card-body">
                                 <form>
@@ -80,7 +84,7 @@ const ContactUs = () => {
                                         <textarea className="form-control" onChange={handleChange('description')} value={description} rows="6" required></textarea>
                                     </div>
                                     <div className="mx-auto">
-                                    <button onClick={clickSubmit} className="btn btn-primary text-right">Submit</button>                        
+                                    <button onClick={clickSubmit} className="btn btn-block btn-primary text-center">Submit</button>                        
                                     {showError()}
                                     {showSuccess()}</div>
                                 </form>
@@ -95,7 +99,7 @@ const ContactUs = () => {
                                 <p>Norwood, South Australia</p>
                                 <p>Australia</p>
                                 <p>5067</p><p><strong>ABN:</strong> 91688399669 </p>
-                                <p><strong>Email:</strong> <a href="mailto:farmgateishere@gmail.com"> farmgateishere@gmail.com</a></p>
+                                <p><strong>Email:</strong> <a href="mailto:contact@farmgate-market.com"> contact@farmgate-market.com</a></p>
                                 <p><strong>Tel:</strong> <a href="https://wa.me/61438807530">+61 438 807 530</a></p>
 
                             </div>
@@ -109,5 +113,13 @@ const ContactUs = () => {
         </Fragment>
     )
 }
+
+const useStyles = makeStyles({
+    heading: {
+        fontFamily: 'Oswald, sans-serif', 
+        fontSize: '3em'
+    }
+  });
+
 
 export default ContactUs

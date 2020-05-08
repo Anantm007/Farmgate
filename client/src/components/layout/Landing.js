@@ -9,8 +9,11 @@ import Footer from '../layout/Footer'
 
 import {getShops} from '../shops/apiShops';
 import Spinner from './Spinner';
+import { makeStyles } from "@material-ui/core/styles";
 
 const Landing = () => {
+
+    const styles = useStyles();
 
     const [shops, setShops] = useState([])
     const [loading, setLoading] = useState(true);
@@ -46,7 +49,7 @@ const Landing = () => {
         
             <Carousel />
             
-            <h1 style={{textAlign:'center', marginTop: '4rem'}}>OUR SHOPS</h1>
+            <h1 className={styles.headingStyle}>OUR SHOPS</h1>
             {showLoading()}
             <div className="row">                
                 {shops.map((shop, i) =>(
@@ -61,7 +64,7 @@ const Landing = () => {
         <br/>    
         <br/>
             <div className="alert alert-success alert-dismissible fade show" style={{marginBottom: '0rem'}} role="alert"> 
-              <strong>ARE YOU A FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
+              <strong className={styles.farmerText}>ARE YOU A FARMER? <Link to="/shop/login">&nbsp; Register / Login Now!</Link></strong> 
               <button type="button" className="btn close" 
                   data-dismiss="alert" aria-label="Close">           
                   <span aria-hidden="true">×</span> 
@@ -73,4 +76,18 @@ const Landing = () => {
     )
 }
 
-export default Landing
+const useStyles = makeStyles({
+    farmerText: {
+        fontFamily: 'Oswald, sans-serif', 
+        fontSize: '1.2em'
+    },
+
+    headingStyle: {
+        textAlign:'center', 
+        marginTop: '4rem',
+        fontFamily: 'Cedarville Cursive, cursive'
+
+    }
+  });
+
+export default Landing;

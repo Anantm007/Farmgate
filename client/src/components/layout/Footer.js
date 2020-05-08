@@ -2,27 +2,26 @@ import React from 'react'
 import TermsAndConditions from '../../TermsAndConditions.pdf';
 import PrivacyPolicy from '../../Farmgate_Ag_Privacy_Policy.pdf';
 import Sitemap from '../../Farmgate_Sitemap.xml';
+import { makeStyles } from "@material-ui/core/styles";
 
 const Footer = () => {
+  const styles = useStyles();
+
     return (
         <footer className="mainfooter" role="contentinfo">
-  <div className="footer-middle">
+  <div className="footer-middle"  style={{backgroundColor: '#649d66'}}>
   <div className="container">
     <div className="row">      
-      	<h4>Follow Us : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</h4>
+      	<h4 className={styles.header}>Follow Us :</h4>
             <ul className="social-network social-circle">
-             <li><a href="https://www.instagram.com/far.gate.market/" target="_blank" rel="noopener noreferrer" title="Instagram"><i className="myfa fa fa-instagram"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <li><a href= "https://www.facebook.com/Farmgate-Market-109209664020278" target="_blank" rel="noopener noreferrer" title="Facebook"><i className="myfa fa fa-facebook"></i></a></li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {/* 
-              <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="Linkedin"><i className="myfa fa fa-linkedin"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter"><i className="myfa fa fa-twitter"></i></a></li>
-            */}
+              <li><a href="https://www.instagram.com/far.gate.market/" target="_blank" rel="noopener noreferrer" title="Instagram"><i className="myfa fa fa-instagram"></i></a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <li><a href= "https://www.facebook.com/Farmgate-Market-109209664020278" target="_blank" rel="noopener noreferrer" title="Facebook"><i className="myfa fa fa-facebook"></i></a></li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </ul> 				
 		</div>
     <div className="row">
-    <a style={{color: '#79bac1'}} href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms and Conditions</a> &nbsp;|&nbsp;
-    <a style={{color: '#79bac1'}} href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a> &nbsp;|&nbsp;
-    <a style={{color: '#79bac1'}} href = {Sitemap} target='_blank' rel="noopener noreferrer">Sitemap</a>
+    <a className={styles.footerText} href = {TermsAndConditions} target='_blank' rel="noopener noreferrer">Terms and Conditions</a> &nbsp;|&nbsp;
+    <a className={styles.footerText} href = {PrivacyPolicy} target='_blank' rel="noopener noreferrer">Privacy Policy</a> &nbsp;|&nbsp;
+    <a className={styles.footerText} href = {Sitemap} target='_blank' rel="noopener noreferrer">Sitemap</a>
     <br/>
     </div>
 	<div className="row">
@@ -38,5 +37,20 @@ const Footer = () => {
   
     )
 }
+
+
+const useStyles = makeStyles({
+  header: {
+    marginLeft: '.7em',
+    marginRight: '2em'
+  },
+
+  footerText: {
+    color: '#142850', 
+    fontSize: '1.1em',
+    marginLeft: '1em',
+    marginRight: '1em'
+  }
+});
 
 export default Footer;
