@@ -2,8 +2,11 @@ import React from 'react';
 import Carousel1 from '../../images/carousel1.jpg';
 import Carousel2 from '../../images/carousel2.jpg';
 import Carousel3 from '../../images/carousel3.jpg';
+import { makeStyles } from "@material-ui/core/styles";
 
 const Carousel = () => {
+	const styles = useStyles();
+
     return (
 	<div className="carouselmain" style={{backgroundColor: '#fff', padding: '2em'}}>
 		<div className="carousel slide" id="main-carousel" data-ride="carousel" data-interval="3000">
@@ -14,16 +17,19 @@ const Carousel = () => {
 			</ol>
 			<div className="carousel-inner">
 				<div className="carousel-item active">
-					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
+					<div>
+					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
+					</div>
+					
 				</div>
 				<div className="carousel-item">
-					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel2} alt="carousel2" />
+					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
 						<h1 style={{marginBottom: '8rem'}}>connecting producers to people</h1>
 					</div>
 				</div>
 				<div className="carousel-item">
-					<img style={{height:"25rem", marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '90%', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel3} alt="carousel3" />
+					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
 						<h1 style={{marginBottom: '2rem'}}>trace your food… support local farmers</h1>
 					</div>
@@ -35,5 +41,13 @@ const Carousel = () => {
         </div>
     )
 }
+
+const useStyles = makeStyles({
+    heading: {
+        fontFamily: 'Oswald, sans-serif', 
+        fontSize: '3em'
+    }
+  });
+
 
 export default Carousel;

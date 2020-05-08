@@ -37,7 +37,7 @@ const UserDashboard = () => {
 
     return (
         <Fragment>
-            <div style={{backgroundColor: '#c0ffb3', minHeight: '8rem', padding: '2rem', marginBottom: '2rem'}}>
+            <div style={{backgroundColor: '#649d66', minHeight: '8rem', padding: '2rem', marginBottom: '2rem', marginTop: '.1em'}}>
                 <h1>User Dashboard</h1>
                 <h5>{`Welcome, ${name}`}</h5>
             </div>
