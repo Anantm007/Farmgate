@@ -1,9 +1,11 @@
 import React from 'react';
-import Carousel1 from '../../images/carousel1.png';
+import Carousel1 from '../../images/carousel1.jpg';
 import Carousel2 from '../../images/carousel2.jpg';
 import Carousel3 from '../../images/carousel3.jpg';
+import { makeStyles } from "@material-ui/core/styles";
 
 const Carousel = () => {
+	const styles = useStyles();
 
     return (
 	<div className="carouselmain" style={{backgroundColor: '#fff', padding: '2em'}}>
@@ -16,20 +18,20 @@ const Carousel = () => {
 			<div className="carousel-inner">
 				<div className="carousel-item active">
 					<div>
-					<img style={{height:"25em", width: '100%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
+					<img className={styles.imageResponsive} src={Carousel1} alt="carousel1" />
 					</div>
 					
 				</div>
 				<div className="carousel-item">
-					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel2} alt="carousel2" />
+					<img className={styles.imageResponsive} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
-						<h1 style={{marginBottom: '8rem'}}>connecting producers to people</h1>
+						<h1 className={styles.heading} >connecting producers to people</h1>
 					</div>
 				</div>
 				<div className="carousel-item">
-					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel3} alt="carousel3" />
+					<img className={styles.imageResponsive} style={{width: '45em'}} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
-						<h1 style={{marginBottom: '2rem'}}>trace your food… support local farmers</h1>
+						<h1 className={styles.heading} >trace your food.. support local farmers</h1>
 					</div>
 				</div>
 				
@@ -39,5 +41,29 @@ const Carousel = () => {
         </div>
     )
 }
+
+const useStyles = makeStyles({
+	heading: {
+		marginBottom: '2rem',
+		textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000', 
+		// color: 'black'
+	},
+
+	imageResponsive: {
+		display: 'block',
+		marginLeft: 'auto', 
+		marginRight: 'auto', 
+		boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)',
+		'@media (min-width: 980px)': {
+			width: '40em',
+			height:"30em"
+		},
+		
+		'@media (max-width: 660px)': {
+			width: '90%',
+			height:"20em"
+		}
+	}
+});
 
 export default Carousel;
