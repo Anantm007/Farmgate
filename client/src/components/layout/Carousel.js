@@ -16,7 +16,7 @@ const Carousel = () => {
 			<div className="carousel-inner">
 				<div className="carousel-item active">
 					<div>
-					<img style={{height:"25em", width: '70%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
+					<img style={{height:"25em", width: '100%', display: 'block', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)'}} src={Carousel1} alt="carousel1" />
 					</div>
 					
 				</div>
