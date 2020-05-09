@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import {isAuthenticated} from '../userAuth';
-// import {getClientToken, setInfo} from '../user/apiUser';
 import {Pay, updateUser, createOrder} from './apiUser';
 import { withRouter } from 'react-router-dom';
 
@@ -69,6 +68,7 @@ const Checkout = (props) => {
 
   const clickSubmit = (e) => {
     e.preventDefault();
+    setValues({...values})
     buy();
   }
   
@@ -77,16 +77,13 @@ const Checkout = (props) => {
     let amount = subtotal + tax + shipping;
     Pay({EWAY_CARDNUMBER, EWAY_CARDNAME, EWAY_CARDEXPIRYYEAR, EWAY_CARDEXPIRYMONTH, EWAY_CARDCVN, amount})
     .then(data => {
-        console.log('lol', data, data.success, )
     if(data.success === false)
     {
-        setValues({...values, error: true, loading: false})
-        // removeInfo();
+        setValues({...values, error: true, loading: false})   
     }
     else
     {
         setValues({...values, success: true, paymentSuccess: true, loading: false})
-        // placeOrder()
         let data = {
           instructions,
           subtotal,
@@ -167,8 +164,7 @@ const Checkout = (props) => {
                         </div>
                     </div>
                     <div className="card-footer">
-                      {/*onClick={buy}*/}
-                    {!success && !loading && <button onClick={clickSubmit} className="btn btn-block btn-success" type="submit">
+                    {!success && <button onClick={clickSubmit} disabled={loading} className="btn btn-block btn-success" type="submit">
                         <i className="mdi mdi-gamepad-circle"></i> PAY</button>}
                         <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider) for decryption</strong>
                     </div>

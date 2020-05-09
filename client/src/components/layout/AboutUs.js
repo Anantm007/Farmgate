@@ -18,7 +18,7 @@ const AboutUs = () => {
                     <p className="font-italic text-muted mb-4" style={{fontSize: '1.2em'}}>We provide a service to deliver produce from the farm gate to the consumer door step.</p><br/>
                     <p className="font-italic text-muted mb-4" style={{fontSize: '1.2em'}}>In this age of decentralisation, our aim is to deliver high quality produce, that is as fresh as practically possible to the consumer, that is marketed at a competitive price point, and service driven for the consumer.</p>
                 </div>
-                <div className="col-lg-6 d-none d-lg-block"><img src={About2} alt="img" className="img-fluid" /></div>
+                <div className="col-lg-6 d-none d-lg-block"><img src={About2} alt="img" className="img-fluid" style={{boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19)'}} /></div>
                 </div>
             </div>
             </div>
