@@ -109,7 +109,7 @@ const Navbar = () => {
 
                         <li className="nav-item active">
                             <Link to="/" onClick={shopSignout} className={styles.navLink}>
-                                Logout
+                                logout
                             </Link>
                         </li>
 
