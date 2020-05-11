@@ -31,7 +31,7 @@ const Carousel = () => {
 					</div>
 				</div> */}
 				<div className="carousel-item">
-					<img className={styles.imageResponsive} src={Carousel3} style={{width: '45em'}} alt="carousel3" />
+					<img className={styles.imageResponsive2} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
 						<h1 className={styles.heading}>trace your food.. support local farmers</h1>
 					</div>
@@ -61,6 +61,22 @@ const useStyles = makeStyles({
 		boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)',
 		'@media (min-width: 980px)': {
 			width: '40em',
+			height:"30em"
+		},
+		
+		'@media (max-width: 660px)': {
+			width: '90%',
+			height:"20em"
+		}
+	},
+
+	imageResponsive2: {
+		display: 'block',
+		marginLeft: 'auto', 
+		marginRight: 'auto', 
+		boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)',
+		'@media (min-width: 980px)': {
+			width: '45em',
 			height:"30em"
 		},
 		
