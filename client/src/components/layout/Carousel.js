@@ -1,7 +1,6 @@
 import React from 'react';
 import Carousel1 from '../../images/carousel1.jpg';
-// import Carousel2 from '../../images/carousel2.jpg';
-import Carousel3 from '../../images/carousel3.jpg';
+import Carousel3 from '../../images/carousel2.jpg';
 import { makeStyles } from "@material-ui/core/styles";
 
 const Carousel = () => {
@@ -32,9 +31,9 @@ const Carousel = () => {
 					</div>
 				</div> */}
 				<div className="carousel-item">
-					<img className={styles.imageResponsive} style={{width: '45em'}} src={Carousel3} alt="carousel3" />
+					<img className={styles.imageResponsive} src={Carousel3} style={{width: '45em'}} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
-						<h1 className={styles.heading} >trace your food.. support local farmers</h1>
+						<h1 className={styles.heading}>trace your food.. support local farmers</h1>
 					</div>
 				</div>
 				
@@ -49,7 +48,10 @@ const useStyles = makeStyles({
 	heading: {
 		marginBottom: '2rem',
 		textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000', 
-		// color: 'black'
+		fontSize: '2.5em',
+		'@media (max-width: 660px)': {
+			fontSize: '1.5em'
+		}
 	},
 
 	imageResponsive: {

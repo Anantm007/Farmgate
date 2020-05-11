@@ -44,6 +44,7 @@ import AdminRoute from './components/userAuth/AdminRoute';
 
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
+import { isAuthenticated } from "./components/userAuth";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -52,6 +53,7 @@ if (localStorage.token) {
 const  App = () => {
   return ( 
         <Router>
+          {/* {isAuthenticated() && window.location.pathname === '/shops/5e85c70418c96a3fbae794c0' ? '' : <Navbar />} */}
           <Navbar />
           
           <Switch>
