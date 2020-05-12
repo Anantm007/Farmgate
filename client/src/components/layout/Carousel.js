@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 		
 		'@media (max-width: 660px)': {
 			width: '90%',
-			height:"20em"
+			height:"18rem"
 		}
 	},
 
@@ -76,13 +76,14 @@ const useStyles = makeStyles({
 		marginRight: 'auto', 
 		boxShadow: '0 8px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19)',
 		'@media (min-width: 980px)': {
-			width: '45em',
-			height:"30em"
+			width: '45rem',
+			height:"30rem"
 		},
 		
 		'@media (max-width: 660px)': {
-			width: '90%',
-			height:"20em"
+			width: '100%',
+			height:"14rem",
+			marginBottom: '3.8rem'
 		}
 	}
 });
