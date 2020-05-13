@@ -44,7 +44,7 @@ import AdminRoute from './components/userAuth/AdminRoute';
 
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
-import { isAuthenticated } from "./components/userAuth";
+// import { isAuthenticated } from "./components/userAuth";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

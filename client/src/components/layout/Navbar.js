@@ -39,7 +39,7 @@ const Navbar = () => {
     const styles = useStyles();
 
     return (
-        <nav className="navbar navbar-expand-lg py-3 navbarbg shadow-sm" style={{backgroundColor: '#649d66'}}>
+        <nav className="navbar fixed-top navbar-expand-lg py-3 navbarbg shadow-sm" style={{backgroundColor: '#649d66'}}>
             <div className="container">
                 <Link to ="/" className="navbar-brand">
                     <img src={Logo} alt="" width="200" height="30" className="d-inline-block align-middle mr-2" />

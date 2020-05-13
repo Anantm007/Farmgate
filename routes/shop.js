@@ -250,7 +250,7 @@ router.get("/:id/items", async(req, res) => {
         });
   }
 
-  const items = await Item.find({shop: req.params.id}).select('-image');
+  let items = await Item.find({shop: req.params.id}).select('-image');
 
   if(!items || items.length === 0)
   {
@@ -262,7 +262,7 @@ router.get("/:id/items", async(req, res) => {
   }
 
   // don't send items that are not in stock
-  for(i=0; i<items.length; i++)
+  for(i=items.length - 1; i>=0; i--)
   {
     if(!items[i].inStock)
     {
