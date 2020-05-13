@@ -83,7 +83,7 @@ const useStyles = makeStyles({
 		'@media (max-width: 660px)': {
 			width: '100%',
 			height:"14rem",
-			marginBottom: '3.8rem'
+			marginBottom: '4rem'
 		}
 	}
 });
