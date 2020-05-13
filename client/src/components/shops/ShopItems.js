@@ -3,7 +3,7 @@ import {addToCart, updateUser} from '../user/apiUser';
 import Spinner from '../layout/Spinner';
 import {isAuthenticated} from '../userAuth';
 
-const ShopItems = ({item}) => {
+const ShopItems = ({item, index}) => {
 
     const [values, setValues] = useState({
         success: false,
@@ -33,6 +33,28 @@ const ShopItems = ({item}) => {
                     setValues({...values, success: true, error: false, loading: false});
                 })
                 setTimeout(() => setValues({...values, success: false}), 5000)
+                let imgtodrag = document.getElementsByClassName('product')[index];
+                let imgtodragImage = imgtodrag.querySelector('.hideImage');
+                console.log(imgtodragImage)
+        
+                let disLeft= imgtodrag.getBoundingClientRect ().left;
+                let disTop= imgtodrag.getBoundingClientRect ().top;
+                let cartleft= 0.75 * window.screen.width;
+                let carttop= 0.04 * window.screen.height;
+                let image = imgtodragImage;
+        
+                image.style ='z-index: 1111; width: 100px;opacity:0.8; position:fixed; top:'+ disTop+'px;left:'+ disLeft+'px;transition: left 2s, top 2s, width 2s, opacity 2s cubic-bezier(1, 1, 1, 1)';
+                var rechange=document.body.appendChild(image);
+                setTimeout(function() {
+                    image.style.left=cartleft+'px';
+                    image.style.top=carttop+'px';
+                    image.style.width='40px';
+                    image.style.opacity='0';
+                }, 200);
+                setTimeout(function() {
+                    rechange.parentNode.removeChild(rechange);
+                }, 2000);
+               
             }
         })
     }
@@ -61,9 +83,9 @@ const ShopItems = ({item}) => {
             
             <div className="row">
                 
-                { loading ? showLoading() : <div className="flip-card" style={{margin: "2rem"}}>
-                    <div className="flip-card-inner" style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem', borderRadius: '.5em', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
-                        
+                { loading ? showLoading() : <div className="flip-card product" style={{margin: "2rem"}}>
+                    <div className="flip-card-inner" key={index} style={{backgroundImage: `url(/api/items/photo/${item._id}`, backgroundSize: '19rem 20rem', borderRadius: '.5em', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
+                        <img src={`/api/items/photo/${item._id}`} className="hideImage" style={{height: '0', width: '0'}} alt="img"/>
                         <div className="flip-card-front">
                         <h4 style={{  textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff', color: 'black'}}>{item.name}</h4>
                         <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>

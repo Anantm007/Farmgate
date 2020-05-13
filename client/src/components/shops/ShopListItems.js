@@ -10,7 +10,7 @@ const ShopListItems = ({ items, loading }) => {
      <div className="row">                
                 {items.length && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
-                        {item.inStock ? <ShopItems item={item} /> : ''}
+                        {<ShopItems item={item} index={i} />}
                         <br/><br/><br/>      
                     </div>
                 ))}
