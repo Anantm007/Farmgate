@@ -168,6 +168,13 @@ const Checkout = (props) => {
                         <i className="mdi mdi-gamepad-circle"></i> PAY</button>}
                         <strong>* We don't collect or retain (per our terms and conditions) your payment data - we encrypt it and send it to <a href='https://eway.io/' target="_blank" rel="noopener noreferrer">eway</a> (Australia's number one payment gateway provider) for decryption</strong>
                     </div>
+                    <div id="eWAYBlock">
+                      <div style= {{textAalign: "center;", width: '15rem', margin: 'auto'}}>
+                          <a href="https://www.eway.com.au/secure-site-seal?i=12&se=3&theme=0" title="eWAY Payment Gateway" target="_blank" rel="nofollow">
+                              <img alt="eWAY Payment Gateway" src="https://www.eway.com.au/developer/payment-code/verified-seal.php?img=12&size=3&theme=0" />
+                          </a>
+                      </div>
+                    </div>
                   </form>
                 </div>
                 
