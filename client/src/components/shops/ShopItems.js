@@ -3,7 +3,7 @@ import {addToCart, updateUser} from '../user/apiUser';
 import Spinner from '../layout/Spinner';
 import {isAuthenticated} from '../userAuth';
 
-const ShopItems = ({item, index}) => {
+const ShopItems = ({item, index, setRun = f => f, run=undefined}) => {
 
     const [values, setValues] = useState({
         success: false,
@@ -45,6 +45,8 @@ const ShopItems = ({item, index}) => {
         
                 image.style ='z-index: 1111; width: 100px;opacity:0.8; position:fixed; top:'+ disTop+'px;left:'+ disLeft+'px;transition: left 2s, top 2s, width 2s, opacity 2s cubic-bezier(1, 1, 1, 1)';
                 var rechange=document.body.appendChild(image);
+                
+                setRun(!run);
                 setTimeout(function() {
                     image.style.left=cartleft+'px';
                     image.style.top=carttop+'px';
@@ -54,6 +56,7 @@ const ShopItems = ({item, index}) => {
                 setTimeout(function() {
                     rechange.parentNode.removeChild(rechange);
                 }, 2000);
+
                
             }
         })

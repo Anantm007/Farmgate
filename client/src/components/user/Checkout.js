@@ -170,7 +170,7 @@ const Checkout = (props) => {
                     </div>
                     <div id="eWAYBlock">
                       <div style= {{textAalign: "center;", width: '15rem', margin: 'auto'}}>
-                          <a href="https://www.eway.com.au/secure-site-seal?i=12&se=3&theme=0" title="eWAY Payment Gateway" target="_blank" rel="nofollow">
+                          <a href="https://www.eway.com.au/secure-site-seal?i=12&se=3&theme=0" title="eWAY Payment Gateway" target="_blank" rel="noopener noreferrer">
                               <img alt="eWAY Payment Gateway" src="https://www.eway.com.au/developer/payment-code/verified-seal.php?img=12&size=3&theme=0" />
                           </a>
                       </div>

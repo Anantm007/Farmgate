@@ -7,7 +7,7 @@ import {cartLength} from '../user/apiUser';
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const Navbar = () => {
+const Navbar = ({run}) => {
 
     let _id = null;
     if(shopIsAuthenticated())
@@ -33,8 +33,7 @@ const Navbar = () => {
     
     useEffect(() => {
         isAuthenticated() && findLength()
-        //eslint-disable-next-line
-    }, [])    
+    }, [run])    
     
     const styles = useStyles();
 

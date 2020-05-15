@@ -4,6 +4,7 @@ import Spinner from '../layout/Spinner';
 import Footer from '../layout/Footer'
 import CartItem from './CartItem';
 import {isAuthenticated} from '../userAuth';
+import Navbar from '../layout/Navbar';
 import {getCartTotal, checkPromo} from '../user/apiUser';
 
 const UserCart = () => {
@@ -80,20 +81,21 @@ const getTotal = () => {
       </div>)
   }
 
+  const [run, setRun] = useState(false);
 
   useEffect(() => {
     getValues();
-    //eslint-disable-next-line
-  }, [])
+  }, [run])
 
     return (
         <Fragment>
+          <Navbar run={run} />
           <br/>
           <h1 className="text-center">{user.name.indexOf(' ') > 0 ? user.name.split(" ").slice(0,-1) : user.name}'s Shopping Cart</h1>
           
           {user.cart.length >= 1 ? user.cart.map((item, i) =>(
                     <div key={i}>    
-                        <CartItem item={item} />      
+                        <CartItem item={item} run={run} setRun={setRun} />      
                     </div>
           )): <h1 className="text-center">You do not have any items in your cart</h1>}
           

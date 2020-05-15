@@ -184,7 +184,7 @@ router.post('/:id', auth, async(req, res) => {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : s.email,
         subject : "You have a new order on Farmgate Market",
-        text : "Hello " + s.name + ", \n\nA new order for your shop was placed by" + user.name +  "on Farmgate Market. You can find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        text : "Hello " + s.name + ", \n\nA new order for your shop was placed by " + user.name +  " on Farmgate Market. You can find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),

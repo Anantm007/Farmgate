@@ -3,6 +3,7 @@ import {getShop, getItems} from '../shops/apiShops';
 import Pagination from './Pagination';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
+import Navbar from '../layout/Navbar';
 import ShopListItems from './ShopListItems';
 
 const ShopPage = (props) => {
@@ -61,6 +62,7 @@ const ShopPage = (props) => {
       error && <h3 className="text-center">{error}</h3>
     ) 
 
+    const [run, setRun] = useState(false);
 
     useEffect(() => {
         loadShop()
@@ -69,8 +71,7 @@ const ShopPage = (props) => {
         return () => {
           console.log('cleaned up');
         }
-        //eslint-disable-next-line
-    }, [])
+    }, [run])
 
     // Get current items
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -81,86 +82,90 @@ const ShopPage = (props) => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-      
-        loading ? <div>{showLoading()}</div> : (<Fragment>
+      <Fragment>
+        <Navbar run={run}/> 
+        {loading ? <div>{showLoading()}</div> : (<Fragment>
 
-        <div className="container">
+          <div className="container">
 
-        <div className="row">
-    
-          <div className="col-lg-4">
-    
-            <h1 className="my-4">{shop.name}</h1>
-            <div>
-              <strong>Address: </strong>{shop.address}<br/><br />
-              <strong>About: </strong>{shop.description}<br/>
-              <strong>Items Available: </strong>{shop.items.length}<br/><br/>
-              <table>
-                <tbody>
-                <tr>
-                  <th></th>
-                  <th>Weekly Delivery 1</th>
-                  <th>Weekly Delivery 2</th>
-                </tr>
-                <tr>
-                  <td><strong>Order cut-off day/time:</strong></td>
-                  <td>Tuesday, 3pm</td>
-                  <td>Thursday, 3pm</td>
-                </tr>
-                <tr>
-                  <td><strong>Delivery by:</strong></td>
-                  <td>Wednesday, 3pm</td>
-                  <td>Friday, 3pm</td>
-                </tr>
-                </tbody>
-              </table>
-              <br/><br/>
-              {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
-              {shop.instagram !== undefined ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
+          <div className="row">
+
+            <div className="col-lg-4">
+
+              <h1 className="my-4">{shop.name}</h1>
+              <div>
+                <strong>Address: </strong>{shop.address}<br/><br />
+                <strong>About: </strong>{shop.description}<br/>
+                <strong>Items Available: </strong>{shop.items.length}<br/><br/>
+                <table>
+                  <tbody>
+                  <tr>
+                    <th></th>
+                    <th>Weekly Delivery 1</th>
+                    <th>Weekly Delivery 2</th>
+                  </tr>
+                  <tr>
+                    <td><strong>Order cut-off day/time:</strong></td>
+                    <td>Tuesday, 3pm</td>
+                    <td>Thursday, 3pm</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Delivery by:</strong></td>
+                    <td>Wednesday, 3pm</td>
+                    <td>Friday, 3pm</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <br/><br/>
+                {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
+                {shop.instagram !== undefined ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
+
+              </div>
 
             </div>
-    
-          </div>
-    
-          <div className="col-lg-8">
-    
-            <div id="carouselExampleIndicators" className="carousel slide my-4" data-ride="carousel">
-              <div className="carousel-inner" role="listbox">
-                <div className="carousel-item active">
-                  <img className="d-block img-fluid" alt="" src={`/api/shops/photo/${shop._id}`} style={{height: '30rem', width: '30rem'}} />
-                </div>
-                </div>
+
+            <div className="col-lg-8">
+
+              <div id="carouselExampleIndicators" className="carousel slide my-4" data-ride="carousel">
+                <div className="carousel-inner" role="listbox">
+                  <div className="carousel-item active">
+                    <img className="d-block img-fluid" alt="" src={`/api/shops/photo/${shop._id}`} style={{height: '30rem', width: '30rem'}} />
+                  </div>
+                  </div>
+                
+              </div>
+
+              <br/><br/>
+              <h3>Shop Items Available</h3>
+              {showError()}
+              <br/>
+
+              <ShopListItems items={currentItem} loading={loading} setRun={setRun} run={run} />
+              <Pagination
+                itemsPerPage={itemsPerPage}
+                totalItems={items.length}
+                paginate={paginate}
+                pageNumber = {currentPage}
+              />               
               
             </div>
-    
-            <br/><br/>
-            <h3>Shop Items Available</h3>
-            {showError()}
-            <br/>
 
-            <ShopListItems items={currentItem} loading={loading} />
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={items.length}
-              paginate={paginate}
-              pageNumber = {currentPage}
-            />               
-            
           </div>
-    
-        </div>
-    
-      </div>
 
-      <br/><br/><br/>
-      {!loading ? <div className="text-center">
-                <button className="btn btn-dark" style={{width: '12rem'}}><i className="fa fa-shopping-cart">&nbsp;&nbsp;</i><a href="/cart" style={{color: 'white'}}>Go To Cart</a></button>
-      </div> : ''}
-<br/><br/>
-<br/><br/>
-      <Footer/>
-      </Fragment>)
+          </div>
+
+          <br/><br/><br/>
+          {!loading ? <div className="text-center">
+                  <button className="btn btn-dark" style={{width: '12rem'}}><i className="fa fa-shopping-cart">&nbsp;&nbsp;</i><a href="/cart" style={{color: 'white'}}>Go To Cart</a></button>
+          </div> : ''}
+          <br/><br/>
+          <br/><br/>
+          
+          <Footer/>
+          </Fragment>
+          )}   
+      </Fragment>
     )
-}
+  }
 
 export default ShopPage
