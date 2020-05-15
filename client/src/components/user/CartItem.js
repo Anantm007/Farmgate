@@ -4,7 +4,7 @@ import {updateUser, removeFromCart} from './apiUser';
 import {getItem} from '../items/apiItems';
 import {updateCartItem} from '../user/apiUser';
 
-const CartItem = ({item}) => {
+const CartItem = ({item, setRun = f => f, run=undefined}) => {
     const [values, setValues] = useState({
         foundItem: {},
         error: '',
@@ -138,8 +138,8 @@ const CartItem = ({item}) => {
             {
                 updateUser(data.data, () => {
                     setValues({...values, success: true, loading: false});
-                });
-                window.location.reload(false);
+                });                
+                setRun(!run);
             }
         })
 
