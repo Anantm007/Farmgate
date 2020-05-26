@@ -97,6 +97,7 @@ const CreateItem = () => {
                         <option value="1.5 Kg.">1.5 Kg.</option>
                         <option value="2 Kg.">2 Kg.</option>
                         <option value="5 Kg.">5 Kg.</option>
+                        <option value="Half Dozen">Half Dozen</option>
                         <option value="Dozen">Dozen</option>
                         <option value="Each">Each</option>
                         <option value="Container">Container</option>
