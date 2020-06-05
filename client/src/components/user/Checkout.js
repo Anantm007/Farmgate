@@ -20,7 +20,7 @@ const Checkout = (props) => {
       window.location = '/cart'
     }
     
-    if(props.location.state && (props.location.state.tax < 0 || props.location.state.shipping) )
+    if(props.location.state && (props.location.state.tax < 0 || props.location.state.shipping < 0) )
     {
       window.location = '/cart'
     }
