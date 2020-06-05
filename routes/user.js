@@ -408,7 +408,7 @@ router.delete('/cart/remove/:id', auth, async(req, res) => {
 
   let i=0;
   user.cart.forEach(async(c) => {
-    if(c.item.toString() === req.params.id)
+    if(c.item.toString() === req.params.id.toString())
     {
       user.cart.splice(i,1);
       await user.save();

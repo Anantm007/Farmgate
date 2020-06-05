@@ -32,6 +32,13 @@ const UserCart = () => {
   const clickSubmit = (e) => {
     e.preventDefault();
     setValues({...values, error: false, success: false, loading: true});
+    
+    if( (user.newUser && shipping === 4.95) || (!user.newUser && shipping === 0 ) )
+    {
+      setValues({...values, error: "Promo Code already applied!", loading: false, success: false});
+      return;
+    }
+
     checkPromo({promoCode})
     .then(data => {
         if(data.success === false)
@@ -43,7 +50,7 @@ const UserCart = () => {
             setValues({...values, shipping: shipping - 4.95, tax: 0, total: getTotal(), success: true, error: false, loading: false});
           }
     })
-
+  
 }
 
 const getTotal = () => {
@@ -85,7 +92,7 @@ const getTotal = () => {
 
   useEffect(() => {
     getValues();
-  }, [run])
+  }, [run]) // eslint-disable-line
 
     return (
         <Fragment>
@@ -95,7 +102,7 @@ const getTotal = () => {
           
           {user.cart.length >= 1 ? user.cart.map((item, i) =>(
                     <div key={i}>    
-                        <CartItem item={item} run={run} setRun={setRun} />      
+                      <CartItem item={item} run={run} setRun={setRun} />      
                     </div>
           )): <h1 className="text-center">You do not have any items in your cart</h1>}
           

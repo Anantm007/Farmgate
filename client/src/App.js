@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+// Layout
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-
 
 // User
 import Register from './components/user/Register';
@@ -44,7 +45,6 @@ import AdminRoute from './components/userAuth/AdminRoute';
 
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
-import { isAuthenticated } from "./components/userAuth";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -53,14 +53,7 @@ if (localStorage.token) {
 const  App = () => {
   return ( 
         <Router>
-          { (isAuthenticated() && 
-              (window.location.pathname === '/shops/5e85c70418c96a3fbae794c0') || 
-              (window.location.pathname === '/shops/5ebd9a21de9f591824e907d2') ||
-              (window.location.pathname === '/cart') )
-            ? '' 
-            : <Navbar />
-          }
-          {/* <Navbar /> */}
+          <Navbar />
           
           <Switch>
 
