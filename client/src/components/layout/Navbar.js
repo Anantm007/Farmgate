@@ -33,7 +33,7 @@ const Navbar = ({run}) => {
     
     useEffect(() => {
         isAuthenticated() && findLength()
-    }, [run])    
+    }, [run]) // eslint-disable-line
     
     const styles = useStyles();
 

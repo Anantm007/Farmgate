@@ -106,6 +106,12 @@ router.post('/:id', auth, async(req, res) => {
     await user.save();
 
     let ta,sh;
+
+    if(tax_shipping < 0)
+    {
+        return res.status(401).send("Server Error due to invalid shipping amount")
+    }
+
     if(tax_shipping === 0)
     {
         ta = sh = 0;

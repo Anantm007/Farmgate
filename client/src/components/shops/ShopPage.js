@@ -71,7 +71,7 @@ const ShopPage = (props) => {
         return () => {
           console.log('cleaned up');
         }
-    }, [run])
+    }, [run]) // eslint-disable-line
 
     // Get current items
     const indexOfLastItem = currentPage * itemsPerPage;

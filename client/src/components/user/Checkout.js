@@ -19,6 +19,11 @@ const Checkout = (props) => {
     {
       window.location = '/cart'
     }
+    
+    if(props.location.state && (props.location.state.tax < 0 || props.location.state.shipping) )
+    {
+      window.location = '/cart'
+    }
 
     if(props.location.state.subtotal < 25)
     {
@@ -28,7 +33,7 @@ const Checkout = (props) => {
 
   const [values, setValues] = useState({
     shipping: props.location.state ? props.location.state.shipping: 4.5,
-    tax: props.location.state ? props.location.state.tax: 0,
+    tax: 0,
     subtotal: props.location.state ? props.location.state.subtotal: 0,
     loading: false,
     instructions: '',

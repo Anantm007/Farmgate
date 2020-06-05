@@ -23,7 +23,7 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
       
       if(quantity === 1)
       {
-        removeItem();
+        removeItem(foundItem._id);
         return;
       }
 
@@ -125,10 +125,9 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
       //eslint-disable-next-line
     }, [])
 
-    const removeItem = () => {
+    const removeItem = (foundItemId) => {
         setValues({...values, error: false, loading: true});
-        const id = item.item._id ? item.item._id : item.item
-        removeFromCart(id)
+        removeFromCart(foundItemId)
         .then(data => {
             if(data.success === false)
             {
@@ -139,7 +138,7 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
                 updateUser(data.data, () => {
                     setValues({...values, success: true, loading: false});
                 });                
-                setRun(!run);
+                window.location.reload(false);
             }
         })
 
@@ -207,7 +206,7 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
                   </td>
                   
                   <td className="align-middle"><strong>${price}</strong></td>
-                  <td className="align-middle"><i onClick={removeItem} className="fa fa-trash fa-2x"></i>
+                  <td className="align-middle"><i onClick={() => removeItem(foundItem._id)} className="fa fa-trash fa-2x"></i>
                   </td>
                 </tr>
                   </Fragment>}
