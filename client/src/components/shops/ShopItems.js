@@ -3,7 +3,7 @@ import {addToCart, updateUser} from '../user/apiUser';
 import Spinner from '../layout/Spinner';
 import {isAuthenticated} from '../userAuth';
 
-const ShopItems = ({item, index, setRun = f => f, run=undefined}) => {
+const ShopItems = ({item, index, setRun = f => f, run=undefined, showCartButton}) => {
 
     const [values, setValues] = useState({
         success: false,
@@ -92,7 +92,7 @@ const ShopItems = ({item, index, setRun = f => f, run=undefined}) => {
                         <div className="flip-card-front">
                         <h4 style={{  textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff', color: 'black'}}>{item.name}</h4>
                         <span className="badge badge-success badge-pill">{item.quality}</span><br/><br/>
-                        {item.inStock && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
+                        {item.inStock && showCartButton && <button className="btn btn-danger" onClick={addCart}>Add to Cart</button>}
                         </div>
                         
                     </div>

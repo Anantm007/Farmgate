@@ -70,7 +70,7 @@ export const updateShop = (shop, next) => {
     }
 }
 
-// Get items for a shop
+// Get items for a shop (only in stock)
 export const getItems = id => {
     return fetch(`/api/shops/${id}/items`, {
         method: "GET"
@@ -83,6 +83,19 @@ export const getItems = id => {
     })
 }
 
+
+// Get items for a shop (both in and out of stock)
+export const getItemsAllType = id => {
+    return fetch(`/api/shops/${id}/items/allType`, {
+        method: "GET"
+      })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
 
 
 // Get my Shop

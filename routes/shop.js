@@ -233,12 +233,11 @@ router.put('/:id', auth, async(req, res) => {
 
     });
 
-  
-
 });
 
+
 // @route   GET /api/shops/:id/items 
-// @desc    List all items for a particular shop
+// @desc    List all items for a particular shop (only in stock)
 // @access  Public 
 router.get("/:id/items", async(req, res) => {
   
@@ -284,6 +283,40 @@ router.get("/:id/items", async(req, res) => {
       }
     }
   
+  // Return the in stock and sorted items
+  return res.json({
+    success: true,
+    count: items.length,
+    data: items
+  })
+  
+});
+
+
+// @route   GET /api/shops/:id/items/allType 
+// @desc    List all items for a particular shop (both in and out of stock)
+// @access  Public 
+router.get("/:id/items/allType", async(req, res) => {
+  
+  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
+  {
+      return res.json({
+          success: false,
+          message: "Shop Not Found"
+        });
+  }
+
+  let items = await Item.find({shop: req.params.id}).select('-image');
+
+  if(!items || items.length === 0)
+  {
+      return res.json({
+        success: true,
+        count: 0,
+        message: "This shop has no items listed"
+      })
+  }
+
   // Return the in stock and sorted items
   return res.json({
     success: true,
@@ -349,6 +382,5 @@ router.get('/photo/:id', async(req, res) => {
     res.send(result.image.data);     
 });
   
-
 
 module.exports = router;

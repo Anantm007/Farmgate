@@ -10,7 +10,7 @@ const ShopListItems = ({ items, loading, setRun = f => f, run=undefined }) => {
      <div className="row">                
                 {items.length && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
-                        {<ShopItems item={item} index={i} setRun={setRun} run={run} />}
+                        {<ShopItems item={item} index={i} setRun={setRun} run={run} showCartButton={true} />}
                         <br/><br/><br/>      
                     </div>
                 ))}
