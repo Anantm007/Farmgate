@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import {Link} from 'react-router-dom';
 import Footer from '../layout/Footer'
-import {getItems} from '../shops/apiShops';
+import {getItemsAllType} from '../shops/apiShops';
 import {deleteItem} from './apiItems';
 import Spinner from '../layout/Spinner';
 import ShopItems from '../shops/ShopItems';
@@ -16,7 +16,7 @@ const MyShopItems = (props) => {
     
 
     const loadItems = () => {
-        getItems(shopId).then(data => {
+        getItemsAllType(shopId).then(data => {
             if(data.success === false)
             {         
                 setError(data.message);
@@ -85,10 +85,10 @@ const MyShopItems = (props) => {
             <div className="row">                
                 {items.length > 0 && items.map((item, i) =>(
                     <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">    
-                        <ShopItems item={item} />
+                        <ShopItems item={item} showCartButton={false} />
                         <br/><br/><br/>
                         <div className="text-center">
-                        <button className="btn btn-primary"><Link to= {`/shop/${shopId}/item/${item._id}`} style={{color: 'white'}}>UPDATE </Link></button>&nbsp;
+                        <Link to= {`/shop/${shopId}/item/${item._id}`} style={{color: 'white'}}><button className="btn btn-primary">UPDATE</button></Link>&nbsp;
                         <button onClick={() => DeleteItem(item._id)} className="btn btn-danger">DELETE</button>
                         </div>
                         <br/>      
