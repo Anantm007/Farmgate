@@ -160,7 +160,7 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
             <div className="pb-5">
     <div className="container">
       <div className="row">
-        <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+        <div className="col-lg-12 p-5 bg-white rounded shadow-sm">
 
           <div className="table-responsive">
             <table className="table">
@@ -189,7 +189,7 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
                   <tr>
                   <th scope="row">
                     <div className="p-2">                        
-                      {/* <img src={`/api/items/photo/${foundItem._id}`} alt="" width="70" className="img-fluid rounded shadow-sm" /> */}
+                      <img src={`/api/items/photo/${foundItem._id}`} alt="" width="70" className="img-fluid rounded shadow-sm" />
                       <div className="ml-3 d-inline-block align-middle">
                       <h5 className="mb-0"><a href="/#" className="text-dark d-inline-block">{foundItem.name}</a></h5><span className="text-muted font-weight-normal font-italic">{foundItem.description}</span>
                       </div>
@@ -198,11 +198,11 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
                   <td className="align-middle"><strong>{`$${foundItem.price} per ${foundItem.variant}`}</strong></td>
                   
                   <td className="align-middle">
-                    <button type="button" className="fa fa-minus btn btn-number" onClick={decreaseQuantity} style={{height:"2rem", width: '2.9rem', border: 'solid 1px'}}></button>
+                    <button type="button" className="fa fa-minus btn btn-number" onClick={decreaseQuantity} style={{height:"1.9rem", width: '3rem', border: 'solid 0.3px'}}></button>
                     
                     <input type="number" className="text-center" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/>
 
-                    <button type="button" class="fa fa-plus btn btn-number" onClick={increaseQuantity} style={{height:"2rem", width: '2.9rem',  border: 'solid 1px'}}></button>
+                    <button type="button" class="fa fa-plus btn btn-number" onClick={increaseQuantity} style={{height:"1.9rem", width: '3rem',  border: 'solid 0.3px'}}></button>
                   </td>
                   
                   <td className="align-middle"><strong>${price}</strong></td>

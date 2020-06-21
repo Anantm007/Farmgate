@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel1 from '../../images/carousel1.jpg';
-import Carousel3 from '../../images/carousel2.jpg';
+import Carousel2 from '../../images/carousel2.jpg';
+import Carousel3 from '../../images/carousel3.jpg';
 import { makeStyles } from "@material-ui/core/styles";
 
 const Carousel = () => {
@@ -11,25 +12,21 @@ const Carousel = () => {
 		<div className="carousel slide" id="main-carousel" data-ride="carousel" data-interval="3000">
 			<ol className="carousel-indicators">
 				<li data-target="#main-carousel" data-slide-to="0" className="active"></li>
-				{/* <li data-target="#main-carousel" data-slide-to="1"></li> */}
+				<li data-target="#main-carousel" data-slide-to="1"></li>
 				<li data-target="#main-carousel" data-slide-to="2"></li>
 			</ol>
 			<div className="carousel-inner">
 				<div className="carousel-item active">
 					<div>
 						<img className={styles.imageResponsive} src={Carousel1} alt="carousel1" />
-						<div className="carousel-caption d-md-block">
-							<h1 className={styles.heading} >connecting producers to people</h1>
-						</div>
-					</div>
-					
+					</div>					
 				</div>
-				{/* <div className="carousel-item">
-					<img className={styles.imageResponsive} src={Carousel1} alt="carousel2" />
+				<div className="carousel-item">
+					<img className={styles.imageResponsive} src={Carousel2} alt="carousel2" />
 					<div className="carousel-caption d-md-block">
 						<h1 className={styles.heading} >connecting producers to people</h1>
 					</div>
-				</div> */}
+				</div>
 				<div className="carousel-item">
 					<img className={styles.imageResponsive2} src={Carousel3} alt="carousel3" />
 					<div className="carousel-caption d-md-block">
