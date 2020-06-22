@@ -11,6 +11,8 @@ const ShopsCard = ({shop}) => {
                                     <p><img className=" img-fluid" src={`/api/shops/photo/${shop._id}`} alt="cardimage" /></p>
                                     <h4 className="card-title">{shop.name}</h4>
                                     <p className="card-text">{shop.address}</p> 
+                                    <h6>Items Available: {shop.items.length}</h6>
+                                    <p>{shop.description.substring(0,50)}... </p>
                                     <a href={`/shops/${shop._id}`} style={{color: "black"}}><button className="btn btn-primary">ORDER NOW</button></a>         
                                 </div>
                         </div>

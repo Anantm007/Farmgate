@@ -133,10 +133,11 @@ const UserSettings = (props) => {
 
     return (
         <Fragment>
-        <div style={{backgroundColor: '#c0ffb3', minHeight: '8rem', padding: '2rem', marginBottom: '2rem'}}>
-            <h1>Update Your Details</h1>
-        </div>
-        <div className="row">
+            <div style={{backgroundColor: '#649d66', minHeight: '8rem', padding: '2rem', marginBottom: '2rem', marginTop: '1em'}}>
+                <h1>User Settings</h1>
+                <h5>{`Welcome, ${name}`}</h5>
+            </div>
+            <div className="row">
             <div className="col-md-8 offset-md-2">
                 {UserForm()}
             </div>
