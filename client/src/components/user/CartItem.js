@@ -198,11 +198,11 @@ const CartItem = ({item, setRun = f => f, run=undefined}) => {
                   <td className="align-middle"><strong>{`$${foundItem.price} per ${foundItem.variant}`}</strong></td>
                   
                   <td className="align-middle">
-                    <button type="button" className="fa fa-minus btn btn-number" onClick={decreaseQuantity} style={{height:"1.9rem", width: '3rem', border: 'solid 0.3px'}}></button>
+                    <button type="button" className="fa fa-minus btn btn-number" onClick={decreaseQuantity} style={{height:"1.9rem", width: '3rem', border: 'solid 0.3px', lineHeight: ".5rem"}}></button>
                     
                     <input type="number" className="text-center" value={quantity} onFocus={handleFocus} onChange={handleChange(foundItem)} style={{width:"3rem"}} min="1"/>
 
-                    <button type="button" class="fa fa-plus btn btn-number" onClick={increaseQuantity} style={{height:"1.9rem", width: '3rem',  border: 'solid 0.3px'}}></button>
+                    <button type="button" class="fa fa-plus btn btn-number" onClick={increaseQuantity} style={{height:"1.9rem", width: '3rem',  border: 'solid 0.3px', lineHeight: ".5rem"}}></button>
                   </td>
                   
                   <td className="align-middle"><strong>${price}</strong></td>
