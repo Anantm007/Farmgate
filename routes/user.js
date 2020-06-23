@@ -304,7 +304,7 @@ router.post('/cart/add/:id', auth, async(req, res) => {
     {
       return res.json({
         success: false,
-        message: "Sorry, you can currently have items from one shop only"
+        message: "Sorry, you can only checkout for each order with items from one shop (not multiple)"
       })
     }
     user.cart.forEach(async(c) => {
