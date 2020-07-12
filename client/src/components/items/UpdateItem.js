@@ -109,7 +109,8 @@ const UpdateItem = (props) => {
                 <label>Type per price</label>
                 <select onChange={handleChange('variant')} className="form-control" value={variant}>
                     <option>Select</option>
-                    <option value="100 g.">100 g.</option>
+                        <option value="100 g.">100 g.</option>
+                        <option value="125 g.">125 g.</option>
                         <option value="150 g.">150 g.</option>
                         <option value="200 g.">200 g.</option>
                         <option value="250 g.">250 g.</option>
