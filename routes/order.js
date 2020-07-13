@@ -364,8 +364,10 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             subtotal += o.subtotal
         })
 
-        
+        let FarmgateFees =  subtotal*(shop.invoiceChargePercentage/100);
+        let total = (1 - (shop.invoiceChargePercentage/100))*subtotal
         const code = shortid.generate();
+
         const invoice = {
             shipping: {
             name: shop.name,
@@ -377,10 +379,10 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             postal_code: shop.zipCode
             },
             orders: orders,
-    
+            invoiceChargePercentage: shop.invoiceChargePercentage,
             subtotal: subtotal,
-            FarmgateFees: subtotal*0.225,
-            total: 0.775*subtotal,
+            FarmgateFees,
+            total,
             invoice_nr: code
         };
 

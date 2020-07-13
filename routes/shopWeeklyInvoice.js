@@ -117,7 +117,7 @@ function generateInvoiceTable(doc, invoice) {
     duePosition,
     "",
     "",
-    "Farmgate Fees (22.5%)",
+    `Farmgate Fees (${invoice.invoiceChargePercentage}%)`,
     "",
     formatCurrency(invoice.FarmgateFees)
   );
