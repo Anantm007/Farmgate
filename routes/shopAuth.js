@@ -14,6 +14,9 @@ const _ = require('lodash');
 const Shop = require('../models/shop');
 
 // Nodemailer setup
+// Email templates
+const welcomeShop = require("./emailTemplates/welcomeShop");
+const forgotPass = require("./emailTemplates/forgotPassword");
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
     service : 'gmail',
@@ -124,13 +127,17 @@ router.post('/',
             shop
           });
 
+          let information = {
+            shopName: shop.name
+          }
+          const mailHtml = welcomeShop(information)
+          
           // Send welcome email
           let HelperOptions ={
-
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality produce, raised with care. \n\nLogin now to add items to your shop. \n\Visit (use the login link from the bottom of the home page for shop account login) http://www.farmgate-market.com \n\nRegards, \nThe Farmgate Team"
+            html: mailHtml
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{
@@ -176,13 +183,17 @@ router.post("/forgot", async(req, res) => {
   // Send reset password email
   const resetUrl = `${req.protocol}://farmgate-market.com/shop/reset/password/${resetToken}`;
 
+  const information = {
+    name: shop.name,
+    resetUrl
+  }
+  const mailHtml = forgotPass(information);
+  
   let HelperOptions ={
     from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
     to : shop.email,
     subject : "Farmgate Password Reset",
-    text : "Hello " + shop.name + 
-            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password.\n\nDo not share this link with anybody. \nThis link is valid only for 10 minutes.
-            \n\nRegards, \nThe Farmgate Team`
+    html: mailHtml
   };
 
   transporter.sendMail(HelperOptions,(err,info)=>{

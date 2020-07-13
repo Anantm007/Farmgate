@@ -110,7 +110,6 @@ function generateInvoiceTable(doc, invoice) {
     formatCurrency(invoice.subtotal)
   );
 
-  console.log('lol',invoice.FarmgateFees)
   const duePosition = subtotalPosition + 25;
   doc.font("Helvetica");
   generateTableRow(
@@ -122,7 +121,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     formatCurrency(invoice.FarmgateFees)
   );
-  console.log('here me')
+
   doc.font("Helvetica");
   const xxx = duePosition + 25;
   doc.font("Helvetica-Bold");
