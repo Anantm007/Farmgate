@@ -12,6 +12,13 @@ var path = require('path');
 const shortid = require('shortid');
 
 // nodemailer to send emails
+// Email Templates
+const invoiceAdmin = require("./emailTemplates/invoiceAdmin");
+const invoiceShop = require("./emailTemplates/invoiceShop");
+const orderUser = require('./emailTemplates/orderUser');
+const orderShop = require('./emailTemplates/orderShop');
+const orderAdmin = require('./emailTemplates/orderAdmin');
+
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
     service : 'gmail',
@@ -150,12 +157,19 @@ router.post('/:id', auth, async(req, res) => {
     const code = shortid.generate();
     createInvoice(invoice, `${code}.pdf`);
 
+    const information = {
+        userName: user.name,
+        shopName: s.name,
+        total: totalAmount.toFixed(2)
+    }
+    const mailHtml = orderAdmin(information);
+
     // Send order confirmation email to user and admin
     let HelperOptions = {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : "farmgateishere@gmail.com",
         subject : "Hey admin, a purchase has been made!",
-        text : "Hello Admin, \n\nA purchase of $" + totalAmount.toFixed(2) + " has been made by " + user.name + "\n\nRegards, \nThe Farmgate Team",
+        html: mailHtml,
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
@@ -168,11 +182,12 @@ router.post('/:id', auth, async(req, res) => {
         console.log("The message was sent");
     });
 
+    const mailHtml2 = orderUser(information)
     let HelperOptions2 = {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : user.email,
         subject : "Your order on Farmgate Market was successful",
-        text : "Hello " + user.name + ", \n\nYour purchase of $" + totalAmount.toFixed(2) + " on Farmgate Market was successful. Please check your dashboard to track the status of your order. You can also find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        html: mailHtml2,
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
@@ -185,12 +200,12 @@ router.post('/:id', auth, async(req, res) => {
         console.log("The message was sent...");
     });
 
-
+    const mailHtml3 = orderShop(information)
     let HelperOptions3 = {
         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
         to : s.email,
         subject : "You have a new order on Farmgate Market",
-        text : "Hello " + s.name + ", \n\nA new order for your shop was placed by " + user.name +  " on Farmgate Market. You can find more details in the attached receipt.\n\nRegards, \nThe Farmgate Team",
+        html: mailHtml3,
         attachments: [{
             filename: `${code}.pdf`,
             path: path.join(__dirname, `../${code}.pdf`),
@@ -371,12 +386,18 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
 
         shopWeeklyInvoice(invoice, `${code}.pdf`);
         
+        const information = {
+            total: invoice.total,
+            shopName: shop.name
+        }
+        const mailHtml = invoiceAdmin(information);
+
         // Send invoice confirmation email to user and admin
         let HelperOptions = {
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : "farmgateishere@gmail.com",
             subject : `Hey admin, an invoice has been generated for ${shop.name}`,
-            text : "Hello Pelle, \n\nAn invoice of $" + invoice.total + `  has been generated for ${shop.name}` + "\n\nRegards, \nThe Farmgate Team",
+            html : mailHtml,
             attachments: [{
                 filename: `${code}.pdf`,
                 path: path.join(__dirname, `../${code}.pdf`),
@@ -389,11 +410,12 @@ router.get('/invoice/:id', adminAuth, async(req, res) => {
             console.log("The message was sent");
         });
 
+        const mailHtml2 = invoiceShop(information);
         let HelperOptions2 = {
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : shop.email,
             subject : "Invoice generated for you on Farmgate Market",
-            text : `Hello ${shop.name}, \n\nAn invoice of $` + invoice.total + ` has been generated. You should receive the payment soon. \n\nRegards, \nThe Farmgate Team`,
+            html : mailHtml2,
             attachments: [{
                 filename: `${code}.pdf`,
                 path: path.join(__dirname, `../${code}.pdf`),

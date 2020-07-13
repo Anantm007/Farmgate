@@ -15,7 +15,10 @@ const User = require('../models/user');
 const PostCodes = require("../models/postcodes");
 const PostCodesNew = require('../models/postcodesNew');
 
-// Nodemailer setup
+// Nodemailer setup 
+// Email templates
+const welcomeUser = require("./emailTemplates/welcomeUser");
+const forgotPass = require("./emailTemplates/forgotPassword");
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
     service : 'gmail',
@@ -183,14 +186,18 @@ router.post('/',
             token,
             user
           });
+
+          let information = {
+            userName: user.name
+          }
+          const mailHtml = welcomeUser(information)
           
           // Send welcome email
           let HelperOptions ={
-
             from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
             to : email,
             subject : "Welcome to Farmgate!",
-            text : "Hello " + name + ", \n\nWelcome to Farmgate. We are very excited to see you onboard! Login now to order fresh quality food from the best stores near you. \n\nVisit http://www.farmgate-market.com to start ordering \n\nRegards, \nThe Farmgate Team"
+            html: mailHtml
         };
 
         transporter.sendMail(HelperOptions,(err,info)=>{
@@ -240,12 +247,17 @@ router.post("/forgot", async(req, res) => {
   // Send reset password email
   const resetUrl = `${req.protocol}://farmgate-market.com/user/reset/password/${resetToken}`;
 
+  const information = {
+    name: user.name,
+    resetUrl
+  }
+  const mailHtml = forgotPass(information);
+
   let HelperOptions ={
     from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
     to : user.email,
     subject : "Farmgate Password Reset",
-    text : "Hello " + user.name + 
-            `, \n\nYou are receiving this email because you have requested your password reset. Please visit: \n${resetUrl} to reset your password.\n\nDo not share this link with anybody. \nThe link is valid only for 10 minutes. \n\nRegards, \The Farmgate Team`
+    html: mailHtml
   };
 
   transporter.sendMail(HelperOptions,(err,info)=>{
