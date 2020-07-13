@@ -65,6 +65,11 @@ const ShopSchema = new mongoose.Schema({
         ref: 'Item'
     }],
 
+    invoiceChargePercentage: {
+        type: Number,
+        default: 22.5
+    },
+
     resetPasswordToken: {
         type: String
     },
