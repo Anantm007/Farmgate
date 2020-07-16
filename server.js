@@ -60,6 +60,7 @@ app.use('/api/items', require('./routes/item'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/order', require('./routes/order'));
 app.use('/api/eway', require('./routes/eway'));
+app.use('/api/util', require('./routes/extrautil'));
 
 // Serve Static Assets in production
 if(process.env.NODE_ENV === 'production')

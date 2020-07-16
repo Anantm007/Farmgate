@@ -1,4 +1,50 @@
-// @route   POST /api/order/specialInvoice/:orderId
+const express = require('express');
+const router = express.Router();
+
+const fs = require("fs");
+
+// Models
+const SuburbAndPostcode = require('../models/suburbAndPostcode');
+
+
+// @route   POST /api/util/cleanPostcodes
+// @desc    Remove duplicate postcodes from MongoDB
+// @access  Private 
+router.get("/cleanPostcodes", async(req, res) => {
+    try {
+        // path needs to be changes in future
+        let data = JSON.parse(fs.readFileSync(`${__dirname}/postcodes_geo.json`, 'utf-8'));
+
+        var flags = {};
+        let myData = [];
+        data.filter(function(obj) {
+            if (!flags[obj.postcode]) {
+                flags[obj.postcode] = true;
+                myData.push(obj);
+            }
+        });
+
+        myData.forEach(async(obj) => {
+            let x = new SuburbAndPostcode({
+                postcode: obj.postcode,
+                suburb: obj.suburb
+            })
+
+            await x.save();
+        })
+
+        data = await SuburbAndPostcode.find({});
+
+        return res.status(200).json(data)
+
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json(err)
+    }
+})
+
+
+// @route   POST /api/util/specialInvoice/:orderId
 // @desc    Generate PDF invoice using the user id
 // @access  Private 
 router.get("/specialInvoice/:id", async(req, res) => {
@@ -228,3 +274,5 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //     })
     
 // })
+
+module.exports = router;
