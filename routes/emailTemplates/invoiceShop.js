@@ -150,7 +150,7 @@ function invoiceShop(information) {
     </tbody>
     </table>
     <div align="center" class="img-container center fixedwidth" style="padding-right: 0px;padding-left: 0px;">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Your Logo" border="0" class="center fixedwidth" src="https://res.cloudinary.com/dtgqjl09r/image/upload/v1594642115/logo_c7895g_d9srci.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: 12rem; border: 0; width: 100%; max-width: 448px; display: block;" title="Your Logo" width="448"/>
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Farmgate Logo" border="0" class="center fixedwidth" src="https://res.cloudinary.com/dtgqjl09r/image/upload/v1594642115/logo_c7895g_d9srci.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: 12rem; border: 0; width: 12.3rem; max-width: 448px; display: block;" title="Farmgate Logo" width="448"/>
     <!--[if mso]></td></tr></table><![endif]-->
     </div>
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: serif"><![endif]-->
@@ -416,7 +416,7 @@ function invoiceShop(information) {
     </tbody>
     </table>
     <div align="center" class="img-container center fixedwidth" style="padding-right: 0px;padding-left: 0px;">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="https://www.example.com" style="outline:none" tabindex="-1" target="_blank"> <img align="center" alt="Your Logo" border="0" class="center fixedwidth" src="https://res.cloudinary.com/dtgqjl09r/image/upload/v1594642115/logo_c7895g_d9srci.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: 5rem; border: 0; width: 100%; max-width: 224px; display: block;" title="Your Logo" width="224"/></a>
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="https://www.example.com" style="outline:none" tabindex="-1" target="_blank"> <img align="center" alt="Farmgate Logo" border="0" class="center fixedwidth" src="https://res.cloudinary.com/dtgqjl09r/image/upload/v1594642115/logo_c7895g_d9srci.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: 5rem; border: 0; width: 5.2rem; max-width: 224px; display: block;" title="Farmgate Logo" width="224"/></a>
     <!--[if mso]></td></tr></table><![endif]-->
     </div>
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: serif"><![endif]-->

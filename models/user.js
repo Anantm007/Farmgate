@@ -31,6 +31,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Please add a zip code'],
     },
 
+    suburb: {
+        type: String,
+        trim: true
+    },
+
     phoneNumber: {
         type: Number,
         unique: true,
