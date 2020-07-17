@@ -12,13 +12,14 @@ const UserSettings = (props) => {
         email: '',
         address: '',
         zipCode: '',
+        suburb: '',
         phoneNumber: '',
         error: false,
         loading: false,
         success: false,
     });
 
-    const {name, email, address, zipCode, phoneNumber, error, loading, success} = values;
+    const {name, email, address, zipCode, suburb, phoneNumber, error, loading, success} = values;
     
     const loadUser = () => {
         setValues({...values, loading: true})
@@ -31,7 +32,7 @@ const UserSettings = (props) => {
             else
             {
                 setValues({...values, name: data.data.name, email: data.data.email, address: data.data.address, 
-                    phoneNumber: data.data.phoneNumber, zipCode: data.data.zipCode
+                    phoneNumber: data.data.phoneNumber, zipCode: data.data.zipCode, suburb: data.data.suburb
               })
             }
         })
@@ -99,7 +100,11 @@ const UserSettings = (props) => {
                 <label>Zip Code</label>
                 <input onChange={handleChange('zipCode')} type="number" className="form-control" value={zipCode} />
             </div>
-        
+
+            <div className="form-group">
+                <label>Suburb</label>
+                <input onChange={handleChange('suburb')} type="text" className="form-control" value={suburb} />
+            </div>
 
             <br/>
             <div className="text-center">

@@ -57,6 +57,13 @@ function generateCustomerInformation(doc, invoice) {
     .text(invoice.shipping.name, 300, customerInformationTop)
     .font("Helvetica")
     .text(invoice.shipping.address, 300, customerInformationTop + 15)
+    .text(
+        invoice.shipping.suburb +
+        ", " +
+        invoice.shipping.country,
+      300,
+      customerInformationTop + 30
+    )
     .moveDown();
 
   generateHr(doc, 252);
