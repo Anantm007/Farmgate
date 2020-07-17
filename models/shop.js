@@ -60,12 +60,6 @@ const ShopSchema = new mongoose.Schema({
         type: String,
     },
 
-    // certificate name
-    // certificate url
-    // certifcates: [{
-    //     type: String
-    // }],
-
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
