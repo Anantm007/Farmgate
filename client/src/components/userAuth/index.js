@@ -34,6 +34,23 @@ export const signin = async user => {
     })
 }
 
+// Find suburb to autofill from postcode
+export const findSuburbFromCode = (zipcode) => {
+    return fetch(`/api/users/findSuburb/${zipcode}`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 // Save token in storage
 export const authenticate = (data) => {
     if(typeof window !== 'undefined')

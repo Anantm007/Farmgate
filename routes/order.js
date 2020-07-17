@@ -63,14 +63,6 @@ router.post('/:id', auth, async(req, res) => {
     const user = await User.findById(req.params.id);
     
     const {instructions, subtotal, tax_shipping, totalAmount} = req.body;
-    // const orderCheck = await Order.findOne({accessCode});
-    // if(orderCheck)
-    // {
-    //     return res.json({
-    //         success: false,
-    //         message: 'Order cannot be placed again'
-    //     })
-    // }
 
     let items = [];
 
@@ -140,8 +132,7 @@ router.post('/:id', auth, async(req, res) => {
       shipping: {
         name: order.userName,
         address: user.address,
-        city: "Adelaide",
-        state: "South Australia",
+        suburb: user.suburb,
         country: "Australia",
         postal_code: user.zipCode
       },

@@ -58,6 +58,10 @@ router.post('/',
     check('zipCode', 'Zipcode is required')
     .not()
     .isEmpty(),
+    
+    check('suburb', 'Suburb is required')
+    .not()
+    .isEmpty(),
 
     check('phoneNumber', 'Phone Number is required')
     .not()
@@ -72,7 +76,7 @@ router.post('/',
         message: errors.array()[0].msg });
     }
 
-    const { name, email, password, address, zipCode, phoneNumber } = req.body;
+    const { name, email, password, address, zipCode, suburb, phoneNumber } = req.body;
   
     /*const { name, email, password, address, zipCode, phoneNumber, captcha  } = req.body;
     
@@ -151,6 +155,7 @@ router.post('/',
         password,
         address,
         zipCode,
+        suburb,
         phoneNumber,
         newUser 
       });

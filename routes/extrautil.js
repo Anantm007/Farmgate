@@ -5,7 +5,7 @@ const fs = require("fs");
 
 // Models
 const SuburbAndPostcode = require('../models/suburbAndPostcode');
-
+const User = require('../models/user')
 
 // @route   POST /api/util/cleanPostcodes
 // @desc    Remove duplicate postcodes from MongoDB
@@ -36,6 +36,37 @@ router.get("/cleanPostcodes", async(req, res) => {
         data = await SuburbAndPostcode.find({});
 
         return res.status(200).json(data)
+
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json(err)
+    }
+})
+
+
+// @route   POST /api/util/addSuburbs
+// @desc    Add suburbs to users
+// @access  Private 
+router.get("/addSuburbs", async(req, res) => {
+    try {
+
+        let users = await User.find({}).select("_id zipCode");
+
+        users.forEach(async(user) => {
+            let ob = await SuburbAndPostcode.findOne({postcode: user.zipCode});
+            if(ob) {
+                user.suburb = ob.suburb;
+                await user.save();
+            }
+
+            else {
+                console.log("not found for", user.zipCode)
+            }
+        })
+
+        
+        users = await User.find({}).select("_id name zipCode suburb");
+        return res.json(users);
 
     } catch (err) {
         console.log(err)

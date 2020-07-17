@@ -19,6 +19,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const PostCodes = require('../models/postcodes');
 const Item = require('../models/item');
+const SuburbAndPostcode = require('../models/suburbAndPostcode');
 
 
 /*                                                  ROUTES                                                  */
@@ -467,5 +468,27 @@ router.get('/cart/length', auth, async(req, res) => {
     data: user.cart.length
   })
 })
+
+// @route   GET /api/users/findSuburb/:zipcode 
+// @desc    List All users 
+// @access  Public 
+router.get('/findSuburb/:zipcode', async(req, res) => {
+  try {
+    let suburb = await SuburbAndPostcode.findOne({postcode: req.params.zipcode}).select("suburb");
+
+    if(suburb) {
+      return res.json({success: true, suburb: suburb.suburb})
+    }
+
+    else {
+      return res.json({success: false})
+    }
+    
+  } catch (err) {
+    console.log(err)
+    return res.json({success: false})
+  }
+})
+
 
 module.exports = router;

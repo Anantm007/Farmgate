@@ -1,6 +1,6 @@
 import React, {useState, Fragment} from 'react';
 import {Link, Redirect} from 'react-router-dom';
-import {signup, authenticate, isAuthenticated} from '../userAuth';
+import {signup, authenticate, isAuthenticated, findSuburbFromCode} from '../userAuth';
 import Footer from '../layout/Footer';
 
 import TermsAndConditions from '../../TermsAndConditions.pdf';
@@ -15,12 +15,13 @@ const Register = () => {
         repeatPassword: '',
         address: '',
         zipCode: undefined,
+        suburb: '',
         phoneNumber: undefined,
         error: '',
         success: false
     });
 
-    const {name, email, password, repeatPassword, address, zipCode, phoneNumber, success, error} = values;
+    const {name, email, password, repeatPassword, address, zipCode, suburb, phoneNumber, success, error} = values;
 
     const handleChange = name => e => {
         setValues({...values, error: false, [name]: e.target.value})
@@ -37,7 +38,7 @@ const Register = () => {
         setValues({...values, error: false});
 
         /*signup({name, email, password, address, zipCode, phoneNumber, captcha})*/
-        signup({name, email, password, address, zipCode, phoneNumber})
+        signup({name, email, password, address, zipCode, suburb, phoneNumber})
         .then(data => {
             
             if(data.success === false)
@@ -53,6 +54,20 @@ const Register = () => {
             }
         })
 
+    }
+
+    const findSuburb = () => {
+        findSuburbFromCode(zipCode)
+        .then(data => {
+            if(data.success === false)
+            {
+                console.log("not found or error")
+            }
+            else if(data.success === true)
+            {
+                setValues({...values, suburb: data.suburb})
+            }
+        })
     }
 
     const signUpForm = () => (
@@ -111,9 +126,16 @@ const Register = () => {
                          
                         <div className="form-group input-group">
                             <div className="input-group-prepend">
+                                <span className="input-group-text"> <i className="fa fa-thumb-tack"></i> </span>
+                            </div>
+                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode*" onBlur={findSuburb} />
+                        </div>                              
+                        
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('zipCode')} type="Number" value={zipCode} className="form-control" placeholder="Your Postcode*" />
+                            <input onChange={handleChange('suburb')} type="text" value={suburb} className="form-control" placeholder="Your Suburb*" />
                         </div>                              
                         {/*
                         <br />
