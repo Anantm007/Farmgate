@@ -121,7 +121,7 @@ const Register = () => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-home"></i> </span>
                             </div>
-                            <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Full address*" />
+                            <input onChange={handleChange('address')} type="text" value={address} className="form-control" placeholder="Address*" />
                         </div>
                          
                         <div className="form-group input-group">
