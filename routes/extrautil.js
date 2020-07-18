@@ -9,7 +9,7 @@ const User = require('../models/user')
 
 // @route   POST /api/util/cleanPostcodes
 // @desc    Remove duplicate postcodes from MongoDB
-// @access  Private 
+// @access  Public
 router.get("/cleanPostcodes", async(req, res) => {
     try {
         // path needs to be changes in future
@@ -46,7 +46,7 @@ router.get("/cleanPostcodes", async(req, res) => {
 
 // @route   POST /api/util/addSuburbs
 // @desc    Add suburbs to users
-// @access  Private 
+// @access  Public 
 router.get("/addSuburbs", async(req, res) => {
     try {
 
@@ -77,7 +77,7 @@ router.get("/addSuburbs", async(req, res) => {
 
 // @route   POST /api/util/specialInvoice/:orderId
 // @desc    Generate PDF invoice using the user id
-// @access  Private 
+// @access  Public 
 router.get("/specialInvoice/:id", async(req, res) => {
     const order = await Order.findById(req.params.id);
     if(!order) {
@@ -161,7 +161,7 @@ router.get("/specialInvoice/:id", async(req, res) => {
 
 // @route   POST /api/order/special/:userId
 // @desc    Create order using the user's id
-// @access  Private 
+// @access  Public 
 // router.post('/special/:id', async(req, res) => {
 //     const user = await User.findById(req.params.id);
     

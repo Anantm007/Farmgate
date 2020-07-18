@@ -142,3 +142,17 @@ export const countItems = (shopId) => {
     });
 }
 
+
+// Get all certificates for a shop
+export const getCertificates = id => {
+    return fetch(`/api/certificate/shop/${id}`, {
+        method: "GET"
+      })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
