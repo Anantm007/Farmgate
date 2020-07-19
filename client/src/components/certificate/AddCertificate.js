@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState} from 'react';
 import {createCertificate} from './apiCertificates';
 import {shopIsAuthenticated} from '../shopAuth';
 import Footer from '../layout/Footer';
