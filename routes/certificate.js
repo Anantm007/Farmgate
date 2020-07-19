@@ -31,6 +31,27 @@ router.get("/", async(req, res) => {
 })
 
 
+// @route   GET /api/certificate/:id
+// @desc    Get particular certificate
+// @access  Public
+router.get("/:id", async(req, res) => {
+    try {
+        const certificate = await Certificate.findById(req.params.id);
+
+        if(!certificate) {
+            return res.json({success: false, message: "No certificates found"})
+        }
+
+        else {    
+            return res.status(200).json({success: true, certificate})
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({success: false, message: err})
+    }
+})
+
+
 // @route   POST /api/certificate/shop/:shopId
 // @desc    Find certificates of a particular shop
 // @access  Public
@@ -80,7 +101,7 @@ router.post("/", auth, async(req, res) => {
 // @desc    Update a new certificate
 // @access  Public
 router.put("/:id", auth, async(req, res) => {
-    try {
+    try {  
         const newData = req.body;
 
         const certificate = await Certificate.findByIdAndUpdate(req.params.id, newData, {new: true});

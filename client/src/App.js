@@ -23,11 +23,15 @@ import ShopDashboard from './components/shops/ShopDashboard';
 import ShopResetPass from './components/shops/ShopResetPass';
 import Shops from './components/shops/Shops';
 import ShopOrders from './components/shops/ShopOrders';
-import ShopCertificates from './components/shops/ShopCertificates';
 import ShopPage from './components/shops/ShopPage';
 import CreateItem from './components/items/CreateItem';
 import MyShopItems from './components/items/MyShopItems';
 import UpdateItem from './components/items/UpdateItem';
+
+// Shop Certificates
+import ShopCertificates from './components/certificate/ShopCertificates';
+import AddCertificate from './components/certificate/AddCertificate';
+import EditCertificate from './components/certificate/EditCertificate';
 
 // Admin
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -79,7 +83,9 @@ const  App = () => {
             <ShopRoute exact path="/shop/:id/settings" component = {ShopSettings} />    
             <ShopRoute exact path = '/create/item' component = {CreateItem} />
             <ShopRoute exact path="/shop/:id/orders" component = {ShopOrders} />
+            <ShopRoute exact path = '/shop/:id/add/certificate' component = {AddCertificate} />
             <ShopRoute exact path="/shop/:id/certificates" component = {ShopCertificates} />
+            <ShopRoute exact path = '/shop/:id/certificate/:certificateId' component = {EditCertificate} />
             <ShopRoute exact path = '/shop/:id/items' component = {MyShopItems} />
             <ShopRoute exact path = '/shop/:id/item/:itemid' component = {UpdateItem} />
             <Route exact path="/shop/reset/password/:token" component = {ShopResetPass} />

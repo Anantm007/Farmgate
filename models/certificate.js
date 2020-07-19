@@ -10,7 +10,7 @@ const CertificateSchema = new mongoose.Schema({
 
     url: {
         type: String,
-        required: [true, 'Please add a valid email'],
+        required: [true, 'Please add a valid url'],
         trim: true,
     },
    

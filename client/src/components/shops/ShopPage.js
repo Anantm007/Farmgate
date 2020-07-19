@@ -127,8 +127,8 @@ const ShopPage = (props) => {
                   </tr>
                   <tr>
                     <td><strong>Delivery by:</strong></td>
-                    <td>Wednesday, 3pm</td>
-                    <td>Friday, 3pm</td>
+                    <td>Wednesday, 3pm*</td>
+                    <td>Friday, 3pm*</td>
                   </tr>
                   </tbody>
                 </table>
@@ -196,6 +196,11 @@ const ShopPage = (props) => {
                     )
                 }
 
+                <div style={{fontStyle: "italic", marginTop: "5rem"}}>
+                  <strong>* Note:</strong>&nbsp;
+                  Certain areas (principally some outer metro) are defined in the T&C (link from home page, see Appendix B) as within the Limited Service Area. Delivery for these areas is principally expected the morning following the delivery day stipulated above (we will attempt to contact you if we foresee any procurement issues).
+                </div>
+                
               </div>
 
             </div>
