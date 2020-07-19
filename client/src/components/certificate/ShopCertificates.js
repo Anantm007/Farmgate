@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {shopIsAuthenticated} from '../shopAuth';
 import Footer from '../layout/Footer';
-import {listCertificates, deleteCertificate} from './apiShops';
+import {listCertificates, deleteCertificate} from './apiCertificates';
 import Spinner from '../layout/Spinner';
 
 const ShopCertificates = () => {
@@ -51,7 +51,11 @@ const ShopCertificates = () => {
                 <h1>Shop Dashboard</h1>
                 <h5>{`Welcome, ${name}`}</h5>
             </div>
-
+            
+            <div style={{margin: "2rem", padding: "1rem"}}>
+                <Link to={`/shop/${_id}/add/certificate`}><button className="btn btn-primary">+ ADD CERTIFICATE</button></Link>
+            </div>
+            
             <h2 className="text-center">MY CERTIFICATIONS</h2>
             {showLoading()}
             <div className="row">
@@ -64,7 +68,7 @@ const ShopCertificates = () => {
                                 <li className="list-group-item" ><strong>Certificate URL:</strong> <a href={certificate.url} target="_blank" rel="noopener noreferrer">{certificate.url}</a></li>
                                 <div className="row">
                                     <div className="xs-col-12 col-lg=6" style={{margin: "2rem"}}>
-                                        <button className="btn btn-primary">UPDATE</button>
+                                        <Link to={`/shop/${_id}/certificate/${certificate._id}`}><button className="btn btn-primary">UPDATE</button></Link>
                                         <button className="btn btn-danger" style={{marginLeft: "1rem"}} onClick={() => deleteCerti(certificate._id)}>DELETE</button>
                                     </div>
                                 </div>
