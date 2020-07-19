@@ -16,7 +16,8 @@ const CertificateSchema = new mongoose.Schema({
    
     shop: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shop'
+        ref: 'Shop',
+        required: [true, 'Please add a shop'],
     }    
 
 }, {timestamps: true}

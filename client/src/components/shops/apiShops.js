@@ -129,6 +129,37 @@ export const listOrders = (shopId) => {
 }
 
 
+// List all certificates for a shop
+export const listCertificates = (shopId) => {
+    return fetch(`/api/certificate/shop/${shopId}`, {
+        method: "GET"
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}
+
+
+// Delete a certificate
+export const deleteCertificate = (id) => {
+    return fetch(`/api/certificate/${id}`, {
+        method: "DELETE",
+        headers: {
+            'x-auth-token': JSON.parse(localStorage.getItem('shopjwt')).token
+        }
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}
+
+
 // List number of items for a shop
 export const countItems = (shopId) => {
     return fetch(`/api/shops/items/${shopId}`, {
@@ -140,5 +171,19 @@ export const countItems = (shopId) => {
     .catch(err => {
         console.log(err)
     });
+}
+
+
+// Get all certificates for a shop
+export const getCertificates = id => {
+    return fetch(`/api/certificate/shop/${id}`, {
+        method: "GET"
+      })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }
 

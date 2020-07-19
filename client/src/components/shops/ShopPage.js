@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import {getShop, getItems} from '../shops/apiShops';
+import {getShop, getItems, getCertificates} from '../shops/apiShops';
 import Pagination from './Pagination';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
@@ -11,6 +11,7 @@ const ShopPage = (props) => {
     const shopId = props.match.params.id;
     const [shop, setShop] = useState([]);
     const [items, setItems] = useState([]);
+    const [certificates, setCertificates] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);  
     const [error, setError] = useState(false)
@@ -35,7 +36,6 @@ const ShopPage = (props) => {
     
     const loadItems = () => {
       getItems(shopId).then(data => {
-        console.log(data)
           if(data.success === false)
           {         
               setError(data.message);
@@ -52,7 +52,22 @@ const ShopPage = (props) => {
                 }
           }
       })
-  }
+    }
+
+    
+    const loadCertificates = () => {
+      getCertificates(shopId).then(data => {
+          if(data.success === false)
+          {         
+              setError(data.message);
+          }
+
+          else
+          {
+            setCertificates(data.certificates);    
+          }
+      })
+    }
 
     const showLoading = () => (
         loading && <Spinner />
@@ -65,8 +80,9 @@ const ShopPage = (props) => {
     const [run, setRun] = useState(false);
 
     useEffect(() => {
-        loadShop()
-        loadItems()
+        loadShop();
+        loadItems();
+        loadCertificates();
 
         return () => {
           console.log('cleaned up');
@@ -117,8 +133,68 @@ const ShopPage = (props) => {
                   </tbody>
                 </table>
                 <br/><br/>
-                {shop.facebook !== undefined ? (<Fragment><strong>Facebook Page: </strong><a href={shop.facebook} target='_blank' rel="noopener noreferrer">{shop.facebook} </a> <br/><br/></Fragment>) : ''}
-                {shop.instagram !== undefined ? (<Fragment><strong>Instagram Page: </strong><a href={shop.instagram} target='_blank' rel="noopener noreferrer">{shop.instagram} </a> <br/><br/></Fragment>) : ''}
+
+                {
+                  certificates.length > 0 && 
+                  (
+                    <Fragment>
+                      <strong>
+                        <mark>CERTIFICATIONS for {shop.name}</mark>:
+                      </strong>
+                      <br/><br/>
+                      {
+                        certificates.map((certi) => (
+                          <a 
+                            href={certi.url} 
+                            target='_blank' 
+                            rel="noopener noreferrer"
+                          >
+                            <span style={{color: "black"}}>•</span> {certi.name} <br/>
+                          </a>
+                        ))
+                      }
+                      <br/><br/>
+                    </Fragment>
+                  )
+                }
+
+                { 
+                  shop.facebook !== undefined && 
+                    (
+                      <Fragment>
+                        <strong>
+                          Facebook Page: &nbsp;
+                        </strong>
+                        <a 
+                          href={shop.facebook} 
+                          target='_blank' 
+                          rel="noopener noreferrer"
+                        >
+                          {shop.facebook} 
+                        </a> 
+                        <br/><br/>
+                      </Fragment>
+                    )
+                }
+
+                { 
+                  shop.instagram !== undefined && 
+                    (
+                      <Fragment>
+                        <strong>
+                          Instagram Page: &nbsp;
+                        </strong>
+                        <a 
+                          href={shop.instagram} 
+                          target='_blank' 
+                          rel="noopener noreferrer"
+                        >
+                          {shop.instagram} 
+                        </a> 
+                        <br/><br/>
+                      </Fragment>
+                    )
+                }
 
               </div>
 
