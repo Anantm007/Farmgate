@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+// Middleware for protecting routes
+const auth = require('../middleware/shopAuth');
+
 // Models
 const Certificate = require("../models/certificate");
 
@@ -53,7 +56,7 @@ router.get("/shop/:shopId", async(req, res) => {
 // @route   POST /api/certificate
 // @desc    Create a new certificate
 // @access  Public
-router.post("/", async(req, res) => {
+router.post("/", auth, async(req, res) => {
     try {
         const {name, url, shop} = req.body;
 
@@ -73,22 +76,37 @@ router.post("/", async(req, res) => {
 })
 
 
+// @route   Update /api/certificate
+// @desc    Update a new certificate
+// @access  Public
+router.put("/:id", auth, async(req, res) => {
+    try {
+        const newData = req.body;
+
+        const certificate = await Certificate.findByIdAndUpdate(req.params.id, newData, {new: true});
+
+        return res.status(200).json({success: true, certificate});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({success: false, message: err})
+    }
+})
+
+
 // @route   DELETE /api/certificate/:id
 // @desc    Delete a certificate
 // @access  Public
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", auth, async(req, res) => {
     try {
-        const {name, url, shop} = req.body;
+        const certificate = await Certificate.findById(req.params.id).select(" _id");
 
-        let certificate = new Certificate({
-            name,
-            url,
-            shop
-        });
+        if(!certificate) {
+            return res.status(404).json({success: false, message: "Certificate not found"})
+        }
         
-        await certificate.save();
+        await Certificate.findByIdAndRemove(req.params.id);
+        return res.status(200).json({success: true});
 
-        return res.status(200).json({success: true, certificate});
     } catch (err) {
         console.log(err);
         return res.status(500).json({success: false, message: err})

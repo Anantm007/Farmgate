@@ -139,7 +139,7 @@ const ShopPage = (props) => {
                   (
                     <Fragment>
                       <strong>
-                        <mark>ICO CERTIFICATIONS</mark> for {shop.name}:
+                        <mark>CERTIFICATIONS for {shop.name}</mark>:
                       </strong>
                       <br/><br/>
                       {
