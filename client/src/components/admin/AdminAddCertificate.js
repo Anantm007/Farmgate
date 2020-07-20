@@ -1,44 +1,21 @@
-import React, {Fragment, useState, useEffect} from 'react';
-import {getCertificate, updateCertificate} from './apiCertificates';
+import React, {Fragment, useState} from 'react';
+import {createCertificate} from './apiAdmin';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
 
-const EditCertificate = (props) => {
-
-    const certiId = props.match.params.certificateId;
-
+const AdminAddCertificate = (props) => {
+    const _id = props.match.params.id;
 
     const [values, setValues] = useState({
         name: '',
         url: '',
+        shop: _id,
         error: '',
         success: false,
         loading: false
     });
 
     const {name, url, error, success, loading} = values;
-    
-    const loadCertificate = () => {
-        setValues({...values, loading: true})
-        getCertificate(certiId).then(data => {
-            if(data.success === false)
-            {         
-                setValues({...values, error: data.message, loading: false});
-            }
-  
-            else
-            {
-            setValues({...values, name: data.certificate.name, url: data.certificate.url, loading:false})
-            }
-        })
-    }
-  
-    
-    useEffect(() => {
-        loadCertificate();
-        // eslint-disable-next-line
-    }, [])
-    
 
     const handleChange = name => e => {
         setValues({...values, [name]: e.target.value}) 
@@ -48,7 +25,7 @@ const EditCertificate = (props) => {
         e.preventDefault();
         setValues({...values, error: '', loading: true});
         
-        updateCertificate(certiId, values)
+        createCertificate(values)
         .then(data => {
             if(data.success === false)
             {
@@ -57,12 +34,12 @@ const EditCertificate = (props) => {
 
             else
             {
-                setValues({...values, name: data.certificate.name, url: data.certificate.url, loading: false, error: '', success: true})
+                setValues({...values, name: '', url: '', loading: false, error: '', success: true})
             }
         })
     }
 
-    const editCertiForm = () => (
+    const addCertiForm = () => (
         <form className="mb-3" onSubmit={clickSubmit}>
                 {showLoading()}
 
@@ -79,7 +56,7 @@ const EditCertificate = (props) => {
 
             <br/>
             <div className="text-center">
-                <button className="btn btn-outline-primary">Edit Certificate</button>
+                <button className="btn btn-outline-primary">Add Certificate</button>
                 <br/><br />
                 {showError()}
                 {showSuccess()}
@@ -97,7 +74,7 @@ const EditCertificate = (props) => {
 
     const showSuccess = () => {
         return (<div className="alert alert-success" style={{display: success ? '': 'none'}}>
-            Certificate updated Succesfully
+            Certificate Added Succesfully
         </div>)
     }
 
@@ -109,11 +86,11 @@ const EditCertificate = (props) => {
     return (
         <Fragment>
             <div style={{backgroundColor: '#c0ffb3', minHeight: '8rem', padding: '2rem', marginBottom: '2rem'}}>
-                <h1>Edit Certificate</h1>
+                <h1>Add Certificate</h1>
             </div>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {editCertiForm()}
+                    {addCertiForm()}
                 </div>
             </div>
             <Footer/>
@@ -124,4 +101,4 @@ const EditCertificate = (props) => {
 
 }
 
-export default EditCertificate;
+export default AdminAddCertificate;
