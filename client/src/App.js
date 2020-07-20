@@ -27,6 +27,7 @@ import ShopPage from './components/shops/ShopPage';
 import CreateItem from './components/items/CreateItem';
 import MyShopItems from './components/items/MyShopItems';
 import UpdateItem from './components/items/UpdateItem';
+import ShopSettings from './components/shops/ShopSettings';
 
 // Shop Certificates
 import ShopCertificates from './components/certificate/ShopCertificates';
@@ -40,7 +41,9 @@ import ShopList from './components/admin/ShopList';
 import AdminShop from './components/admin/AdminShopItems';
 import AdminOrders from './components/admin/AdminOrders';
 import InvoiceListShops from './components/admin/InvoiceListShops';
-import ShopSettings from './components/shops/ShopSettings';
+import AdminShopCertificates from './components/admin/AdminShopCertificates';
+import AdminAddCertificate from './components/admin/AdminAddCertificate';
+import AdminEditCertificate from './components/admin/AdminEditCertificate';
 
 // Utilities
 import NotFound from './components/layout/NotFound';
@@ -94,7 +97,10 @@ const  App = () => {
             <AdminRoute exact path="/admin/users" component = {AdminUsers} />                        
             <AdminRoute exact path="/admin/shops" component = {ShopList} />                
             <AdminRoute exact path="/admin/shops/:id" component = {AdminShop} />            
-            <AdminRoute exact path="/admin/update/item/:itemid" component = {UpdateItem} />    
+            <AdminRoute exact path="/admin/update/item/:itemid" component = {UpdateItem} />  
+            <AdminRoute exact path="/admin/shops/:id/certificates" component = {AdminShopCertificates} /> 
+            <AdminRoute exact path = '/admin/shops/:id/add/certificate' component = {AdminAddCertificate} />
+            <AdminRoute exact path = '/admin/shops/:id/certificate/:certificateId' component = {AdminEditCertificate} />   
             <AdminRoute exact path="/admin/orders" component = {AdminOrders} />
             <AdminRoute exact path='/admin/invoice' component = {InvoiceListShops} />
             

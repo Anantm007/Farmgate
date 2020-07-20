@@ -1,9 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {getCertificate, updateCertificate} from './apiCertificates';
+import {getCertificate} from '../certificate/apiCertificates';
+import {updateCertificate} from './apiAdmin';
 import Footer from '../layout/Footer';
 import Spinner from '../layout/Spinner';
 
-const EditCertificate = (props) => {
+const AdminEditCertificate = (props) => {
 
     const certiId = props.match.params.certificateId;
 
@@ -124,4 +125,4 @@ const EditCertificate = (props) => {
 
 }
 
-export default EditCertificate;
+export default AdminEditCertificate;

@@ -44,7 +44,10 @@ const ShopsCard = ({shop}) => {
                         {role!== undefined && role === 0 &&
                         <Link to ={`/shops/${shop._id}`} style={{color: 'white'}} ><button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}>Order Now</button></Link>}
                         {role!== undefined && role === 1 &&
-                        <button className="btn btn-warning"><Link to ={`/admin/shops/${shop._id}`} >Edit Now</Link></button>}
+                        <div>
+                        <Link to ={`/admin/shops/${shop._id}`}><button className="btn btn-warning">Edit Items</button></Link>
+                        <Link to ={`/admin/shops/${shop._id}/certificates`}><button className="btn btn-warning ml-2">Edit Certificates</button></Link>
+                        </div>}
                         {role === undefined &&
                         <Link to ={`/shops/${shop._id}`} style={{color: 'white'}} ><button className="btn btn-primary" style={{backgroundColor: '#0000FF'}}>Order Now</button></Link>}
                     </div>

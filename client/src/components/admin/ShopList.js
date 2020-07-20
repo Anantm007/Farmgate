@@ -40,7 +40,7 @@ const Shops = () => {
                     <h5>{`Welcome, Admin`}</h5>
             </div>
                         
-            <h1 style={{textAlign:'center', marginTop: '4rem'}}>MANAGE SHOP ITEMS</h1>
+            <h1 style={{textAlign:'center', marginTop: '4rem'}}>MANAGE SHOP ITEMS & CERTIFICATES</h1>
             
             {showLoading()}
             
