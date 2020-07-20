@@ -59,7 +59,7 @@ const ShopPage = (props) => {
       getCertificates(shopId).then(data => {
           if(data.success === false)
           {         
-              setError(data.message);
+              // setError(data.message);
           }
 
           else
