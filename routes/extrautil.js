@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const fs = require("fs");
+const shortid = require('shortid');
+
+const {createInvoice} = require('./createInvoice');
 
 // Models
 const SuburbAndPostcode = require('../models/suburbAndPostcode');
-const User = require('../models/user')
+const User = require('../models/user');
+const Order = require('../models/order')
 
 // @route   POST /api/util/cleanPostcodes
 // @desc    Remove duplicate postcodes from MongoDB
@@ -86,71 +90,94 @@ router.get("/specialInvoice/:id", async(req, res) => {
             message: "Order not found"
         })
     } 
-    const user = await User.findById(order.user).select("address zipCode");
+    const user = await User.findById(order.user).select("address zipCode suburb");
     let orderItems = [];
     
     orderItems = [
         {
-            itemName: "Banana",
-            description: "Per pack",
-            price: 2.5,
-            quantity: 2,
-            variant: "500 g",
-            amount: 5
-        },
-        {
-            itemName: "Beans Green",
-            description: "Per pack",
-            price: 3.6,
-            quantity: 1,
-            variant: "200 g",
-            amount: 3.6
-        },
-        {
-            itemName: "Carrot",
+            itemName: "Chillies (hot)",
             description: "Per bag",
-            price: 6.5,
-            quantity: 1,
-            variant: "1 kg",
-            amount: 6.5
-        },
-        {
-            itemName: "Cauliflower",
-            description: "Half Cauliflower",
-            price: 4.2,
-            quantity: 1,
-            variant: "Each",
-            amount: 4.2
-        },
-        {
-            itemName: "Sweet Potato",
-            description: "Per pack",
-            price: 9,
-            quantity: 1,
-            variant: "1 kg",
+            price: 3,
+            quantity: 3,
+            variant: "500 g",
             amount: 9
         },
         {
-            itemName: "Pumpkin - Butternut",
-            description: "Cut",
-            price: 4.7,
+            itemName: "Tomatoes - 1st grade",
+            description: "By box (upto 10kg per box).",
+            price: 17.5,
             quantity: 1,
-            variant: "1 kg",
-            amount: 4.7
+            variant: "5 Kg",
+            amount: 17.5
+        },
+        {
+            itemName: "Zucchini - green",
+            description: "Loose. Approximate weight per item - 200g.",
+            price: 1.6,
+            quantity: 2,
+            variant: "200 g.",
+            amount: 3.2
+        },
+        {
+            itemName: "Zucchini - white",
+            description: "Loose. Approximate weight per item - 200g.",
+            price: 1.6,
+            quantity: 3,
+            variant: "200 g.",
+            amount: 4.8
+        },
+        {
+            itemName: "Herbs - Rocket",
+            description: "Per bunch",
+            price: 3,
+            quantity: 1,
+            variant: "Bunch",
+            amount: 3
+        },
+        {
+            itemName: "Herbs - Sage",
+            description: "Per bunch",
+            price: 3,
+            quantity: 1,
+            variant: "Bunch",
+            amount: 3
+        },
+        {
+            itemName: "Herbs - Rosemary",
+            description: "Per bunch",
+            price: 3,
+            quantity: 1,
+            variant: "Bunch",
+            amount: 3
+        },
+        {
+            itemName: "Eggs",
+            description: "Hobby Chickens. Free running.",
+            price: 6,
+            quantity: 3,
+            variant: "Half Dozen",
+            amount: 18
+        },
+        {
+            itemName: "Celery",
+            description: "Full Celery bunch",
+            price: 6,
+            quantity: 1,
+            variant: "Bunch",
+            amount: 6
         }
     ]
     const invoice = {
         shipping: {
-          name: order.userName,
-          address: user.address,
-          city: "Adelaide",
-          state: "South Australia",
-          country: "Australia",
-          postal_code: user.zipCode
+            name: order.userName,
+            address: user.address,
+            suburb: user.suburb,
+            country: "Australia",
+            postal_code: user.zipCode
         },
         items: orderItems,
         subtotal: order.subtotal,
-        shippingAmount: 4.95, // Be careful
+        shippingAmount: 0, // Be careful
         tax: 0,
         total: order.totalAmount,
         invoice_nr: order._id

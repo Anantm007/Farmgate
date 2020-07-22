@@ -304,7 +304,7 @@ router.get('/user/:id', auth, async(req, res) => {
 // @access  Private 
 router.get('/admin/all', async(req, res) => {
     try {
-        const orders = await Order.find().sort('-createdAt');
+        const orders = await Order.find().populate("items.item").sort('-createdAt');
      
         return res.json({
             success: true,

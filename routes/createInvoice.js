@@ -95,7 +95,7 @@ function generateInvoiceTable(doc, invoice) {
       doc,
       position,
       item.itemName,
-      item.description,
+      item.description.substring(0,20),
       formatCurrency(item.price),
       item.quantity + ' x ' + item.variant,
       formatCurrency(item.amount)

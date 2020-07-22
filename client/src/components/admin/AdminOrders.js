@@ -154,9 +154,13 @@ const AdminOrders = () => {
 
                             {o.items.map((p, pIndex) => (
                                 <div className="mb-4" key={pIndex} style={{padding: '20px'}}>
-                                    {showInput('Item Id', p.item)}
+                                    {showInput('Item Id', p.item._id)}
                                     {showInput('Item Name', p.itemName)}
                                     {showInput('Item Quantity', p.quantity + ' X ' + p.variant)}
+                                    {showInput('Item Price', p.item.price)}
+                                    {showInput('Item Description', p.item.description)}
+                                    {showInput('Item Variant', p.item.variant)}
+                                    {showInput('Total Item Amount', p.quantity * p.item.price)}
                                 </div>
                             ))}
                         </div>
