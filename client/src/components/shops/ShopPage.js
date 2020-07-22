@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react'
+import {Link} from 'react-router-dom';
 import {getShop, getItems, getCertificates} from '../shops/apiShops';
 import Pagination from './Pagination';
 import Footer from '../layout/Footer';
@@ -196,11 +197,6 @@ const ShopPage = (props) => {
                     )
                 }
 
-                <div style={{fontStyle: "italic", marginTop: "5rem"}}>
-                  <strong>* Note:</strong>&nbsp;
-                  Certain areas (principally some outer metro) are defined in the T&C (link from home page, see Appendix B) as within the Limited Service Area. Delivery for these areas is principally expected the morning following the delivery day stipulated above (we will attempt to contact you if we foresee any procurement issues).
-                </div>
-                
               </div>
 
             </div>
@@ -234,14 +230,18 @@ const ShopPage = (props) => {
           </div>
 
           </div>
-
-          <br/><br/><br/>
-          {!loading ? <div className="text-center">
-                  <button className="btn btn-dark" style={{width: '12rem'}}><i className="fa fa-shopping-cart">&nbsp;&nbsp;</i><a href="/cart" style={{color: 'white'}}>Go To Cart</a></button>
-          </div> : ''}
-          <br/><br/>
-          <br/><br/>
           
+          { !loading && 
+            <div className="text-center mt-5">
+              <Link to="/cart"><button className="btn btn-dark" style={{width: '12rem'}}><i className="fa fa-shopping-cart">&nbsp;&nbsp;</i>Go To Cart</button></Link>
+            </div>
+          }
+
+          <div style={{fontStyle: "italic", margin: "5rem 3rem"}}>
+            <strong>* Note:</strong>&nbsp;
+            Certain areas (principally some outer metro) are defined in the T&C (link from home page, see Appendix B) as within the Limited Service Area. Delivery for these areas is principally expected the morning following the delivery day stipulated above (we will attempt to contact you if we foresee any procurement issues).
+          </div>
+                          
           <Footer/>
           </Fragment>
           )}   
