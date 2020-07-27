@@ -1,5 +1,3 @@
-const CheckPayment = () => {
+const CheckPayment = () => {};
 
-}
-
-export default CheckPayment
+export default CheckPayment;

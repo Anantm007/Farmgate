@@ -1,16 +1,13 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
 import { shopIsAuthenticated } from "./index";
 
-const ShopRoute = ({
-  component: Component,
-  ...rest
-}) => (
+const ShopRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       !shopIsAuthenticated() ? (
-        <Redirect to='/shop/login' />
+        <Redirect to="/shop/login" />
       ) : (
         <Component {...props} />
       )
