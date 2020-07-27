@@ -370,7 +370,7 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
       invoice_nr: code,
     };
 
-    shopWeeklyInvoice(invoice, `${code}.pdf`);
+    await shopWeeklyInvoice(invoice, `${code}.pdf`);
 
     const information = {
       total: invoice.total,
