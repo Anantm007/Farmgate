@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../userAuth";
 import ContactUs from "../layout/ContactUs";
@@ -8,6 +8,16 @@ const UserDashboard = () => {
   const {
     user: { _id, name, email, address },
   } = isAuthenticated();
+
+  useEffect(() => {
+    if (localStorage.getItem("redirectUrl")) {
+      let url = localStorage.getItem("redirectUrl");
+      url = url.substring(1, url.length - 1);
+      window.location.href = `${window.location.origin}${url}`;
+      localStorage.removeItem("redirectUrl");
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const userLinks = () => {
     return (
