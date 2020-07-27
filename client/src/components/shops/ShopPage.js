@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getShop, getItems, getCertificates } from "../shops/apiShops";
+import { isAuthenticated } from "../userAuth";
 import Pagination from "./Pagination";
 import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
@@ -63,7 +64,12 @@ const ShopPage = (props) => {
     loadShop();
     loadItems();
     loadCertificates();
-
+    if (!isAuthenticated()) {
+      localStorage.setItem(
+        "redirectUrl",
+        JSON.stringify(window.location.pathname)
+      );
+    }
     return () => {
       console.log("cleaned up");
     };
