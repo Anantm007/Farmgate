@@ -38,7 +38,6 @@ const ShopItems = ({
         setTimeout(() => setValues({ ...values, success: false }), 5000);
         let imgtodrag = document.getElementsByClassName("product")[index];
         let imgtodragImage = imgtodrag.querySelector(".hideImage");
-        console.log(imgtodragImage);
 
         let disLeft = imgtodrag.getBoundingClientRect().left;
         let disTop = imgtodrag.getBoundingClientRect().top;

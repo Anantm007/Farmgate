@@ -180,6 +180,20 @@ const ShopPage = (props) => {
                       <br />
                     </Fragment>
                   )}
+
+                  {shop.website !== undefined && (
+                    <Fragment>
+                      <strong>Website: &nbsp;</strong>
+                      <a
+                        href={shop.website}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        {shop.website}
+                      </a>
+                      <br />
+                      <br />
+                    </Fragment>
+                  )}
                 </div>
               </div>
 
