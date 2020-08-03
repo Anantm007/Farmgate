@@ -162,6 +162,7 @@ const ShopItems = ({
           </div>
         )}
       </div>
+      {!showCartButton && <div style={{ marginBottom: "9rem" }}></div>}
     </Fragment>
   );
 };
