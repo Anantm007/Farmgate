@@ -85,12 +85,12 @@ const MyShopItems = (props) => {
                 <Link
                   to={`/shop/${shopId}/item/${item._id}`}
                   style={{ color: "white" }}>
-                  <button className="btn btn-primary">UPDATE</button>
+                  <button className="btn btn-primary mt-4">UPDATE</button>
                 </Link>
                 &nbsp;
                 <button
                   onClick={() => DeleteItem(item._id)}
-                  className="btn btn-danger">
+                  className="btn btn-danger mt-4">
                   DELETE
                 </button>
               </div>
