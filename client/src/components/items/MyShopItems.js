@@ -77,10 +77,6 @@ const MyShopItems = (props) => {
           items.map((item, i) => (
             <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">
               <ShopItems item={item} showCartButton={false} />
-              <br />
-              <br />
-              <br />
-              <br />
               <div className="ml-5">
                 <Link
                   to={`/shop/${shopId}/item/${item._id}`}

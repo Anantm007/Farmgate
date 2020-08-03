@@ -146,7 +146,7 @@ const ShopItems = ({
                   ? ""
                   : error
                   ? ""
-                  : "$" + item.price + " per " + item.variant}
+                  : "$" + item.price.toFixed(2) + " per " + item.variant}
               </strong>
             </div>
             <p
@@ -162,6 +162,7 @@ const ShopItems = ({
           </div>
         )}
       </div>
+      {!showCartButton && <div style={{ marginBottom: "9rem" }}></div>}
     </Fragment>
   );
 };
