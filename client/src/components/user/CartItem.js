@@ -233,10 +233,11 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
                                 lineHeight: ".5rem",
                               }}></button>
                           </td>
-
-                          <td className="align-middle">
-                            <strong>${price}</strong>
-                          </td>
+                          {price && (
+                            <td className="align-middle">
+                              <strong>${price.toFixed(2)}</strong>
+                            </td>
+                          )}
                           <td className="align-middle">
                             <i
                               onClick={() => removeItem(foundItem._id)}
