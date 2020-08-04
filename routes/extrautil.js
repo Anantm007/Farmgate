@@ -1,199 +1,201 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const fs = require("fs");
-const shortid = require('shortid');
+const shortid = require("shortid");
 
-const {createInvoice} = require('./createInvoice');
+const { createInvoice } = require("./createInvoice");
 
 // Models
-const SuburbAndPostcode = require('../models/suburbAndPostcode');
-const User = require('../models/user');
-const Order = require('../models/order')
+const SuburbAndPostcode = require("../models/suburbAndPostcode");
+const User = require("../models/user");
+const Order = require("../models/order");
 
 // @route   POST /api/util/cleanPostcodes
 // @desc    Remove duplicate postcodes from MongoDB
 // @access  Public
-router.get("/cleanPostcodes", async(req, res) => {
-    try {
-        // path needs to be changes in future
-        let data = JSON.parse(fs.readFileSync(`${__dirname}/postcodes_geo.json`, 'utf-8'));
+router.get("/cleanPostcodes", async (req, res) => {
+  try {
+    // path needs to be changes in future
+    let data = JSON.parse(
+      fs.readFileSync(`${__dirname}/postcodes_geo.json`, "utf-8")
+    );
 
-        var flags = {};
-        let myData = [];
-        data.filter(function(obj) {
-            if (!flags[obj.postcode]) {
-                flags[obj.postcode] = true;
-                myData.push(obj);
-            }
-        });
+    var flags = {};
+    let myData = [];
+    data.filter(function (obj) {
+      if (!flags[obj.postcode]) {
+        flags[obj.postcode] = true;
+        myData.push(obj);
+      }
+    });
 
-        myData.forEach(async(obj) => {
-            let x = new SuburbAndPostcode({
-                postcode: obj.postcode,
-                suburb: obj.suburb
-            })
+    myData.forEach(async (obj) => {
+      let x = new SuburbAndPostcode({
+        postcode: obj.postcode,
+        suburb: obj.suburb,
+      });
 
-            await x.save();
-        })
+      await x.save();
+    });
 
-        data = await SuburbAndPostcode.find({});
+    data = await SuburbAndPostcode.find({});
 
-        return res.status(200).json(data)
-
-    } catch (err) {
-        console.log(err)
-        return res.status(400).json(err)
-    }
-})
-
+    return res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
 
 // @route   POST /api/util/addSuburbs
 // @desc    Add suburbs to users
-// @access  Public 
-router.get("/addSuburbs", async(req, res) => {
-    try {
+// @access  Public
+router.get("/addSuburbs", async (req, res) => {
+  try {
+    let users = await User.find({}).select("_id zipCode");
 
-        let users = await User.find({}).select("_id zipCode");
+    users.forEach(async (user) => {
+      let ob = await SuburbAndPostcode.findOne({ postcode: user.zipCode });
+      if (ob) {
+        user.suburb = ob.suburb;
+        await user.save();
+      } else {
+        console.log("not found for", user.zipCode);
+      }
+    });
 
-        users.forEach(async(user) => {
-            let ob = await SuburbAndPostcode.findOne({postcode: user.zipCode});
-            if(ob) {
-                user.suburb = ob.suburb;
-                await user.save();
-            }
-
-            else {
-                console.log("not found for", user.zipCode)
-            }
-        })
-
-        
-        users = await User.find({}).select("_id name zipCode suburb");
-        return res.json(users);
-
-    } catch (err) {
-        console.log(err)
-        return res.status(400).json(err)
-    }
-})
-
+    users = await User.find({}).select("_id name zipCode suburb");
+    return res.json(users);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
 
 // @route   POST /api/util/specialInvoice/:orderId
 // @desc    Generate PDF invoice using the user id
-// @access  Public 
-router.get("/specialInvoice/:id", async(req, res) => {
-    const order = await Order.findById(req.params.id);
-    if(!order) {
-        return res.json({
-            success: false,
-            message: "Order not found"
-        })
-    } 
-    const user = await User.findById(order.user).select("address zipCode suburb");
-    let orderItems = [];
-    
-    orderItems = [
-        {
-            itemName: "Chillies (hot)",
-            description: "Per bag",
-            price: 3,
-            quantity: 3,
-            variant: "500 g",
-            amount: 9
-        },
-        {
-            itemName: "Tomatoes - 1st grade",
-            description: "By box (upto 10kg per box).",
-            price: 17.5,
-            quantity: 1,
-            variant: "5 Kg",
-            amount: 17.5
-        },
-        {
-            itemName: "Zucchini - green",
-            description: "Loose. Approximate weight per item - 200g.",
-            price: 1.6,
-            quantity: 2,
-            variant: "200 g.",
-            amount: 3.2
-        },
-        {
-            itemName: "Zucchini - white",
-            description: "Loose. Approximate weight per item - 200g.",
-            price: 1.6,
-            quantity: 3,
-            variant: "200 g.",
-            amount: 4.8
-        },
-        {
-            itemName: "Herbs - Rocket",
-            description: "Per bunch",
-            price: 3,
-            quantity: 1,
-            variant: "Bunch",
-            amount: 3
-        },
-        {
-            itemName: "Herbs - Sage",
-            description: "Per bunch",
-            price: 3,
-            quantity: 1,
-            variant: "Bunch",
-            amount: 3
-        },
-        {
-            itemName: "Herbs - Rosemary",
-            description: "Per bunch",
-            price: 3,
-            quantity: 1,
-            variant: "Bunch",
-            amount: 3
-        },
-        {
-            itemName: "Eggs",
-            description: "Hobby Chickens. Free running.",
-            price: 6,
-            quantity: 3,
-            variant: "Half Dozen",
-            amount: 18
-        },
-        {
-            itemName: "Celery",
-            description: "Full Celery bunch",
-            price: 6,
-            quantity: 1,
-            variant: "Bunch",
-            amount: 6
-        }
-    ]
-    const invoice = {
-        shipping: {
-            name: order.userName,
-            address: user.address,
-            suburb: user.suburb,
-            country: "Australia",
-            postal_code: user.zipCode
-        },
-        items: orderItems,
-        subtotal: order.subtotal,
-        shippingAmount: 0, // Be careful
-        tax: 0,
-        total: order.totalAmount,
-        invoice_nr: order._id
-      };
-      const code = shortid.generate();
-      createInvoice(invoice, `${code}.pdf`);     
-})
+// @access  Public
+router.get("/specialInvoice/:id", async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    return res.json({
+      success: false,
+      message: "Order not found",
+    });
+  }
+  const user = await User.findById(order.user).select("address zipCode suburb");
+  let orderItems = [];
+
+  orderItems = [
+    {
+      itemName: "Celery",
+      description: "Loose ",
+      price: 10,
+      quantity: 1,
+      variant: "Bunch",
+      amount: 10,
+    },
+    {
+      itemName: "Apple - Pink Lady",
+      description: "Loose",
+      price: 7.5,
+      quantity: 1,
+      variant: "1 Kg",
+      amount: 7.5,
+    },
+    {
+      itemName: "Banana",
+      description: "Loose $5 per kg",
+      price: 2.5,
+      quantity: 1,
+      variant: "500 g.",
+      amount: 2.5,
+    },
+    {
+      itemName: "Carrot",
+      description: "1 kg sealed brown paper bag",
+      price: 6.5,
+      quantity: 1,
+      variant: "1 Kg.",
+      amount: 6.5,
+    },
+    {
+      itemName: "Broccoli",
+      description: "Loose  $8 Per kg",
+      price: 4,
+      quantity: 1,
+      variant: "500 g.",
+      amount: 4,
+    },
+    {
+      itemName: "Eggs",
+      description: "Per dozen. Large approximately 700gm eggs.",
+      price: 10,
+      quantity: 1,
+      variant: "Dozen",
+      amount: 10,
+    },
+    {
+      itemName: "Sweet Potato",
+      description: "Loose",
+      price: 9,
+      quantity: 1,
+      variant: "1 Kg.",
+      amount: 9,
+    },
+    {
+      itemName: "Tomato 500gm",
+      description: "Loose in Biobag $12 Per kg",
+      price: 6,
+      quantity: 1,
+      variant: "500 g.",
+      amount: 6,
+    },
+    {
+      itemName: "Celery",
+      description: "Cut and wrapped for food safety hygiene.",
+      price: 4.5,
+      quantity: 1,
+      variant: "Each",
+      amount: 4.5,
+    },
+    {
+      itemName: "Celery Pack 300gm",
+      description: "Corn Starch Biodegradable Tray",
+      price: 4,
+      quantity: 2,
+      variant: "300 g.",
+      amount: 8,
+    },
+  ];
+  const invoice = {
+    shipping: {
+      name: order.userName,
+      address: user.address,
+      suburb: user.suburb,
+      country: "Australia",
+      postal_code: user.zipCode,
+    },
+    items: orderItems,
+    subtotal: order.subtotal,
+    shippingAmount: 4.95, // Be careful
+    tax: 0,
+    total: order.totalAmount,
+    invoice_nr: order._id,
+  };
+  const code = shortid.generate();
+  createInvoice(invoice, `${code}.pdf`);
+});
 
 // @route   POST /api/order/special/:userId
 // @desc    Create order using the user's id
-// @access  Public 
+// @access  Public
 // router.post('/special/:id', async(req, res) => {
 //     const user = await User.findById(req.params.id);
-    
+
 //     const {instructions, subtotal, tax_shipping, totalAmount} = req.body;
-    
+
 //     let items = [];
 
 //     user.cart.forEach(async(c) => {
@@ -220,14 +222,14 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //         user: user._id,
 //         userName: user.name,
 //         shop,
-//         shopName: s.name, 
+//         shopName: s.name,
 //         deliveryAddress: user.address,
 //         instructions,
-//         subtotal, 
-//         tax_shipping, 
+//         subtotal,
+//         tax_shipping,
 //         totalAmount,
 //     })
-    
+
 //     await order.save();
 
 //     user.cart = [];
@@ -246,12 +248,12 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //         ta = 0;
 //     }
 
-//     else 
+//     else
 //     {
 //         sh = 9.9;
 //         ta = 0;
 //     }
-    
+
 //     const invoice = {
 //       shipping: {
 //         name: order.userName,
@@ -269,7 +271,7 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //       total: totalAmount,
 //       invoice_nr: order._id
 //     };
-    
+
 //     const code = shortid.generate();
 //     createInvoice(invoice, `${code}.pdf`);
 
@@ -285,7 +287,7 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //             contentType: 'application/pdf'
 //           }]
 //     };
-        
+
 //     transporter.sendMail(HelperOptions,(err,info)=>{
 //         if(err) throw err;
 //         console.log("The message was sent");
@@ -308,7 +310,6 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //         console.log("The message was sent...");
 //     });
 
-
 //     let HelperOptions3 = {
 //         from : process.env.EmailName + '<'+ (process.env.EmailId)+'>' ,
 //         to : s.email,
@@ -320,7 +321,7 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //             contentType: 'application/pdf'
 //           }]
 //     };
-        
+
 //     transporter.sendMail(HelperOptions3,(err,info)=>{
 //         if(err) throw err;
 //         console.log("The message was sent...");
@@ -330,7 +331,7 @@ router.get("/specialInvoice/:id", async(req, res) => {
 //         success: true,
 //         data: user
 //     })
-    
+
 // })
 
 module.exports = router;
