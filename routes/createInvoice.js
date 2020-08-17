@@ -1,6 +1,6 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
-var path = require('path'); 
+var path = require("path");
 
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -16,12 +16,14 @@ function createInvoice(invoice, path) {
 
 function generateHeader(doc) {
   doc
-    .image(path.join(__dirname,'logo.png'), 50, 25, { width: 100 })
+    .image(path.join(__dirname, "logo.png"), 400, 35, {
+      width: 150,
+    })
     .fillColor("#444444")
     .fontSize(10)
-    .text("Farmgate Ag", 200, 50, { align: "right" })
-    .text("Level 1, 49 George Street Norwood, S.A.", 200, 65, { align: "right" })
-    .text("ABN: 91688399669", 200, 80, { align: "right" })
+    .text("Farmgate Ag", 50, 35, { align: "left" })
+    .text("Level 1, 49 George Street Norwood, S.A.", 50, 50, { align: "left" })
+    .text("ABN: 91688399669", 50, 65, { align: "left" })
     .moveDown();
 }
 
@@ -47,20 +49,14 @@ function generateCustomerInformation(doc, invoice) {
     .text("Invoice Date:", 50, customerInformationTop + 15)
     .text(formatDate(new Date()), 150, customerInformationTop + 15)
     .text("Total:", 50, customerInformationTop + 30)
-    .text(
-      formatCurrency(invoice.total),
-      150,
-      customerInformationTop + 30
-    )
+    .text(formatCurrency(invoice.total), 150, customerInformationTop + 30)
 
     .font("Helvetica-Bold")
     .text(invoice.shipping.name, 300, customerInformationTop)
-    .font("Helvetica")
+    .font("Helvetica-Bold")
     .text(invoice.shipping.address, 300, customerInformationTop + 15)
     .text(
-        invoice.shipping.suburb +
-        ", " +
-        invoice.shipping.country,
+      invoice.shipping.suburb + ", " + invoice.shipping.country,
       300,
       customerInformationTop + 30
     )
@@ -85,35 +81,35 @@ function generateInvoiceTable(doc, invoice) {
   );
   generateHr(doc, invoiceTableTop + 20);
   doc.font("Helvetica");
-  
-  let flag = 0, position, j=0;
+
+  let flag = 0,
+    position,
+    j = 0;
   for (i = 0; i < invoice.items.length; i++) {
     const item = invoice.items[i];
     position = invoiceTableTop + (j + 1) * 30;
-    j=j+1;
+    j = j + 1;
     generateTableRow(
       doc,
       position,
       item.itemName,
-      item.description,
+      item.description.substring(0, 20),
       formatCurrency(item.price),
-      item.quantity + ' x ' + item.variant,
+      item.quantity + " x " + item.variant,
       formatCurrency(item.amount)
     );
-    
+
     generateHr(doc, position + 20);
-    if(position >= 660 && flag === 0)
-    {
+    if (position >= 660 && flag === 0) {
       doc.addPage();
       invoiceTableTop = 0;
       flag = 1;
-      j=0;
+      j = 0;
     }
   }
 
-  if(i > 10)
-  {
-    i=0;
+  if (i > 10) {
+    i = 0;
     invoiceTableTop = position;
   }
 
@@ -139,7 +135,6 @@ function generateInvoiceTable(doc, invoice) {
     formatCurrency(invoice.shippingAmount)
   );
 
-
   const duePosition = paidToDatePosition + 25;
   doc.font("Helvetica");
   generateTableRow(
@@ -153,7 +148,6 @@ function generateInvoiceTable(doc, invoice) {
   );
   doc.font("Helvetica");
 
-  
   const xxx = duePosition + 25;
   doc.font("Helvetica-Bold");
   generateTableRow(
@@ -198,16 +192,11 @@ function generateTableRow(
 }
 
 function generateHr(doc, y) {
-  doc
-    .strokeColor("#aaaaaa")
-    .lineWidth(1)
-    .moveTo(50, y)
-    .lineTo(550, y)
-    .stroke();
+  doc.strokeColor("#aaaaaa").lineWidth(1).moveTo(50, y).lineTo(550, y).stroke();
 }
 
 function formatCurrency(cents) {
-  return "(AUD) $" + (cents).toFixed(2);
+  return "(AUD) $" + cents.toFixed(2);
 }
 
 function formatDate(date) {
@@ -219,5 +208,5 @@ function formatDate(date) {
 }
 
 module.exports = {
-  createInvoice
+  createInvoice,
 };
