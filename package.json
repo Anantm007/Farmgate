@@ -4,8 +4,8 @@
   "description": "Official code for farmgate, Australia's food  delivery service",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server",
-    "server": "nodemon server",
+    "start": "node server",
+    "server": "node server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
