@@ -63,6 +63,15 @@ function generateCustomerInformation(doc, invoice) {
     .moveDown();
 
   generateHr(doc, 252);
+
+  {
+    invoice.instructions.length > 0 &&
+      doc
+        .fontSize(11)
+        .font("Helvetica-Bold")
+        .text("Order Instructions: ", 140, customerInformationTop + 75)
+        .text(invoice.instructions, 270, customerInformationTop + 75);
+  }
 }
 
 function generateInvoiceTable(doc, invoice) {
