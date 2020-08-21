@@ -131,6 +131,7 @@ router.post("/:id", auth, async (req, res) => {
     },
     items: items,
 
+    instructions: order.instructions,
     subtotal: subtotal,
     shippingAmount: sh,
     tax: ta,
