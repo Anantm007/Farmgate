@@ -293,11 +293,12 @@ router.get("/user/:id", auth, async (req, res) => {
 // @access  Private
 router.get("/admin/all", async (req, res) => {
   try {
-    const orders = await Order.find().sort("-createdAt");
+    const ordersLength = await Order.countDocuments();
+    const orders = await Order.find().sort("-createdAt").limit(50);
 
     return res.json({
       success: true,
-      count: orders.length,
+      count: ordersLength,
       data: orders,
     });
   } catch (err) {
