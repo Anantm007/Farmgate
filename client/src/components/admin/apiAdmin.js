@@ -16,6 +16,22 @@ export const query = (query) => {
     });
 };
 
+// Generate invoice for an order
+export const generateSpecialInvoice = (orderId) => {
+  return fetch(`/api/util/specialInvoice/${orderId}`, {
+    method: "GET",
+    headers: {
+      "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 // List all users for the admin
 export const getUsers = () => {
   return fetch(`/api/users`, {

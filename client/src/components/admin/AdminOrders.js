@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { isAuthenticated } from "../userAuth";
 import Footer from "../layout/Footer";
-import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
+import {
+  listOrders,
+  getStatusValues,
+  updateOrderStatus,
+  generateSpecialInvoice,
+} from "./apiAdmin";
 import Moment from "moment";
 import Spinner from "../layout/Spinner";
 
@@ -11,6 +16,7 @@ const AdminOrders = () => {
   } = isAuthenticated();
 
   const [orders, setOrders] = useState([]);
+  const [ordersLength, setOrdersLength] = useState(0);
   const [statusValues, setStatusValues] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +30,7 @@ const AdminOrders = () => {
         setLoading(false);
       } else {
         setOrders(data.data);
+        setOrdersLength(data.count);
         setLoading(false);
       }
     });
@@ -71,9 +78,9 @@ const AdminOrders = () => {
   };
 
   const showOrdersLength = () => {
-    if (orders.length > 0) {
-      return <h4 className="text-danger">Total Orders: {orders.length}</h4>;
-    } else if (!loading) {
+    if (ordersLength > 0) {
+      return <h4 className="text-danger">Total Orders: {ordersLength}</h4>;
+    } else if (ordersLength === 0 && !loading) {
       return (
         <Fragment>
           <h1 className="text-danger">No Orders</h1>
@@ -89,12 +96,21 @@ const AdminOrders = () => {
     }
   };
 
+  const sendSpecialInvoice = (orderId) => {
+    generateSpecialInvoice(orderId).then((data) => {
+      if (data.success === false) {
+        alert("Operation failed, contact support");
+      } else {
+        alert(data.message);
+      }
+    });
+  };
+
   const showLoading = () => loading && <Spinner />;
 
   useEffect(() => {
     loadOrders();
     loadStatusValues();
-    showLoading();
     // eslint-disable-next-line
   }, []);
 
@@ -140,6 +156,12 @@ const AdminOrders = () => {
                     style={{ fontWeight: "bold" }}>
                     Order_id: {o._id}
                   </li>
+                  <button
+                    className="btn btn-primary"
+                    style={{ width: "20rem", margin: "auto" }}
+                    onClick={() => sendSpecialInvoice(o._id)}>
+                    Generate Special Invoice
+                  </button>
                   <li className="list-group-item">{showStatus(o)}</li>
                   <li className="list-group-item">
                     <strong>Total Amount:</strong> ${o.totalAmount.toFixed(3)}
