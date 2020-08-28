@@ -1,6 +1,7 @@
 node_modules
 .env
 *.pdf
+build
 debug.log
 !TermsAndConditions.pdf
 !Farmgate_Ag_Privacy_Policy.pdf
