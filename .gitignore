@@ -3,6 +3,7 @@ node_modules
 *.pdf
 build
 debug.log
+build
 !TermsAndConditions.pdf
 !Farmgate_Ag_Privacy_Policy.pdf
 run.bat
