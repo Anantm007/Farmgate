@@ -87,7 +87,7 @@ const UserCart = () => {
         setValues({
           ...values,
           subtotal: data.data,
-          total: (data.data + tax + shipping).toFixed(3),
+          total: (data.data + tax + shipping).tofixed(2),
           loading: false,
         });
       } else {
