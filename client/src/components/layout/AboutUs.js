@@ -27,7 +27,7 @@ const AboutUs = () => {
                 style={{ fontSize: "1.2em" }}>
                 In this age of decentralisation, our aim is to establish markets
                 that support farmers, and provide logistics to assist in the
-                delivery of quality produce.
+                delivery of quality goods.
               </p>
             </div>
             <div className="col-lg-6 d-none d-lg-block">
