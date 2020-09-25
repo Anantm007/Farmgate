@@ -107,7 +107,7 @@ const ShopOrders = () => {
                   </li>
                   <li className="list-group-item">{showStatus(o)}</li>
                   <li className="list-group-item">
-                    <strong>Total Amount:</strong> ${o.totalAmount.tofixed(2)}
+                    <strong>Total Amount:</strong> ${o.totalAmount.toFixed(3)}
                   </li>
                   <li className="list-group-item">
                     <strong>Ordered By:</strong> {o.userName}
