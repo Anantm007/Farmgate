@@ -87,7 +87,9 @@ const UserCart = () => {
         setValues({
           ...values,
           subtotal: data.data,
-          total: (data.data + tax + shipping).tofixed(2),
+          total: (Math.round((data.data + tax + shipping) * 100) / 100).toFixed(
+            2
+          ),
           loading: false,
         });
       } else {

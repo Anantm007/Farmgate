@@ -43,7 +43,7 @@ const Login = () => {
         <article className="card-body mx-auto" style={{ maxWdith: "400px" }}>
           <h4 className="card-title mt-3 text-center">Login to your Account</h4>
           <p className="text-center">
-            Login now to order paddock direct and quality produce
+            Login now to order paddock direct and quality goods
           </p>
 
           <form>
