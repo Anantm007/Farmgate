@@ -150,64 +150,64 @@ router.post("/:id", auth, async (req, res) => {
   const mailHtml = await orderAdmin(information);
 
   // Send order confirmation email to user and admin
-  let HelperOptions = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: "farmgateishere@gmail.com",
-    subject: "Hey admin, a purchase has been made!",
-    html: mailHtml,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
+  // let HelperOptions = {
+  //   from: process.env.EmailName + "<" + process.env.EmailId + ">",
+  //   to: "farmgateishere@gmail.com",
+  //   subject: "Hey admin, a purchase has been made!",
+  //   html: mailHtml,
+  //   attachments: [
+  //     {
+  //       filename: `${code}.pdf`,
+  //       path: path.join(__dirname, `../${code}.pdf`),
+  //       contentType: "application/pdf",
+  //     },
+  //   ],
+  // };
 
-  transporter.sendMail(HelperOptions, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent");
-  });
+  // transporter.sendMail(HelperOptions, (err, info) => {
+  //   if (err) throw err;
+  //   console.log("The message was sent");
+  // });
 
-  const mailHtml2 = orderUser(information);
-  let HelperOptions2 = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: user.email,
-    subject: "Your order on Farmgate Market was successful",
-    html: mailHtml2,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
+  // const mailHtml2 = orderUser(information);
+  // let HelperOptions2 = {
+  //   from: process.env.EmailName + "<" + process.env.EmailId + ">",
+  //   to: user.email,
+  //   subject: "Your order on Farmgate Market was successful",
+  //   html: mailHtml2,
+  //   attachments: [
+  //     {
+  //       filename: `${code}.pdf`,
+  //       path: path.join(__dirname, `../${code}.pdf`),
+  //       contentType: "application/pdf",
+  //     },
+  //   ],
+  // };
 
-  transporter.sendMail(HelperOptions2, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent...");
-  });
+  // transporter.sendMail(HelperOptions2, (err, info) => {
+  //   if (err) throw err;
+  //   console.log("The message was sent...");
+  // });
 
-  const mailHtml3 = orderShop(information);
-  let HelperOptions3 = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: s.email,
-    subject: "You have a new order on Farmgate Market",
-    html: mailHtml3,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
+  // const mailHtml3 = orderShop(information);
+  // let HelperOptions3 = {
+  //   from: process.env.EmailName + "<" + process.env.EmailId + ">",
+  //   to: s.email,
+  //   subject: "You have a new order on Farmgate Market",
+  //   html: mailHtml3,
+  //   attachments: [
+  //     {
+  //       filename: `${code}.pdf`,
+  //       path: path.join(__dirname, `../${code}.pdf`),
+  //       contentType: "application/pdf",
+  //     },
+  //   ],
+  // };
 
-  transporter.sendMail(HelperOptions3, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent...");
-  });
+  // transporter.sendMail(HelperOptions3, (err, info) => {
+  //   if (err) throw err;
+  //   console.log("The message was sent...");
+  // });
 
   return res.json({
     success: true,
