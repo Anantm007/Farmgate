@@ -247,12 +247,12 @@ const ShopPage = (props) => {
           )}
 
           <div style={{ fontStyle: "italic", margin: "5rem 3rem" }}>
-            <strong>* Note:</strong>&nbsp; Certain areas (principally some outer
-            metro) are defined in the T&C (link from home page, see Appendix B)
-            as within the Limited Service Area. Delivery for these areas is
-            principally expected the morning following the delivery day
-            stipulated above (we will attempt to contact you if we foresee any
-            procurement issues).
+            <strong>* Note:&nbsp; Certain areas</strong> (principally some outer
+            metro) <strong>are defined in the T&C</strong> (link from home page,
+            see Appendix B) <strong>as within the Limited Service Area.</strong>{" "}
+            Delivery for these areas is principally expected the morning
+            following the delivery day stipulated above (we will attempt to
+            contact you if we foresee any procurement issues).
           </div>
 
           <Footer />

@@ -1,6 +1,6 @@
 function welcomeShop(information) {
-    const { shopName } = information;
-    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  const { shopName } = information;
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
     <head>
@@ -164,7 +164,7 @@ function welcomeShop(information) {
     <div style="color:#555555;font-family:'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
     <div style="font-size: 14px; line-height: 1.2; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #555555; mso-line-height-alt: 17px;">
     <p style="font-size: 16px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 19px; margin: 0;"><span style="font-size: 16px;">Hello ${shopName}, </span></p>
-    <p style="font-size: 16px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 19px; margin: 0;"><span style="font-size: 16px;">Welcome to Farmgate Market. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality produce, raised with care. </span></p>
+    <p style="font-size: 16px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 19px; margin: 0;"><span style="font-size: 16px;">Welcome to Farmgate Market. We are very excited to see you onboard! Thank you for signing up and helping our customers enjoy more quality goods, raised with care. </span></p>
     <p style="font-size: 16px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 19px; margin: 0;"><span style="font-size: 16px;">Login now to add items to your shop. Visit (use the login link from the bottom of the home page for shop account login) the portal using the button below</span></p>
     </div>
     </div>
@@ -284,7 +284,7 @@ function welcomeShop(information) {
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 15px; padding-bottom: 15px; font-family: 'Trebuchet MS', Tahoma, sans-serif"><![endif]-->
     <div style="color:#000000;font-family:'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:1.2;padding-top:15px;padding-right:30px;padding-bottom:15px;padding-left:30px;">
     <div style="font-size: 14px; line-height: 1.2; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #000000; mso-line-height-alt: 17px;">
-    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px; color: #ffffff;">To establish markets that support local farmers, and provide logistics to assist in the delivery of quality produce. We strive to facilitate the delivery of fresh, clean, local produce.</span></p>
+    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px; color: #ffffff;">To establish markets that support local farmers, and provide logistics to assist in the delivery of quality goods. We strive to facilitate the delivery of fresh, clean, local produce.</span></p>
     </div>
     </div>
     <!--[if mso]></td></tr></table><![endif]-->
@@ -322,7 +322,7 @@ function welcomeShop(information) {
     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 15px; padding-bottom: 15px; font-family: 'Trebuchet MS', Tahoma, sans-serif"><![endif]-->
     <div style="color:#555555;font-family:'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:1.2;padding-top:15px;padding-right:30px;padding-bottom:15px;padding-left:30px;">
     <div style="font-size: 14px; line-height: 1.2; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #555555; mso-line-height-alt: 17px;">
-    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px; color: #ffffff;">Trading as Farmgate Ag, we are an IT company from farming grass roots, with a passion for quality food, and supporting healthy physiology! In this age of decentralisation, our aim is to establish markets that support farmers, and provide logistics to assist in the delivery of quality produce.</span></p>
+    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px; color: #ffffff;">Trading as Farmgate Ag, we are an IT company from farming grass roots, with a passion for quality food, and supporting healthy physiology! In this age of decentralisation, our aim is to establish markets that support farmers, and provide logistics to assist in the delivery of quality goods.</span></p>
     </div>
     </div>
     <!--[if mso]></td></tr></table><![endif]-->
