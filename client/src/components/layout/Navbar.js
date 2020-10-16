@@ -41,7 +41,7 @@ const Navbar = ({ run }) => {
           <img
             src={Logo}
             alt=""
-            width="250"
+            width="240"
             height="40"
             className="d-inline-block align-middle mr-2"
           />

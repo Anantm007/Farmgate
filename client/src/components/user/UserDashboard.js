@@ -36,7 +36,7 @@ const UserDashboard = () => {
           </li>
           <li className="list-group-item">
             <Link to={`/user/${_id}/settings`} className="nav-link">
-              Account Settings
+              Account Settings & Delivery Address
             </Link>
           </li>
         </ul>
