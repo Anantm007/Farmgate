@@ -9,7 +9,6 @@ const hpp = require("hpp");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
-const colors = require("colors");
 const cron = require("node-cron");
 
 const path = require("path");
@@ -33,7 +32,7 @@ mongoose.connect(
   },
   (err, db) => {
     if (err) console.log(err);
-    else console.log("Database Connected...".blue.bold);
+    else console.log("Database Connected...");
   }
 );
 
@@ -88,5 +87,5 @@ cron.schedule("0 0 * * *", () => {
 
 // Starting the server
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server started on port ${process.env.PORT || 5000}`.blue.bold);
+  console.log(`Server started on port ${process.env.PORT || 5000}`);
 });

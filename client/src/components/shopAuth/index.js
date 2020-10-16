@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Register Shop
 export const signup = async (shop) => {
-  return fetch(`/api/shop/auth`, {
+  return fetch(`${BASE_URL}/api/shop/auth`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -17,7 +19,7 @@ export const signup = async (shop) => {
 
 // Login Shop
 export const signin = async (shop) => {
-  return fetch(`/api/shops`, {
+  return fetch(`${BASE_URL}/api/shops`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -66,7 +68,7 @@ export const shopIsAuthenticated = () => {
 
 // Forgot Password (send token)
 export const forgot = async (email) => {
-  return fetch(`/api/shop/auth/forgot`, {
+  return fetch(`${BASE_URL}/api/shop/auth/forgot`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -84,7 +86,7 @@ export const forgot = async (email) => {
 
 // Update password
 export const updatePassword = async (password, token) => {
-  return fetch(`/api/shop/auth/resetPassword/${token}`, {
+  return fetch(`${BASE_URL}/api/shop/auth/resetPassword/${token}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",

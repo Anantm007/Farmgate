@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Send feedback to the server
 export const query = (query) => {
-  return fetch(`/api/admin/feedback`, {
+  return fetch(`${BASE_URL}/api/admin/feedback`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -18,7 +20,7 @@ export const query = (query) => {
 
 // Generate invoice for an order
 export const generateSpecialInvoice = (orderId) => {
-  return fetch(`/api/util/specialInvoice/${orderId}`, {
+  return fetch(`${BASE_URL}/api/util/specialInvoice/${orderId}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -34,7 +36,7 @@ export const generateSpecialInvoice = (orderId) => {
 
 // List all users for the admin
 export const getUsers = () => {
-  return fetch(`/api/users`, {
+  return fetch(`${BASE_URL}/api/users`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -50,7 +52,7 @@ export const getUsers = () => {
 
 // List all shops for the admin
 export const listShops = () => {
-  return fetch(`/api/shops`, {
+  return fetch(`${BASE_URL}/api/shops`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -66,7 +68,7 @@ export const listShops = () => {
 
 // List all orders for admin
 export const listOrders = () => {
-  return fetch(`/api/order/admin/all`, {
+  return fetch(`${BASE_URL}/api/order/admin/all`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -82,7 +84,7 @@ export const listOrders = () => {
 
 // Get status values of all orders
 export const getStatusValues = () => {
-  return fetch(`/api/order/statusValues`, {
+  return fetch(`${BASE_URL}/api/order/statusValues`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -96,7 +98,7 @@ export const getStatusValues = () => {
 
 // Update status values
 export const updateOrderStatus = (orderId, status) => {
-  return fetch(`/api/order/admin/update/${orderId}`, {
+  return fetch(`${BASE_URL}/api/order/admin/update/${orderId}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -113,7 +115,7 @@ export const updateOrderStatus = (orderId, status) => {
 
 // Generate orders invoice for shops
 export const generateInvoice = (id) => {
-  return fetch(`/api/order/invoice/${id}`, {
+  return fetch(`${BASE_URL}/api/order/invoice/${id}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -132,7 +134,7 @@ export const createCertificate = (data) => {
   formBody.url = data.url;
   formBody.shop = data.shop;
 
-  return fetch(`/api/admin/certificate`, {
+  return fetch(`${BASE_URL}/api/admin/certificate`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -155,7 +157,7 @@ export const updateCertificate = (id, data) => {
   formBody.name = data.name;
   formBody.url = data.url;
 
-  return fetch(`/api/admin/certificate/${id}`, {
+  return fetch(`${BASE_URL}/api/admin/certificate/${id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -174,7 +176,7 @@ export const updateCertificate = (id, data) => {
 
 // Delete a certificate
 export const deleteCertificate = (id) => {
-  return fetch(`/api/admin/certificate/${id}`, {
+  return fetch(`${BASE_URL}/api/admin/certificate/${id}`, {
     method: "DELETE",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,

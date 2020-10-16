@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Get a particular user
 export const getUser = async (id) => {
-  return fetch(`/api/users/${id}`, {
+  return fetch(`${BASE_URL}/api/users/${id}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -16,7 +18,7 @@ export const getUser = async (id) => {
 
 // Update User
 export const Update = async (id, user) => {
-  return fetch(`/api/users/${id}`, {
+  return fetch(`${BASE_URL}/api/users/${id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -51,7 +53,7 @@ export const addToCart = (id) => {
     quantity: 1,
   };
 
-  return fetch(`/api/users/cart/add/${id}`, {
+  return fetch(`${BASE_URL}/api/users/cart/add/${id}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -69,7 +71,7 @@ export const addToCart = (id) => {
 
 // Get cart length of user
 export const cartLength = () => {
-  return fetch(`/api/users/cart/length`, {
+  return fetch(`${BASE_URL}/api/users/cart/length`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -85,7 +87,7 @@ export const cartLength = () => {
 
 // Get cart total of user
 export const getCartTotal = () => {
-  return fetch(`/api/users/cart/total`, {
+  return fetch(`${BASE_URL}/api/users/cart/total`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -104,7 +106,7 @@ export const updateCartItem = (id, quantity) => {
   const b = {
     quantity,
   };
-  return fetch(`/api/users/cart/update/${id}`, {
+  return fetch(`${BASE_URL}/api/users/cart/update/${id}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json",
@@ -122,7 +124,7 @@ export const updateCartItem = (id, quantity) => {
 
 // Remove item from cart
 export const removeFromCart = (id, amount) => {
-  return fetch(`/api/users/cart/remove/${id}`, {
+  return fetch(`${BASE_URL}/api/users/cart/remove/${id}`, {
     method: "DELETE",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -139,7 +141,7 @@ export const removeFromCart = (id, amount) => {
 
 // Get access code for payment from backend
 export const Pay = (data) => {
-  return fetch(`/api/eway/payment`, {
+  return fetch(`${BASE_URL}/api/eway/payment`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -158,7 +160,7 @@ export const Pay = (data) => {
 
 // // Get access code for payment from backend
 // export const getClientToken = (userId, amount) => {
-//     return fetch(`/api/eway/getToken/${userId}`, {
+//     return fetch(`${BASE_URL}/api/eway/getToken/${userId}`, {
 //         method: 'POST',
 //         headers: {
 //             Accept: "application/json",
@@ -177,7 +179,7 @@ export const Pay = (data) => {
 
 // // Check Payment status
 // export const checkPaymentStatus = (userId, code) => {
-//     return fetch(`/api/eway/status/${userId}/${code}`, {
+//     return fetch(`${BASE_URL}/api/eway/status/${userId}/${code}`, {
 //         method: 'GET',
 //         headers: {
 //           'x-auth-token': JSON.parse(localStorage.getItem('jwt')).token
@@ -193,7 +195,7 @@ export const Pay = (data) => {
 
 // Create the order
 export const createOrder = (userId, data) => {
-  return fetch(`/api/order/${userId}`, {
+  return fetch(`${BASE_URL}/api/order/${userId}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -212,7 +214,7 @@ export const createOrder = (userId, data) => {
 
 // List all orders for the user
 export const listOrders = (userId) => {
-  return fetch(`/api/order/user/${userId}`, {
+  return fetch(`${BASE_URL}/api/order/user/${userId}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
@@ -228,7 +230,7 @@ export const listOrders = (userId) => {
 
 // Check promo code for delivery and tax
 export const checkPromo = (data) => {
-  return fetch(`/api/order/checkout/checkPromo`, {
+  return fetch(`${BASE_URL}/api/order/checkout/checkPromo`, {
     method: "POST",
     headers: {
       Accept: "application/json",

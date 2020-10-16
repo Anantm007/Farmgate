@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Get list of shops from backend
 export const getShops = () => {
-  return fetch(`/api/shops`, {
+  return fetch(`${BASE_URL}/api/shops`, {
     method: "GET",
   })
     .then((response) => {
@@ -20,7 +22,7 @@ export const getShop = (id) => {
     h = JSON.parse(localStorage.getItem("shopjwt")).token;
   }
 
-  return fetch(`/api/shops/${id}`, {
+  return fetch(`${BASE_URL}/api/shops/${id}`, {
     method: "GET",
     headers: { "x-auth-token": h },
   })
@@ -34,7 +36,7 @@ export const getShop = (id) => {
 
 // Update Shop
 export const Update = async (id, user) => {
-  return fetch(`/api/shops/${id}`, {
+  return fetch(`${BASE_URL}/api/shops/${id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -65,7 +67,7 @@ export const updateShop = (shop, next) => {
 
 // Get items for a shop (only in stock)
 export const getItems = (id) => {
-  return fetch(`/api/shops/${id}/items`, {
+  return fetch(`${BASE_URL}/api/shops/${id}/items`, {
     method: "GET",
   })
     .then((response) => {
@@ -78,7 +80,7 @@ export const getItems = (id) => {
 
 // Get items for a shop (both in and out of stock)
 export const getItemsAllType = (id) => {
-  return fetch(`/api/shops/${id}/items/allType`, {
+  return fetch(`${BASE_URL}/api/shops/${id}/items/allType`, {
     method: "GET",
   })
     .then((response) => {
@@ -91,7 +93,7 @@ export const getItemsAllType = (id) => {
 
 // Get my Shop
 export const myShop = (id) => {
-  return fetch(`/api/shops/${id}`, {
+  return fetch(`${BASE_URL}/api/shops/${id}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("shopjwt")).token,
@@ -107,7 +109,7 @@ export const myShop = (id) => {
 
 // List all orders for a shop
 export const listOrders = (shopId) => {
-  return fetch(`/api/order/shop/${shopId}`, {
+  return fetch(`${BASE_URL}/api/order/shop/${shopId}`, {
     method: "GET",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("shopjwt")).token,
@@ -123,7 +125,7 @@ export const listOrders = (shopId) => {
 
 // List number of items for a shop
 export const countItems = (shopId) => {
-  return fetch(`/api/shops/items/${shopId}`, {
+  return fetch(`${BASE_URL}/api/shops/items/${shopId}`, {
     method: "GET",
   })
     .then((response) => {
@@ -136,7 +138,7 @@ export const countItems = (shopId) => {
 
 // Get all certificates for a shop
 export const getCertificates = (id) => {
-  return fetch(`/api/certificate/shop/${id}`, {
+  return fetch(`${BASE_URL}/api/certificate/shop/${id}`, {
     method: "GET",
   })
     .then((response) => {

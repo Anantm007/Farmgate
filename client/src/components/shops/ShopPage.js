@@ -7,6 +7,7 @@ import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
 import Navbar from "../layout/Navbar";
 import ShopListItems from "./ShopListItems";
+import BASE_URL from "../../utils/baseUrl";
 
 const ShopPage = (props) => {
   const shopId = props.match.params.id;
@@ -207,7 +208,7 @@ const ShopPage = (props) => {
                       <img
                         className="d-block img-fluid"
                         alt=""
-                        src={`/api/shops/photo/${shop._id}`}
+                        src={`${BASE_URL}/api/shops/photo/${shop._id}`}
                         style={{ height: "30rem", width: "30rem" }}
                       />
                     </div>

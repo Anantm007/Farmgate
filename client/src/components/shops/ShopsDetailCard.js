@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../userAuth";
 import { countItems } from "./apiShops";
+import BASE_URL from "../../utils/baseUrl";
 
 const ShopsCard = ({ shop }) => {
   const [noOfItems, setNoOfItems] = useState(0);
@@ -29,7 +30,7 @@ const ShopsCard = ({ shop }) => {
       <div className="card">
         <div className="image">
           <img
-            src={`/api/shops/photo/${shop._id}`}
+            src={`${BASE_URL}/api/shops/photo/${shop._id}`}
             alt=""
             style={{ height: "15rem" }}
           />

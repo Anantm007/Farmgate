@@ -1,7 +1,7 @@
 import React from "react";
-import TermsAndConditions from "../../TermsAndConditions.pdf";
-import PrivacyPolicy from "../../Farmgate_Ag_Privacy_Policy.pdf";
-import Sitemap from "../../Farmgate_Sitemap.xml";
+import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
+import PrivacyPolicy from "../../utils/Farmgate_Ag_Privacy_Policy.pdf";
+import Sitemap from "../../utils/Farmgate_Sitemap.xml";
 import { makeStyles } from "@material-ui/core/styles";
 
 const Footer = () => {

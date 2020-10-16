@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Add new Item
 export const createItem = async (shop) => {
-  return fetch(`/api/items`, {
+  return fetch(`${BASE_URL}/api/items`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -18,7 +20,7 @@ export const createItem = async (shop) => {
 
 // Delete an Item
 export const deleteItem = async (id) => {
-  return fetch(`/api/items/${id}`, {
+  return fetch(`${BASE_URL}/api/items/${id}`, {
     method: "DELETE",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("shopjwt")).token,
@@ -34,7 +36,7 @@ export const deleteItem = async (id) => {
 
 // Get a particular item
 export const getItem = async (id) => {
-  return fetch(`/api/items/${id}`, {
+  return fetch(`${BASE_URL}/api/items/${id}`, {
     method: "GET",
   })
     .then((response) => {
@@ -48,7 +50,7 @@ export const getItem = async (id) => {
 // Update an Item
 export const Update = async (itemid, item) => {
   if (JSON.parse(localStorage.getItem("shopjwt"))) {
-    return fetch(`/api/items/${itemid}`, {
+    return fetch(`${BASE_URL}/api/items/${itemid}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -63,7 +65,7 @@ export const Update = async (itemid, item) => {
         console.log(err);
       });
   } else if (JSON.parse(localStorage.getItem("jwt"))) {
-    return fetch(`/api/admin/items/${itemid}`, {
+    return fetch(`${BASE_URL}/api/admin/items/${itemid}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

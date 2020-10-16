@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import { addToCart, updateUser } from "../user/apiUser";
 import Spinner from "../layout/Spinner";
 import { isAuthenticated } from "../userAuth";
+import { makeStyles } from "@material-ui/core/styles";
+import BASE_URL from "../../utils/baseUrl";
 
 const ShopItems = ({
   item,
@@ -10,6 +12,8 @@ const ShopItems = ({
   run = undefined,
   showCartButton,
 }) => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     success: false,
     error: "",
@@ -98,67 +102,82 @@ const ShopItems = ({
           <div
             className="product"
             style={{ margin: "2rem", minWidth: "22rem" }}>
-            <div
-              className="flip-card-inner"
-              key={index}
-              style={{
-                borderRadius: ".5em",
-                border: ".1px solid black",
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-              }}>
-              <img
-                src={`/api/items/photo/${item._id}`}
-                style={{ height: "10rem", margin: "2.5rem 1.1rem 1rem 1.1rem" }}
-              />
-              <img
-                src={`/api/items/photo/${item._id}`}
-                className="hideImage"
-                style={{ height: "0", width: "0" }}
-                alt="img"
-              />
-              <br />
-              <strong style={{ fontSize: "1.3rem" }}>{item.name}</strong>
-              <hr />
-              <p>
-                {success
-                  ? showSuccess()
-                  : error
-                  ? showError()
-                  : item.description}
-              </p>
-              <div>
-                <strong style={{ fontSize: "1.2rem", color: "darkgreen" }}>
-                  {!success &&
-                    !error &&
-                    "$" + item.price.toFixed(2) + " per " + item.variant}
-                </strong>
+            <div className="flip-card-inner" key={index}>
+              <div className={styles.mainDiv}>
+                <img
+                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  className={styles.itemImage}
+                  alt="itemImage"
+                />
+                <img
+                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  className="hideImage"
+                  style={{ height: "0", width: "0" }}
+                  alt="img"
+                />
+                <br />
+                <strong style={{ fontSize: "1.3rem" }}>{item.name}</strong>
+                <hr />
+                <p className="p-1">
+                  {success
+                    ? showSuccess()
+                    : error
+                    ? showError()
+                    : item.description}
+                </p>
+                <div>
+                  <strong className={styles.priceStyle}>
+                    {!success &&
+                      !error &&
+                      "$" + item.price.toFixed(2) + " per " + item.variant}
+                  </strong>
+                </div>
+                <br />
+                {item.inStock && showCartButton && (
+                  <button
+                    className="btn btn-block btn-danger"
+                    style={{
+                      width: "90%",
+                      margin: "auto",
+                    }}
+                    onClick={addCart}>
+                    ADD TO CART
+                  </button>
+                )}
+                <br />
+                <span className="badge badge-success badge-pill">
+                  {item.quality}
+                </span>
+                <br />
+                <br />
               </div>
-              <br />
-              {item.inStock && showCartButton && (
-                <button
-                  className="btn btn-block btn-danger"
-                  style={{
-                    width: "90%",
-                    margin: "auto",
-                  }}
-                  onClick={addCart}>
-                  ADD TO CART
-                </button>
-              )}
-              <br />
-              <span className="badge badge-success badge-pill">
-                {item.quality}
-              </span>
-              <br />
-              <br />
             </div>
           </div>
         )}
       </div>
-      {!showCartButton && <div style={{ marginBottom: "9rem" }}></div>}
+      {!showCartButton && <div className={styles.mb9}></div>}
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  mainDiv: {
+    borderRadius: ".5em",
+    border: ".1px solid black",
+    boxShadow:
+      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  },
+  itemImage: {
+    height: "10rem",
+    margin: "2.5rem 1.1rem 1rem 1.1rem",
+  },
+  priceStyle: {
+    fontSize: "1.2rem",
+    color: "darkgreen",
+  },
+  mb9: {
+    marginBottom: "9rem",
+  },
+});
 
 export default ShopItems;
