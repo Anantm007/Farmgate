@@ -65,10 +65,7 @@ const MyShopItems = (props) => {
           marginBottom: "2rem",
         }}>
         <h1>Manage Your Shop Items</h1>
-        <h5>{`Welcome`}</h5>
       </div>
-
-      <br />
 
       {showError()}
 
@@ -77,13 +74,13 @@ const MyShopItems = (props) => {
           items.map((item, i) => (
             <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">
               <ShopItems item={item} showCartButton={false} />
-              <div className="ml-5">
+              <div className="ml-5" style={{ marginTop: "-8rem" }}>
                 <Link
                   to={`/shop/${shopId}/item/${item._id}`}
                   style={{ color: "white" }}>
                   <button className="btn btn-primary">UPDATE</button>
                 </Link>
-                &nbsp;
+                &nbsp;&nbsp;&nbsp;
                 <button
                   onClick={() => DeleteItem(item._id)}
                   className="btn btn-danger">
@@ -94,19 +91,6 @@ const MyShopItems = (props) => {
             </div>
           ))}
       </div>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
 
       <Footer />
     </Fragment>

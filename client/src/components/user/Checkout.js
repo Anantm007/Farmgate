@@ -309,7 +309,9 @@ const Checkout = (props) => {
               </li>
               <li className="d-flex justify-content-between py-3 border-bottom">
                 <strong className="text-muted">Delivery Address</strong>
-                <strong>{user.address}</strong>
+                <strong>
+                  {user.address} (Suburb - {user.suburb})
+                </strong>
               </li>
               {showLoading()}
               <li className="d-flex justify-content-between py-3 border-bottom">
