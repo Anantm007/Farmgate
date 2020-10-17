@@ -7,7 +7,7 @@ function evalURL() {
   )
     return "http://localhost:5000";
   else {
-    return "http://208.117.83.35:5000";
+    return "https://api.farmgate-market.com";
   }
 }
 export default BASE_URL;
