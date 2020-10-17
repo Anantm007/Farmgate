@@ -7,7 +7,8 @@
     "start": "node server",
     "server": "node server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "serve": "cd client && npm run build && serve -s build -l 3000",
+    "dev": "concurrently \"npm run server\" \"npm run serve\""
   },
   "author": "Anant Mathur",
   "license": "MIT",
