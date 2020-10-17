@@ -358,5 +358,5 @@ input[type="number"] {
 }
 
 iframe {
-  /* display: none; */
+  display: none;
 }
