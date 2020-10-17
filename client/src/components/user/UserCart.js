@@ -22,7 +22,7 @@ const UserCart = () => {
     total: 0,
   });
 
-  const {
+  let {
     shipping,
     tax,
     subtotal,
@@ -84,12 +84,18 @@ const UserCart = () => {
     setValues({ ...values, loading: true });
     getCartTotal().then((data) => {
       if (data.success === true) {
+        if (data.data + tax + shipping > 60) {
+          shipping -= 4.95;
+          console.log("yess");
+        }
+
         setValues({
           ...values,
           subtotal: data.data,
           total: (Math.round((data.data + tax + shipping) * 100) / 100).toFixed(
             2
           ),
+          shipping,
           loading: false,
         });
       } else {
@@ -177,14 +183,15 @@ const UserCart = () => {
           </div>
           <div className="p-4">
             <p className="font-italic mb-4">
-              Please check your delivery address before proceeding forward
+              Please check your delivery address & suburb before proceeding
+              forward
             </p>
             <textarea
               name=""
               cols="30"
-              rows="2"
+              rows="3"
               className="form-control"
-              value={user.address}
+              value={`${user.address}\n\nSuburb - ${user.suburb}`}
               readOnly></textarea>
           </div>
         </div>
@@ -238,9 +245,14 @@ const UserCart = () => {
                 Proceed to checkout
               </Link>
             )}
-            {subtotal <= 25
-              ? "Min. subtotal amount allowed to checkout is $25"
-              : ""}
+            {subtotal <= 25 && (
+              <strong>* Min. subtotal amount allowed to checkout is $25</strong>
+            )}
+            <br />
+            <br />
+            <strong>
+              ** Delivery automatically discounted for orders above $60
+            </strong>
           </div>
         </div>
       </div>

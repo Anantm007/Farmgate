@@ -1,6 +1,8 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Register User
 export const signup = async (user) => {
-  return fetch(`/api/user/auth`, {
+  return fetch(`${BASE_URL}/api/user/auth`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -18,7 +20,7 @@ export const signup = async (user) => {
 
 // Login User
 export const signin = async (user) => {
-  return fetch(`/api/users`, {
+  return fetch(`${BASE_URL}/api/users`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -36,7 +38,7 @@ export const signin = async (user) => {
 
 // Find suburb to autofill from postcode
 export const findSuburbFromCode = (zipcode) => {
-  return fetch(`/api/users/findSuburb/${zipcode}`, {
+  return fetch(`${BASE_URL}/api/users/findSuburb/${zipcode}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -85,7 +87,7 @@ export const isAuthenticated = () => {
 
 // Forgot Password (send token)
 export const forgot = async (email) => {
-  return fetch(`/api/user/auth/forgot`, {
+  return fetch(`${BASE_URL}/api/user/auth/forgot`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -103,7 +105,7 @@ export const forgot = async (email) => {
 
 // Update password
 export const updatePassword = async (password, token) => {
-  return fetch(`/api/user/auth/resetPassword/${token}`, {
+  return fetch(`${BASE_URL}/api/user/auth/resetPassword/${token}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",

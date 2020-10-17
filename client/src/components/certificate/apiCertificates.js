@@ -1,3 +1,5 @@
+import BASE_URL from "../../utils/baseUrl";
+
 // Create a new Certificate
 export const createCertificate = (data) => {
   let formBody = {};
@@ -5,7 +7,7 @@ export const createCertificate = (data) => {
   formBody.url = data.url;
   formBody.shop = data.shop;
 
-  return fetch(`/api/certificate`, {
+  return fetch(`${BASE_URL}/api/certificate`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -24,7 +26,7 @@ export const createCertificate = (data) => {
 
 // List all certificates for a shop
 export const listCertificates = (shopId) => {
-  return fetch(`/api/certificate/shop/${shopId}`, {
+  return fetch(`${BASE_URL}/api/certificate/shop/${shopId}`, {
     method: "GET",
   })
     .then((response) => {
@@ -37,7 +39,7 @@ export const listCertificates = (shopId) => {
 
 // Get a particular certificate
 export const getCertificate = (id) => {
-  return fetch(`/api/certificate/${id}`, {
+  return fetch(`${BASE_URL}/api/certificate/${id}`, {
     method: "GET",
   })
     .then((response) => {
@@ -54,7 +56,7 @@ export const updateCertificate = (id, data) => {
   formBody.name = data.name;
   formBody.url = data.url;
 
-  return fetch(`/api/certificate/${id}`, {
+  return fetch(`${BASE_URL}/api/certificate/${id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -73,7 +75,7 @@ export const updateCertificate = (id, data) => {
 
 // Delete a certificate
 export const deleteCertificate = (id) => {
-  return fetch(`/api/certificate/${id}`, {
+  return fetch(`${BASE_URL}/api/certificate/${id}`, {
     method: "DELETE",
     headers: {
       "x-auth-token": JSON.parse(localStorage.getItem("shopjwt")).token,

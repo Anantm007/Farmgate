@@ -3,6 +3,7 @@ import Spinner from "../layout/Spinner";
 import { updateUser, removeFromCart } from "./apiUser";
 import { getItem } from "../items/apiItems";
 import { updateCartItem } from "../user/apiUser";
+import BASE_URL from "../../utils/baseUrl";
 
 const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
   const [values, setValues] = useState({
@@ -177,7 +178,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
                           <th scope="row">
                             <div className="p-2">
                               <img
-                                src={`/api/items/photo/${foundItem._id}`}
+                                src={`${BASE_URL}/api/items/photo/${foundItem._id}`}
                                 alt=""
                                 width="70"
                                 className="img-fluid rounded shadow-sm"

@@ -1,15 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Middleware for protecting routes
-const auth = require('../middleware/shopAuth');
+const auth = require("../middleware/shopAuth");
 
-require('dotenv').config()
+require("dotenv").config();
 
 // Form Data
-const formidable = require('formidable');
+const formidable = require("formidable");
 const fs = require("fs");
-const _ = require('lodash');
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
@@ -17,12 +16,11 @@ const MongoObjectId = require("mongoose").Types.ObjectId;
 const Item = require("../models/item");
 const Shop = require("../models/shop");
 
-
 /*                                                       ROUTES                                                   */
 
-// @route   GET /api/items/checking/setitemQuality 
+// @route   GET /api/items/checking/setitemQuality
 // @desc    Set item quality to Pesticide free
-// @access  Public 
+// @access  Public
 // router.get('/checking/setItemQuality', async(req, res) => {
 //   await Item.updateMany({}, { $set: { quality: 'Pesticide Free' } });
 //   const items = await Item.find({});
@@ -34,243 +32,210 @@ const Shop = require("../models/shop");
 
 // })
 
-
-// @route   POST /api/items 
+// @route   POST /api/items
 // @desc    Add new item
-// @access  Private 
-router.post("/", auth, 
-async(req, res) => {
-  
-    // Formidable is used to handle form data. we are using it to handle image upload
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true // Extension for images
-  
-    form.parse(req, async(err, fields, files) => {
-        if(err)
-        {
-            return res.status(400).json({
-              success: false,
-              message: 'Image could not be uploaded'});
-        }
-  
-        // check for all fields
-        const {name, price, variant, quality, description} = fields;    // Destructure
-  
-        
-        if(!name || !price || !variant || !quality || !description)
-        {
-            return res.status(400).json({
-                success: false,
-                message: "Please fill all the fields"
-            })
-        }
-  
-        // Create new item now
-        let item = new Item(fields);
-        item.shop = req.shop.id;
-        // Handle files
-        if(files.image)
-        {
-            // Validate file size less than 1 MB
-            if(files.image.size > 1000000)
-            {
-                return res.status(400).json({
-                  success: false,
-                  message: "File size should be less than 1 MB"
-                })
-            }
-  
-            item.image.data = fs.readFileSync(files.image.path);
-            item.image.contentType = files.image.type;
-        }
+// @access  Private
+router.post("/", auth, async (req, res) => {
+  // Formidable is used to handle form data. we are using it to handle image upload
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true; // Extension for images
 
-        // Add the item to shop's item array
-        const shop = await Shop.findById(req.shop.id);
-        shop.items.unshift(item);
-        await shop.save();
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        message: "Image could not be uploaded",
+      });
+    }
 
-  
-        // Save to database
-        await item.save();
+    // check for all fields
+    const { name, price, variant, quality, description } = fields; // Destructure
 
-        return res.json({
-          success: true,
-          message: "Item added"
-        })
+    if (!name || !price || !variant || !quality || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all the fields",
+      });
+    }
 
-    });
-  
-})
-
-
-// @route   GET /api/items/:id 
-// @desc    Get a particular item
-// @access  Public 
-router.get("/:id", async(req, res) => {
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
+    // Create new item now
+    let item = new Item(fields);
+    item.shop = req.shop.id;
+    // Handle files
+    if (files.image) {
+      // Validate file size less than 1 MB
+      if (files.image.size > 1000000) {
+        return res.status(400).json({
           success: false,
-          message: "Item Not Found"
+          message: "File size should be less than 1 MB",
         });
+      }
+
+      item.image.data = fs.readFileSync(files.image.path);
+      item.image.contentType = files.image.type;
+    }
+
+    // Add the item to shop's item array
+    const shop = await Shop.findById(req.shop.id);
+    shop.items.unshift(item);
+    await shop.save();
+
+    // Save to database
+    await item.save();
+
+    return res.json({
+      success: true,
+      message: "Item added",
+    });
+  });
+});
+
+// @route   GET /api/items/:id
+// @desc    Get a particular item
+// @access  Public
+router.get("/:id", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Item Not Found",
+    });
   }
 
-  const item = await Item.findById(req.params.id).select('-image');
+  const item = await Item.findById(req.params.id).select("-image");
 
-  if(!item)
-  {
-      return res.json({
-        success: false,
-        message: "Item not found!"
-      })
+  if (!item) {
+    return res.json({
+      success: false,
+      message: "Item not found!",
+    });
   }
 
   return res.json({
     success: true,
-    data: item
-  })
-  
+    data: item,
+  });
 });
 
-
-// @route   PUT /api/items/:id 
+// @route   PUT /api/items/:id
 // @desc    Update item
-// @access  Private 
-router.put("/:id",
-    auth, 
-    async(req, res) => {
-      
-    // Formidable is used to handle form data. we are using it to handle image upload
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true // Extension for images
-  
-    form.parse(req, async(err, fields, files) => {
-      if(err)
-        {
-            return res.status(400).json({
-              success: false,
-              message: 'Image could not be uploaded'});
-        }
-  
-        
-        // Saving product to the Database
-        const item = await Item.findByIdAndUpdate(req.params.id, fields, {new: true});
-        
-        // Handle files
-        if(files.image)
-        {
-            // Validate file size less than 1 MB
-            if(files.image.size > 1000000)
-            {
-                return res.status(400).json({
-                  success: false,
-                  message: "File size should be less than 1 MB"
-                })
-            }
-  
-            item.image.data = fs.readFileSync(files.image.path);
-            item.image.contentType = files.image.type;
-        }
+// @access  Private
+router.put("/:id", auth, async (req, res) => {
+  // Formidable is used to handle form data. we are using it to handle image upload
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true; // Extension for images
 
-  
-        // Save to database
-        await item.save();
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        message: "Image could not be uploaded",
+      });
+    }
 
-        return res.json({
-          success: true,
-          message: "Item Modified"
-        })
-
+    // Saving product to the Database
+    const item = await Item.findByIdAndUpdate(req.params.id, fields, {
+      new: true,
     });
-   
-})
 
+    // Handle files
+    if (files.image) {
+      // Validate file size less than 1 MB
+      if (files.image.size > 1000000) {
+        return res.status(400).json({
+          success: false,
+          message: "File size should be less than 1 MB",
+        });
+      }
 
-// @route   DELETE /api/items/:id 
+      item.image.data = fs.readFileSync(files.image.path);
+      item.image.contentType = files.image.type;
+    }
+
+    // Save to database
+    await item.save();
+
+    return res.json({
+      success: true,
+      message: "Item Modified",
+    });
+  });
+});
+
+// @route   DELETE /api/items/:id
 // @desc    Delete item using item id
 // @access  Private
-router.delete("/:id", auth, async(req, res) => {
-  
+router.delete("/:id", auth, async (req, res) => {
   // Check whether the shop is authorized or not
   const item = await Item.findById(req.params.id);
-  if( (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id) ) || !item)
-  {
+  if (
+    (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id)) ||
+    !item
+  ) {
     return res.json({
       success: false,
-      message: "You are not authorized to perform this action!"
-    })
+      message: "You are not authorized to perform this action!",
+    });
   }
 
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Item Not Found"
-        });
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Item Not Found",
+    });
   }
 
   // cascade delete the item from shop schema as well
   const shop = await Shop.findById(item.shop);
-  
+
   let x = 0;
-  for(x = 0; x<shop.items.length; x++)
-  {
-    if(JSON.stringify(shop.items[x]) === JSON.stringify(item._id))
-    {
-      shop.items.splice(x,1)
+  for (x = 0; x < shop.items.length; x++) {
+    if (JSON.stringify(shop.items[x]) === JSON.stringify(item._id)) {
+      shop.items.splice(x, 1);
     }
   }
 
   await shop.save();
-  
-  await Item.findByIdAndDelete(req.params.id, async(err, item) => {
-    if(err)
-    {
+
+  await Item.findByIdAndDelete(req.params.id, async (err, item) => {
+    if (err) {
       return res.json({
         success: false,
-        message: "Item Not Found"
-      })
+        message: "Item Not Found",
+      });
     }
-
-  })
+  });
 
   return res.json({
     success: true,
-    message: "Item deleted"
+    message: "Item deleted",
   });
-
-})
-
-
-
-// @route   GET /api/items/photo/:id 
-// @desc    Display image using item id
-// @access  Public 
-router.get('/photo/:id', async(req, res) => {
-
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-    {
-        return res.json({
-            success: false,
-            message: "Item Not Found"
-          });
-    }
-
-    const result = await Item.findById(req.params.id); 
-
-    if (!result) 
-    {
-        res.json({
-            success: false,
-            message: "Image not found"
-        });
-    }   
-
-    res.contentType('image/jpeg');
-    res.send(result.image.data);     
-  
 });
-  
+
+// @route   GET ${BASE_URL}/api/items/photo/:id
+// @desc    Display image using item id
+// @access  Public
+router.get("/photo/:id", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Item Not Found",
+    });
+  }
+
+  const result = await Item.findById(req.params.id);
+
+  if (!result) {
+    res.json({
+      success: false,
+      message: "Image not found",
+    });
+  }
+
+  res.contentType("image/jpeg");
+  res.send(result.image.data);
+});
 
 module.exports = router;

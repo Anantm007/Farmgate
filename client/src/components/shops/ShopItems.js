@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import { addToCart, updateUser } from "../user/apiUser";
 import Spinner from "../layout/Spinner";
 import { isAuthenticated } from "../userAuth";
+import { makeStyles } from "@material-ui/core/styles";
+import BASE_URL from "../../utils/baseUrl";
 
 const ShopItems = ({
   item,
@@ -10,6 +12,8 @@ const ShopItems = ({
   run = undefined,
   showCartButton,
 }) => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     success: false,
     error: "",
@@ -95,76 +99,85 @@ const ShopItems = ({
         {loading ? (
           showLoading()
         ) : (
-          <div className="flip-card product" style={{ margin: "2rem" }}>
-            <div
-              className="flip-card-inner"
-              key={index}
-              style={{
-                backgroundImage: `url(/api/items/photo/${item._id}`,
-                backgroundSize: "19rem 20rem",
-                borderRadius: ".5em",
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-              }}>
-              <img
-                src={`/api/items/photo/${item._id}`}
-                className="hideImage"
-                style={{ height: "0", width: "0" }}
-                alt="img"
-              />
-              <div className="flip-card-front">
-                <h4
-                  style={{
-                    textShadow:
-                      "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff",
-                    color: "black",
-                  }}>
-                  {item.name}
-                </h4>
+          <div
+            className="product"
+            style={{ margin: "2rem", minWidth: "22rem" }}>
+            <div className="flip-card-inner" key={index}>
+              <div className={styles.mainDiv}>
+                <img
+                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  className={styles.itemImage}
+                  alt="itemImage"
+                />
+                <img
+                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  className="hideImage"
+                  style={{ height: "0", width: "0" }}
+                  alt="img"
+                />
+                <br />
+                <strong style={{ fontSize: "1.3rem" }}>{item.name}</strong>
+                <hr />
+                <p className="p-1">
+                  {success
+                    ? showSuccess()
+                    : error
+                    ? showError()
+                    : item.description}
+                </p>
+                <div>
+                  <strong className={styles.priceStyle}>
+                    {!success &&
+                      !error &&
+                      "$" + item.price.toFixed(2) + " per " + item.variant}
+                  </strong>
+                </div>
+                <br />
+                {item.inStock && showCartButton && (
+                  <button
+                    className="btn btn-block btn-danger"
+                    style={{
+                      width: "90%",
+                      margin: "auto",
+                    }}
+                    onClick={addCart}>
+                    ADD TO CART
+                  </button>
+                )}
+                <br />
                 <span className="badge badge-success badge-pill">
                   {item.quality}
                 </span>
                 <br />
                 <br />
-                {item.inStock && showCartButton && (
-                  <button className="btn btn-danger" onClick={addCart}>
-                    Add to Cart
-                  </button>
-                )}
               </div>
             </div>
-            <br />
-            <div
-              style={{
-                backgroundColor: success ? "none" : "",
-                textAlign: "center",
-                marginTop: "-1em",
-                marginBottom: "1em",
-              }}>
-              <strong>
-                {success
-                  ? ""
-                  : error
-                  ? ""
-                  : "$" + item.price.toFixed(2) + " per " + item.variant}
-              </strong>
-            </div>
-            <p
-              style={{
-                border: success ? "none" : "solid 1px",
-                textAlign: "center",
-                borderWidth: "thin",
-                padding: "0.5em",
-              }}>
-              {success ? showSuccess() : error ? showError() : item.description}
-            </p>
-            <br />
           </div>
         )}
       </div>
-      {!showCartButton && <div style={{ marginBottom: "9rem" }}></div>}
+      {!showCartButton && <div className={styles.mb9}></div>}
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  mainDiv: {
+    borderRadius: ".5em",
+    border: ".1px solid black",
+    boxShadow:
+      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  },
+  itemImage: {
+    height: "10rem",
+    margin: "2.5rem 1.1rem 1rem 1.1rem",
+  },
+  priceStyle: {
+    fontSize: "1.2rem",
+    color: "darkgreen",
+  },
+  mb9: {
+    marginBottom: "9rem",
+  },
+});
 
 export default ShopItems;

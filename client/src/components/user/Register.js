@@ -8,8 +8,8 @@ import {
 } from "../userAuth";
 import Footer from "../layout/Footer";
 
-import TermsAndConditions from "../../TermsAndConditions.pdf";
-import PrivacyPolicy from "../../Farmgate_Ag_Privacy_Policy.pdf";
+import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
+import PrivacyPolicy from "../../utils/Farmgate_Ag_Privacy_Policy.pdf";
 
 const Register = () => {
   const [values, setValues] = useState({

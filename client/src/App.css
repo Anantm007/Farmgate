@@ -2,168 +2,164 @@ body {
   padding-top: 4rem;
 }
 
-.navbarbg { 
-    background-color: #272727; 
+.navbarbg {
+  background-color: #272727;
 }
 
-.shop-container{
-    padding: 2rem;
+.shop-container {
+  padding: 2rem;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    .card {
-        margin-left: 0px;  
-        margin-bottom: 1rem;      
-    }
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .card {
+    margin-left: 0px;
+    margin-bottom: 1rem;
+  }
 }
 
-@media only screen  and (min-width : 1224px) {
-    .card {
-        margin-left: 4rem;
-        margin-right: 4rem;
-    }
+@media only screen and (min-width: 1224px) {
+  .card {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
 }
-.modal-footer {   border-top: 0px; }
-
+.modal-footer {
+  border-top: 0px;
+}
 
 /*FOOTER*/
 
 footer {
-    background: #16222A;
-    background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
-    background: linear-gradient(59deg, #3A6073, #16222A);
-    color: white;
-  }
-  
-  footer a {
-    color: #fff;
-    font-size: 14px;
-    transition-duration: 0.2s;
-  }
-  
-  footer a:hover {
-    color: #FA944B;
-    text-decoration: none;
-  }
-  
-  .copy {
-    font-size: 12px;
-    padding: 10px;
-    border-top: 1px solid #FFFFFF;
-  }
-  
-  .footer-middle {
-    padding-top: 2em;
-    color: white;
-  }
-  
-  
-  /*SOCİAL İCONS*/  
-  ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0;
-  }
-  
-  ul.social-network li {
-    display: inline;
-    margin: 0 5px;
-  }
-  
-  
-  /* footer social icons */
-  
-  .social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-  }
-  
-  
-  .social-circle li a:hover i,
-  .triggeredHover {
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -ms--transform: rotate(360deg);
-    transform: rotate(360deg);
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    transition: all 0.2s;
-  }
-  
-  .myfa {
-    padding: 8px;
-    font-size: 15px;
-    width: 45px;
-    text-align: center;
-    text-decoration: none;
-    
-    margin-right: 10px;
-    border-radius: 100%;
-    }
-  
-  .fa:hover {
-      opacity: 0.7;
-  }
-  
-  .fa-facebook {
-    background: #3B5998;
-    color: white;
-  }
-  
-  .fa-twitter {
-    background: #55ACEE;
-    color: white;
-  }
+  background: #16222a;
+  background: -webkit-linear-gradient(59deg, #3a6073, #16222a);
+  background: linear-gradient(59deg, #3a6073, #16222a);
+  color: white;
+}
 
-  .fa-linkedin {
-    background: #007bb5;
-    color: white;
-  }
-  
-  .fa-instagram {
-    background: #125688;
-    color: white;
-  }
-  
+footer a {
+  color: #fff;
+  font-size: 14px;
+  transition-duration: 0.2s;
+}
 
-  
+footer a:hover {
+  color: #fa944b;
+  text-decoration: none;
+}
+
+.copy {
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid #ffffff;
+}
+
+.footer-middle {
+  padding-top: 2em;
+  color: white;
+}
+
+/*SOCİAL İCONS*/
+ul.social-network {
+  list-style: none;
+  display: inline;
+  margin-left: 0 !important;
+  padding: 0;
+}
+
+ul.social-network li {
+  display: inline;
+  margin: 0 5px;
+}
+
+/* footer social icons */
+
+.social-circle li a {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -ms--transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.myfa {
+  padding: 8px;
+  font-size: 15px;
+  width: 45px;
+  text-align: center;
+  text-decoration: none;
+
+  margin-right: 10px;
+  border-radius: 100%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
 .card {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
-  margin-top:10px;
-  margin-bottom:10px;
-  background-color:#FFF;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
 }
 
 .card:hover {
-  box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .card > .card-inner {
-  padding:10px;
+  padding: 10px;
 }
-.card .header h2, h3 {
+.card .header h2,
+h3 {
   margin-bottom: 0px;
-  margin-top:0px;
+  margin-top: 0px;
 }
 .card .header {
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
-.card img{
-  width:100%;
+.card img {
+  width: 100%;
 }
-
 
 .btn-primary:hover,
 .btn-primary:focus {
@@ -202,7 +198,7 @@ section .section-title {
   -o-transform: rotateY(0deg);
   -ms-transform: rotateY(0deg);
   transform: rotateY(0deg);
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 .image-flip:hover .frontside,
@@ -288,7 +284,6 @@ section .section-title {
   border-radius: 50%;
 }
 
-
 .flip-card {
   background-color: transparent;
   width: 300px;
@@ -308,12 +303,13 @@ section .section-title {
 }
 
 .flip-card:hover {
-  box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   cursor: pointer;
 }
 
 /* Position the front and back side */
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -342,14 +338,23 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   /* border: 1px solid #dddddd; */
   text-align: left;
   /* padding: 8px; */
 }
 
-tr:nth-child(even) {
-  /* background-color: #dddddd; */
+/* Hide input arrows on Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide input arrows on Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 iframe {

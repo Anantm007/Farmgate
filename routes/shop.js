@@ -1,41 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Middleware for protecting routes
-const auth = require('../middleware/shopAuth');
+const auth = require("../middleware/shopAuth");
 const userAuth = require("../middleware/userAuth");
 
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-require('dotenv').config()
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
 // Express validation
-const { check, validationResult } = require('express-validator');
+const { check, validationResult } = require("express-validator");
 
 // Models
-const Shop = require('../models/shop');
+const Shop = require("../models/shop");
 const Item = require("../models/item");
-
 
 /*                                                  ROUTES                                                  */
 
-
-// @route   POST /api/shops 
+// @route   POST /api/shops
 // @desc    Authenticate(login) user & get token
-// @access  Public 
-router.post('/',
+// @access  Public
+router.post(
+  "/",
   [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+    check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        errors: errors.array() });
+        errors: errors.array(),
+      });
     }
 
     const { email, password } = req.body;
@@ -44,34 +44,30 @@ router.post('/',
       let shop = await Shop.findOne({ email });
 
       if (!shop) {
-        return res
-          .status(400)
-          .json({ 
-            success: false,
-            message: 'Invalid Credentials'
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Invalid Credentials",
+        });
       }
 
       const isMatch = await bcrypt.compare(password, shop.password);
-      
+
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ 
-            success: false,
-            message: 'Invalid Credentials'
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Invalid Credentials",
+        });
       }
 
       const payload = {
         shop: {
-          id: shop._id
-        }
+          id: shop._id,
+        },
       };
 
       // Do not send this to the client
       shop.password = undefined;
-      shop.image = undefined; 
+      shop.image = undefined;
 
       jwt.sign(
         payload,
@@ -80,307 +76,277 @@ router.post('/',
         (err, token) => {
           if (err) throw err;
 
-          res.json({ 
+          res.json({
             success: true,
             token,
-            shop
+            shop,
           });
         }
       );
-
-      
     } catch (err) {
       return res.json({
         success: false,
-        message: err.message
+        message: err.message,
       });
     }
   }
 );
 
-
 // @route   GET /api/shops/signout
 // @desc    Log the shop out and destroy cookie
 // @access  Only for authenticated shops
-router.get("/signout", auth, async(req, res) => {
-
+router.get("/signout", auth, async (req, res) => {
   // Clear cookie from storage
-  res.clearCookie('jwt')
+  res.clearCookie("jwt");
   res.json({
     success: true,
-    msg: "You have successfully logged out"})
-});
-
-
-// @route   GET /api/shops 
-// @desc    List All shops 
-// @access  Public 
-router.get('/', async(req, res) => {
-  const shops = await Shop.find().select('-image');
-
-  if(!shops)
-  {
-    return res.json({
-      success: false,
-      count: 0
-    })
-  }
-  
-  return res.json({
-      success: true,
-      count: shops.length,
-      data: shops
+    msg: "You have successfully logged out",
   });
 });
 
+// @route   GET /api/shops
+// @desc    List All shops
+// @access  Public
+router.get("/", async (req, res) => {
+  const shops = await Shop.find().select("-image");
 
-// @route   GET /api/shops/:id
-// @desc    Find a shop by id 
-// @access  Private (using middleware) 
-router.get('/:id', async(req, res) => {
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
+  if (!shops) {
+    return res.json({
+      success: false,
+      count: 0,
+    });
   }
 
-      // Check whether the shop is authenticated or not
-      if( (!JSON.stringify(req.params.id) ))
-      {
-        return res.json({
-          success: false,
-          message: "You are not authorized to perform this action"
-        })
-      }
-
-    await Shop.findById(req.params.id, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
-      
-      if(shop)
-      {
-
-        shop.password = undefined;
-        return res.json({
-          success: true,
-          data: shop
-        });
-      }
-
-      
-      // Shop not found/invalid
-      else
-      {
-            res.json({
-              success: false,
-              message: "Shop Could Not Be Found!"
-            })
-      }
-
-    });
-
+  return res.json({
+    success: true,
+    count: shops.length,
+    data: shops,
+  });
 });
 
+// @route   GET /api/shops/:id
+// @desc    Find a shop by id
+// @access  Private (using middleware)
+router.get("/:id", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Shop Not Found",
+    });
+  }
+
+  // Check whether the shop is authenticated or not
+  if (!JSON.stringify(req.params.id)) {
+    return res.json({
+      success: false,
+      message: "You are not authorized to perform this action",
+    });
+  }
+
+  await Shop.findById(req.params.id, (err, shop) => {
+    // req.shop is coming from auth middleware where token is being checked
+
+    if (shop) {
+      shop.password = undefined;
+      return res.json({
+        success: true,
+        data: shop,
+      });
+    }
+
+    // Shop not found/invalid
+    else {
+      res.json({
+        success: false,
+        message: "Shop Could Not Be Found!",
+      });
+    }
+  });
+});
 
 // @route   PUT /api/shops/:id
 // @desc    Update a shop by id
-// @access  Private (using middleware) 
-router.put('/:id', auth, async(req, res) => {
-
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
+// @access  Private (using middleware)
+router.put("/:id", auth, async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Shop Not Found",
+    });
   }
-  
+
   // Checking for empty fields
   for (var keys in req.body) {
-    if (req.body[keys] === undefined || req.body[keys] === "") 
-    {
+    if (req.body[keys] === undefined || req.body[keys] === "") {
       var incomplete = keys;
       break;
     }
   }
-  
+
   // Return error if there are some undefined values
   if (incomplete != undefined) {
     return res.json({
       success: false,
-      message: "Please fill " + incomplete.toUpperCase()
+      message: "Please fill " + incomplete.toUpperCase(),
     });
   }
 
   // Check whether the user is authenticated or not
-  if( (JSON.stringify(req.params.id) !== JSON.stringify(req.shop.id) ) || !req.shop)
-   {
-      return res.json({
-        success: false,
-        message: "You are not authorized to perform this action"
-      })
-   }
+  if (
+    JSON.stringify(req.params.id) !== JSON.stringify(req.shop.id) ||
+    !req.shop
+  ) {
+    return res.json({
+      success: false,
+      message: "You are not authorized to perform this action",
+    });
+  }
 
-    await Shop.findByIdAndUpdate(req.shop.id, req.body, {new: true}, (err, shop) => {  // req.shop is coming from auth middleware where token is being checked
-      
+  await Shop.findByIdAndUpdate(
+    req.shop.id,
+    req.body,
+    { new: true },
+    (err, shop) => {
+      // req.shop is coming from auth middleware where token is being checked
+
       shop.password = undefined;
       return res.json({
         success: true,
-        data: shop
+        data: shop,
       });
-
-    });
-
+    }
+  );
 });
 
-
-// @route   GET /api/shops/:id/items 
+// @route   GET /api/shops/:id/items
 // @desc    List all items for a particular shop (only in stock)
-// @access  Public 
-router.get("/:id/items", async(req, res) => {
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
+// @access  Public
+router.get("/:id/items", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Shop Not Found",
+    });
   }
 
-  let items = await Item.find({shop: req.params.id}).select('-image');
+  let items = await Item.find({ shop: req.params.id }).select("-image");
 
-  if(!items || items.length === 0)
-  {
-      return res.json({
-        success: true,
-        count: 0,
-        message: "This shop has no items listed"
-      })
+  if (!items || items.length === 0) {
+    return res.json({
+      success: true,
+      count: 0,
+      message: "This shop has no items listed",
+    });
   }
 
   // don't send items that are not in stock
-  for(i=items.length - 1; i>=0; i--)
-  {
-    if(!items[i].inStock)
-    {
+  for (i = items.length - 1; i >= 0; i--) {
+    if (!items[i].inStock) {
       items.splice(i, 1);
     }
   }
 
   // Bubble sort technique to sort items by name
-  for(i=0; i<items.length-1; i++)
-    {
-      for(j=i+1; j <items.length; j++)
-      {
-        if(items[j].name.toString() < items[i].name.toString())
-        {
-          let x = items[i];
-          items[i] = items[j];
-          items[j] = x;
-        }
+  for (i = 0; i < items.length - 1; i++) {
+    for (j = i + 1; j < items.length; j++) {
+      if (items[j].name.toString() < items[i].name.toString()) {
+        let x = items[i];
+        items[i] = items[j];
+        items[j] = x;
       }
     }
-  
+  }
+
   // Return the in stock and sorted items
   return res.json({
     success: true,
     count: items.length,
-    data: items
-  })
-  
+    data: items,
+  });
 });
 
-
-// @route   GET /api/shops/:id/items/allType 
+// @route   GET /api/shops/:id/items/allType
 // @desc    List all items for a particular shop (both in and out of stock)
-// @access  Public 
-router.get("/:id/items/allType", async(req, res) => {
-  
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-  {
-      return res.json({
-          success: false,
-          message: "Shop Not Found"
-        });
+// @access  Public
+router.get("/:id/items/allType", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Shop Not Found",
+    });
   }
 
-  let items = await Item.find({shop: req.params.id}).select('-image');
+  let items = await Item.find({ shop: req.params.id }).select("-image");
 
-  if(!items || items.length === 0)
-  {
-      return res.json({
-        success: true,
-        count: 0,
-        message: "This shop has no items listed"
-      })
-  }
-
-  // Return the in stock and sorted items
-  return res.json({
-    success: true,
-    count: items.length,
-    data: items
-  })
-  
-});
-
-
-// @route   GET /api/shops/items/:id 
-// @desc    Return total items listed for the shop
-// @access  Public 
-router.get('/items/:id', async(req, res) => {
-
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-    {
-        return res.json({
-            success: false,
-            message: "Item Not Found"
-          });
-    }
-
-    const shop = await Shop.findById(req.params.id).select('items'); 
-    if (!shop) 
-    {
-        return res.json({
-            success: false,
-            message: "Shop not found"
-        });
-    }   
-    
+  if (!items || items.length === 0) {
     return res.json({
       success: true,
-      data: shop.items.length
+      count: 0,
+      message: "This shop has no items listed",
     });
+  }
+
+  // Return the in stock and sorted items
+  return res.json({
+    success: true,
+    count: items.length,
+    data: items,
+  });
 });
 
-// @route   GET /api/shops/photo/:id 
+// @route   GET /api/shops/items/:id
+// @desc    Return total items listed for the shop
+// @access  Public
+router.get("/items/:id", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Item Not Found",
+    });
+  }
+
+  const shop = await Shop.findById(req.params.id).select("items");
+  if (!shop) {
+    return res.json({
+      success: false,
+      message: "Shop not found",
+    });
+  }
+
+  return res.json({
+    success: true,
+    data: shop.items.length,
+  });
+});
+
+// @route   GET ${BASE_URL}/api/shops/photo/:id
 // @desc    Display image using shop id
-// @access  Public 
-router.get('/photo/:id', async(req, res) => {
+// @access  Public
+router.get("/photo/:id", async (req, res) => {
+  if (!MongoObjectId.isValid(req.params.id)) {
+    //   id is not valid
+    return res.json({
+      success: false,
+      message: "Item Not Found",
+    });
+  }
 
-  if(!MongoObjectId.isValid(req.params.id))  //   id is not valid
-    {
-        return res.json({
-            success: false,
-            message: "Item Not Found"
-          });
-    }
+  const result = await Shop.findById(req.params.id);
 
-    const result = await Shop.findById(req.params.id); 
+  if (!result) {
+    res.json({
+      success: false,
+      message: "Image not found",
+    });
+  }
 
-    if (!result) 
-    {
-        res.json({
-            success: false,
-            message: "Image not found"
-        });
-    }   
-
-    res.contentType('image/jpeg');
-    res.send(result.image.data);     
+  res.contentType("image/jpeg");
+  res.send(result.image.data);
 });
-  
 
 module.exports = router;
