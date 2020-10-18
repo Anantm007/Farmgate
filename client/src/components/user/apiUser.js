@@ -158,6 +158,27 @@ export const Pay = (data) => {
     });
 };
 
+// Fill cart to repeat an order
+export const repeatOrder = (orderId, userId) => {
+  return fetch(
+    `${BASE_URL}/api/users/fillCartWithOldOrder/${orderId}/${userId}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": JSON.parse(localStorage.getItem("jwt")).token,
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 // // Get access code for payment from backend
 // export const getClientToken = (userId, amount) => {
 //     return fetch(`${BASE_URL}/api/eway/getToken/${userId}`, {
