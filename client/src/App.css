@@ -340,9 +340,7 @@ table {
 
 td,
 th {
-  /* border: 1px solid #dddddd; */
   text-align: left;
-  /* padding: 8px; */
 }
 
 /* Hide input arrows on Chrome, Safari, Edge, Opera */
@@ -355,8 +353,4 @@ input::-webkit-inner-spin-button {
 /* Hide input arrows on Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-iframe {
-  display: none;
 }

@@ -17,6 +17,7 @@ const UpdateItem = (props) => {
     loading: false,
     success: false,
     inStock: "",
+    inSale: "",
     formData: new FormData(),
   });
 
@@ -30,6 +31,7 @@ const UpdateItem = (props) => {
     error,
     success,
     inStock,
+    inSale,
     formData,
   } = values;
 
@@ -48,6 +50,7 @@ const UpdateItem = (props) => {
           variant: data.data.variant,
           quality: data.data.quality,
           inStock: data.data.inStock,
+          inSale: data.data.inSale,
           loading: false,
         });
       }
@@ -70,28 +73,15 @@ const UpdateItem = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     Update(itemid, formData).then((data) => {
-      console.log(data);
       if (data.success === false) {
-        setValues({ ...values, error: data.message });
+        setValues({ ...values, error: data.message, loading: false });
       } else {
-        setValues({
-          ...values,
-          name: "",
-          image: "",
-          price: "",
-          variant: "",
-          quality: "",
-          description: "",
-          loading: false,
-          error: "",
-          success: true,
-          formData: "",
-        });
+        setValues({ ...values, error: "", success: true, loading: false });
       }
     });
   };
 
-  const newPostForm = () => (
+  const updateItemForm = () => (
     <form className="mb-3" onSubmit={clickSubmit}>
       {showLoading()}
 
@@ -197,6 +187,18 @@ const UpdateItem = (props) => {
         </select>
       </div>
 
+      <div className="form-group">
+        <label>In Sale</label>
+        <select
+          onChange={handleChange("inSale")}
+          className="form-control"
+          value={inSale}>
+          <option>Select</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
       <br />
       <div className="text-center">
         <button className="btn btn-outline-primary">Edit Item</button>
@@ -242,7 +244,7 @@ const UpdateItem = (props) => {
         <h1>Edit Item</h1>
       </div>
       <div className="row">
-        <div className="col-md-8 offset-md-2">{newPostForm()}</div>
+        <div className="col-md-8 offset-md-2">{updateItemForm()}</div>
       </div>
       <Footer />
     </Fragment>

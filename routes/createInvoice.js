@@ -117,7 +117,7 @@ function generateInvoiceTable(doc, invoice) {
     }
   }
 
-  if (i > 10) {
+  if (i > 11) {
     i = 0;
     invoiceTableTop = position;
   }

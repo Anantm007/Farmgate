@@ -45,7 +45,9 @@ const AdminShop = (props) => {
     <div>{showLoading()}</div>
   ) : (
     <Fragment>
-      <h1 className="text-center">Shop Items</h1>
+      <h1 className="text-center" style={{ marginTop: "2rem" }}>
+        Shop Items
+      </h1>
       {showError()}
       <div className="row">
         {items.length &&

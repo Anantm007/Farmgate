@@ -5,7 +5,7 @@ import { isAuthenticated } from "../userAuth";
 import { makeStyles } from "@material-ui/core/styles";
 import BASE_URL from "../../utils/baseUrl";
 
-const ShopItems = ({
+const ShopItem = ({
   item,
   index,
   setRun = (f) => f,
@@ -104,16 +104,19 @@ const ShopItems = ({
             style={{ margin: "2rem", minWidth: "22rem" }}>
             <div className="flip-card-inner" key={index}>
               <div className={styles.mainDiv}>
+                <div className={styles.saleBadge}>
+                  {item.inSale && (
+                    <span
+                      className="badge badge-primary badge-pill"
+                      style={{ padding: "0.8rem" }}>
+                      SALE!
+                    </span>
+                  )}
+                </div>
                 <img
                   src={`${BASE_URL}/api/items/photo/${item._id}`}
                   className={styles.itemImage}
                   alt="itemImage"
-                />
-                <img
-                  src={`${BASE_URL}/api/items/photo/${item._id}`}
-                  className="hideImage"
-                  style={{ height: "0", width: "0" }}
-                  alt="img"
                 />
                 <br />
                 <strong style={{ fontSize: "1.3rem" }}>{item.name}</strong>
@@ -133,6 +136,12 @@ const ShopItems = ({
                   </strong>
                 </div>
                 <br />
+                <img
+                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  className="hideImage"
+                  style={{ height: "0", width: "0" }}
+                  alt="img"
+                />
                 {item.inStock && showCartButton && (
                   <button
                     className="btn btn-block btn-danger"
@@ -161,6 +170,10 @@ const ShopItems = ({
 };
 
 const useStyles = makeStyles({
+  saleBadge: {
+    textAlign: "left",
+    padding: ".5rem",
+  },
   mainDiv: {
     borderRadius: ".5em",
     border: ".1px solid black",
@@ -169,7 +182,7 @@ const useStyles = makeStyles({
   },
   itemImage: {
     height: "10rem",
-    margin: "2.5rem 1.1rem 1rem 1.1rem",
+    margin: "1rem 1.1rem 1rem 1.1rem",
   },
   priceStyle: {
     fontSize: "1.2rem",
@@ -180,4 +193,4 @@ const useStyles = makeStyles({
   },
 });
 
-export default ShopItems;
+export default ShopItem;

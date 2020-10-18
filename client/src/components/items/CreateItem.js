@@ -11,6 +11,7 @@ const CreateItem = () => {
     variant: "",
     quality: "",
     description: "",
+    inSale: "",
     loading: false,
     error: "",
     success: false,
@@ -23,6 +24,7 @@ const CreateItem = () => {
     variant,
     quality,
     description,
+    inSale,
     loading,
     error,
     success,
@@ -61,6 +63,7 @@ const CreateItem = () => {
           variant: "",
           quality: "",
           description: "",
+          inSale: "",
           loading: false,
           error: "",
           success: true,
@@ -70,7 +73,7 @@ const CreateItem = () => {
     });
   };
 
-  const newPostForm = () => (
+  const newItemForm = () => (
     <form className="mb-3" onSubmit={clickSubmit}>
       <div className="form-group">
         <label>Name</label>
@@ -159,7 +162,21 @@ const CreateItem = () => {
           <option value="No Category">No Category</option>
         </select>
       </div>
+
+      <div className="form-group">
+        <label>In Sale</label>
+        <select
+          onChange={handleChange("inSale")}
+          className="form-control"
+          value={inSale}>
+          <option>Select</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
       <br />
+
       <div className="text-center">
         <button className="btn btn-outline-primary">Create Item</button>
         <br />
@@ -204,7 +221,7 @@ const CreateItem = () => {
         <h1>Add Items to your shop</h1>
       </div>
       <div className="row">
-        <div className="col-md-8 offset-md-2">{newPostForm()}</div>
+        <div className="col-md-8 offset-md-2">{newItemForm()}</div>
       </div>
       <Footer />
     </Fragment>

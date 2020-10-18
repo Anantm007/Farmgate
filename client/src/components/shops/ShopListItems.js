@@ -1,5 +1,5 @@
 import React from "react";
-import ShopItems from "./ShopItems";
+import ShopItem from "./ShopItem";
 
 const ShopListItems = ({
   items,
@@ -17,7 +17,7 @@ const ShopListItems = ({
         items.map((item, i) => (
           <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">
             {
-              <ShopItems
+              <ShopItem
                 item={item}
                 index={i}
                 setRun={setRun}
