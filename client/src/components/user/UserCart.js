@@ -86,7 +86,6 @@ const UserCart = () => {
       if (data.success === true) {
         if (data.data + tax + shipping > 60) {
           shipping -= 4.95;
-          console.log("yess");
         }
 
         setValues({

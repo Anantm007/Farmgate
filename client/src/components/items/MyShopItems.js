@@ -4,7 +4,7 @@ import Footer from "../layout/Footer";
 import { getItemsAllType } from "../shops/apiShops";
 import { deleteItem } from "./apiItems";
 import Spinner from "../layout/Spinner";
-import ShopItems from "../shops/ShopItems";
+import ShopItem from "../shops/ShopItem";
 
 const MyShopItems = (props) => {
   const shopId = props.match.params.id;
@@ -31,9 +31,11 @@ const MyShopItems = (props) => {
   };
 
   const DeleteItem = (Id) => {
+    setLoading(true);
     deleteItem(Id).then((data) => {
       if (items.length === 0) {
         setError("No Items Left");
+        setLoading(false);
       }
       if (data.success === false) {
         setLoading(false);
@@ -73,7 +75,7 @@ const MyShopItems = (props) => {
         {items.length > 0 &&
           items.map((item, i) => (
             <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">
-              <ShopItems item={item} showCartButton={false} />
+              <ShopItem item={item} showCartButton={false} />
               <div className="ml-5" style={{ marginTop: "-8rem" }}>
                 <Link
                   to={`/shop/${shopId}/item/${item._id}`}

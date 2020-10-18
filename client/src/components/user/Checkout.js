@@ -136,7 +136,7 @@ const Checkout = (props) => {
   const showDropIn = () => (
     <div class="padding">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-7">
           <div class="card">
             <div class="card-header">
               <strong>Pay With Card</strong>
