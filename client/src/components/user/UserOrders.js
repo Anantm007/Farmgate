@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { isAuthenticated } from "../userAuth";
 import Footer from "../layout/Footer";
-import { listOrders } from "./apiUser";
+import { listOrders, repeatOrder } from "./apiUser";
 import Moment from "moment";
 import Spinner from "../layout/Spinner";
 
@@ -55,6 +55,20 @@ const UserOrders = () => {
     }
   };
 
+  const duplicateOrder = async (orderId) => {
+    setLoading(true);
+    repeatOrder(orderId, _id).then((data) => {
+      console.log(data);
+      if (data.success === false) {
+        console.log(data.message);
+        setLoading(false);
+      } else {
+        window.location.href = "/cart";
+        setLoading(false);
+      }
+    });
+  };
+
   const showLoading = () => loading && <Spinner />;
 
   useEffect(() => {
@@ -99,12 +113,20 @@ const UserOrders = () => {
               <div
                 key={oIndex}
                 className="mt-5"
-                style={{ borderBottom: "5px solid indigo" }}>
+                style={{
+                  borderBottom: "5px solid indigo",
+                }}>
                 <ul className="list-group mb-2">
                   <li
                     className="list-group-item"
                     style={{ fontWeight: "bold" }}>
-                    Order_id: {o._id}
+                    Order Id: {o._id}
+                  </li>
+                  <li
+                    className="list-group-item"
+                    style={{ fontWeight: "bold" }}
+                    onClick={() => duplicateOrder(o._id)}>
+                    <button className="btn btn-primary"> REPEAT ORDER! </button>
                   </li>
                   <li className="list-group-item">{showStatus(o)}</li>
                   <li className="list-group-item">
@@ -114,11 +136,11 @@ const UserOrders = () => {
                     <strong>Ordered From:</strong> {o.shopName}
                   </li>
                   <li className="list-group-item">
-                    <strong>Instructions:</strong> {o.instructions}
-                  </li>
-                  <li className="list-group-item">
                     <strong>Order Date:</strong>{" "}
                     {Moment(o.createdAt).format("YYYY/MM/DD")}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Instructions:</strong> {o.instructions}
                   </li>
                   <li className="list-group-item">
                     <strong>Total Items:</strong> {o.items.length}

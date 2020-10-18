@@ -44,7 +44,17 @@ app.use(mongoSanitize()); // Sanitize Data
 app.use(helmet()); // Set security headers
 app.use(xss()); // Prevent XSS(cross site scripting) attacks
 app.use(hpp()); // Prevent hpp param pollution
-app.use(cors()); // Enable CORS
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://api.farmgate-market.com",
+      "http://208.117.83.35:3000",
+    ],
+    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
+  })
+);
 
 // Dev Middleware
 app.use(morgan("dev"));

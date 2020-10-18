@@ -1,88 +1,90 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
-
+const UserSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: [true, 'Please add a name'],
-        trim: true
+      type: String,
+      required: [true, "Please add a name"],
+      trim: true,
     },
 
     email: {
-        type: String,
-        required: [true, 'Please add a valid email'],
-        trim: true,
-        unique: true
+      type: String,
+      required: [true, "Please add a valid email"],
+      trim: true,
+      unique: true,
     },
 
     password: {
-        type: String,
-        required: [true, 'Please add a password'],
-        minlength: 6
+      type: String,
+      required: [true, "Please add a password"],
+      minlength: 6,
     },
 
     address: {
-        type: String,
-        required: [true, 'Please add an address'],
+      type: String,
+      required: [true, "Please add an address"],
     },
 
     zipCode: {
-        type: Number,
-        required: [true, 'Please add a zip code'],
+      type: Number,
+      required: [true, "Please add a zip code"],
     },
 
     suburb: {
-        type: String,
-        trim: true
+      type: String,
+      trim: true,
     },
 
     phoneNumber: {
-        type: Number,
-        unique: true,
-        required: [true, 'Please add a phone number'],
+      type: Number,
+      unique: true,
+      required: [true, "Please add a phone number"],
     },
 
     role: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
 
-    
-    cart: [{
+    cart: [
+      {
         item: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Item'
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Item",
         },
         quantity: {
-            type: Number,
-            required: true
+          type: Number,
+          required: true,
         },
         price: {
-            type: Number,
-            required: true
-        }
-    }],
+          type: Number,
+          required: true,
+        },
+      },
+    ],
 
-    history: [{
+    history: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order'
-    }],
+        ref: "Order",
+      },
+    ],
 
-    newUser : {
-        type: Boolean,
-        required: true
+    newUser: {
+      type: Boolean,
+      required: true,
     },
 
     resetPasswordToken: {
-        type: String
+      type: String,
     },
 
     resetPasswordExpire: {
-        type: String
-    }
-    
-}, {timestamps: true}
-
+      type: String,
+    },
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);

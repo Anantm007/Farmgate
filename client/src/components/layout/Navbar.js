@@ -57,7 +57,7 @@ const Navbar = ({ run }) => {
           className="navbar-toggler">
           <span className="navbar-toggler-icon">
             <i
-              class="fas fa-bars"
+              className="fas fa-bars"
               style={{ color: "#fff", fontSize: "28px" }}></i>
           </span>
         </button>
