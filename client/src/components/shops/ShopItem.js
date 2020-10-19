@@ -109,7 +109,7 @@ const ShopItem = ({
                     <span
                       className="badge badge-primary badge-pill"
                       style={{ padding: "0.8rem" }}>
-                      SALE!
+                      SPECIAL!
                     </span>
                   )}
                 </div>

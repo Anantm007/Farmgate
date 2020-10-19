@@ -26,7 +26,6 @@ const AdminOrders = () => {
     setLoading(true);
     listOrders().then((data) => {
       if (data.success === false) {
-        console.log(data.message);
         setLoading(false);
       } else {
         setOrders(data.data);
@@ -40,7 +39,6 @@ const AdminOrders = () => {
     setLoading(true);
     getStatusValues(user._id, token).then((data) => {
       if (data.success === false) {
-        console.log(data.message);
         setLoading(false);
       } else {
         setStatusValues(data.data);

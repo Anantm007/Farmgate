@@ -140,11 +140,12 @@ const ShopPage = (props) => {
                       </strong>
                       <br />
                       <br />
-                      {certificates.map((certi) => (
+                      {certificates.map((certi, index) => (
                         <a
                           href={certi.url}
                           target="_blank"
-                          rel="noopener noreferrer">
+                          rel="noopener noreferrer"
+                          key={index}>
                           <span style={{ color: "black" }}>•</span> {certi.name}{" "}
                           <br />
                         </a>

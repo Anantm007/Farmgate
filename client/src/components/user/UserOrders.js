@@ -17,7 +17,6 @@ const UserOrders = () => {
     setLoading(true);
     listOrders(_id).then((data) => {
       if (data.success === false) {
-        console.log(data.message);
         setLoading(false);
       } else {
         setOrders(data.data);
@@ -58,9 +57,7 @@ const UserOrders = () => {
   const duplicateOrder = async (orderId) => {
     setLoading(true);
     repeatOrder(orderId, _id).then((data) => {
-      console.log(data);
       if (data.success === false) {
-        console.log(data.message);
         setLoading(false);
       } else {
         window.location.href = "/cart";

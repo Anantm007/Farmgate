@@ -84,7 +84,7 @@ const useStyles = makeStyles({
       height: "30em",
     },
 
-    "@media (max-width: 660px)": {
+    "@media (max-width: 1000px)": {
       width: "90%",
       height: "18rem",
     },
@@ -104,6 +104,12 @@ const useStyles = makeStyles({
     "@media (max-width: 660px)": {
       width: "100%",
       height: "14rem",
+      marginBottom: "4rem",
+    },
+
+    "@media (max-width: 1000px)": {
+      width: "90%",
+      height: "18rem",
       marginBottom: "4rem",
     },
   },

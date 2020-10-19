@@ -63,7 +63,6 @@ const UserSettings = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     Update(id, values).then((data) => {
-      console.log(data);
       if (data.success === false) {
         setValues({
           ...values,

@@ -15,7 +15,7 @@ const ShopListItems = ({
     <div className="row">
       {items.length &&
         items.map((item, i) => (
-          <div key={i} className="col-xs-12 col-sm-6 col-md-6 ">
+          <div key={i} className="col-xs-12 col-sm-12 col-md-6 lg-6">
             {
               <ShopItem
                 item={item}

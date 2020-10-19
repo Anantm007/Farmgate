@@ -19,7 +19,6 @@ const AdminShopCertificates = (props) => {
     setLoading(true);
     listCertificates(_id).then((data) => {
       if (data.success === false) {
-        console.log(data.message);
         setLoading(false);
       } else {
         setCertificates(data.certificates);
