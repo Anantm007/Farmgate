@@ -48,11 +48,7 @@ app.use(hpp()); // Prevent hpp param pollution
 // CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://208.117.83.35:3000",
-      "https://farmgate-market.com",
-    ],
+    "Access-Control-Allow-Origin": false,
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
   })
