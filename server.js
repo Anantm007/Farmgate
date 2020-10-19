@@ -45,13 +45,18 @@ app.use(helmet()); // Set security headers
 app.use(xss()); // Prevent XSS(cross site scripting) attacks
 app.use(hpp()); // Prevent hpp param pollution
 
-// CORS - fix later
-const allowCrossDomain = function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
-};
-app.use(allowCrossDomain);
+// CORS
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://208.117.83.35:3000",
+      "https://farmgate-market.com",
+    ],
+    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
+  })
+);
 
 // Dev Middleware
 app.use(morgan("dev"));
