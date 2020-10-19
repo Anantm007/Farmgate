@@ -46,13 +46,7 @@ app.use(xss()); // Prevent XSS(cross site scripting) attacks
 app.use(hpp()); // Prevent hpp param pollution
 
 // CORS
-app.use(
-  cors({
-    "Access-Control-Allow-Origin": false,
-    credentials: true,
-    methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
-  })
-);
+app.use(cors());
 
 // Dev Middleware
 app.use(morgan("dev"));
