@@ -489,7 +489,7 @@ router.get("/cart/length", auth, async (req, res) => {
 // @access  Public
 router.post("/fillCartWithOldOrder/:orderId/:userId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).select("cart");
+    const user = await User.findById(req.params.userId);
     user.cart = [];
 
     const order = await Order.findById(req.params.orderId);
@@ -500,23 +500,29 @@ router.post("/fillCartWithOldOrder/:orderId/:userId", async (req, res) => {
         .json({ success: false, message: "User or orderId invalid" });
     }
 
-    user.cart = order.items;
-    // order.items.forEach(async (item) => {
-    //   console.log(item.item);
-    //   const i = await Item.findById(item.item).select("price");
-    //   let obj = {
-    //     item: item.item,
-    //     quantity: item.quantity,
-    //     price: i.price,
-    //   };
+    await order.items.map(async (item) => {
+      const itemSearch = await Item.findById(item.item).select("-image").exec();
+      if (itemSearch) {
+        const price = itemSearch.price * item.quantity;
+        const obj = {
+          item: item.item,
+          quantity: item.quantity,
+          price,
+        };
+        user.cart.push(obj);
 
-    //   console.log("1", obj);
-
-    //   user.cart.push(obj);
-    //   console.log("2");
-    // });
-    console.log("3", user.cart);
-    return res.status(200).json({ success: true });
+        if (user.cart.length === order.items.length) {
+          await user.save();
+          return res.status(200).json({ success: true, data: user });
+        }
+      } else {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Sorry, this order cannot be repeated as some items have changed!",
+        });
+      }
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ success: false, error: err });
