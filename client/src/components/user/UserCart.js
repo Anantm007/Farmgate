@@ -11,11 +11,12 @@ const UserCart = () => {
   const { user } = isAuthenticated();
 
   const [values, setValues] = useState({
-    shipping: user.newUser ? 9.9 : 4.95,
+    shipping: 0,
     // tax: user.newUser ? 0 : 0,
     tax: 0,
     subtotal: 0,
     promoCode: "",
+    shopName: "",
     loading: false,
     success: false,
     error: false,
@@ -27,6 +28,7 @@ const UserCart = () => {
     tax,
     subtotal,
     total,
+    shopName,
     success,
     error,
     promoCode,
@@ -84,17 +86,14 @@ const UserCart = () => {
     setValues({ ...values, loading: true });
     getCartTotal().then((data) => {
       if (data.success === true) {
-        if (data.data + tax + shipping > 60) {
-          shipping -= 4.95;
-        }
-
         setValues({
           ...values,
           subtotal: data.data,
           total: (Math.round((data.data + tax + shipping) * 100) / 100).toFixed(
             2
           ),
-          shipping,
+          shipping: data.shipping,
+          shopName: data.shopName,
           loading: false,
         });
       } else {
@@ -249,9 +248,11 @@ const UserCart = () => {
             )}
             <br />
             <br />
-            <strong>
-              ** Delivery automatically discounted for orders above $60
-            </strong>
+            {!shopName?.toLowerCase().includes("tsimiklis") && (
+              <strong>
+                ** Delivery automatically discounted for orders above $60
+              </strong>
+            )}
           </div>
         </div>
       </div>

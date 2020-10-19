@@ -11,7 +11,6 @@ const ShopsCard = ({ shop }) => {
 
   const CountItems = () => {
     countItems(shop._id).then((data) => {
-      console.log(data);
       if (data.success === true) setNoOfItems(data.data);
     });
   };
@@ -27,7 +26,7 @@ const ShopsCard = ({ shop }) => {
 
   return (
     <Fragment>
-      <div className="card">
+      <div className="card" style={{ minHeight: "37rem" }}>
         <div className="image">
           <img
             src={`${BASE_URL}/api/shops/photo/${shop._id}`}
@@ -46,7 +45,7 @@ const ShopsCard = ({ shop }) => {
             {role !== undefined && role === 0 && (
               <Link to={`/shops/${shop._id}`} style={{ color: "white" }}>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-block"
                   style={{ backgroundColor: "#0000FF" }}>
                   Order Now
                 </button>

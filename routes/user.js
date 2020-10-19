@@ -20,7 +20,7 @@ const PostCodes = require("../models/postcodes");
 const PostCodesNew = require("../models/postcodesNew");
 const Item = require("../models/item");
 const Order = require("../models/order");
-const SuburbAndPostcode = require("../models/suburbAndPostcode");
+const Shop = require("../models/shop");
 
 /*                                                  ROUTES                                                  */
 
@@ -410,16 +410,38 @@ router.get("/cart/total", auth, async (req, res) => {
   let total = 0;
 
   try {
+    const item = await Item.findById(user.cart[0].item)
+      .select("shop")
+      .populate("shop");
+    const shop = item.shop.name;
+
+    let shipping = 0;
+
     user.cart.forEach(async (c) => {
       total += c.price;
     });
 
-    return res.json({
+    if (user.newUser) {
+      shipping = 9.9;
+    } else {
+      shipping = 4.95;
+    }
+
+    if (shop.toLowerCase().includes("tsimiklis")) {
+      shipping += 4.95;
+    } else if (total > 60) {
+      shipping -= 4.95;
+    }
+
+    return res.status(200).json({
       success: true,
       data: total,
+      shopName: shop,
+      shipping,
     });
   } catch (err) {
-    return res.json({
+    console.log(err);
+    return res.status(500).json({
       success: false,
       message: err,
     });

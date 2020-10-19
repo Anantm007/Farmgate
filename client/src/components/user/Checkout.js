@@ -345,12 +345,13 @@ const Checkout = (props) => {
 
         <div className="col-lg-5">
           <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">
-            Instructions for the seller
+            INSTRUCTIONS
           </div>
           <div className="p-4">
             <p className="font-italic mb-4">
               If you have any special delivery instructions for the delivery
-              driver you can leave them in the box below
+              driver or packing instructions for the supplier you can leave them
+              in the box below
             </p>
             <textarea
               onChange={handleChange("instructions")}
