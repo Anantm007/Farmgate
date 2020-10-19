@@ -60,6 +60,11 @@ const UserOrders = () => {
       if (data.success === false) {
         setLoading(false);
       } else {
+        let auth = JSON.parse(localStorage.getItem("jwt"));
+        auth.user = data.data;
+
+        localStorage.setItem("jwt", JSON.stringify(auth));
+
         window.location.href = "/cart";
         setLoading(false);
       }
