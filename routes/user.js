@@ -410,6 +410,7 @@ router.get("/cart/total", auth, async (req, res) => {
   let total = 0;
 
   try {
+    // fix this
     const item = await Item.findById(user.cart[0].item)
       .select("shop")
       .populate("shop");
@@ -429,7 +430,7 @@ router.get("/cart/total", auth, async (req, res) => {
 
     if (shop.toLowerCase().includes("tsimiklis")) {
       shipping += 4.95;
-    } else if (total > 60) {
+    } else if (total >= 60) {
       shipping -= 4.95;
     }
 
