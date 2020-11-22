@@ -71,6 +71,12 @@ const UserSchema = new mongoose.Schema(
       },
     ],
 
+    fortyPromo: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+
     newUser: {
       type: Boolean,
       required: true,
