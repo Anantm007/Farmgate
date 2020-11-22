@@ -61,7 +61,18 @@ router.get("/statusValues", async (req, res) => {
 router.post("/:id", auth, async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  const { instructions, subtotal, tax_shipping, totalAmount } = req.body;
+  const {
+    instructions,
+    subtotal,
+    tax_shipping,
+    totalAmount,
+    promoCode,
+  } = req.body;
+
+  if (promoCode === "fortyforfree") {
+    user.fortyPromo = user.fortyPromo + 1;
+    await user.save();
+  }
 
   let items = [];
 
@@ -437,17 +448,40 @@ router.get("/invoice/:id", adminAuth, async (req, res) => {
   }
 });
 
-// @route   GET /api/order/checkPromo
+// @route   POST /api/order/checkPromo
 // @desc    Check whether the entered promo code is valid or not
 // @access  Private
 router.post("/checkout/checkPromo", auth, async (req, res) => {
   try {
-    if (
-      req.body.promoCode === "fromthefarmgate" ||
-      req.body.promoCode === "eatingisseasonallyadjusted"
+    const promoCode = req.body.promoCode;
+
+    if (promoCode === "fortyforfree") {
+      const user = await User.findById(req.user.id).select("fortyPromo");
+      let appliedCounter = user.fortyPromo;
+      appliedCounter %= 4;
+      if (appliedCounter === 3) {
+        return res.json({
+          success: true,
+          promoApplied: promoCode,
+          appliedCounter,
+          giveFortyDiscount: true,
+        });
+      } else {
+        return res.json({
+          success: true,
+          promoApplied: promoCode,
+          appliedCounter,
+          giveFortyDiscount: false,
+        });
+      }
+    } else if (
+      promoCode === "fromthefarmgate" ||
+      promoCode === "eatingisseasonallyadjusted"
     ) {
       return res.json({
         success: true,
+        giveFortyDiscount: false,
+        promoApplied: promoCode,
       });
     } else {
       return res.json({

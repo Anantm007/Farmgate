@@ -19,6 +19,8 @@ const UserCart = () => {
     shopName: "",
     loading: false,
     success: false,
+    fortyPromoSuccess: false,
+    fortyDiscountGiven: false,
     error: false,
     total: 0,
   });
@@ -30,50 +32,95 @@ const UserCart = () => {
     total,
     shopName,
     success,
+    fortyPromoSuccess,
+    fortyDiscountGiven,
     error,
     promoCode,
     loading,
   } = values;
 
-  const handleChange = (name) => (e) => {
-    setValues({ ...values, error: false, [name]: e.target.value });
-  };
-
-  const clickSubmit = (e) => {
-    e.preventDefault();
-    setValues({ ...values, error: false, success: false, loading: true });
-
+  const handlePromoChange = (name) => (e) => {
     if (
-      (user.newUser && shipping === 4.95) ||
-      (!user.newUser && shipping === 0)
+      (promoCode === "fromthefarmgate" &&
+        e.target.value === "eatingisseasonallyadjusted") ||
+      (promoCode === "eatingisseasonallyadjusted" &&
+        e.target.value === "fromthefarmgate")
     ) {
-      setValues({
-        ...values,
-        error: "Promo Code already applied!",
-        loading: false,
-        success: false,
-      });
+      setValues({ ...values, [name]: e.target.value });
       return;
     }
 
-    checkPromo({ promoCode }).then((data) => {
+    setValues({ ...values, [name]: e.target.value });
+
+    const promo = e.target.value;
+    checkPromo({ promoCode: promo }).then((data) => {
       if (data.success === false) {
         setValues({
           ...values,
           error: data.message,
           success: false,
+          fortyPromoSuccess: false,
+          fortyDiscountGiven: false,
           loading: false,
         });
       } else {
-        setValues({
-          ...values,
-          shipping: shipping - 4.95,
-          tax: 0,
-          total: getTotal(),
-          success: true,
-          error: false,
-          loading: false,
-        });
+        if (
+          data.promoApplied === "fortyforfree" &&
+          data.giveFortyDiscount === true
+        ) {
+          let newSubtotal = subtotal - 40;
+          if (newSubtotal < 0) {
+            newSubtotal = 0;
+          }
+          const newShipping = user.newUser ? 9.9 : 4.95;
+
+          setValues({
+            ...values,
+            subtotal: newSubtotal,
+            promoCode: data.promoApplied,
+            shipping: newShipping,
+            tax: 0,
+            total: getTotal(),
+            fortyPromoSuccess: `Congrats! Discount of (upto) $40 applied on this order`,
+            fortyDiscountGiven: true,
+            success: true,
+            error: false,
+            loading: false,
+          });
+        } else if (
+          data.promoApplied === "fortyforfree" &&
+          data.giveFortyDiscount === false
+        ) {
+          const newShipping = user.newUser ? 9.9 : 4.95;
+
+          setValues({
+            ...values,
+            promoCode: data.promoApplied,
+            shipping: newShipping,
+            tax: 0,
+            total: getTotal(),
+            fortyPromoSuccess: `Promo Code applied. Apply this promo code on ${
+              4 - data.appliedCounter - 1
+            } more orders to get upto $40 off.`,
+            fortyDiscountGiven: false,
+            success: false,
+            error: false,
+            loading: false,
+          });
+        } else if (data.promoApplied !== "fortyforfree") {
+          setValues({
+            ...values,
+            shipping: shipping - 4.95,
+            promoCode: data.promoApplied,
+            tax: 0,
+            total: getTotal(),
+            fortyPromoSuccess: false,
+            fortyDiscountGiven: false,
+            success: true,
+            error: false,
+            loading: false,
+          });
+        }
       }
     });
   };
@@ -119,7 +166,17 @@ const UserCart = () => {
       <div
         className="alert alert-success"
         style={{ display: success ? "" : "none" }}>
-        Code applied successfully!
+        {promoCode} - Code applied successfully!
+      </div>
+    );
+  };
+
+  const showFortySuccess = () => {
+    return (
+      <div
+        className="alert alert-success"
+        style={{ display: fortyPromoSuccess ? "" : "none" }}>
+        {fortyPromoSuccess}
       </div>
     );
   };
@@ -160,19 +217,29 @@ const UserCart = () => {
             <p className="font-italic mb-4">
               Please enter any promo code that you have ?
             </p>
-            <input
-              onChange={handleChange("promoCode")}
+            <select
+              onChange={handlePromoChange("promoCode")}
               value={promoCode}
-              className="form-control"></input>
+              className="form-control">
+              <option value="" disabled>
+                Select
+              </option>
+              <option value="fortyforfree">fortyforfree</option>
+              <option value="fromthefarmgate">fromthefarmgate</option>
+              <option value="eatingisseasonallyadjusted">
+                eatingisseasonallyadjusted
+              </option>
+            </select>
             <br />
-            <button
+            {/* <button
               style={{ textAlign: "center" }}
               onClick={clickSubmit}
               className="btn btn-success btn-block">
               APPLY!
-            </button>
+            </button> */}
             <br />
             {showSuccess()}
+            {showFortySuccess()}
             {showError()}
           </div>
 
@@ -222,7 +289,7 @@ const UserCart = () => {
                 <strong>(AUD) ${getTotal()}</strong>
               </li>
             </ul>
-            {user.cart.length >= 1 && subtotal > 25 ? (
+            {user.cart.length >= 1 && (subtotal > 25 || fortyDiscountGiven) ? (
               <Link
                 to={{
                   pathname: "/checkout",
@@ -231,6 +298,7 @@ const UserCart = () => {
                     total: total,
                     tax: tax,
                     shipping: shipping,
+                    promoCode,
                   },
                 }}
                 className="btn btn-dark rounded-pill py-2 btn-block">
@@ -243,7 +311,7 @@ const UserCart = () => {
                 Proceed to checkout
               </Link>
             )}
-            {subtotal <= 25 && (
+            {subtotal <= 25 && !fortyDiscountGiven && (
               <strong>* Min. subtotal amount allowed to checkout is $25</strong>
             )}
             <br />

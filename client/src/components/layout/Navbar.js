@@ -19,10 +19,11 @@ const Navbar = ({ run }) => {
 
   const findLength = () => {
     cartLength().then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, Length: 0 });
       }
-      if (data.success === true) setValues({ ...values, Length: data.data });
+      if (data && data.success === true)
+        setValues({ ...values, Length: data.data });
     });
   };
 

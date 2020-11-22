@@ -27,7 +27,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-// @route   POST /api/util/specialInvoice/:orderId
+// @route   GET /api/util/specialInvoice/:orderId
 // @desc    Generate PDF invoice using the user id
 // @access  Public
 router.get("/specialInvoice/:id", async (req, res) => {
@@ -104,7 +104,7 @@ router.get("/specialInvoice/:id", async (req, res) => {
     });
 });
 
-// @route   POST /api/util/cleanPostcodes
+// @route   GET /api/util/cleanPostcodes
 // @desc    Remove duplicate postcodes from MongoDB
 // @access  Public
 router.get("/cleanPostcodes", async (req, res) => {
@@ -141,7 +141,7 @@ router.get("/cleanPostcodes", async (req, res) => {
   }
 });
 
-// @route   POST /api/util/addSuburbs
+// @route   GET /api/util/addSuburbs
 // @desc    Add suburbs to users
 // @access  Public
 router.get("/addSuburbs", async (req, res) => {
@@ -159,6 +159,27 @@ router.get("/addSuburbs", async (req, res) => {
     });
 
     users = await User.find({}).select("_id name zipCode suburb");
+    return res.json(users);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
+
+// @route   GET /api/util/addPromo
+// @desc    Add fortyPromo field to all users
+// @access  Public
+router.get("/addPromo", async (req, res) => {
+  try {
+    let users = await User.find({}).select("_id");
+
+    users.forEach(async (user) => {
+      user.fortyPromo = 0;
+      await user.save();
+    });
+
+    users = await User.find({}).select("_id name fortyPromo");
+
     return res.json(users);
   } catch (err) {
     console.log(err);

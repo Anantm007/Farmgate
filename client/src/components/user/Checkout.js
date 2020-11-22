@@ -24,7 +24,10 @@ const Checkout = (props) => {
       window.location = "/cart";
     }
 
-    if (props.location.state.subtotal < 25) {
+    if (
+      props.location.state.subtotal < 25 &&
+      props.location.state.promoCode !== "fortyforfree"
+    ) {
       window.location = "/cart";
     }
   };
@@ -33,9 +36,9 @@ const Checkout = (props) => {
     shipping: props.location.state ? props.location.state.shipping : 4.5,
     tax: 0,
     subtotal: props.location.state ? props.location.state.subtotal : 0,
+    promoCode: props.location.state ? props.location.state.promoCode : "",
     loading: false,
     instructions: "",
-    accessCode: "",
     EWAY_CARDNAME: "",
     EWAY_CARDNUMBER: "",
     EWAY_CARDEXPIRYMONTH: "",
@@ -52,7 +55,7 @@ const Checkout = (props) => {
     tax,
     instructions,
     subtotal,
-    accessCode,
+    promoCode,
     success,
     paymentSuccess,
     error,
@@ -115,7 +118,7 @@ const Checkout = (props) => {
           subtotal,
           tax_shipping: tax + shipping,
           totalAmount: subtotal + tax + shipping,
-          accessCode,
+          promoCode,
         };
         createOrder(user._id, data).then((data) => {
           if (data.success === false) {
