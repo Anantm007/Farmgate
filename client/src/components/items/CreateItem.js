@@ -52,7 +52,7 @@ const CreateItem = () => {
     setValues({ ...values, error: "", loading: true });
 
     createItem(formData).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, loading: false, error: data.message });
       } else {
         setValues({

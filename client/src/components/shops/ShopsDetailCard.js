@@ -11,7 +11,7 @@ const ShopsCard = ({ shop }) => {
 
   const CountItems = () => {
     countItems(shop._id).then((data) => {
-      if (data.success === true) setNoOfItems(data.data);
+      if (data && data.success === true) setNoOfItems(data.data);
     });
   };
 

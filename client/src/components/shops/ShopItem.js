@@ -28,7 +28,7 @@ const ShopItem = ({
     }
     setValues({ ...values, loading: true, error: false, success: false });
     addToCart(item._id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           success: false,

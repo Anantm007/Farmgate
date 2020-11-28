@@ -24,7 +24,7 @@ const ContactUs = () => {
     e.preventDefault();
     setValues({ ...values, error: "" });
     query({ name, email, description }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, success: false });
       } else {
         setValues({

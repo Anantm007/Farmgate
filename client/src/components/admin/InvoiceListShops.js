@@ -11,7 +11,7 @@ const InvoiceListShops = () => {
   const loadShops = () => {
     setLoading(true);
     listShops().then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setShops(data.data);

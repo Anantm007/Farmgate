@@ -61,9 +61,9 @@ const Register = () => {
       suburb,
       phoneNumber,
     }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, success: false });
-      } else if (data.success === true) {
+      } else if (data && data.success === true) {
         window.location.reload(false); // To reload the page for navbar updation
         authenticate(data, () => {
           setValues({ ...values, loading: false });
@@ -74,9 +74,9 @@ const Register = () => {
 
   const findSuburb = () => {
     findSuburbFromCode(zipCode).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         console.log("not found or error");
-      } else if (data.success === true) {
+      } else if (data && data.success === true) {
         setValues({ ...values, suburb: data.suburb });
       }
     });

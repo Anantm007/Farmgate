@@ -21,7 +21,7 @@ const ShopPage = (props) => {
 
   const loadShop = () => {
     getShop(shopId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setError(data.message);
         setLoading(true);
       } else {
@@ -33,7 +33,7 @@ const ShopPage = (props) => {
 
   const loadItems = () => {
     getItems(shopId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setError(data.message);
       } else {
         if (data.count === 0) {
@@ -47,7 +47,7 @@ const ShopPage = (props) => {
 
   const loadCertificates = () => {
     getCertificates(shopId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         // setError(data.message);
       } else {
         setCertificates(data.certificates);

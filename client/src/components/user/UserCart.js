@@ -54,7 +54,7 @@ const UserCart = () => {
 
     const promo = e.target.value;
     checkPromo({ promoCode: promo }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           error: data.message,
@@ -132,7 +132,7 @@ const UserCart = () => {
   const getValues = () => {
     setValues({ ...values, loading: true });
     getCartTotal().then((data) => {
-      if (data.success === true) {
+      if (data && data.success === true) {
         setValues({
           ...values,
           subtotal: data.data,

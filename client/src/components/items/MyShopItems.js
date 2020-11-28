@@ -15,7 +15,7 @@ const MyShopItems = (props) => {
 
   const loadItems = () => {
     getItemsAllType(shopId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setError(data.message);
         setLoading(true);
       } else {
@@ -37,7 +37,7 @@ const MyShopItems = (props) => {
         setError("No Items Left");
         setLoading(false);
       }
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         loadItems();

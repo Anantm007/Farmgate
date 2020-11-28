@@ -13,7 +13,7 @@ const AdminInvoice = ({ shop }) => {
     setError(false);
 
     generateInvoice(shop._id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
         setSuccess(false);
         setError(data.message);

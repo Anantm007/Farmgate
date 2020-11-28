@@ -33,7 +33,7 @@ const UserSettings = (props) => {
   const loadUser = () => {
     setValues({ ...values, loading: true });
     getUser(id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         setValues({
@@ -63,7 +63,7 @@ const UserSettings = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     Update(id, values).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           error: data.message,
