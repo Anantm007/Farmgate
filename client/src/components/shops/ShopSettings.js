@@ -35,7 +35,7 @@ const ShopSettings = (props) => {
   const loadShop = () => {
     setValues({ ...values, loading: true });
     getShop(id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         setValues({
@@ -66,7 +66,7 @@ const ShopSettings = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     Update(id, values).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           error: data.message,

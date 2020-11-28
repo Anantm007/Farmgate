@@ -25,7 +25,7 @@ const AdminOrders = () => {
   const loadOrders = () => {
     setLoading(true);
     listOrders().then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setOrders(data.data);
@@ -38,7 +38,7 @@ const AdminOrders = () => {
   const loadStatusValues = () => {
     setLoading(true);
     getStatusValues(user._id, token).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setStatusValues(data.data);
@@ -49,7 +49,7 @@ const AdminOrders = () => {
 
   const handleStatusChange = (e, orderId) => {
     updateOrderStatus(orderId, e.target.value).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         console.log("Status update fail");
       } else {
         loadOrders();
@@ -96,7 +96,7 @@ const AdminOrders = () => {
 
   const sendSpecialInvoice = (orderId) => {
     generateSpecialInvoice(orderId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         alert("Operation failed, contact support");
       } else {
         alert(data.message);

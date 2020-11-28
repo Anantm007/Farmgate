@@ -104,7 +104,7 @@ const Checkout = (props) => {
       EWAY_CARDCVN,
       amount,
     }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: true, loading: false });
       } else {
         setValues({
@@ -121,7 +121,7 @@ const Checkout = (props) => {
           promoCode,
         };
         createOrder(user._id, data).then((data) => {
-          if (data.success === false) {
+          if (data && data.success === false) {
             setValues({ ...values, success: false, error: data.message });
           } else {
             updateUser(data.data, () => {
@@ -137,21 +137,21 @@ const Checkout = (props) => {
   };
 
   const showDropIn = () => (
-    <div class="padding">
-      <div class="row">
-        <div class="col-sm-7">
-          <div class="card">
-            <div class="card-header">
+    <div className="padding">
+      <div className="row">
+        <div className="col-sm-7">
+          <div className="card">
+            <div className="card-header">
               <strong>Pay With Card</strong>
             </div>
-            <div class="card-body">
+            <div className="card-body">
               <form>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="form-group">
                       <label for="name">Name</label>
                       <input
-                        class="form-control"
+                        className="form-control"
                         onChange={handleChange("EWAY_CARDNAME")}
                         value={EWAY_CARDNAME}
                         type="text"
@@ -160,29 +160,29 @@ const Checkout = (props) => {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="form-group">
                       <label for="ccnumber">Credit Card Number</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
-                          class="form-control"
+                          className="form-control"
                           type="text"
                           onChange={handleChange("EWAY_CARDNUMBER")}
                           value={EWAY_CARDNUMBER}
                           placeholder="Your credit card number"
                         />
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <i class="mdi mdi-credit-card"></i>
+                        <div className="input-group-append">
+                          <span className="input-group-text">
+                            <i className="mdi mdi-credit-card"></i>
                           </span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="form-group col-sm-4">
+                <div className="row">
+                  <div className="form-group col-sm-4">
                     <label for="ccmonth">Card Expiry Month</label>
                     <input
                       className="form-control"

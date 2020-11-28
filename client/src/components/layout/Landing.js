@@ -19,7 +19,7 @@ const Landing = () => {
 
   const loadShops = () => {
     getShops().then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setShops(data.data);

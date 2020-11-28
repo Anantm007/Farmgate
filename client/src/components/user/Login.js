@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     setValues({ ...values, error: false, loading: true });
     signin({ email, password }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         window.location.reload(false); // To reload the page for navbar updation

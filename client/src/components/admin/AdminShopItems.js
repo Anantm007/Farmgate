@@ -12,7 +12,7 @@ const AdminShop = (props) => {
 
   const loadItems = () => {
     getItemsAllType(shopId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setError(data.message);
         setLoading(true);
       } else {

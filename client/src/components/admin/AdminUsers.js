@@ -14,7 +14,7 @@ const AdminUsers = () => {
 
   const loadShops = () => {
     getUsers().then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setUsers(data.data);

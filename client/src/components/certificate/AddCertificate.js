@@ -29,7 +29,7 @@ const AddCertificate = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     createCertificate(values).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message });
       } else {
         setValues({

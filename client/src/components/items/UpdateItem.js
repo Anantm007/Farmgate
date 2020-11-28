@@ -38,7 +38,7 @@ const UpdateItem = (props) => {
   const loadItem = () => {
     setValues({ ...values, loading: true });
     getItem(itemid).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message });
         setValues({ ...values, loading: false });
       } else {
@@ -73,7 +73,7 @@ const UpdateItem = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     Update(itemid, formData).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         setValues({ ...values, error: "", success: true, loading: false });

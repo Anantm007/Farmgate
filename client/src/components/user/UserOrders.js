@@ -16,7 +16,7 @@ const UserOrders = () => {
   const loadOrders = () => {
     setLoading(true);
     listOrders(_id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setOrders(data.data);
@@ -57,7 +57,7 @@ const UserOrders = () => {
   const duplicateOrder = async (orderId) => {
     setLoading(true);
     repeatOrder(orderId, _id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         let auth = JSON.parse(localStorage.getItem("jwt"));

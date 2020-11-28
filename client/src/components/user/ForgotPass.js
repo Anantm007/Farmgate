@@ -19,7 +19,7 @@ const ForgotPass = () => {
     e.preventDefault();
     setValues({ ...values, error: false, loading: true });
     forgot({ email }).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           error: data.message,

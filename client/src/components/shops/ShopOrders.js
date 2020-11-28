@@ -16,7 +16,7 @@ const ShopOrders = () => {
   const loadOrders = () => {
     setLoading(true);
     listOrders(_id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setLoading(false);
       } else {
         setOrders(data.data);

@@ -20,7 +20,7 @@ const AdminEditCertificate = (props) => {
   const loadCertificate = () => {
     setValues({ ...values, loading: true });
     getCertificate(certiId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         setValues({
@@ -47,7 +47,7 @@ const AdminEditCertificate = (props) => {
     setValues({ ...values, error: "", loading: true });
 
     updateCertificate(certiId, values).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message });
       } else {
         setValues({

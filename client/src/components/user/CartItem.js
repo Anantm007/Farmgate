@@ -29,7 +29,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
     let q = quantity < 1 ? 1 : quantity - 1;
 
     updateCartItem(foundItem._id, q).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, loading: false, error: data.message });
       } else {
         updateUser(data.data, () => {
@@ -50,7 +50,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
     if (q === 0) q = 1;
 
     updateCartItem(foundItem._id, q).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, loading: false, error: data.message });
       } else {
         updateUser(data.data, () => {
@@ -77,7 +77,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
     if (q >= 1) {
       setValues({ ...values, loading: true });
       updateCartItem(Item._id, q).then((data) => {
-        if (data.success === false) {
+        if (data && data.success === false) {
           setValues({ ...values, loading: false, error: data.message });
         } else {
           updateUser(data.data, () => {
@@ -97,7 +97,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
   const loadItem = (id) => {
     setValues({ ...values, loading: true });
     getItem(id).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, loading: false });
       } else {
         setValues({ ...values, foundItem: data.data, loading: false });
@@ -113,7 +113,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
   const removeItem = (foundItemId) => {
     setValues({ ...values, error: false, loading: true });
     removeFromCart(foundItemId).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({
           ...values,
           error: data.message,
@@ -225,7 +225,7 @@ const CartItem = ({ item, setRun = (f) => f, run = undefined }) => {
 
                             <button
                               type="button"
-                              class="fa fa-plus btn btn-number"
+                              className="fa fa-plus btn btn-number"
                               onClick={increaseQuantity}
                               style={{
                                 height: "1.9rem",

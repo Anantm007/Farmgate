@@ -27,7 +27,7 @@ const ResetPass = (props) => {
     }
 
     updatePassword({ password }, token).then((data) => {
-      if (data.success === false) {
+      if (data && data.success === false) {
         setValues({ ...values, error: data.message, success: false });
       } else {
         setValues({
