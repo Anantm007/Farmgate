@@ -39,21 +39,27 @@ const UserCart = () => {
     loading,
   } = values;
 
-  const handlePromoChange = (name) => (e) => {
+  const handleChange = (name) => (e) => {
+    setValues({ ...values, error: false, [name]: e.target.value });
+  };
+
+  const clickSubmit = (e) => {
+    e.preventDefault();
+
     if (
-      (promoCode === "fromthefarmgate" &&
-        e.target.value === "eatingisseasonallyadjusted") ||
-      (promoCode === "eatingisseasonallyadjusted" &&
-        e.target.value === "fromthefarmgate")
+      (promoCode !== "fortyforfree" && user.newUser && shipping === 4.95) ||
+      (!user.newUser && shipping === 0)
     ) {
-      setValues({ ...values, [name]: e.target.value });
+      setValues({
+        ...values,
+        error: "Promo Code already applied!",
+        loading: false,
+        success: false,
+      });
       return;
     }
 
-    setValues({ ...values, [name]: e.target.value });
-
-    const promo = e.target.value;
-    checkPromo({ promoCode: promo }).then((data) => {
+    checkPromo({ promoCode }).then((data) => {
       if (data && data.success === false) {
         setValues({
           ...values,
@@ -217,7 +223,12 @@ const UserCart = () => {
             <p className="font-italic mb-4">
               Please enter any promo code that you have ?
             </p>
-            <select
+            <input
+              onChange={handleChange("promoCode")}
+              value={promoCode}
+              className="form-control"></input>
+
+            {/* <select
               onChange={handlePromoChange("promoCode")}
               value={promoCode}
               className="form-control">
@@ -229,14 +240,14 @@ const UserCart = () => {
               <option value="eatingisseasonallyadjusted">
                 eatingisseasonallyadjusted
               </option>
-            </select>
+            </select> */}
             <br />
-            {/* <button
+            <button
               style={{ textAlign: "center" }}
               onClick={clickSubmit}
               className="btn btn-success btn-block">
               APPLY!
-            </button> */}
+            </button>
             <br />
             {showSuccess()}
             {showFortySuccess()}
