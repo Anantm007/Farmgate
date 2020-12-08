@@ -12,6 +12,9 @@ const User = require("../models/user");
 const Order = require("../models/order");
 const Item = require("../models/item");
 
+// Mail template
+const fortyForFreeMail = require("./emailTemplates/promotions/fortyForFreeMail");
+
 // Nodemailer setup
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
@@ -25,6 +28,46 @@ let transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false,
   },
+});
+
+// @route   GET /api/util/promoMail
+// @desc    Send "fortyforfree" promo emails to all the users in the DB
+// @access  Public
+router.get("/promoMail", async (req, res) => {
+  try {
+    const users = await User.find().select("name email");
+
+    users.map((user) => {
+      let { name, email } = user;
+
+      let result = name.split(" ");
+      name = result[0];
+
+      let information = {
+        name,
+      };
+
+      const mailHtml = fortyForFreeMail(information);
+
+      // Send email
+      let HelperOptions = {
+        from: process.env.EmailName + "<" + process.env.EmailId + ">",
+        to: email,
+        subject: "How about forty dollars ($40) for free?",
+        html: mailHtml,
+      };
+
+      transporter.sendMail(HelperOptions, (err, info) => {
+        if (err) throw err;
+        console.log("The message was sent");
+      });
+    });
+
+    return res.json({ success: true, users, message: "Mail Sent" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   GET /api/util/specialInvoice/:orderId
