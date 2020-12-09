@@ -431,9 +431,9 @@ router.get("/cart/total", auth, async (req, res) => {
     if (shop.toLowerCase().includes("tsimiklis") && !user.newUser) {
       shipping += 4.95;
     }
-    if (total >= 60) {
-      shipping -= 4.95;
-    }
+    // if (total >= 60) {
+    //   shipping -= 4.95;
+    // }
 
     return res.status(200).json({
       success: true,
