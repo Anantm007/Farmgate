@@ -327,11 +327,6 @@ const UserCart = () => {
             )}
             <br />
             <br />
-            {!shopName?.toLowerCase().includes("tsimiklis") && (
-              <strong>
-                ** Delivery automatically discounted for orders above $60
-              </strong>
-            )}
           </div>
         </div>
       </div>
