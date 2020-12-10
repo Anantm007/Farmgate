@@ -34,6 +34,27 @@ let transporter = nodemailer.createTransport({
 
 /*                                                           ROUTES                                       */
 
+// @route   GET /api/admin/fortyCount
+// @desc    Get a count of how many orders went through with promo "fortyforfree"
+// @access  Public
+router.get("/fortyCount", async (req, res) => {
+  try {
+    const ans = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: { $add: ["$fortyPromo"] } },
+        },
+      },
+    ]);
+    const total = ans[0].total;
+    return res.status(200).json({ success: true, total });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
+});
+
 // @route   DELETE /api/admin/delete/user/:id
 // @desc    Delete a user account
 // @access  Private
