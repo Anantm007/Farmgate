@@ -57,10 +57,10 @@ router.get("/promoMail", async (req, res) => {
         html: mailHtml,
       };
 
-      transporter.sendMail(HelperOptions, (err, info) => {
-        if (err) throw err;
-        console.log("The message was sent", user.email);
-      });
+      // transporter.sendMail(HelperOptions, (err, info) => {
+      //   if (err) throw err;
+      //   console.log("The message was sent", user.email);
+      // });
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     });
