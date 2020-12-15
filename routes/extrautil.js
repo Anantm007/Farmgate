@@ -35,9 +35,9 @@ let transporter = nodemailer.createTransport({
 // @access  Public
 router.get("/promoMail", async (req, res) => {
   try {
-    const users = await User.find().select("name email");
+    const users = await User.find().select("name email").limit(10).skip(150);
 
-    users.map((user) => {
+    users.map(async (user) => {
       let { name, email } = user;
 
       let result = name.split(" ");
@@ -59,8 +59,10 @@ router.get("/promoMail", async (req, res) => {
 
       transporter.sendMail(HelperOptions, (err, info) => {
         if (err) throw err;
-        console.log("The message was sent");
+        console.log("The message was sent", user.email);
       });
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
     });
 
     return res.json({ success: true, users, message: "Mail Sent" });
