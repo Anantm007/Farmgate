@@ -49,181 +49,193 @@ const Item = require("../models/item");
 // @desc    Get status values of orders
 // @access  Public
 router.get("/statusValues", async (req, res) => {
-  return res.json({
-    success: true,
-    data: Order.schema.path("status").enumValues,
-  });
+  try {
+    return res.json({
+      success: true,
+      data: Order.schema.path("status").enumValues,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   POST /api/order/:userId
 // @desc    Create order using the user's id
 // @access  Private
 router.post("/:id", auth, async (req, res) => {
-  const user = await User.findById(req.params.id);
+  try {
+    const user = await User.findById(req.params.id);
 
-  const {
-    instructions,
-    subtotal,
-    tax_shipping,
-    totalAmount,
-    promoCode,
-  } = req.body;
+    const {
+      instructions,
+      subtotal,
+      tax_shipping,
+      totalAmount,
+      promoCode,
+    } = req.body;
 
-  if (promoCode === "fortyforfree") {
-    user.fortyPromo = user.fortyPromo + 1;
+    if (promoCode === "fortyforfree") {
+      user.fortyPromo = user.fortyPromo + 1;
+      await user.save();
+    }
+
+    let items = [];
+
+    user.cart.forEach(async (c) => {
+      let x = await Item.findById(c.item).select(
+        "name variant price description"
+      );
+      let i = {
+        item: c.item,
+        itemName: x.name,
+        price: x.price,
+        description: x.description.substring(0, 20) + "...",
+        variant: x.variant,
+        amount: c.quantity * x.price,
+        quantity: c.quantity,
+      };
+
+      items.push(i);
+    });
+
+    let item = await Item.findById(user.cart[0].item);
+    let shop = item.shop;
+    const s = await Shop.findById(shop).select("name email");
+
+    const order = new Order({
+      items,
+      user: user._id,
+      userName: user.name,
+      shop,
+      shopName: s.name,
+      deliveryAddress: user.address,
+      instructions,
+      subtotal,
+      tax_shipping,
+      totalAmount,
+    });
+
+    await order.save();
+
+    user.cart = [];
+    user.history.push(order);
     await user.save();
-  }
 
-  let items = [];
+    let ta, sh;
 
-  user.cart.forEach(async (c) => {
-    let x = await Item.findById(c.item).select(
-      "name variant price description"
-    );
-    let i = {
-      item: c.item,
-      itemName: x.name,
-      price: x.price,
-      description: x.description.substring(0, 20) + "...",
-      variant: x.variant,
-      amount: c.quantity * x.price,
-      quantity: c.quantity,
+    if (tax_shipping < 0) {
+      return res
+        .status(401)
+        .send("Server Error due to invalid shipping amount");
+    }
+
+    if (tax_shipping === 0) {
+      ta = sh = 0;
+    } else if (tax_shipping === 4.95) {
+      sh = 4.95;
+      ta = 0;
+    } else {
+      sh = 9.9;
+      ta = 0;
+    }
+
+    const invoice = {
+      shipping: {
+        name: order.userName,
+        address: user.address,
+        suburb: user.suburb,
+        country: "Australia",
+        postal_code: user.zipCode,
+      },
+      items: items,
+
+      instructions: order.instructions,
+      subtotal: subtotal,
+      shippingAmount: sh,
+      tax: ta,
+      total: totalAmount,
+      invoice_nr: order._id,
     };
 
-    items.push(i);
-  });
+    const code = shortid.generate();
+    await createInvoice(invoice, `${code}.pdf`);
 
-  let item = await Item.findById(user.cart[0].item);
-  let shop = item.shop;
-  const s = await Shop.findById(shop).select("name email");
+    const information = {
+      userName: user.name,
+      shopName: s.name,
+      total: totalAmount.toFixed(2),
+    };
+    const mailHtml = await orderAdmin(information);
 
-  const order = new Order({
-    items,
-    user: user._id,
-    userName: user.name,
-    shop,
-    shopName: s.name,
-    deliveryAddress: user.address,
-    instructions,
-    subtotal,
-    tax_shipping,
-    totalAmount,
-  });
+    // Send order confirmation email to user and admin
+    let HelperOptions = {
+      from: process.env.EmailName + "<" + process.env.EmailId + ">",
+      to: "farmgateishere@gmail.com",
+      subject: "Hey admin, a purchase has been made!",
+      html: mailHtml,
+      attachments: [
+        {
+          filename: `${code}.pdf`,
+          path: path.join(__dirname, `../${code}.pdf`),
+          contentType: "application/pdf",
+        },
+      ],
+    };
 
-  await order.save();
+    transporter.sendMail(HelperOptions, (err, info) => {
+      if (err) throw err;
+      console.log("The message was sent");
+    });
 
-  user.cart = [];
-  user.history.push(order);
-  await user.save();
+    const mailHtml2 = orderUser(information);
+    let HelperOptions2 = {
+      from: process.env.EmailName + "<" + process.env.EmailId + ">",
+      to: user.email,
+      subject: "Your order on Farmgate Market was successful",
+      html: mailHtml2,
+      attachments: [
+        {
+          filename: `${code}.pdf`,
+          path: path.join(__dirname, `../${code}.pdf`),
+          contentType: "application/pdf",
+        },
+      ],
+    };
 
-  let ta, sh;
+    transporter.sendMail(HelperOptions2, (err, info) => {
+      if (err) throw err;
+      console.log("The message was sent...");
+    });
 
-  if (tax_shipping < 0) {
-    return res.status(401).send("Server Error due to invalid shipping amount");
+    const mailHtml3 = orderShop(information);
+    let HelperOptions3 = {
+      from: process.env.EmailName + "<" + process.env.EmailId + ">",
+      to: s.email,
+      subject: "You have a new order on Farmgate Market",
+      html: mailHtml3,
+      attachments: [
+        {
+          filename: `${code}.pdf`,
+          path: path.join(__dirname, `../${code}.pdf`),
+          contentType: "application/pdf",
+        },
+      ],
+    };
+
+    transporter.sendMail(HelperOptions3, (err, info) => {
+      if (err) throw err;
+      console.log("The message was sent...");
+    });
+
+    return res.json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
   }
-
-  if (tax_shipping === 0) {
-    ta = sh = 0;
-  } else if (tax_shipping === 4.95) {
-    sh = 4.95;
-    ta = 0;
-  } else {
-    sh = 9.9;
-    ta = 0;
-  }
-
-  const invoice = {
-    shipping: {
-      name: order.userName,
-      address: user.address,
-      suburb: user.suburb,
-      country: "Australia",
-      postal_code: user.zipCode,
-    },
-    items: items,
-
-    instructions: order.instructions,
-    subtotal: subtotal,
-    shippingAmount: sh,
-    tax: ta,
-    total: totalAmount,
-    invoice_nr: order._id,
-  };
-
-  const code = shortid.generate();
-  await createInvoice(invoice, `${code}.pdf`);
-
-  const information = {
-    userName: user.name,
-    shopName: s.name,
-    total: totalAmount.toFixed(2),
-  };
-  const mailHtml = await orderAdmin(information);
-
-  // Send order confirmation email to user and admin
-  let HelperOptions = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: "farmgateishere@gmail.com",
-    subject: "Hey admin, a purchase has been made!",
-    html: mailHtml,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
-
-  transporter.sendMail(HelperOptions, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent");
-  });
-
-  const mailHtml2 = orderUser(information);
-  let HelperOptions2 = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: user.email,
-    subject: "Your order on Farmgate Market was successful",
-    html: mailHtml2,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
-
-  transporter.sendMail(HelperOptions2, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent...");
-  });
-
-  const mailHtml3 = orderShop(information);
-  let HelperOptions3 = {
-    from: process.env.EmailName + "<" + process.env.EmailId + ">",
-    to: s.email,
-    subject: "You have a new order on Farmgate Market",
-    html: mailHtml3,
-    attachments: [
-      {
-        filename: `${code}.pdf`,
-        path: path.join(__dirname, `../${code}.pdf`),
-        contentType: "application/pdf",
-      },
-    ],
-  };
-
-  transporter.sendMail(HelperOptions3, (err, info) => {
-    if (err) throw err;
-    console.log("The message was sent...");
-  });
-
-  return res.json({
-    success: true,
-    data: user,
-  });
 });
 
 // @route   GET /api/order/:id
@@ -237,10 +249,10 @@ router.get("/:id", async (req, res) => {
       success: true,
       data: order,
     });
-  } catch (err) {
-    return res.json({
+  } catch (error) {
+    return res.status(500).json({
       success: false,
-      message: err,
+      message: error,
     });
   }
 });
@@ -249,14 +261,14 @@ router.get("/:id", async (req, res) => {
 // @desc    Get all orders for a particular shop
 // @access  Private
 router.get("/shop/:id", shopAuth, async (req, res) => {
-  if (req.shop.id != req.params.id) {
-    return res.json({
-      success: false,
-      message: "Sorry, you are not authorized!",
-    });
-  }
-
   try {
+    if (req.shop.id != req.params.id) {
+      return res.json({
+        success: false,
+        message: "Sorry, you are not authorized!",
+      });
+    }
+
     const orders = await Order.find({ shop: req.params.id }).sort("-createdAt");
 
     return res.json({
@@ -276,14 +288,14 @@ router.get("/shop/:id", shopAuth, async (req, res) => {
 // @desc    Get all orders for a particular user
 // @access  Private
 router.get("/user/:id", auth, async (req, res) => {
-  if (req.user.id != req.params.id) {
-    return res.json({
-      success: false,
-      message: "Sorry, you are not authorized!",
-    });
-  }
-
   try {
+    if (req.user.id != req.params.id) {
+      return res.json({
+        success: false,
+        message: "Sorry, you are not authorized!",
+      });
+    }
+
     const orders = await Order.find({ user: req.params.id }).sort("-createdAt");
 
     return res.json({
@@ -324,22 +336,27 @@ router.get("/admin/all", async (req, res) => {
 // @desc    Update order by admin
 // @access  Private
 router.put("/admin/update/:id", adminAuth, async (req, res) => {
-  await Order.update(
-    { _id: req.params.id },
-    { $set: { status: req.body.status } },
-    (err, order) => {
-      if (err) {
+  try {
+    await Order.update(
+      { _id: req.params.id },
+      { $set: { status: req.body.status } },
+      (err, order) => {
+        if (err) {
+          return res.json({
+            success: false,
+            message: err,
+          });
+        }
         return res.json({
-          success: false,
-          message: err,
+          success: true,
+          data: order,
         });
       }
-      return res.json({
-        success: true,
-        data: order,
-      });
-    }
-  );
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   GET /api/order/invoice/:shopId

@@ -1,27 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const CertificateSchema = new mongoose.Schema({
-
+const CertificateSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: [true, 'Please add a name'],
-        trim: true
+      type: String,
+      required: [true, "Please add a name"],
+      trim: true,
     },
 
     url: {
-        type: String,
-        required: [true, 'Please add a valid url'],
-        trim: true,
+      type: String,
+      required: [true, "Please add a valid url"],
+      trim: true,
     },
-   
+
     shop: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shop',
-        required: [true, 'Please add a shop'],
-    }    
-
-}, {timestamps: true}
-
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shop",
+      required: [true, "Please add a shop"],
+    },
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('Certificate', CertificateSchema);
+module.exports = mongoose.model("Certificate", CertificateSchema);

@@ -36,206 +36,231 @@ const Shop = require("../models/shop");
 // @desc    Add new item
 // @access  Private
 router.post("/", auth, async (req, res) => {
-  // Formidable is used to handle form data. we are using it to handle image upload
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true; // Extension for images
+  try {
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true; // Extension for images
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        success: false,
-        message: "Image could not be uploaded",
-      });
-    }
-
-    // check for all fields
-    const { name, price, variant, quality, description } = fields; // Destructure
-
-    if (!name || !price || !variant || !quality || !description) {
-      return res.status(400).json({
-        success: false,
-        message: "Please fill all the fields",
-      });
-    }
-
-    // Create new item now
-    let item = new Item(fields);
-    item.shop = req.shop.id;
-    // Handle files
-    if (files.image) {
-      // Validate file size less than 1 MB
-      if (files.image.size > 1000000) {
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
         return res.status(400).json({
           success: false,
-          message: "File size should be less than 1 MB",
+          message: "Image could not be uploaded",
         });
       }
 
-      item.image.data = fs.readFileSync(files.image.path);
-      item.image.contentType = files.image.type;
-    }
+      // check for all fields
+      const { name, price, variant, quality, description } = fields; // Destructure
 
-    // Add the item to shop's item array
-    const shop = await Shop.findById(req.shop.id);
-    shop.items.unshift(item);
-    await shop.save();
+      if (!name || !price || !variant || !quality || !description) {
+        return res.status(400).json({
+          success: false,
+          message: "Please fill all the fields",
+        });
+      }
 
-    // Save to database
-    await item.save();
+      // Create new item now
+      let item = new Item(fields);
+      item.shop = req.shop.id;
+      // Handle files
+      if (files.image) {
+        // Validate file size less than 1 MB
+        if (files.image.size > 1000000) {
+          return res.status(400).json({
+            success: false,
+            message: "File size should be less than 1 MB",
+          });
+        }
 
-    return res.json({
-      success: true,
-      message: "Item added",
+        item.image.data = fs.readFileSync(files.image.path);
+        item.image.contentType = files.image.type;
+      }
+
+      // Add the item to shop's item array
+      const shop = await Shop.findById(req.shop.id);
+      shop.items.unshift(item);
+      await shop.save();
+
+      // Save to database
+      await item.save();
+
+      return res.json({
+        success: true,
+        message: "Item added",
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   GET /api/items/:id
 // @desc    Get a particular item
 // @access  Public
 router.get("/:id", async (req, res) => {
-  if (!MongoObjectId.isValid(req.params.id)) {
-    //   id is not valid
+  try {
+    if (!MongoObjectId.isValid(req.params.id)) {
+      //   id is not valid
+      return res.json({
+        success: false,
+        message: "Item Not Found",
+      });
+    }
+
+    const item = await Item.findById(req.params.id).select("-image");
+
+    if (!item) {
+      return res.json({
+        success: false,
+        message: "Item not found!",
+      });
+    }
+
     return res.json({
-      success: false,
-      message: "Item Not Found",
+      success: true,
+      data: item,
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
   }
-
-  const item = await Item.findById(req.params.id).select("-image");
-
-  if (!item) {
-    return res.json({
-      success: false,
-      message: "Item not found!",
-    });
-  }
-
-  return res.json({
-    success: true,
-    data: item,
-  });
 });
 
 // @route   PUT /api/items/:id
 // @desc    Update item
 // @access  Private
 router.put("/:id", auth, async (req, res) => {
-  // Formidable is used to handle form data. we are using it to handle image upload
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true; // Extension for images
+  try {
+    // Formidable is used to handle form data. we are using it to handle image upload
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true; // Extension for images
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        success: false,
-        message: "Image could not be uploaded",
-      });
-    }
-
-    // Saving product to the Database
-    const item = await Item.findByIdAndUpdate(req.params.id, fields, {
-      new: true,
-    });
-
-    // Handle files
-    if (files.image) {
-      // Validate file size less than 1 MB
-      if (files.image.size > 1000000) {
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
         return res.status(400).json({
           success: false,
-          message: "File size should be less than 1 MB",
+          message: "Image could not be uploaded",
         });
       }
 
-      item.image.data = fs.readFileSync(files.image.path);
-      item.image.contentType = files.image.type;
-    }
+      // Saving product to the Database
+      const item = await Item.findByIdAndUpdate(req.params.id, fields, {
+        new: true,
+      });
 
-    // Save to database
-    await item.save();
+      // Handle files
+      if (files.image) {
+        // Validate file size less than 1 MB
+        if (files.image.size > 1000000) {
+          return res.status(400).json({
+            success: false,
+            message: "File size should be less than 1 MB",
+          });
+        }
 
-    return res.json({
-      success: true,
-      message: "Item Modified",
+        item.image.data = fs.readFileSync(files.image.path);
+        item.image.contentType = files.image.type;
+      }
+
+      // Save to database
+      await item.save();
+
+      return res.json({
+        success: true,
+        message: "Item Modified",
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   DELETE /api/items/:id
 // @desc    Delete item using item id
 // @access  Private
 router.delete("/:id", auth, async (req, res) => {
-  // Check whether the shop is authorized or not
-  const item = await Item.findById(req.params.id);
-  if (
-    (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id)) ||
-    !item
-  ) {
-    return res.json({
-      success: false,
-      message: "You are not authorized to perform this action!",
-    });
-  }
-
-  if (!MongoObjectId.isValid(req.params.id)) {
-    //   id is not valid
-    return res.json({
-      success: false,
-      message: "Item Not Found",
-    });
-  }
-
-  // cascade delete the item from shop schema as well
-  const shop = await Shop.findById(item.shop);
-
-  let x = 0;
-  for (x = 0; x < shop.items.length; x++) {
-    if (JSON.stringify(shop.items[x]) === JSON.stringify(item._id)) {
-      shop.items.splice(x, 1);
+  try {
+    // Check whether the shop is authorized or not
+    const item = await Item.findById(req.params.id);
+    if (
+      (item && JSON.stringify(item.shop) !== JSON.stringify(req.shop.id)) ||
+      !item
+    ) {
+      return res.json({
+        success: false,
+        message: "You are not authorized to perform this action!",
+      });
     }
-  }
 
-  await shop.save();
-
-  await Item.findByIdAndDelete(req.params.id, async (err, item) => {
-    if (err) {
+    if (!MongoObjectId.isValid(req.params.id)) {
+      //   id is not valid
       return res.json({
         success: false,
         message: "Item Not Found",
       });
     }
-  });
 
-  return res.json({
-    success: true,
-    message: "Item deleted",
-  });
+    // cascade delete the item from shop schema as well
+    const shop = await Shop.findById(item.shop);
+
+    let x = 0;
+    for (x = 0; x < shop.items.length; x++) {
+      if (JSON.stringify(shop.items[x]) === JSON.stringify(item._id)) {
+        shop.items.splice(x, 1);
+      }
+    }
+
+    await shop.save();
+
+    await Item.findByIdAndDelete(req.params.id, async (err, item) => {
+      if (err) {
+        return res.json({
+          success: false,
+          message: "Item Not Found",
+        });
+      }
+    });
+
+    return res.json({
+      success: true,
+      message: "Item deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   GET ${BASE_URL}/api/items/photo/:id
 // @desc    Display image using item id
 // @access  Public
 router.get("/photo/:id", async (req, res) => {
-  if (!MongoObjectId.isValid(req.params.id)) {
-    //   id is not valid
-    return res.json({
-      success: false,
-      message: "Item Not Found",
-    });
+  try {
+    if (!MongoObjectId.isValid(req.params.id)) {
+      //   id is not valid
+      return res.json({
+        success: false,
+        message: "Item Not Found",
+      });
+    }
+
+    const result = await Item.findById(req.params.id);
+
+    if (!result) {
+      res.json({
+        success: false,
+        message: "Image not found",
+      });
+    }
+
+    res.contentType("image/jpeg");
+    res.send(result.image.data);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
   }
-
-  const result = await Item.findById(req.params.id);
-
-  if (!result) {
-    res.json({
-      success: false,
-      message: "Image not found",
-    });
-  }
-
-  res.contentType("image/jpeg");
-  res.send(result.image.data);
 });
 
 module.exports = router;
