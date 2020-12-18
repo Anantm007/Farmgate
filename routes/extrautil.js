@@ -76,77 +76,84 @@ router.get("/promoMail", async (req, res) => {
 // @desc    Generate PDF invoice using the user id
 // @access  Public
 router.get("/specialInvoice/:id", async (req, res) => {
-  const order = await Order.findById(req.params.id);
-  if (!order) {
-    return res.json({
-      success: false,
-      message: "Order not found",
-    });
-  }
-  const user = await User.findById(order.user).select("address zipCode suburb");
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+    const user = await User.findById(order.user).select(
+      "address zipCode suburb"
+    );
 
-  await Promise.all(
-    order.items.map(async (item) => {
-      let fullItem = await Item.findById(item.item).select("-image").exec();
-      let x = {
-        itemName: fullItem.name,
-        description: fullItem.description,
-        price: fullItem.price,
-        quantity: item.quantity,
-        variant: fullItem.variant,
-        amount: item.quantity * fullItem.price,
-      };
-      return x;
-    })
-  )
-    .then((orderItems) => {
-      const invoice = {
-        shipping: {
-          name: order.userName,
-          address: user.address,
-          suburb: user.suburb,
-          country: "Australia",
-          postal_code: user.zipCode,
-        },
-        instructions: order.instructions,
-        items: orderItems,
-        subtotal: order.subtotal,
-        shippingAmount: order.tax_shipping, // Be careful
-        tax: 0,
-        total: order.totalAmount,
-        invoice_nr: order._id,
-      };
-      const code = shortid.generate();
-      createInvoice(invoice, `${code}.pdf`);
-
-      // Send email to admin
-      let HelperOptions = {
-        from: process.env.EmailName + "<" + process.env.EmailId + ">",
-        to: "farmgateishere@gmail.com",
-        subject: `Re-generated Invoice for Order ${order._id}`,
-        text: `Hello Admin, \n\nPlease find the attached re-generated invoice of ${order.userName} of $${order.totalAmount} purchased from ${order.shopName}`,
-        attachments: [
-          {
-            filename: `${code}.pdf`,
-            path: path.join(__dirname, `../${code}.pdf`),
-            contentType: "application/pdf",
+    await Promise.all(
+      order.items.map(async (item) => {
+        let fullItem = await Item.findById(item.item).select("-image").exec();
+        let x = {
+          itemName: fullItem.name,
+          description: fullItem.description,
+          price: fullItem.price,
+          quantity: item.quantity,
+          variant: fullItem.variant,
+          amount: item.quantity * fullItem.price,
+        };
+        return x;
+      })
+    )
+      .then((orderItems) => {
+        const invoice = {
+          shipping: {
+            name: order.userName,
+            address: user.address,
+            suburb: user.suburb,
+            country: "Australia",
+            postal_code: user.zipCode,
           },
-        ],
-      };
+          instructions: order.instructions,
+          items: orderItems,
+          subtotal: order.subtotal,
+          shippingAmount: order.tax_shipping, // Be careful
+          tax: 0,
+          total: order.totalAmount,
+          invoice_nr: order._id,
+        };
+        const code = shortid.generate();
+        createInvoice(invoice, `${code}.pdf`);
 
-      transporter.sendMail(HelperOptions, (err, info) => {
-        if (err) throw err;
-        console.log("The message was sent");
-      });
+        // Send email to admin
+        let HelperOptions = {
+          from: process.env.EmailName + "<" + process.env.EmailId + ">",
+          to: "farmgateishere@gmail.com",
+          subject: `Re-generated Invoice for Order ${order._id}`,
+          text: `Hello Admin, \n\nPlease find the attached re-generated invoice of ${order.userName} of $${order.totalAmount} purchased from ${order.shopName}`,
+          attachments: [
+            {
+              filename: `${code}.pdf`,
+              path: path.join(__dirname, `../${code}.pdf`),
+              contentType: "application/pdf",
+            },
+          ],
+        };
 
-      return res.status(200).json({
-        success: true,
-        message: "Invoice sent to email ",
+        transporter.sendMail(HelperOptions, (err, info) => {
+          if (err) throw err;
+          console.log("The message was sent");
+        });
+
+        return res.status(200).json({
+          success: true,
+          message: "Invoice sent to email ",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error });
+  }
 });
 
 // @route   GET /api/util/cleanPostcodes

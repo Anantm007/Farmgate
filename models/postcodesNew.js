@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const PostCodesNewSchema = new mongoose.Schema({
+const PostCodesNewSchema = new mongoose.Schema(
+  {
     adminName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
 
     codes: {
-        type: Array
+      type: Array,
     },
-}, {timestamps: true}
-
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('PostCodesNew', PostCodesNewSchema);
+module.exports = mongoose.model("PostCodesNew", PostCodesNewSchema);
