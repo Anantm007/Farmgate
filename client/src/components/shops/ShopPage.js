@@ -9,7 +9,11 @@ import Navbar from "../layout/Navbar";
 import ShopListItems from "./ShopListItems";
 import BASE_URL from "../../utils/baseUrl";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 const ShopPage = (props) => {
+  const styles = useStyles();
+
   const shopId = props.match.params.id;
   const [shop, setShop] = useState([]);
   const [items, setItems] = useState([]);
@@ -102,6 +106,7 @@ const ShopPage = (props) => {
                   <br />
                   <strong>About: </strong>
                   {shop.description}
+                  <br />
                   <br />
                   <strong>Items Available: </strong>
                   {shop.items.length}
@@ -206,19 +211,25 @@ const ShopPage = (props) => {
                   data-ride="carousel">
                   <div className="carousel-inner" role="listbox">
                     <div className="carousel-item active">
-                      <img
-                        className="d-block img-fluid"
-                        alt=""
-                        src={`${BASE_URL}/api/shops/photo/${shop._id}`}
-                        style={{ height: "30rem", width: "30rem" }}
-                      />
+                      <div className={styles.shopImageStyle}>
+                        <img
+                          className="d-block img-fluid"
+                          alt=""
+                          src={`${BASE_URL}/api/shops/photo/${shop._id}`}
+                          style={{
+                            marginTop: "2rem",
+                            height: "30rem",
+                            width: "30rem",
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <br />
                 <br />
-                <h3>Shop Items Available</h3>
+                <h3 style={{ textAlign: "center" }}>Shop Items Available</h3>
                 {showError()}
                 <br />
 
@@ -263,5 +274,13 @@ const ShopPage = (props) => {
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  shopImageStyle: {
+    "@media screen and (min-width: 576px)": {
+      marginLeft: "8rem",
+    },
+  },
+});
 
 export default ShopPage;

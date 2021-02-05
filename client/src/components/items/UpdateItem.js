@@ -171,6 +171,7 @@ const UpdateItem = (props) => {
           <option value="Organic (not certified)">
             Organic (not certified)
           </option>
+          <option value="SA Grown">SA Grown</option>
           <option value="No Category">No Category</option>
         </select>
       </div>

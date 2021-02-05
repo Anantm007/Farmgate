@@ -6,12 +6,16 @@ import {
   isAuthenticated,
   findSuburbFromCode,
 } from "../userAuth";
+import { makeStyles } from "@material-ui/core/styles";
+
 import Footer from "../layout/Footer";
 
 import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
 import PrivacyPolicy from "../../utils/Farmgate_Ag_Privacy_Policy.pdf";
 
 const Register = () => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -288,16 +292,28 @@ const Register = () => {
       <div
         style={{
           backgroundImage: "url(" + require("../../images/login.jpg") + ")",
-          backgroundSize: "100% 100%",
+          backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>
         {showSuccess()}
         {signUpForm()}
         {redirectUser()}
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  footer: {
+    "@media (min-height: 700px)": {
+      paddingTop: "3rem",
+      height: "15rem",
+      background: "#649d66",
+    },
+  },
+});
 
 export default Register;
