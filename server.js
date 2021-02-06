@@ -80,7 +80,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Cron job to make a backup of database everyday at 12:00 AM (Indian Standard Time -> As conigured on the server)
+// Cron job to make a backup of database everyday at 12:00 AM (Indian Standard Time -> As configured on the server)
 // cron.schedule("0 0 * * *", () => {
 cron.schedule("0 0 * * *", () => {
   console.log("check");
