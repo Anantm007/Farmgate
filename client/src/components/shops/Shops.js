@@ -36,7 +36,7 @@ const Shops = () => {
 
       <div className="row shop-container container-fluid">
         {shops.map((shop, i) => (
-          <div key={i} className="col-sm-4">
+          <div key={i} className="col-xs-12 col-sm-6 col-md-4">
             <ShopsDetailCard shop={shop} />
           </div>
         ))}

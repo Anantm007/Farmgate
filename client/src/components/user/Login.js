@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../userAuth";
+import { makeStyles } from "@material-ui/core/styles";
 import ForgotPass from "./ForgotPass";
 import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
 
 const Login = () => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -142,7 +145,7 @@ const Login = () => {
       <div
         style={{
           backgroundImage: "url(" + require("../../images/login.jpg") + ")",
-          backgroundSize: "100% 100%",
+          backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>
         {showError()}
@@ -150,9 +153,21 @@ const Login = () => {
         {redirectUser()}
         {signUpForm()}
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  footer: {
+    "@media (min-height: 700px)": {
+      paddingTop: "3rem",
+      height: "15rem",
+      background: "#649d66",
+    },
+  },
+});
 
 export default Login;

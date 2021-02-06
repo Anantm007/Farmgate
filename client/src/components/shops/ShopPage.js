@@ -95,11 +95,12 @@ const ShopPage = (props) => {
         <div>{showLoading()}</div>
       ) : (
         <Fragment>
+          <h1 className={styles.shopNameStyle}>{shop.name}</h1>
+
           <div className="container">
             <div className="row">
               <div className="col-lg-4">
-                <h1 className="my-4">{shop.name}</h1>
-                <div>
+                <div style={{ marginTop: "2rem" }}>
                   <strong>Address: </strong>
                   {shop.address}
                   <br />
@@ -276,9 +277,14 @@ const ShopPage = (props) => {
 };
 
 const useStyles = makeStyles({
+  shopNameStyle: {
+    textAlign: "center",
+    marginTop: "2rem",
+  },
   shopImageStyle: {
     "@media screen and (min-width: 576px)": {
       marginLeft: "8rem",
+      marginTop: "-2rem",
     },
   },
 });
