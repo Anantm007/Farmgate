@@ -309,8 +309,8 @@ const Register = () => {
 const useStyles = makeStyles({
   footer: {
     "@media (min-height: 700px)": {
-      paddingTop: "3rem",
-      height: "15rem",
+      paddingTop: "5rem",
+      height: "18rem",
       background: "#649d66",
     },
   },
