@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { signin, authenticate, shopIsAuthenticated } from "../shopAuth";
+import { makeStyles } from "@material-ui/core/styles";
 import ForgotPass from "./ForgotPass";
 import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
 
 const ShopLogin = () => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -137,7 +140,7 @@ const ShopLogin = () => {
       <div
         style={{
           backgroundImage: "url(" + require("../../images/login.jpg") + ")",
-          backgroundSize: "100% 100%",
+          backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>
         {showError()}
@@ -145,9 +148,21 @@ const ShopLogin = () => {
         {redirectShop()}
         {signUpForm()}
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  footer: {
+    "@media (min-height: 700px)": {
+      paddingTop: "5rem",
+      height: "18rem",
+      background: "#649d66",
+    },
+  },
+});
 
 export default ShopLogin;
