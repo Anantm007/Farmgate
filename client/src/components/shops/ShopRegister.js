@@ -2,11 +2,14 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { signup, authenticate, shopIsAuthenticated } from "../shopAuth";
 import Footer from "../layout/Footer";
+import { makeStyles } from "@material-ui/core/styles";
 
 import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
 import PrivacyPolicy from "../../utils/Farmgate_Ag_Privacy_Policy.pdf";
 
 const Register = () => {
+  const styles = useStyles();
+
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -341,16 +344,28 @@ const Register = () => {
       <div
         style={{
           backgroundImage: "url(" + require("../../images/login.jpg") + ")",
-          backgroundSize: "100% 100%",
+          backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>
         {showSuccess()}
         {signUpForm()}
         {redirectShop()}
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </Fragment>
   );
 };
+
+const useStyles = makeStyles({
+  footer: {
+    "@media (min-height: 700px)": {
+      paddingTop: "5rem",
+      height: "18rem",
+      background: "#649d66",
+    },
+  },
+});
 
 export default Register;
