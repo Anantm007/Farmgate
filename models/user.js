@@ -77,6 +77,12 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
 
+    twentyPromo: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+
     newUser: {
       type: Boolean,
       required: true,

@@ -239,4 +239,46 @@ router.get("/addPromo", async (req, res) => {
   }
 });
 
+// @route   GET /api/util/addPromo
+// @desc    Add fortyPromo field to all users
+// @access  Public
+router.get("/addPromo", async (req, res) => {
+  try {
+    let users = await User.find({}).select("_id");
+
+    users.forEach(async (user) => {
+      user.fortyPromo = 0;
+      await user.save();
+    });
+
+    users = await User.find({}).select("_id name fortyPromo");
+
+    return res.json(users);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
+
+// @route   GET /api/util/addPromo/twenty
+// @desc    Add twentyPromo field to all users
+// @access  Public
+router.get("/addPromo/twenty", async (req, res) => {
+  try {
+    let users = await User.find({}).select("_id");
+
+    users.forEach(async (user) => {
+      user.twentyPromo = 0;
+      await user.save();
+    });
+
+    users = await User.find({}).select("_id name twentyPromo");
+
+    return res.json(users);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
+
 module.exports = router;

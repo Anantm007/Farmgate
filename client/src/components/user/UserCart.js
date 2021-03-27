@@ -19,8 +19,10 @@ const UserCart = () => {
     shopName: "",
     loading: false,
     success: false,
-    fortyPromoSuccess: false,
-    fortyDiscountGiven: false,
+    // fortyPromoSuccess: false,
+    // fortyDiscountGiven: false,
+    twentyPromoSuccess: false,
+    twentyDiscountGiven: false,
     error: false,
     total: 0,
   });
@@ -32,8 +34,10 @@ const UserCart = () => {
     total,
     shopName,
     success,
-    fortyPromoSuccess,
-    fortyDiscountGiven,
+    // fortyPromoSuccess,
+    // fortyDiscountGiven,
+    twentyPromoSuccess,
+    twentyDiscountGiven,
     error,
     promoCode,
     loading,
@@ -47,8 +51,10 @@ const UserCart = () => {
     e.preventDefault();
 
     if (
-      (promoCode !== "fortyforfree" && user.newUser && shipping === 4.95) ||
-      (!user.newUser && shipping === 0)
+      // (promoCode !== "fortyforfree" && user.newUser && shipping === 4.95) ||
+      (promoCode !== "twofortwenty" && user.newUser && shipping === 4.95) ||
+      (!user.newUser && shipping === 0) ||
+      twentyDiscountGiven === true
     ) {
       setValues({
         ...values,
@@ -65,16 +71,22 @@ const UserCart = () => {
           ...values,
           error: data.message,
           success: false,
-          fortyPromoSuccess: false,
-          fortyDiscountGiven: false,
+          // fortyPromoSuccess: false,
+          // fortyDiscountGiven: false,
+          twentyPromoSuccess: false,
+          twentyDiscountGiven: false,
           loading: false,
         });
       } else {
         if (
-          data.promoApplied === "fortyforfree" &&
-          data.giveFortyDiscount === true
+          // data.promoApplied === "fortyforfree" &&
+          // data.giveFortyDiscount === true
+
+          data.promoApplied === "twofortwenty" &&
+          data.giveTwentyDiscount === true
         ) {
-          let newSubtotal = subtotal - 40;
+          // let newSubtotal = subtotal - 40;
+          let newSubtotal = subtotal - 20;
           if (newSubtotal < 0) {
             newSubtotal = 0;
           }
@@ -87,15 +99,20 @@ const UserCart = () => {
             shipping: newShipping,
             tax: 0,
             total: getTotal(),
-            fortyPromoSuccess: `Congrats! Discount of (upto) $40 applied on this order`,
-            fortyDiscountGiven: true,
+            // fortyPromoSuccess: `Congrats! Discount of (upto) $40 applied on this order`,
+            // fortyDiscountGiven: true,
+            twentyPromoSuccess: `Congrats! Discount of (upto) $20 applied on this order`,
+            twentyDiscountGiven: true,
             success: true,
             error: false,
             loading: false,
           });
         } else if (
-          data.promoApplied === "fortyforfree" &&
-          data.giveFortyDiscount === false
+          // data.promoApplied === "fortyforfree" &&
+          // data.giveFortyDiscount === false
+
+          data.promoApplied === "twofortwenty" &&
+          data.giveTwentyDiscount === false
         ) {
           const newShipping = user.newUser ? 9.9 : 4.95;
 
@@ -105,23 +122,31 @@ const UserCart = () => {
             shipping: newShipping,
             tax: 0,
             total: getTotal(),
-            fortyPromoSuccess: `Promo Code applied. Apply this promo code on ${
-              4 - data.appliedCounter - 1
-            } more orders to get upto $40 off.`,
-            fortyDiscountGiven: false,
+            // fortyPromoSuccess: `Promo Code applied. Apply this promo code on ${
+            //   4 - data.appliedCounter - 1
+            // } more orders to get upto $40 off.`,
+            // fortyDiscountGiven: false,
+            twentyPromoSuccess: `Promo Code applied. Apply this promo code on ${
+              2 - data.appliedCounter - 1
+            } more orders to get upto $20 off.`,
+            twentyDiscountGiven: false,
+
             success: false,
             error: false,
             loading: false,
           });
-        } else if (data.promoApplied !== "fortyforfree") {
+          // } else if (data.promoApplied !== "fortyforfree" ) {
+        } else if (data.promoApplied !== "twofortwenty") {
           setValues({
             ...values,
             shipping: shipping - 4.95,
             promoCode: data.promoApplied,
             tax: 0,
             total: getTotal(),
-            fortyPromoSuccess: false,
-            fortyDiscountGiven: false,
+            // fortyPromoSuccess: false,
+            // fortyDiscountGiven: false,
+            twentyPromoSuccess: false,
+            twentyDiscountGiven: false,
             success: true,
             error: false,
             loading: false,
@@ -177,12 +202,22 @@ const UserCart = () => {
     );
   };
 
-  const showFortySuccess = () => {
+  // const showFortySuccess = () => {
+  //   return (
+  //     <div
+  //       className="alert alert-success"
+  //       style={{ display: fortyPromoSuccess ? "" : "none" }}>
+  //       {fortyPromoSuccess}
+  //     </div>
+  //   );
+  // };
+
+  const showTwentySuccess = () => {
     return (
       <div
         className="alert alert-success"
-        style={{ display: fortyPromoSuccess ? "" : "none" }}>
-        {fortyPromoSuccess}
+        style={{ display: twentyPromoSuccess ? "" : "none" }}>
+        {twentyPromoSuccess}
       </div>
     );
   };
@@ -250,7 +285,8 @@ const UserCart = () => {
             </button>
             <br />
             {showSuccess()}
-            {showFortySuccess()}
+            {/* {showFortySuccess()} */}
+            {showTwentySuccess()}
             {showError()}
           </div>
 
@@ -300,7 +336,8 @@ const UserCart = () => {
                 <strong>(AUD) ${getTotal()}</strong>
               </li>
             </ul>
-            {user.cart.length >= 1 && (subtotal > 25 || fortyDiscountGiven) ? (
+            {/* {user.cart.length >= 1 && (subtotal > 25 || fortyDiscountGiven) ? ( */}
+            {user.cart.length >= 1 && (subtotal > 25 || twentyDiscountGiven) ? (
               <Link
                 to={{
                   pathname: "/checkout",
@@ -322,7 +359,8 @@ const UserCart = () => {
                 Proceed to checkout
               </Link>
             )}
-            {subtotal <= 25 && !fortyDiscountGiven && (
+            {/* {subtotal <= 25 && !fortyDiscountGiven && ( */}
+            {subtotal <= 25 && !twentyDiscountGiven && (
               <strong>* Min. subtotal amount allowed to checkout is $25</strong>
             )}
             <br />
