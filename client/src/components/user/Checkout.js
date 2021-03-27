@@ -26,7 +26,8 @@ const Checkout = (props) => {
 
     if (
       props.location.state.subtotal < 25 &&
-      props.location.state.promoCode !== "fortyforfree"
+      // props.location.state.promoCode !== "fortyforfree"
+      props.location.state.promoCode !== "twofortwenty"
     ) {
       window.location = "/cart";
     }

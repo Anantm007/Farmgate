@@ -75,8 +75,13 @@ router.post("/:id", auth, async (req, res) => {
       promoCode,
     } = req.body;
 
-    if (promoCode === "fortyforfree") {
-      user.fortyPromo = user.fortyPromo + 1;
+    // if (promoCode === "fortyforfree") {
+    //   user.fortyPromo = user.fortyPromo + 1;
+    //   await user.save();
+    // }
+
+    if (promoCode === "twofortwenty") {
+      user.twentyPromo = user.twentyPromo + 1;
       await user.save();
     }
 
@@ -472,23 +477,29 @@ router.post("/checkout/checkPromo", auth, async (req, res) => {
   try {
     const promoCode = req.body.promoCode;
 
-    if (promoCode === "fortyforfree") {
-      const user = await User.findById(req.user.id).select("fortyPromo");
-      let appliedCounter = user.fortyPromo;
-      appliedCounter %= 4;
-      if (appliedCounter === 3) {
+    // if (promoCode === "fortyforfree") {
+    //   const user = await User.findById(req.user.id).select("fortyPromo");
+    //   let appliedCounter = user.fortyPromo;
+
+    if (promoCode === "twofortwenty") {
+      const user = await User.findById(req.user.id).select("twentyPromo");
+      let appliedCounter = user.twentyPromo;
+      appliedCounter %= 2;
+      if (appliedCounter === 1) {
         return res.json({
           success: true,
           promoApplied: promoCode,
           appliedCounter,
-          giveFortyDiscount: true,
+          // giveFortyDiscount: true,
+          giveTwentyDiscount: true,
         });
       } else {
         return res.json({
           success: true,
           promoApplied: promoCode,
           appliedCounter,
-          giveFortyDiscount: false,
+          // giveFortyDiscount: false,
+          giveTwentyDiscount: false,
         });
       }
     } else if (
@@ -497,7 +508,8 @@ router.post("/checkout/checkPromo", auth, async (req, res) => {
     ) {
       return res.json({
         success: true,
-        giveFortyDiscount: false,
+        // giveFortyDiscount: false,
+        giveTwentyDiscount: false,
         promoApplied: promoCode,
       });
     } else {
