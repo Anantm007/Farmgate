@@ -15,7 +15,10 @@ const path = require("path");
 
 // Mongoose
 const mongoose = require("mongoose");
+
+// Util functions
 const { databaseBackup } = require("./routes/backup");
+const { buffer_image_items } = require("./routes/buffer-image");
 
 // Config variables
 require("dotenv").config();

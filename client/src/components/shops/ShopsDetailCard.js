@@ -1,28 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../userAuth";
-import { countItems } from "./apiShops";
-import BASE_URL from "../../utils/baseUrl";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 const ShopsCard = ({ shop }) => {
   const styles = useStyles();
 
-  const [noOfItems, setNoOfItems] = useState(0);
   const { user } = isAuthenticated();
   let role;
-
-  const CountItems = () => {
-    countItems(shop._id).then((data) => {
-      if (data && data.success === true) setNoOfItems(data.data);
-    });
-  };
-
-  useEffect(() => {
-    CountItems();
-    //eslint-disable-next-line
-  }, []);
 
   if (user) {
     role = user.role;
@@ -45,7 +31,7 @@ const ShopsCard = ({ shop }) => {
                   <p>
                     <img
                       className=" img-fluid"
-                      src={`${BASE_URL}/api/shops/photo/${shop._id}`}
+                      src={shop.photo}
                       alt="cardimage"
                     />
                   </p>

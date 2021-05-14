@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import BASE_URL from "../../utils/baseUrl";
 
 const ShopsCard = ({ shop }) => {
   return (
@@ -18,7 +17,7 @@ const ShopsCard = ({ shop }) => {
                 <p>
                   <img
                     className=" img-fluid"
-                    src={`${BASE_URL}/api/shops/photo/${shop._id}`}
+                    src={shop.photo}
                     alt="cardimage"
                   />
                 </p>

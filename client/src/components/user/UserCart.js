@@ -32,7 +32,6 @@ const UserCart = () => {
     tax,
     subtotal,
     total,
-    shopName,
     success,
     // fortyPromoSuccess,
     // fortyDiscountGiven,

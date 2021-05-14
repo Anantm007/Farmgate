@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import BASE_URL from "../../utils/baseUrl";
 
 const ShopItems = ({ item }) => {
   return (
@@ -10,7 +9,7 @@ const ShopItems = ({ item }) => {
           <div
             className="flip-card-inner"
             style={{
-              backgroundImage: `url(${BASE_URL}/api/items/photo/${item._id}`,
+              backgroundImage: `url("${item.photo}")`,
               backgroundSize: "19rem 20rem",
             }}>
             <div className="flip-card-front">
