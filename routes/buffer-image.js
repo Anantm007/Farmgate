@@ -34,7 +34,7 @@ const buffer_image_shops = async () => {
     });
 
     shop.photo = res.secure_url;
-    // shop.image = undefined;
+    shop.image = undefined;
     await shop.save();
 
     console.log("done", shop.name);
@@ -56,11 +56,11 @@ const buffer_image_items = async () => {
     });
 
     item.photo = res.secure_url;
-    // item.image = undefined;
+    item.image = undefined;
     await item.save();
 
     console.log("done", item.name);
   });
 };
 
-module.exports = { buffer_image_items };
+module.exports = { buffer_image_shops, buffer_image_items };
