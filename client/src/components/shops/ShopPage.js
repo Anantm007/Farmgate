@@ -7,7 +7,6 @@ import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
 import Navbar from "../layout/Navbar";
 import ShopListItems from "./ShopListItems";
-import BASE_URL from "../../utils/baseUrl";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -216,7 +215,7 @@ const ShopPage = (props) => {
                         <img
                           className="d-block img-fluid"
                           alt=""
-                          src={`${BASE_URL}/api/shops/photo/${shop._id}`}
+                          src={shop.photo}
                           style={{
                             marginTop: "2rem",
                             height: "30rem",

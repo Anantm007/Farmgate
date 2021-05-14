@@ -3,7 +3,6 @@ import { addToCart, updateUser } from "../user/apiUser";
 import Spinner from "../layout/Spinner";
 import { isAuthenticated } from "../userAuth";
 import { makeStyles } from "@material-ui/core/styles";
-import BASE_URL from "../../utils/baseUrl";
 
 const ShopItem = ({
   item,
@@ -114,7 +113,7 @@ const ShopItem = ({
                   )}
                 </div>
                 <img
-                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  src={item.photo}
                   className={styles.itemImage}
                   alt="itemImage"
                 />
@@ -137,7 +136,7 @@ const ShopItem = ({
                 </div>
                 <br />
                 <img
-                  src={`${BASE_URL}/api/items/photo/${item._id}`}
+                  src={item.photo}
                   className="hideImage"
                   style={{ height: "0", width: "0" }}
                   alt="img"

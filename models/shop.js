@@ -47,6 +47,10 @@ const ShopSchema = new mongoose.Schema(
       contentType: String,
     },
 
+    photo: {
+      type: String,
+    },
+
     ABN: {
       type: String,
       required: true,

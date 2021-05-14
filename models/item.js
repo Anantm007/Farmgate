@@ -14,6 +14,10 @@ const ItemSchema = new mongoose.Schema(
       contentType: String,
     },
 
+    photo: {
+      type: String,
+    },
+
     description: {
       type: String,
       required: [true, "Please enter a description"],
@@ -39,12 +43,6 @@ const ItemSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
       required: [true, "Please add item stock status"],
-    },
-
-    inSale: {
-      type: Boolean,
-      default: false,
-      required: [true, "Please add item sale status"],
     },
 
     shop: {
