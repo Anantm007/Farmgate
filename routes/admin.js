@@ -4,10 +4,23 @@ const router = express.Router();
 // Middleware for protecting routes
 const auth = require("../middleware/adminAuth");
 
+// Config variables
 require("dotenv").config();
+const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+
+// Cloudinary
+const cloudinary = require("cloudinary");
+
+// Configure cloudinary for upload
+cloudinary.v2.config({
+  cloud_name: "dtgqjl09r",
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
+});
+
+// Utils
 const formidable = require("formidable");
 const fs = require("fs");
-
 const MongoObjectId = require("mongoose").Types.ObjectId;
 
 // Models
@@ -214,8 +227,16 @@ router.put("/items/:id", auth, async (req, res) => {
           });
         }
 
-        item.image.data = fs.readFileSync(files.image.path);
-        item.image.contentType = files.image.type;
+        // Upload image to cloudinary
+        const res = await cloudinary.v2.uploader.upload(files.image.path, {
+          folder: "cloudImages",
+          use_filename: true,
+        });
+
+        item.photo = res.secure_url;
+
+        // item.image.data = fs.readFileSync(files.image.path);
+        // item.image.contentType = files.image.type;
       }
 
       // Save to database

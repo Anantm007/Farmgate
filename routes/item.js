@@ -4,7 +4,19 @@ const router = express.Router();
 // Middleware for protecting routes
 const auth = require("../middleware/shopAuth");
 
+// Config variables
 require("dotenv").config();
+const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+
+// Cloudinary
+const cloudinary = require("cloudinary");
+
+// Configure cloudinary for upload
+cloudinary.v2.config({
+  cloud_name: "dtgqjl09r",
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
+});
 
 // Form Data
 const formidable = require("formidable");
@@ -72,8 +84,16 @@ router.post("/", auth, async (req, res) => {
           });
         }
 
-        item.image.data = fs.readFileSync(files.image.path);
-        item.image.contentType = files.image.type;
+        // Upload image to cloudinary
+        const res = await cloudinary.v2.uploader.upload(files.image.path, {
+          folder: "cloudImages",
+          use_filename: true,
+        });
+
+        item.photo = res.secure_url;
+
+        // item.image.data = fs.readFileSync(files.image.path);
+        // item.image.contentType = files.image.type;
       }
 
       // Add the item to shop's item array
@@ -159,8 +179,16 @@ router.put("/:id", auth, async (req, res) => {
           });
         }
 
-        item.image.data = fs.readFileSync(files.image.path);
-        item.image.contentType = files.image.type;
+        // Upload image to cloudinary
+        const res = await cloudinary.v2.uploader.upload(files.image.path, {
+          folder: "cloudImages",
+          use_filename: true,
+        });
+
+        item.photo = res.secure_url;
+
+        // item.image.data = fs.readFileSync(files.image.path);
+        // item.image.contentType = files.image.type;
       }
 
       // Save to database
