@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import About3 from "../../images/about3.jpg";
+import { About3 } from "../../images";
 
 import { makeStyles } from "@material-ui/core/styles";
 

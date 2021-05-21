@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../images/logo.png";
+import { Logo } from "../../images";
 import { signout, isAuthenticated } from "../userAuth";
 import { shopSignout, shopIsAuthenticated } from "../shopAuth";
 import { cartLength } from "../user/apiUser";

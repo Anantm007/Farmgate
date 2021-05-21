@@ -18,7 +18,7 @@ const ShopPage = (props) => {
   const [items, setItems] = useState([]);
   const [certificates, setCertificates] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
