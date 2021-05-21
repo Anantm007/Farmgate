@@ -4,6 +4,8 @@ import { signin, authenticate, shopIsAuthenticated } from "../shopAuth";
 import { makeStyles } from "@material-ui/core/styles";
 import ForgotPass from "./ForgotPass";
 import Footer from "../layout/Footer";
+
+import { Login } from "../../images";
 import Spinner from "../layout/Spinner";
 
 const ShopLogin = () => {
@@ -139,7 +141,7 @@ const ShopLogin = () => {
     <Fragment>
       <div
         style={{
-          backgroundImage: "url(" + require("../../images/login.jpg") + ")",
+          backgroundImage: `url(${Login})`,
           backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>

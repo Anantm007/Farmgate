@@ -8,6 +8,7 @@ import {
 } from "../userAuth";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { Login } from "../../images";
 import Footer from "../layout/Footer";
 
 import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
@@ -291,7 +292,7 @@ const Register = () => {
     <Fragment>
       <div
         style={{
-          backgroundImage: "url(" + require("../../images/login.jpg") + ")",
+          backgroundImage: `url(${Login})`,
           backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>

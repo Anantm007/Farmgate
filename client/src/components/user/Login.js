@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ForgotPass from "./ForgotPass";
 import Footer from "../layout/Footer";
 import Spinner from "../layout/Spinner";
+import { Login as LoginImage } from "../../images";
 
 const Login = () => {
   const styles = useStyles();
@@ -144,7 +145,7 @@ const Login = () => {
     <Fragment>
       <div
         style={{
-          backgroundImage: "url(" + require("../../images/login.jpg") + ")",
+          backgroundImage: `url(${LoginImage})`,
           backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>

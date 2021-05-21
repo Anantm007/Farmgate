@@ -4,6 +4,8 @@ import { signup, authenticate, shopIsAuthenticated } from "../shopAuth";
 import Footer from "../layout/Footer";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { Login } from "../../images";
+
 import TermsAndConditions from "../../utils/TermsAndConditions.pdf";
 import PrivacyPolicy from "../../utils/Farmgate_Ag_Privacy_Policy.pdf";
 
@@ -343,7 +345,7 @@ const Register = () => {
     <Fragment>
       <div
         style={{
-          backgroundImage: "url(" + require("../../images/login.jpg") + ")",
+          backgroundImage: `url(${Login})`,
           backgroundSize: "100% 105%",
           backgroundRepeat: "no-repeat",
         }}>

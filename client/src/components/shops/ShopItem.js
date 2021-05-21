@@ -98,9 +98,7 @@ const ShopItem = ({
         {loading ? (
           showLoading()
         ) : (
-          <div
-            className="product"
-            style={{ margin: "2rem", minWidth: "22rem" }}>
+          <div className="product" style={{ margin: "2rem", minWidth: "22rem" }}>
             <div className="flip-card-inner" key={index}>
               <div className={styles.mainDiv}>
                 <div className={styles.saleBadge}>
