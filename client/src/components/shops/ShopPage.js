@@ -22,6 +22,13 @@ const ShopPage = (props) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 500,
+      behavior: "smooth",
+    });
+  };
+
   const loadShop = () => {
     getShop(shopId).then((data) => {
       if (data && data.success === false) {
@@ -58,6 +65,13 @@ const ShopPage = (props) => {
     });
   };
 
+  // Change page
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+
+    scrollToTop();
+  };
+
   const showLoading = () => loading && <Spinner />;
 
   const showError = () => error && <h3 className="text-center">{error}</h3>;
@@ -83,9 +97,6 @@ const ShopPage = (props) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItem = items.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Fragment>
