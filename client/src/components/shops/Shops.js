@@ -13,6 +13,8 @@ const Shops = () => {
       if (data && data.success === false) {
         setLoading(false);
       } else {
+        // Filter out 'wild flower' shop
+        data.data = data.data.filter(shop => shop._id !== "600cd690bc0d95715c4863b9");
         setShops(data.data);
         setLoading(false);
       }
@@ -36,7 +38,7 @@ const Shops = () => {
 
       <div className="row shop-container container-fluid">
         {shops.map((shop, i) => (
-          <div key={i} className="col-xs-12 col-sm-6 col-md-4">
+          <div key={i} className="col-xs-12 col-sm-6 col-md-6">
             <ShopsDetailCard shop={shop} />
           </div>
         ))}
