@@ -53,7 +53,7 @@ router.get("/promoMail", async (req, res) => {
       let HelperOptions = {
         from: process.env.EmailName + "<" + process.env.EmailId + ">",
         to: email,
-        subject: "How about forty dollars ($40) for free?",
+        subject: "How about twenty dollars ($20) for free?",
         html: mailHtml,
       };
 
