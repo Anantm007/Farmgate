@@ -13,6 +13,8 @@ const Shops = () => {
       if (data && data.success === false) {
         setLoading(false);
       } else {
+        // Filter out 'wild flower' shop
+        data.data = data.data.filter(shop => shop._id !== "600cd690bc0d95715c4863b9");
         setShops(data.data);
         setLoading(false);
       }

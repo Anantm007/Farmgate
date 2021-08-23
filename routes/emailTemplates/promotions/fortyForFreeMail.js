@@ -51,7 +51,7 @@ function forgotPassword(information) {
         line-height: inherit;
       }
 
-      a[x-apple-data-detectors="true"] {
+      a[x-apple-data-detectors='true'] {
         color: inherit !important;
         text-decoration: none !important;
       }
@@ -377,19 +377,18 @@ function forgotPassword(information) {
                               <!-- <br /> -->
                               <br />
                               <span style="font-size: 15px"
-                                >We want to wish you Happy New Year and help
-                                bring fine returns for the coming new year.
+                                >We are doing a promo...just because
                                 <br />
                                 <br />
                                 So our offer is put through
-                                <strong>four</strong> orders with us through
+                                <strong>any two</strong> orders with us through
                                 <a href="https://www.farmgate-market.com/"
                                   >https://www.farmgate-market.com</a
                                 >
                                 using the promo code
-                                <strong>fortyforfree</strong> for each of your
-                                four orders, and we will refund you forty
-                                dollars ($40) on your fourth order.
+                                <strong>twofortwenty</strong> for each of your
+                                two orders, and we will refund you twenty
+                                dollars ($20) on your second order.
                               </span>
                               <br />
                               <br />
@@ -398,15 +397,9 @@ function forgotPassword(information) {
                               2. Monika’s Organics
                               <br />
                               <br />
-                              To be valid, just put your first order through
-                              before 7 January 2021, and fourth prior to 7 March
-                              2021.
+                              To be valid, just put your second order before 21
+                              August 2021.
                               <br />
-                              <br />
-                              Alternatively, you can also use the valid promo
-                              code <strong>fromthefarmgate</strong> for
-                              discounted delivery (not to be used in conjunction
-                              with any other promotion).
                             </p>
                           </div>
                         </div>
@@ -1899,7 +1892,6 @@ function forgotPassword(information) {
     <!--[if (IE)]></div><![endif]-->
   </body>
 </html>
-
     `;
 }
 module.exports = forgotPassword;

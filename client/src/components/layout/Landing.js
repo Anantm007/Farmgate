@@ -22,6 +22,8 @@ const Landing = () => {
       if (data && data.success === false) {
         setLoading(false);
       } else {
+        // Filter out 'wild flower' shop
+        data.data = data.data.filter(shop => shop._id !== "600cd690bc0d95715c4863b9");
         setShops(data.data);
         setLoading(false);
       }
@@ -43,7 +45,7 @@ const Landing = () => {
       {showLoading()}
       <div className="row">
         {shops.map((shop, i) => (
-          <div key={i} className="col-xs-12 col-sm-6 col-md-4">
+          <div key={i} className="col-xs-12 col-sm-6 col-md-5" style={{margin: "auto"}}>
             <ShopsCard shop={shop} />
           </div>
         ))}
