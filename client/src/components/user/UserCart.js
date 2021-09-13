@@ -294,15 +294,15 @@ const UserCart = () => {
           </div>
           <div className="p-4">
             <p className="font-italic mb-4">
-              Please check your delivery address & suburb before proceeding
-              forward
+              Please check your delivery address before proceeding
+              forward. You can change your address in <Link to={'/user/' + user._id + '/settings'}>Settings</Link>
             </p>
             <textarea
               name=""
               cols="30"
-              rows="3"
+              rows="4"
               className="form-control"
-              value={`${user.address}\n\nSuburb - ${user.suburb}`}
+              value={`${user.address}, ${user.suburb}\n\nPostCode - ${user.zipCode}`}
               readOnly></textarea>
           </div>
         </div>
