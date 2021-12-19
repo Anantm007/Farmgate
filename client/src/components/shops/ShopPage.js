@@ -30,6 +30,9 @@ const ShopPage = (props) => {
   };
 
   const loadShop = () => {
+    if (shopId === '5ef007a26c7fd67a3df5d23f') {
+      window.location.href = 'http://monikasorganics.com.au';
+    }
     getShop(shopId).then((data) => {
       if (data && data.success === false) {
         setError(data.message);
@@ -82,7 +85,7 @@ const ShopPage = (props) => {
     loadShop();
     loadItems();
     loadCertificates();
-    if (!isAuthenticated()) {
+    if (!isAuthenticated() && window.location.pathname?.split('/')[2] !== '5ef007a26c7fd67a3df5d23f') {
       localStorage.setItem(
         "redirectUrl",
         JSON.stringify(window.location.pathname)

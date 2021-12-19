@@ -251,6 +251,10 @@ router.get("/:id/items", async (req, res) => {
       });
     }
 
+    if (req.params.id.toString() === '5ef007a26c7fd67a3df5d23f') {
+      return res.redirect('http://monikasorganics.com.au/');
+    }
+
     let items = await Item.find({ shop: req.params.id }).select("-image");
 
     if (!items || items.length === 0) {
@@ -304,6 +308,10 @@ router.get("/:id/items/allType", async (req, res) => {
       });
     }
 
+    if (req.params.id.toString() === '5ef007a26c7fd67a3df5d23f') {
+      return res.redirect('http://monikasorganics.com.au/');
+    }
+
     let items = await Item.find({ shop: req.params.id }).select("-image");
 
     if (!items || items.length === 0) {
@@ -339,6 +347,10 @@ router.get("/items/:id", async (req, res) => {
       });
     }
 
+    if (req.params.id.toString() === '5ef007a26c7fd67a3df5d23f') {
+      return res.redirect('http://monikasorganics.com.au/');
+    }
+
     const shop = await Shop.findById(req.params.id).select("items");
     if (!shop) {
       return res.json({
@@ -368,6 +380,10 @@ router.get("/photo/:id", async (req, res) => {
         success: false,
         message: "Item Not Found",
       });
+    }
+
+    if (req.params.id.toString() === '5ef007a26c7fd67a3df5d23f') {
+      return res.redirect('http://monikasorganics.com.au/');
     }
 
     const result = await Shop.findById(req.params.id);
